@@ -1,0 +1,2 @@
+# KGA35_TEAM5_SKUL
+KGA 35기 5조 팀프로젝트
