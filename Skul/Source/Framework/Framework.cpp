@@ -1,6 +1,7 @@
 #include "Framework.h"
-#include "ResourceMgr.h"
-#include "RandomMgr.h"
+#include "../Manager/ResourceMgr.h"
+#include "../Manager/RandomMgr.h"
+#include "../Utils/Singleton.h"
 #include <iostream>
 
 using namespace std;

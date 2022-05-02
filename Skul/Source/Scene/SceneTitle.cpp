@@ -1,5 +1,5 @@
 #include "SceneTitle.h"
-#include "ResourceMgr.h"
+#include "../Manager/ResourceMgr.h"
 
 void SceneTitle::Init()
 {
