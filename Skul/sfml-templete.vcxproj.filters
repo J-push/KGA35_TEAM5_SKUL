@@ -1,102 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{cdb2ff98-6294-4171-94e0-947330a750db}</UniqueIdentifier>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source\Framework">
-      <UniqueIdentifier>{0cefe887-2aab-4dfc-b4f6-e1346752aac6}</UniqueIdentifier>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Source\Manager">
-      <UniqueIdentifier>{3632716a-9610-4cdb-b02a-c7eee804b63f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Resource">
-      <UniqueIdentifier>{0ca804fd-7c9c-4c2e-bdef-fa83e43afd21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Scene">
-      <UniqueIdentifier>{6e4d1041-1967-47fc-a641-fdc49f4ce4ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Utils">
-      <UniqueIdentifier>{885118df-d297-4b63-98a1-c5fec3394b0f}</UniqueIdentifier>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\main.cpp">
-      <Filter>Source</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\Framework.cpp">
-      <Filter>Source\Framework</Filter>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\InputManager.cpp">
-      <Filter>Source\Manager</Filter>
+    <ClCompile Include="RandomMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\RandomMgr.cpp">
-      <Filter>Source\Manager</Filter>
+    <ClCompile Include="Resource.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\ResourceMgr.cpp">
-      <Filter>Source\Manager</Filter>
+    <ClCompile Include="ResourceMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Manager\SceneMgr.cpp">
-      <Filter>Source\Manager</Filter>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Resource\Resource.cpp">
-      <Filter>Source\Resource</Filter>
+    <ClCompile Include="SceneCharacter.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Scene.cpp">
-      <Filter>Source\Scene</Filter>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneCharacter.cpp">
-      <Filter>Source\Scene</Filter>
+    <ClCompile Include="SceneMenu.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneGame.cpp">
-      <Filter>Source\Scene</Filter>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneMenu.cpp">
-      <Filter>Source\Scene</Filter>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneTitle.cpp">
-      <Filter>Source\Scene</Filter>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utils\Singleton.cpp">
-      <Filter>Source\Utils</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Framework\Framework.h">
-      <Filter>Source\Framework</Filter>
+    <ClInclude Include="Framework.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\InputManager.h">
-      <Filter>Source\Manager</Filter>
+    <ClInclude Include="RandomMgr.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\RandomMgr.h">
-      <Filter>Source\Manager</Filter>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\ResourceMgr.h">
-      <Filter>Source\Manager</Filter>
+    <ClInclude Include="ResourceMgr.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Manager\SceneMgr.h">
-      <Filter>Source\Manager</Filter>
+    <ClInclude Include="Scene.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Resource\Resource.h">
-      <Filter>Source\Resource</Filter>
+    <ClInclude Include="SceneCharacter.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\Scene.h">
-      <Filter>Source\Scene</Filter>
+    <ClInclude Include="SceneGame.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneCharacter.h">
-      <Filter>Source\Scene</Filter>
+    <ClInclude Include="SceneMenu.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneGame.h">
-      <Filter>Source\Scene</Filter>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneMenu.h">
-      <Filter>Source\Scene</Filter>
+    <ClInclude Include="SceneTitle.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneTitle.h">
-      <Filter>Source\Scene</Filter>
+    <ClInclude Include="Singleton.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utils\Singleton.h">
-      <Filter>Source\Utils</Filter>
+    <ClInclude Include="InputManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

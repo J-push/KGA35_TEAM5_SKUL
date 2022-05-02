@@ -1,7 +1,7 @@
 #include "SceneGame.h"
-#include "../Manager/ResourceMgr.h"
-#include "../Manager/RandomMgr.h"
-#include "../Framework/Framework.h" //??
+#include "ResourceMgr.h"
+#include "RandomMgr.h"
+#include "Framework.h"
 
 void SceneGame::Init()
 {

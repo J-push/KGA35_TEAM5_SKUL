@@ -18,35 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source\Framework\Framework.cpp" />
-    <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\Manager\InputManager.cpp" />
-    <ClCompile Include="Source\Manager\RandomMgr.cpp" />
-    <ClCompile Include="Source\Manager\ResourceMgr.cpp" />
-    <ClCompile Include="Source\Manager\SceneMgr.cpp" />
-    <ClCompile Include="Source\Resource\Resource.cpp" />
-    <ClCompile Include="Source\Scene\Scene.cpp" />
-    <ClCompile Include="Source\Scene\SceneCharacter.cpp" />
-    <ClCompile Include="Source\Scene\SceneGame.cpp" />
-    <ClCompile Include="Source\Scene\SceneMenu.cpp" />
-    <ClCompile Include="Source\Scene\SceneTitle.cpp" />
-    <ClCompile Include="Source\Utils\Singleton.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source\Framework\Framework.h" />
-    <ClInclude Include="Source\Manager\InputManager.h" />
-    <ClInclude Include="Source\Manager\RandomMgr.h" />
-    <ClInclude Include="Source\Manager\ResourceMgr.h" />
-    <ClInclude Include="Source\Manager\SceneMgr.h" />
-    <ClInclude Include="Source\Resource\Resource.h" />
-    <ClInclude Include="Source\Scene\Scene.h" />
-    <ClInclude Include="Source\Scene\SceneCharacter.h" />
-    <ClInclude Include="Source\Scene\SceneGame.h" />
-    <ClInclude Include="Source\Scene\SceneMenu.h" />
-    <ClInclude Include="Source\Scene\SceneTitle.h" />
-    <ClInclude Include="Source\Utils\Singleton.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -178,6 +149,35 @@
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomMgr.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMgr.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneCharacter.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="RandomMgr.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMgr.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneCharacter.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Singleton.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

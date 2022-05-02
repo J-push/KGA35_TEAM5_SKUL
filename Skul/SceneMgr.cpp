@@ -1,8 +1,8 @@
 #include "SceneMgr.h"
-#include "../Scene/SceneTitle.h"
-#include "../Scene/SceneGame.h"
-#include "../Scene/SceneCharacter.h"
-#include "../Scene/SceneMenu.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
+#include "SceneCharacter.h"
+#include "SceneMenu.h"
 /**********************************************************
 * 설명 : Scene들을 초기화한다.
 ***********************************************************/

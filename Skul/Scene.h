@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../Manager/SceneMgr.h"
+#include "SceneMgr.h"
 
 class Scene
 {

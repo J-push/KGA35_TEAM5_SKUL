@@ -1,5 +1,5 @@
 #include "SceneCharacter.h"
-#include "../Manager/ResourceMgr.h"
+#include "ResourceMgr.h"
 
 void SceneCharacter::Init()
 {

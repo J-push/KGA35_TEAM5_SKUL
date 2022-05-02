@@ -4,12 +4,15 @@
 #include <cmath>
 
 std::map<Axis, AxisInfo> InputManager::mapAxis;
+
 list<Keyboard::Key> InputManager::downKeys;
 list<Keyboard::Key> InputManager::ingKeys;
 list<Keyboard::Key> InputManager::upKeys;
+
 list<Mouse::Button> InputManager::downButtons;
 list<Mouse::Button> InputManager::ingButtons;
 list<Mouse::Button> InputManager::upButtons;
+
 Vector2i InputManager::mousePosition;
 Vector2f InputManager::mouseWorldPosition;
 void InputManager::Init()
