@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "SceneMgr.h"
+#include "../Utils/Singleton.h"
+#include "../Manager/ResourceMgr.h"
+#include "../Manager/RandomMgr.h"
+#include "../Manager/SceneMgr.h"
 
 using namespace sf;
 /**********************************************************

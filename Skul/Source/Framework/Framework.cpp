@@ -1,6 +1,4 @@
 #include "Framework.h"
-#include "ResourceMgr.h"
-#include "RandomMgr.h"
 #include <iostream>
 
 using namespace std;
