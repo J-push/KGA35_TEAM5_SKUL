@@ -1,5 +1,5 @@
 #include "SceneMenu.h"
-#include "ResourceMgr.h"
+#include "../Manager/ResourceMgr.h"
 
 void SceneMenu::Init()
 {

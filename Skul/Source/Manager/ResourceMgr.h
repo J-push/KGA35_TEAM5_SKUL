@@ -1,9 +1,9 @@
 #pragma once
-#include "Singleton.h"
+#include "../Utils/Singleton.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <string>
-#include "Resource.h"
+#include "../Resource/Resource.h"
 #include <map>
 
 using namespace sf;

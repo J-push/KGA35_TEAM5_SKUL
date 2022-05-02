@@ -1,4 +1,4 @@
-#include "ResourceMgr.h"
+#include "../Manager/ResourceMgr.h"
 #include <list>
 /**********************************************************
 * 설명 : Resource파일들을 초기화 한다.
