@@ -39,6 +39,10 @@ void ResourceMgr::Init()
 	}
 }
 
+/**********************************************************
+* 설명 : Resource파일들을 가지고 온다.
+* 변수1 : 리소스에 할당한 아이디
+***********************************************************/
 Resource* ResourceMgr::GetResource(std::string id)
 {
 	std::map<std::string, Resource*>::iterator find = resouceMap.find(id);
