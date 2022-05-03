@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationController.cpp" />
     <ClCompile Include="Source\Framework\Framework.cpp" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationController.h" />
+    <ClInclude Include="Source\Boss\Boss.h" />
     <ClInclude Include="Source\Framework\Framework.h" />
     <ClInclude Include="Source\Manager\InputManager.h" />
     <ClInclude Include="Source\Manager\RandomMgr.h" />

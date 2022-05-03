@@ -23,6 +23,10 @@
     <Filter Include="Source\Player">
       <UniqueIdentifier>{68469b71-9b4d-4214-9ce4-1f399729b5ba}</UniqueIdentifier>
     </Filter>
+
+    <Filter Include="Boss">
+      <UniqueIdentifier>{39033c39-7bed-4be4-a17c-b8f0a48ef7b0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
@@ -83,6 +87,9 @@
 	  <Filter>Source\Animation</Filter>
 
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -126,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Source\Player\Skul\LittleBone.h">
       <Filter>Source\Player\Skul</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\Boss.h">
+      <Filter>Boss</Filter>
     </ClInclude>
 
   </ItemGroup>
