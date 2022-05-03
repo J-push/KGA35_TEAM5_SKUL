@@ -82,12 +82,16 @@ void SceneTitle::Update(float dt)
 	{
 		mgr.ChangeScene(Scenes::MENU);
 	}
+	if (Keyboard::isKeyPressed(Keyboard::Num0))
+	{
+		animation.Play("MAPTEX");
+	}
 }
 
 void SceneTitle::Draw(sf::RenderWindow* window)
 {
-	window->draw(spriteTitle);
-	window->draw(spriteStart);
+	//window->draw(spriteTitle);
+	//window->draw(spriteStart);
 
 
 	/*window->draw(spriteStart1);*/
