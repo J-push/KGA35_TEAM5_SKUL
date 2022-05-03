@@ -33,17 +33,73 @@ int Tilemap::CreateBackGround()
             tileMap[vertexIndex + 3].position = Vector2f(x, y + TILE_SIZE);
 
             int texIndex = 5;
-            if (r == 25 && c == 0)
+            if (r <= 25 && c <= 3)
             {
-                texIndex = 0;
+                texIndex = 2;
             }
-            else if (r == 25 && c > 0)
+            else if (r == 25 && c == 5)
+            {
+                texIndex = 31;
+            }
+            else if (r < 25 && c == 4)
+            {
+                texIndex = 18;
+            }
+            else if (r == 25 && c == 4)
+            {
+                texIndex = 27;
+            }
+            else if (r == 25 && c > 5)
             {
                 texIndex = 6;
+                if (c == 35)
+                {
+                    texIndex = 4;
+                }
+                if (c > 35 && c < 50)
+                {
+                    texIndex = 5;
+                }
+                if (c == 36 && r == 28)
+                {
+                    texIndex = 0;
+                }
+                if (c == 50)
+                {
+                    texIndex = 31;
+                }
             }
             else if (r > 25 && r < 35)
             {
                 texIndex = 2;
+                if (r >= 26 && r <= 28 && c == 35)
+                {
+                    texIndex = 27;
+                }
+                if (c > 35 && c < 50 && r < 28 )
+                {
+                    texIndex = 5;
+                }
+                if (c > 35 && c < 50 && r == 28)
+                {
+                    texIndex = 6;
+                }
+                if (r == 28 && c == 35)
+                {
+                    texIndex = 27;
+                }
+                if (r >= 26 && r <= 28 && c == 50)
+                {
+                    texIndex = 27;
+                }
+                if (r == 28 && c == 49)
+                {
+                    texIndex = 4;
+                }
+                if (r == 28 && c == 36)
+                {
+                    texIndex = 31;
+                }
             }
             else if (r == 22 && c ==25)
             {
