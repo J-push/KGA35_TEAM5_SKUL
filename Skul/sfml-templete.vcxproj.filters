@@ -22,6 +22,9 @@
     <Filter Include="Source\Animation">
       <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Boss">
+      <UniqueIdentifier>{39033c39-7bed-4be4-a17c-b8f0a48ef7b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="Source\Animation\AnimationController.cpp">
       <Filter>Source\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -112,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Source\Animation\AnimationController.h">
       <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\Boss.h">
+      <Filter>Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
