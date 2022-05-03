@@ -10,24 +10,8 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX2", "graphics/menu/GameStartIcon2.png", ResourceTypes::Texture));
-
-	//loaded.push_back(new Resource("STARTTEX", "graphics/menu/GameStart.png", ResourceTypes::Texture));
-
-	
-	//loaded.push_back(new Resource("MAINBGTEX", "graphics/background.png", ResourceTypes::Texture));
-	///*loaded.push_back(new Resource("MAINTITLETEX", "graphics/title.png", ResourceTypes::Texture));*/
-	//loaded.push_back(new Resource("MAINBEETEX", "graphics/bee.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINCLOUDTEX", "graphics/cloud.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINTREETEX", "graphics/tree.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINBRANCHTEX", "graphics/branch.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINPLAYERTEX", "graphics/player.png", ResourceTypes::Texture));
-
-	//loaded.push_back(new Resource("MAINRIPTEX", "graphics/rip.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINAXETEX", "graphics/axe.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("MAINLOGTEX", "graphics/log.png", ResourceTypes::Texture));
-	//loaded.push_back(new Resource("CHOPSOUND", "sound/chop.wav", ResourceTypes::SoundBuffer));
-	//loaded.push_back(new Resource("DEATHSOUND", "sound/death.wav", ResourceTypes::SoundBuffer));
-	//loaded.push_back(new Resource("OOTSOUND", "sound/out_of_time.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("BACKGROUNDTEX", "graphics/background.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("TILETEX", "graphics/TileGrass.png", ResourceTypes::Texture));
 	
 	for (std::list<Resource*>::iterator it = loaded.begin(); it != loaded.end(); ++it)
 	{

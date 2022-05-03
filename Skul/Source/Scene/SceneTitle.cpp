@@ -1,26 +1,15 @@
 #include "SceneTitle.h"
 #include "../Manager/ResourceMgr.h"
-#include "../../rapidcsv.h"
+#include "../rapidcsv.h"
 
 
 void SceneTitle::Init()
 {
-	/*test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
-	test.setString("MAIN");
-	test.setFillColor(Color::White);
-	test.setCharacterSize(100);
-	test.setPosition(0, 0);*/
 	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
-	spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
-	spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
-	//spriteStart1.setPosition(900, 700);
-	//spriteStart2.setPosition(900, 700);
-
-	//spriteStart.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX"));	
-
+	/*spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
+	spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));*/
+	
 	spriteStart.setPosition(880, 700);
-	spriteStart.setOrigin(60, 60);
-	spriteStart.setScale(-1.f, 1.f);
 	animation.SetTarget(&spriteStart);
 
 	rapidcsv::Document clips("data_tables/animations/title/title_animation_clips.csv");
@@ -80,7 +69,7 @@ void SceneTitle::Update(float dt)
 {
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
-		mgr.ChangeScene(Scenes::MENU);
+		mgr.ChangeScene(Scenes::GAME);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
