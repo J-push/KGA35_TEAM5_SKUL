@@ -36,6 +36,11 @@
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
     <ClCompile Include="Source\Scene\SceneMenu.cpp" />
     <ClCompile Include="Source\Scene\SceneTitle.cpp" />
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="Source\Tile\Tilemap.cpp" />
+    <ClCompile Include="Source\Tile\Utils.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="Source\Utils\Singleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +60,11 @@
     <ClInclude Include="Source\Scene\SceneGame.h" />
     <ClInclude Include="Source\Scene\SceneMenu.h" />
     <ClInclude Include="Source\Scene\SceneTitle.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Source\Tile\Tilemap.h" />
+    <ClInclude Include="Source\Tile\Utils.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="Source\Utils\Singleton.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
