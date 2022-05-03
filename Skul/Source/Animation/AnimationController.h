@@ -12,17 +12,17 @@ class AnimationController
 {
 private:
 	std::map<std::string, AnimationClip> clips; // map <key type, value type>
-	std::queue<std::string> playQueue; // FIFO
+	std::queue<std::string> playQueue;          // FIFO 자료구조
 
 	AnimationClip *currentClip;
-	bool isPlaying;      // 재생중인지
-	int currentFrame;    // 몇번째꺼 재생중인지
-	int totalFrame;      // 총 갯수
-	float frameDuration; // 지속시간????
+	bool isPlaying;      
+	int currentFrame;    
+	int totalFrame;     
+	float frameDuration; 
 
 	float accumTime;
 
-	Sprite *sprite;
+	Sprite *sprite; // 포인터 이유??
 
 public:
 	AnimationController();

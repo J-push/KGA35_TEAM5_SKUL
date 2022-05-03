@@ -15,8 +15,8 @@ void SceneTitle::Init()
 	test.setCharacterSize(100);
 	test.setPosition(0, 0);*/
 	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
-	spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
-	spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
+	//spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
+	//spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
 	//spriteStart1.setPosition(900, 700);
 	//spriteStart2.setPosition(900, 700);
 
@@ -69,6 +69,7 @@ void SceneTitle::Init()
 	animationGameStart.Play("STARTTEX");
 	animationMapEdit.Play("MAPTEX");
 
+	mouseCurse.GetSprite().setPosition(300, 30);
 }
 
 void SceneTitle::Release()
@@ -104,10 +105,7 @@ void SceneTitle::Update(float dt)
 		animationGameStart.Play("STARTTEX");
 	}
 
-	std::cout << StartShape.getPosition().x;
-
-	
-
+	mouseCurse.Update(dt);
 }
 
 void SceneTitle::Draw(sf::RenderWindow* window)
@@ -117,7 +115,7 @@ void SceneTitle::Draw(sf::RenderWindow* window)
 	window->draw(spriteStart);
 	window->draw(spriteMapEdit);
 
-
-
+	window->setMouseCursorVisible(false);
+	window->draw(mouseCurse.GetSprite());
 	/*window->draw(spriteStart1);*/
 }

@@ -9,21 +9,20 @@ using namespace sf;
 class Framework
 {
 private:
-	RenderWindow* window;	//SFML기본 윈도우
-	Clock clock;			//시간
-	SceneMgr sceneMgr;		//scene매니저
+	RenderWindow* window;	// SFML기본 윈도우
+	Clock clock;			// 시계
+	SceneMgr sceneMgr;		// scene 매니저
 
-	Framework(const Framework& ref) {}
+	Framework(const Framework& ref) {} // ??
 	Framework& operator=(const Framework& ref) {}
 public:
-	Framework();
+	Framework(); // 멤버변수 초기화
 	~Framework();
 
 	bool Init();
 	void Run();
 
-
-	void ProcessEvent(Event event);				//키입력
+	void ProcessEvent(Event event);	    //키입력
 	void Update(float delaTime);		//업데이트
 	void Draw(RenderWindow* window);	//그리기
 

@@ -2,12 +2,14 @@
 #include "Scene.h"
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
-
+#include "../ChangeMouse.h"
 
 
 class SceneTitle : public Scene
 {
 private:
+
+	MouseCursor mouseCurse;
 
 	AnimationController animationGameStart;
 	AnimationController animationMapEdit;
