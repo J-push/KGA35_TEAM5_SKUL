@@ -188,6 +188,39 @@
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomMgr.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ResourceMgr.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneCharacter.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneMenu.cpp" />
+    <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="RandomMgr.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceMgr.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneCharacter.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneMenu.h" />
+    <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Tilemap.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

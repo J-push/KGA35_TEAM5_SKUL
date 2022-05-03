@@ -10,6 +10,9 @@
     <Filter Include="Source\Manager">
       <UniqueIdentifier>{3632716a-9610-4cdb-b02a-c7eee804b63f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{f589f1c7-9f33-4504-b959-9d4cc8a16495}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Resource">
       <UniqueIdentifier>{0ca804fd-7c9c-4c2e-bdef-fa83e43afd21}</UniqueIdentifier>
     </Filter>
@@ -90,6 +93,12 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -136,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="Source\Boss\Boss.h">
       <Filter>Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
 
   </ItemGroup>
