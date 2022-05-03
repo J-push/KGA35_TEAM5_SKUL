@@ -1,4 +1,4 @@
-#include "ResourceMgr.h"
+#include "../Manager/ResourceMgr.h"
 #include <list>
 /**********************************************************
 * 설명 : Resource파일들을 초기화 한다.
@@ -10,6 +10,9 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX2", "graphics/menu/GameStartIcon2.png", ResourceTypes::Texture));
+
+	//loaded.push_back(new Resource("STARTTEX", "graphics/menu/GameStart.png", ResourceTypes::Texture));
+
 	
 	//loaded.push_back(new Resource("MAINBGTEX", "graphics/background.png", ResourceTypes::Texture));
 	///*loaded.push_back(new Resource("MAINTITLETEX", "graphics/title.png", ResourceTypes::Texture));*/
@@ -39,6 +42,10 @@ void ResourceMgr::Init()
 	}
 }
 
+/**********************************************************
+* 설명 : Resource파일들을 가지고 온다.
+* 변수1 : 리소스에 할당한 아이디
+***********************************************************/
 Resource* ResourceMgr::GetResource(std::string id)
 {
 	std::map<std::string, Resource*>::iterator find = resouceMap.find(id);
