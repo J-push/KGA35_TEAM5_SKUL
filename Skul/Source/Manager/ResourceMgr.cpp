@@ -10,6 +10,9 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX2", "graphics/menu/GameStartIcon2.png", ResourceTypes::Texture));
+
+	//loaded.push_back(new Resource("STARTTEX", "graphics/menu/GameStart.png", ResourceTypes::Texture));
+
 	
 	//loaded.push_back(new Resource("MAINBGTEX", "graphics/background.png", ResourceTypes::Texture));
 	///*loaded.push_back(new Resource("MAINTITLETEX", "graphics/title.png", ResourceTypes::Texture));*/

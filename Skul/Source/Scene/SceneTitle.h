@@ -1,12 +1,22 @@
 #pragma once
 #include "Scene.h"
+#include "../Animation/AnimationController.h"
+
+
 
 class SceneTitle : public Scene
 {
 private:
+
+	AnimationController animation;
+	std::map<std::string, Texture> texMap;
+
 	sf::Sprite spriteTitle;
 	sf::Sprite spriteStart1;
 	sf::Sprite spriteStart2;
+
+	sf::Sprite spriteStart;
+
 public:
 	SceneTitle(SceneMgr& mgr) : Scene(mgr) {};
 
