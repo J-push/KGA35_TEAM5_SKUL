@@ -19,7 +19,7 @@ void SceneTitle::Init()
 	//spriteStart.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX"));	
 
 	spriteStart.setPosition(880, 700);
-	//spriteStart.setOrigin(60, 60);
+	spriteStart.setOrigin(60, 60);
 	spriteStart.setScale(-1.f, 1.f);
 	animation.SetTarget(&spriteStart);
 
@@ -37,7 +37,7 @@ void SceneTitle::Init()
 		clip.fps = colFps[i];
 		clip.loopType = (AnimationLoopTypes)colLoop[i];
 
-		std::string path = colPath[i]; // ??
+		//std::string path = colPath[i]; // ??
 		rapidcsv::Document frames(colPath[i]);
 		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
 		std::vector<int> colL = frames.GetColumn<int>("L");
@@ -58,7 +58,7 @@ void SceneTitle::Init()
 
 		animation.AddClip(clip);
 	}
-	animation.Play("MAPTEX");
+	animation.Play("STARTTEX");
 }
 
 void SceneTitle::Release()
@@ -90,8 +90,8 @@ void SceneTitle::Update(float dt)
 
 void SceneTitle::Draw(sf::RenderWindow* window)
 {
-	//window->draw(spriteTitle);
-	//window->draw(spriteStart);
+	window->draw(spriteTitle);
+	window->draw(spriteStart);
 
 
 	/*window->draw(spriteStart1);*/
