@@ -3,8 +3,10 @@
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
 
+
 void SceneGame::Init()
 {
+	player.Init();
 	/*spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
 	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINPLAYERTEX"));
 	spriteCloud.setTexture(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
@@ -27,6 +29,7 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
+	player.Update(dt);
 	//if (!beeActive)
 	//{
 	//	beeSpeed = RandomMgr::GetRandom(200, 200);
@@ -53,6 +56,8 @@ void SceneGame::Update(float dt)
 
 void SceneGame::Draw(sf::RenderWindow* window)
 {
+	//window->draw(player.Draw(window));
+	player.Draw(*window);
 	/*window->draw(spriteBackground);*/
 	/*window->draw(spriteBee);*/
 }

@@ -1,9 +1,11 @@
 #pragma once
 #include "Scene.h"
+#include "../Player/Player.h"
 class SceneGame : public Scene
 {
 private:
 	sf::Sprite spriteBackground;
+	Player player;
 	
 public:
 	SceneGame(SceneMgr& mgr) : Scene(mgr) {};
