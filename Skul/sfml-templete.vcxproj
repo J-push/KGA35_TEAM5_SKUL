@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
     <ClCompile Include="Source\Scene\SceneMenu.cpp" />
     <ClCompile Include="Source\Scene\SceneTitle.cpp" />
+
     <ClCompile Include="Source\TileMap\Tilemap.cpp" />
     <ClCompile Include="Source\Utils\Singleton.cpp" />
     <ClCompile Include="Source\Utils\Utils.cpp" />
