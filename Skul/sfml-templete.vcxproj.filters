@@ -25,6 +25,9 @@
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
+	<Filter Include="Source\Animation">
+	  <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
+	</Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -72,6 +75,12 @@
     <ClCompile Include="Source\Player\Skul\LittleBone.cpp">
       <Filter>Source\Player\Skul</Filter>
     </ClCompile>
+	<ClCompile Include="Source\Animation\AnimationClip.cpp">
+	  <Filter>Source\Animation</Filter>
+    </ClCompile>
+	<ClCompile Include="Source\Animation\AnimationController.cpp">
+	  <Filter>Source\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -115,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="Source\Player\Skul\LittleBone.h">
       <Filter>Source\Player\Skul</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation\AnimationClip.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation\AnimationController.h">
+      <Filter>Source\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
