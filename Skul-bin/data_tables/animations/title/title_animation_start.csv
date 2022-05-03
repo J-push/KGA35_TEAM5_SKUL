@@ -1,3 +1,3 @@
-﻿TEXTURE PATH,L,T,W,H
-graphics/menu/gamestart.png,0,0,150,30
-graphics/menu/gamestart.png,150,0,150,30
+TEXTURE PATH,L,T,W,H
+graphics/menu/gamestart.png,158,0,158,39
+graphics/menu/gamestart.png,0,0,158,39

@@ -158,5 +158,8 @@
     <ClInclude Include="Source\Utils\Utils.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ChangeMouse.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
