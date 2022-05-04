@@ -26,6 +26,9 @@ public:
 	{
 		spriteCursor.setPosition(InputManager::GetMouseWorldPosition());
 
+		spriteCursor.setPosition().x = 100;
+
+
 		std::cout << spriteCursor.getPosition().x;
 	}
 

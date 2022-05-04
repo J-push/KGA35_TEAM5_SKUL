@@ -67,7 +67,7 @@ void SceneTitle::Init()
 	animationGameStart.Play("STARTTEX");
 	animationMapEdit.Play("MAPTEX");
 
-	
+	mouseCurse.Init();
 }
 
 void SceneTitle::Release()
@@ -90,6 +90,8 @@ void SceneTitle::Update(float dt)
 	animationGameStart.Update(dt);
 	animationMapEdit.Update(dt);
 
+	mouseCurse.Update(dt);
+
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
@@ -103,7 +105,7 @@ void SceneTitle::Update(float dt)
 		animationGameStart.Play("STARTTEX");
 	}
 
-	mouseCurse.Update(dt);
+	
 }
 
 void SceneTitle::Draw(sf::RenderWindow* window)
@@ -114,5 +116,5 @@ void SceneTitle::Draw(sf::RenderWindow* window)
 	window->draw(spriteMapEdit);
 
 	//window->setMouseCursorVisible(false);
-	window->draw(mouseCurse.GetSprite());
+	mouseCurse.Draw(window);
 }
