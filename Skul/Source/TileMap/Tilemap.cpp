@@ -7,7 +7,6 @@ void Tilemap::Init()
     spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
 }
 
-
 int Tilemap::CreateBackGround()
 {
     int cols = backGround.width / TILE_SIZE;
@@ -27,7 +26,7 @@ int Tilemap::CreateBackGround()
 
             int vertexIndex = index * VERTS_IN_QUAD;
 
-            tileMap[vertexIndex + 0].position = Vector2f(x, y);    // »ç°¢ÇüÀÇ ¸Ç ÁÂ»ó´Ü ÁÂÇ¥
+            tileMap[vertexIndex + 0].position = Vector2f(x, y);    // Â»Ã§Â°Â¢Ã‡Ã¼Ã€Ã‡ Â¸Ã‡ ÃÃ‚Â»Ã³Â´Ãœ ÃÃ‚Ã‡Â¥
             tileMap[vertexIndex + 1].position = Vector2f(x + TILE_SIZE, y);
             tileMap[vertexIndex + 2].position = Vector2f(x + TILE_SIZE, y + TILE_SIZE);
             tileMap[vertexIndex + 3].position = Vector2f(x, y + TILE_SIZE);
