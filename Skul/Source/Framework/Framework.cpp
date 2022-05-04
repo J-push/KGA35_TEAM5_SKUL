@@ -1,19 +1,18 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-04
+* 내    용 : skul게임의 전체적인 프레임워크를 담당.
+* 수 정 일 :
+*******************************************************************************/
+/*include될 헤더*/
+#include <iostream>
 #include "Framework.h"
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Utils/Singleton.h"
-#include <iostream>
 #include "../Manager/InputManager.h"
 
 using namespace std;
-
-Framework::Framework()
-{
-}
-Framework::~Framework()
-{
-}
-
 /**********************************************************
 * 설명 : Framework를 초기화한다.
 ***********************************************************/
@@ -46,8 +45,7 @@ void Framework::Run()
 				window->close();
 				break;
 			}
-			InputManager::ProcessInput(event);
-			//ProcessEvent(event);
+			ProcessEvent(event);
 		}
 
 		Update(dt.asSeconds());
@@ -59,6 +57,7 @@ void Framework::Run()
 ***********************************************************/
 void Framework::ProcessEvent(Event event)
 {
+	InputManager::ProcessInput(event);
 }
 
 /**********************************************************

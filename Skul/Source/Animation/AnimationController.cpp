@@ -1,8 +1,8 @@
 /******************************************************************************
 * 작 성 자 : 김 재 휘
-* 작 성 일 : 2022-05-03
-* 내    용 : AnimationControllere 부분의 동작을 구현한다.
-* 수 정 일 : 주석 다 안담
+* 작 성 일 : 2022-05-04
+* 내    용 : Animation의 동작을 컨트롤한다.
+* 수 정 일 :
 *******************************************************************************/
 
 /*include 될 헤더파일*/
@@ -18,7 +18,7 @@ AnimationController::AnimationController()
 }
 
 /**********************************************************
-* 설명 : 타겟을 잡음??
+* 설명 : sprite 지정
 ***********************************************************/
 void AnimationController::SetTarget(Sprite *sprite)
 {
@@ -26,7 +26,7 @@ void AnimationController::SetTarget(Sprite *sprite)
 }
 
 /**********************************************************
-* 설명 : AnimationClip에 아이디를 추가?
+* 설명 : AnimationClip에 아이디를 추가한다.
 ***********************************************************/
 void AnimationController::AddClip(const AnimationClip &newClip)
 {
@@ -88,7 +88,7 @@ void AnimationController::Update(float dt)
 
 
 /**********************************************************
-* 설명 : Play를 위한 설정을 한다??
+* 설명 : Play한다.
 ***********************************************************/
 void AnimationController::Play(std::string clipId, bool clear)
 {
@@ -100,10 +100,6 @@ void AnimationController::Play(std::string clipId, bool clear)
 	currentClip = &clips[clipId];
 	currentFrame = 0;
 
-
-
-
-
 	totalFrame = currentClip->frames.size();
 	frameDuration = 1.f / currentClip->fps; // 한 프레임당 몇 초 쓰는지
 	//frameDurtion = currentClip->fps;
@@ -111,7 +107,7 @@ void AnimationController::Play(std::string clipId, bool clear)
 
 
 /**********************************************************
-* 설명 : 원소를 삽입하고 play상태로 변경한다.
+* 설명 : 큐 자료구조로 play 한다.
 ***********************************************************/
 void AnimationController::PlayQueue(std::string clipId)
 {
@@ -120,7 +116,7 @@ void AnimationController::PlayQueue(std::string clipId)
 }
 
 /**********************************************************
-* 설명 : 큐스택을 비우고 play상태를 false로 변경한다.
+* 설명 : 큐스택을 비운다.
 ***********************************************************/
 void AnimationController::Stop()
 {
@@ -129,7 +125,7 @@ void AnimationController::Stop()
 }
 
 /**********************************************************
-* 설명 : isplaying의 상태를 받아온다.
+* 설명 : play 중인지 확인한다.
 ***********************************************************/
 bool AnimationController::IsPlaying()
 {
