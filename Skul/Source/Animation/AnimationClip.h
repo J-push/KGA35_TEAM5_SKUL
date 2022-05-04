@@ -6,13 +6,18 @@
 #include <vector>
 
 using namespace sf;
-
+/**********************************************************
+* 설명 : Loop의 유무를 판단하는 enum class
+***********************************************************/
 enum class AnimationLoopTypes
 {
 	Single,
 	Loop,
 };
 
+/**********************************************************
+* 설명 : Texture와 좌표값을 초기화하는 구조체
+***********************************************************/
 struct AnimationFrame
 {
 	Texture texture;
@@ -21,7 +26,9 @@ struct AnimationFrame
 	AnimationFrame(const Texture tex, const IntRect coord);
 };
 
-
+/**********************************************************
+* 설명 : 전체적인 틀
+***********************************************************/
 struct AnimationClip
 {
 	std::string id;
