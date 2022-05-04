@@ -22,13 +22,9 @@
     <Filter Include="Source\Player">
       <UniqueIdentifier>{68469b71-9b4d-4214-9ce4-1f399729b5ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Boss">
-      <UniqueIdentifier>{39033c39-7bed-4be4-a17c-b8f0a48ef7b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
@@ -41,7 +37,6 @@
     <Filter Include="Source\TIleMap">
       <UniqueIdentifier>{6aeafd8e-3697-4860-a982-cd8255288a37}</UniqueIdentifier>
     </Filter>
-
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -98,7 +93,6 @@
     <ClCompile Include="Source\Boss\Boss.cpp">
       <Filter>Source\Boss</Filter>
     </ClCompile>
-
     <ClCompile Include="Source\TileMap\Tilemap.cpp">
       <Filter>Source\TIleMap</Filter>
     </ClCompile>
@@ -158,13 +152,14 @@
     <ClInclude Include="Source\rapidcsv.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utils\Utils.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Boss\Boss.h">
+      <Filter>Source\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Source\TileMap\Tilemap.h">
       <Filter>Source\TIleMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utils\Utils.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
