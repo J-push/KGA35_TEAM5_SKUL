@@ -15,19 +15,23 @@
 void SceneTitle::Init()
 {
 
-	StartShape.setSize(Vector2f(158, 39));
-	StartShape.setPosition(880, 700);
+	/*StartShape.setSize(Vector2f(158, 39));
+	StartShape.setPosition(880, 700);*/
 
 	/*test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
 	test.setString("MAIN");
 	test.setFillColor(Color::White);
 	test.setCharacterSize(100);
 	test.setPosition(0, 0);*/
-	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
 	//spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
 	//spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
 	//spriteStart1.setPosition(900, 700);
 	//spriteStart2.setPosition(900, 700);
+
+	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
+
+	shapeGameStart.setPosition(880, 700);
+	shapeGameStart.setSize(Vector2f(158, 39));
 
 	spriteStart.setPosition(880, 700);
 	animationGameStart.SetTarget(&spriteStart);
@@ -37,7 +41,7 @@ void SceneTitle::Init()
 
 
 	rapidcsv::Document clips("data_tables/animations/title/title_animation_clips.csv");
-	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // ÀÏ¹ÝÈ­ÀÎÀÚ¸¦ ¹ÞÀ½
+	std::vector<std::string> colId = clips.GetColumn<std::string>("ID");
 	std::vector<int> colFps = clips.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
@@ -52,7 +56,8 @@ void SceneTitle::Init()
 
 		std::string path = colPath[i]; // ??
 		rapidcsv::Document frames(colPath[i]);
-		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
+		std::vector<std::string> 
+			colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
 		std::vector<int> colL = frames.GetColumn<int>("L");
 		std::vector<int> colT = frames.GetColumn<int>("T");
 		std::vector<int> colW = frames.GetColumn<int>("W");
@@ -73,10 +78,10 @@ void SceneTitle::Init()
 		animationMapEdit.AddClip(clip);
 
 	}
-	animationGameStart.Play("STARTTEX");
+	//animationGameStart.Play("STARTTEX");
 	animationMapEdit.Play("MAPTEX");
 
-	mouseCurse.Init();
+	mouseCursor.Init();
 }
 
 void SceneTitle::Release()
@@ -101,7 +106,18 @@ void SceneTitle::Update(float dt)
 	animationGameStart.Update(dt);
 	animationMapEdit.Update(dt);
 
-	mouseCurse.Update(dt);
+	mouseCursor.Update(dt);
+
+	FloatRect mouseBound = mouseCursor.GetGlobalBounds();
+	bool check = mouseBound.intersects(shapeGameStart.getGlobalBounds());
+
+	if (check)
+	{
+		animationGameStart.Play("STARTTEX");
+		
+	}
+	
+
 
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
@@ -114,10 +130,9 @@ void SceneTitle::Update(float dt)
 	if (Keyboard::isKeyPressed(Keyboard::Num9))
 	{
 		animationGameStart.Play("STARTTEX");
-	}
-
-	
+	}	
 }
+
 /**********************************************************
 * 설명 : SceneTitle을 그린다.
 ***********************************************************/
@@ -128,6 +143,6 @@ void SceneTitle::Draw(sf::RenderWindow* window)
 	window->draw(spriteStart);
 	window->draw(spriteMapEdit);
 
-	//window->setMouseCursorVisible(false);
-	mouseCurse.Draw(window);
+	mouseCursor.Draw(window);
 }
+

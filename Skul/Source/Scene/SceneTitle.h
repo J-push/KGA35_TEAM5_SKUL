@@ -9,10 +9,16 @@ class SceneTitle : public Scene
 {
 private:
 
-	MouseCursor mouseCurse;
+	MouseCursor mouseCursor;
 
 	AnimationController animationGameStart;
 	AnimationController animationMapEdit;
+
+	RectangleShape shapeGameStart;
+	Vector2f positionGameStart;
+
+	sf::Sprite spriteStart;
+	sf::Sprite spriteMapEdit;
 
 	std::map<std::string, Texture> texMap;
 
@@ -20,10 +26,7 @@ private:
 	sf::Sprite spriteStart1;
 	sf::Sprite spriteStart2;
 
-	sf::Sprite spriteStart;
-	sf::RectangleShape StartShape;
-
-	sf::Sprite spriteMapEdit;
+	
 
 
 public:
@@ -36,5 +39,7 @@ public:
 	virtual void End() override;
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow* window) override;
+
+
 };
 
