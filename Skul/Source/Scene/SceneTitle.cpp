@@ -1,19 +1,34 @@
 #include "SceneTitle.h"
 #include "../Manager/ResourceMgr.h"
 #include "../rapidcsv.h"
-
+#include <iostream>
 
 void SceneTitle::Init()
 {
+
+	StartShape.setSize(Vector2f(158, 39));
+	StartShape.setPosition(880, 700);
+
+	/*test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+	test.setString("MAIN");
+	test.setFillColor(Color::White);
+	test.setCharacterSize(100);
+	test.setPosition(0, 0);*/
 	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
-	/*spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
-	spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));*/
-	
+	//spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
+	//spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
+	//spriteStart1.setPosition(900, 700);
+	//spriteStart2.setPosition(900, 700);
+
 	spriteStart.setPosition(880, 700);
-	animation.SetTarget(&spriteStart);
+	animationGameStart.SetTarget(&spriteStart);
+
+	spriteMapEdit.setPosition(880, 750);
+	animationMapEdit.SetTarget(&spriteMapEdit);
+
 
 	rapidcsv::Document clips("data_tables/animations/title/title_animation_clips.csv");
-	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // ¿œπ›»≠¿Œ¿⁄∏¶ πﬁ¿Ω
+	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // √Ä√è¬π√ù√à¬≠√Ä√é√Ä√ö¬∏¬¶ ¬π√û√Ä¬Ω
 	std::vector<int> colFps = clips.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
@@ -26,7 +41,7 @@ void SceneTitle::Init()
 		clip.fps = colFps[i];
 		clip.loopType = (AnimationLoopTypes)colLoop[i];
 
-		//std::string path = colPath[i]; // ??
+		std::string path = colPath[i]; // ??
 		rapidcsv::Document frames(colPath[i]);
 		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
 		std::vector<int> colL = frames.GetColumn<int>("L");
@@ -45,9 +60,14 @@ void SceneTitle::Init()
 			clip.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
 		}
 
-		animation.AddClip(clip);
+		animationGameStart.AddClip(clip);
+		animationMapEdit.AddClip(clip);
+
 	}
-	animation.Play("STARTTEX");
+	animationGameStart.Play("STARTTEX");
+	animationMapEdit.Play("MAPTEX");
+
+	
 }
 
 void SceneTitle::Release()
@@ -67,21 +87,32 @@ void SceneTitle::End()
 
 void SceneTitle::Update(float dt)
 {
+	animationGameStart.Update(dt);
+	animationMapEdit.Update(dt);
+
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
-		animation.Play("MAPTEX");
+		animationGameStart.Play("MAPTEX");
 	}
+	if (Keyboard::isKeyPressed(Keyboard::Num9))
+	{
+		animationGameStart.Play("STARTTEX");
+	}
+
+	mouseCurse.Update(dt);
 }
 
 void SceneTitle::Draw(sf::RenderWindow* window)
 {
 	window->draw(spriteTitle);
+
 	window->draw(spriteStart);
+	window->draw(spriteMapEdit);
 
-
-	/*window->draw(spriteStart1);*/
+	//window->setMouseCursorVisible(false);
+	window->draw(mouseCurse.GetSprite());
 }

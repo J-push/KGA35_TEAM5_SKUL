@@ -161,5 +161,8 @@
     <ClInclude Include="Source\TileMap\Tilemap.h">
       <Filter>Source\TIleMap</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ChangeMouse.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,17 +1,22 @@
 #include "../Manager/ResourceMgr.h"
 #include <list>
 /**********************************************************
-* ¼³¸í : ResourceÆÄÀÏµéÀ» ÃÊ±âÈ­ ÇÑ´Ù.
+* ì„¤ëª… : ResourceíŒŒì¼ë“¤ì„ ì´ˆê¸°í™” í•œë‹¤.
 ***********************************************************/
 void ResourceMgr::Init()
 {
-	std::list<Resource*> loaded;	//¸®½ºÆ®¿¡
+	std::list<Resource*> loaded;	//ë¦¬ìŠ¤íŠ¸ì—
 	loaded.push_back(new Resource("MAINFONT", "fonts/KOMIKAP_.ttf", ResourceTypes::Font));
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX2", "graphics/menu/GameStartIcon2.png", ResourceTypes::Texture));
+  
+  //2022.05.04 ì¬íœ˜ì»¤ì„œ ì¶”ê°€, ì§€ìš© ë°°ê²½ ì¶”ê°€
+	loaded.push_back(new Resource("CURSORTEX", "graphics/menu/Cursor.png", ResourceTypes::Texture));
+	//loaded.push_back(new Resource("CHOPSOUND", "sound/chop.wav", ResourceTypes::SoundBuffer));
 	loaded.push_back(new Resource("BACKGROUNDTEX", "graphics/background.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("TILETEX", "graphics/TileGrass.png", ResourceTypes::Texture));
+
 	
 	for (std::list<Resource*>::iterator it = loaded.begin(); it != loaded.end(); ++it)
 	{
@@ -19,7 +24,7 @@ void ResourceMgr::Init()
 		if (!res->Load())
 		{
 			delete res;
-			// ¸Ş¼¼Áö
+			// ë©”ì„¸ì§€
 			continue;
 		}
 		resouceMap[(*it)->id] = res;
@@ -27,8 +32,8 @@ void ResourceMgr::Init()
 }
 
 /**********************************************************
-* ¼³¸í : ResourceÆÄÀÏµéÀ» °¡Áö°í ¿Â´Ù.
-* º¯¼ö1 : ¸®¼Ò½º¿¡ ÇÒ´çÇÑ ¾ÆÀÌµğ
+* ì„¤ëª… : ResourceíŒŒì¼ë“¤ì„ ê°€ì§€ê³  ì˜¨ë‹¤.
+* ë³€ìˆ˜1 : ë¦¬ì†ŒìŠ¤ì— í• ë‹¹í•œ ì•„ì´ë””
 ***********************************************************/
 Resource* ResourceMgr::GetResource(std::string id)
 {
