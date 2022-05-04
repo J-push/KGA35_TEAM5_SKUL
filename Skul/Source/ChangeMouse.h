@@ -2,6 +2,9 @@
 
 #include "../Source/Manager/InputManager.h"
 #include "../Source/Manager/ResourceMgr.h"
+#include "../Source/Utils/Utils.h"
+
+#include <iostream>
 
 
 class MouseCursor
@@ -11,14 +14,20 @@ private:
 	FloatRect CursorBounds;
 
 public:
-	MouseCursor()
+	void Init()
 	{
 		spriteCursor.setTexture(*ResourceMgr::instance()->GetTexture("CURSORTEX"));
+
+		//Utils::SetOrigin(spriteCursor, Pivots::CC);
+
 	}
 
 	void Update(float dt)
 	{
 		spriteCursor.setPosition(InputManager::GetMouseWorldPosition());
+		spriteCursor.setPosition().x = 100;
+
+		std::cout << spriteCursor.getPosition().x;
 	}
 
 	virtual void Draw(sf::RenderWindow *window)
