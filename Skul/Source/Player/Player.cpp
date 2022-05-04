@@ -14,12 +14,15 @@
 ***********************************************************/
 void Player::Init()
 {
+	Player player;
 	mPlayerPosition.x = 512.f;
-	mPlayerPosition.y = 512.f;
+	mPlayerPosition.y = 750.f;
 	mSpeed = START_PLAYER_SPEED;
 
+	mPlayerAttacking = false;
+
 	SpritePlayer.setPosition(880, 700);
-	SpritePlayer.setOrigin(100, 100);
+	SpritePlayer.setOrigin(70, 100);
 	SpritePlayer.setScale(2.f, 2.f);
 	animation.SetTarget(&SpritePlayer);
 	rapidcsv::Document clips("data_tables/animations/Player/player_animation_clips.csv");
@@ -27,6 +30,12 @@ void Player::Init()
 	std::vector<int> colFps = clips.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
+
+	View mainView(FloatRect(0, 0, resolution.x, resolution.y));
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
+
+	mainView.setCenter(player.GetPosition());
 
 	int totalClips = colId.size();
 	for (int i = 0; i < totalClips; ++i)
@@ -70,27 +79,44 @@ void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 ***********************************************************/
 void Player::UpdateInput()
 {
+	
 	//Play를 여러번 해주면 프레임에서 멈춘다?
 	if (InputManager::instance()->GetKeyDown(Keyboard::Right))
 	{
-		animation.Play("RightWalk");
+		
+		animation.Play("Walk");
+		SpritePlayer.setScale(2.f, 2.f);
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Left))
 	{
-		animation.Play("LeftWalk");
+		SpritePlayer.setScale(-2.f, 2.f);
+		animation.Play("Walk");
+		//animation.Play("LeftWalk");
+		
 	}
 
 	if (InputManager::instance()->GetKeyUp(Keyboard::Right) ||
 		InputManager::instance()->GetKeyUp(Keyboard::Left))
 	{
+		//SpritePlayer.setScale(3.f, 3.f);
 		animation.Play("Idle");
 		animation.PlayQueue("Idle");
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::X))
 	{
 		
-		animation.Play("Attack");
+		animation.Play("Attack1");
+		mPlayerAttacking = true;
+	
+		if (mPlayerAttacking == true && InputManager::instance()->GetKeyDown(Keyboard::X))
+		{
+			animation.PlayQueue("Attack2");
+			mPlayerAttacking = false;
+			animation.PlayQueue("Idle");
+		}
+		animation.PlayQueue("Idle");
 	}
+	
 
 	/*switch (event.type)
 	{
@@ -117,39 +143,47 @@ void Player::Update(float dt)
 {
 	UpdateInput();
 	
-	float h = InputManager::GetAxisRaw(Axis::Horizontal);
+	/*float h = InputManager::GetAxisRaw(Axis::Horizontal);
 	float v = InputManager::GetAxisRaw(Axis::Vertical);
 	Vector2f dir(h, v);
 
-	Utils::Normalize(dir);
-
-	//이동처리를 하는 곳이긴한데... 아직 빡숙 불가...
-	//if (dir.x == 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("Idle");
-	//	
-	//}
-	//if (dir.x > 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("RightWalk");
-	//	mPlayerPosition.x += dir.x * mSpeed * dt;
-	//}
-	//if (dir.x < 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("LeftWalk");
-	//	mPlayerPosition.x -= dir.x * mSpeed * dt;
-	//}
-	//탑뷰든 사이드 뷰든 노상관~
-	//위는 X
+	Utils::Normalize(dir);*/
 	if (InputManager::instance()->GetKey(Keyboard::Right))
 	{
-		mPlayerPosition.x +=  mSpeed * dt;
+		mPlayerPosition.x += mSpeed * dt;
 	}
-
-	mLastDir = dir;
+	if (InputManager::instance()->GetKey(Keyboard::Left))
+	{
+		mPlayerPosition.x -= mSpeed * dt;
+	}
+	//이동처리를 하는 곳이긴한데... 아직 빡숙 불가...
+	/*if (dir.x == 0.f && mLastDir != dir)
+	{
+		animation.Play("Idle");
+		
+	}
+	if (dir.x > 0.f && mLastDir != dir)
+	{
+		animation.Play("RightWalk");
+		mPlayerPosition.x += dir.x * mSpeed * dt;
+	}
+	if (dir.x < 0.f && mLastDir != dir)
+	{
+		animation.Play("LeftWalk");
+		mPlayerPosition.x -= dir.x * mSpeed * dt;
+	}*/
+	//탑뷰든 사이드 뷰든 노상관~
+	//위는 X
+	
+	//mLastDir = dir;
 	SpritePlayer.setPosition(mPlayerPosition);
 
 	animation.Update(dt);
+}
+
+Vector2f Player::GetPosition()
+{
+	return mPlayerPosition;
 }
 
 /**********************************************************
@@ -165,4 +199,5 @@ Sprite Player::GetSprite()
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(SpritePlayer);
+	//window.setView(mainView);
 }

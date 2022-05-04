@@ -18,10 +18,12 @@ using namespace std;
 ***********************************************************/
 bool Framework::Init()
 {	
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
 	VideoMode vm(1920, 1080);                               // 해상도	
 	window = new RenderWindow(vm, "Skull", Style::Default); // 창그려주기
 	                                                        //Default 창모드, fullscreen 풀모드
-
+	mainView = new View(FloatRect(0, 0, resolution.x, resolution.y));
 	ResourceMgr::instance()->Init(); // singleton패턴을 이용하여 ResourceMgr 클래스의 Init()함수 실행
 	sceneMgr.Init();		         // 장면들 초기화한다.
 	return true;
@@ -66,6 +68,7 @@ void Framework::ProcessEvent(Event event)
 void Framework::Update(float delaTime)
 {
 	sceneMgr.Update(delaTime);
+	InputManager::Update(delaTime, *window, *mainView);
 }
 
 /**********************************************************
