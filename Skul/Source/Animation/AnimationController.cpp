@@ -142,3 +142,4 @@ void AnimationController::ClearPlayQueue()
 		playQueue.pop();
 	}
 }
+

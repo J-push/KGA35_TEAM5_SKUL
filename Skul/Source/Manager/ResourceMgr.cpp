@@ -25,6 +25,15 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("BACKGROUNDTEX", "graphics/background.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("TILETEX", "graphics/TileGrass.png", ResourceTypes::Texture));
 
+	// ui추가
+	loaded.push_back(new Resource("MAINFRAMETEX", "graphics/UI/PlayerFrame.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("HPBARTEX", "graphics/UI/HpBar.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("REAPERICONTEX", "graphics/UI/GrimReaper3.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("REAPERSKILLTEX", "graphics/UI/GrimReaperSkill.png", ResourceTypes::Texture));
+
+
+	
+
 	for (std::list<Resource*>::iterator it = loaded.begin(); it != loaded.end(); ++it)
 	{
 		Resource* res = (*it);
