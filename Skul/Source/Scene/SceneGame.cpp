@@ -2,7 +2,7 @@
 * 작 성 자 : 김 재 휘
 * 작 성 일 : 2022-05-03
 * 내    용 : 게임이 진행중인 Scene의 정보를 담당한다.
-* 수 정 일 : 2022-05-04(임병록)
+* 수 정 일 : 2022-05-04(진현섭)
 *******************************************************************************/
 /*include될 헤더*/
 #include "SceneGame.h"
@@ -16,7 +16,7 @@ void SceneGame::Init()
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-  
+	boss.Init();
 	player.Init();
 }
 
@@ -36,6 +36,7 @@ void SceneGame::Update(float dt)
 {
 
 	player.Update(dt);
+	boss.Update(dt);
 	//if (!beeActive)
 	//{
 	//	beeSpeed = RandomMgr::GetRandom(200, 200);
@@ -74,4 +75,5 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
+	boss.Draw(*window);
 }

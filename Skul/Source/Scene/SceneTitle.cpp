@@ -42,8 +42,8 @@ void SceneTitle::Init()
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
 
-	int totalClips = colId.size();
-	for (int i = 0; i < totalClips; ++i)
+	int totalclips = colId.size();
+	for (int i = 0; i < totalclips; ++i)
 	{
 		AnimationClip clip;
 		clip.id = colId[i];

@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "../Player/Player.h"
+#include "../Boss/Boss.h"
 #include "../TileMap/Tilemap.h"
 
 class SceneGame : public Scene
@@ -11,6 +12,7 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
+	Boss boss;
 public:
 	SceneGame(SceneMgr& mgr) : Scene(mgr) {};
 

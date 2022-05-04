@@ -2,7 +2,8 @@
 * 작 성 자 : 김 재 휘
 * 작 성 일 : 2022-05-04
 * 내    용 : Animation의 동작을 컨트롤한다.
-* 수 정 일 :
+* 수 정 일 : 2022-05-04 진현섭 
+* 수정 내용: ClearPlayQueueCheck()함수 추가
 *******************************************************************************/
 
 /*include 될 헤더파일*/
@@ -141,4 +142,16 @@ void AnimationController::ClearPlayQueue()
 	{
 		playQueue.pop();
 	}
+}
+
+/**********************************************************
+* 설명 : 큐가 비워졌는지 bool 형으로 판단하는 함수.
+***********************************************************/
+bool AnimationController::ClearPlayQueueCheck()
+{
+	while (playQueue.empty())
+	{
+		return true;
+	}
+	return false;
 }
