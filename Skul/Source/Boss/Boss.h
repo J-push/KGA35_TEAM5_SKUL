@@ -1,5 +1,6 @@
 #pragma once
 #include "../Animation/AnimationController.h"
+
 #include "../Player/Player.h"
 #include <map>
 
@@ -28,40 +29,41 @@ enum class BossStatus
 class Boss
 {
 private:
-	const float START_BOSS_HEALTH = 100; // ½ÃÀÛ º¸½º Ã¼·Â
-	const float START_BOSS_SPEED = 200; // ½ÃÀÛ º¸½º ½ºÇÇµå
-	const float START_BOSS_DAMAGE = 20; // ½ÃÀÛ º¸½º µ¥¹ÌÁö
 
-	Vector2f position;	// º¸½º À§Ä¡ ÁÂÇ¥
+	const float START_BOSS_HEALTH = 100; // ì‹œì‘ ë³´ìŠ¤ ì²´ë ¥
+	const float START_BOSS_SPEED = 200; // ì‹œì‘ ë³´ìŠ¤ ìŠ¤í”¼ë“œ
+	const float START_BOSS_DAMAGE = 20; // ì‹œì‘ ë³´ìŠ¤ ë°ë¯¸ì§€
 
-	BossAction action;	// º¸½º ¾×¼Ç Å¬·¡½ºÀÇ º¯¼ö
-	BossStatus status;	// º¸½º ½ºÅ×ÀÌÅÍ½º Å¬·¡½ºÀÇ º¯¼ö
+	Vector2f position;	// ë³´ìŠ¤ ìœ„ì¹˜ ì¢Œí‘œ
 
-	Sprite sprite;	// º¸½º ±×¸²
-	AnimationController animation;	// ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö
+	BossAction action;	// ë³´ìŠ¤ ì•¡ì…˜ í´ë˜ìŠ¤ì˜ ë³€ìˆ˜
+	BossStatus status;	// ë³´ìŠ¤ ìŠ¤í…Œì´í„°ìŠ¤ í´ë˜ìŠ¤ì˜ ë³€ìˆ˜
 
-	std::map<std::string, Texture> texMap;	// º¸½º cvs ÆÄÀÏ·Î ¾Ö´Ï¸ŞÀÌ¼Ç ¼Ò½º ±×¸®´Â º¯¼ö
+	Sprite sprite;	// ë³´ìŠ¤ ê·¸ë¦¼
+	AnimationController animation;	// ì• ë‹ˆë©”ì´ì…˜ ë³€ìˆ˜
 
-	int mHp; // º¸½º ÇöÀç Ã¼·Â
-	int damage;	 // º¸½º ÇöÀç µ¥¹ÌÁö
+	std::map<std::string, Texture> texMap;	// ë³´ìŠ¤ cvs íŒŒì¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ ì†ŒìŠ¤ ê·¸ë¦¬ëŠ” ë³€ìˆ˜
+
+	int mHp; // ë³´ìŠ¤ í˜„ì¬ ì²´ë ¥
+	int damage;	 // ë³´ìŠ¤ í˜„ì¬ ë°ë¯¸ì§€
 
 	int frame;
-	int speed;	// º¸½º ÇöÀç ½ºÇÇµå
+	int speed;	// ë³´ìŠ¤ í˜„ì¬ ìŠ¤í”¼ë“œ
 
-	int testNum;	// º¸½º ¾×¼Ç Å¬·¡½º¿¡ ´ëÇÑ Å×½ºÆ® ¼ıÀÚ
+	int testNum;	// ë³´ìŠ¤ ì•¡ì…˜ í´ë˜ìŠ¤ì— ëŒ€í•œ í…ŒìŠ¤íŠ¸ ìˆ«ì
 
-	float mIntro2Time;	// º¸½º ÀÎÆ®·Î 2¹øÀÇ ½ÃÀÛ ½Ã°£
-	float mActionTime;	// º¸½º °ø°İ Å¸ÀÓÀÇ ½ÃÀÛ ½Ã°£
-	float mAttack2Time;	// º¸½º ³«ÇÏ °ø°İ ½ºÅ³ÀÇ ½ÃÀÛ ½Ã°£
-	float mOutroTime;	// º¸½º Á×¾úÀ» ¶§ÀÇ ÅğÀå ½Ã°£
+	float mIntro2Time;	// ë³´ìŠ¤ ì¸íŠ¸ë¡œ 2ë²ˆì˜ ì‹œì‘ ì‹œê°„
+	float mActionTime;	// ë³´ìŠ¤ ê³µê²© íƒ€ì„ì˜ ì‹œì‘ ì‹œê°„
+	float mAttack2Time;	// ë³´ìŠ¤ ë‚™í•˜ ê³µê²© ìŠ¤í‚¬ì˜ ì‹œì‘ ì‹œê°„
+	float mOutroTime;	// ë³´ìŠ¤ ì£½ì—ˆì„ ë•Œì˜ í‡´ì¥ ì‹œê°„
 
-	bool attackReady;	// º¸½º°¡ ÇÃ·¹ÀÌ¾î °ø°İ °¡´É ¿©ºÎ ÆÇ´Ü
-	bool hitReady;	// º¸½º°¡ °ø°İ¿¡ ¸ÂÀ» ¶§ÀÇ °¡´É ¿©ºÎ ÆÇ´Ü
+	bool attackReady;	// ë³´ìŠ¤ê°€ í”Œë ˆì´ì–´ ê³µê²© ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
+	bool hitReady;	// ë³´ìŠ¤ê°€ ê³µê²©ì— ë§ì„ ë•Œì˜ ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
 
 	bool afterIdle;
 
-	float mNextAttackTime;	// ´ÙÀ½ °ø°İ±îÁöÀÇ ´ë½Ã ½Ã°£
-	float attackDelay;	// °ø°İÀ» ÇÑ¹ø ÇÏ°í ³ª¼­ Àá±ñ ÈÄµô·¹ÀÌ
+	float mNextAttackTime;	// ë‹¤ìŒ ê³µê²©ê¹Œì§€ì˜ ëŒ€ì‹œ ì‹œê°„
+	float attackDelay;	// ê³µê²©ì„ í•œë²ˆ í•˜ê³  ë‚˜ì„œ ì ê¹ í›„ë”œë ˆì´
 
 public:
 	void Init();

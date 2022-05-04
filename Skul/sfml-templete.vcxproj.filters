@@ -25,9 +25,6 @@
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Player\Skul">
-      <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Animation">
       <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
     </Filter>
@@ -152,6 +149,7 @@
     <ClInclude Include="Source\Animation\AnimationController.h">
       <Filter>Source\Animation</Filter>
     </ClInclude>
+
     <ClInclude Include="Source\Utils\Utils.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -169,6 +167,7 @@
     </ClInclude>
     <ClInclude Include="Source\UIMaker.h">
       <Filter>Source</Filter>
+
     </ClInclude>
   </ItemGroup>
 </Project>
