@@ -99,6 +99,9 @@
     <ClCompile Include="Source\Utils\Utils.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\UIMaker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utils\ChangeMouse.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIMaker.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

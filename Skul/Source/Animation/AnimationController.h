@@ -38,5 +38,7 @@ public:
 
 	bool IsPlaying();
 	void ClearPlayQueue();
+
+	
 };
 

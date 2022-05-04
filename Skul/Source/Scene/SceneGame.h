@@ -2,6 +2,10 @@
 #include "Scene.h"
 #include "../Player/Player.h"
 #include "../TileMap/Tilemap.h"
+#include "../UIMaker.h"
+#include "../Utils/ChangeMouse.h"
+
+
 
 class SceneGame : public Scene
 {
@@ -11,6 +15,10 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
+
+	MouseCursor mouseCursor;
+	UIMaker ui;
+
 public:
 	SceneGame(SceneMgr& mgr) : Scene(mgr) {};
 
