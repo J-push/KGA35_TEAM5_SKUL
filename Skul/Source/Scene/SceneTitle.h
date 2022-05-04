@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
-#include "../ChangeMouse.h"
+#include "../Utils/ChangeMouse.h"
 
 
 class SceneTitle : public Scene

@@ -149,9 +149,6 @@
     <ClInclude Include="Source\Animation\AnimationController.h">
       <Filter>Source\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\rapidcsv.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utils\Utils.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
@@ -161,8 +158,11 @@
     <ClInclude Include="Source\TileMap\Tilemap.h">
       <Filter>Source\TIleMap</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ChangeMouse.h">
-      <Filter>Source</Filter>
+    <ClInclude Include="Source\Animation\rapidcsv.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\ChangeMouse.h">
+      <Filter>Source\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
