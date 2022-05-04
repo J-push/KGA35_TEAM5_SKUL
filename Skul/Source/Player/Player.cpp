@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "../rapidcsv.h"
+#include "../Animation/rapidcsv.h"
 #include "../Utils/Utils.h"
 
 void Player::Init()
@@ -125,7 +125,10 @@ void Player::Update(float dt)
 	//}
 	//탑뷰든 사이드 뷰든 노상관~
 	//위는 X
-	mPlayerPosition.x += dir.x * mSpeed * dt;
+	if (InputManager::instance()->GetKey(Keyboard::Right))
+	{
+		mPlayerPosition.x +=  mSpeed * dt;
+	}
 
 	mLastDir = dir;
 	SpritePlayer.setPosition(mPlayerPosition);
