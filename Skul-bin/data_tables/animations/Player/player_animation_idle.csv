@@ -1,5 +1,7 @@
 TEXTURE PATH,L,T,W,H
-graphics/SkulPlayer/skul_Player.png,0,0,140,100
-graphics/SkulPlayer/skul_Player.png,140,0,140,100
-graphics/SkulPlayer/skul_Player.png,280,0,140,100
-graphics/SkulPlayer/skul_Player.png,420,0,140,100
+graphics/SkulPlayer/skul_grim_reaper.png,0,0,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,300,0,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,600,0,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,900,0,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,1200,0,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,1500,0,300,150
