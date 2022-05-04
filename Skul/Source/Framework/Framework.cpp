@@ -1,33 +1,34 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-04
+* 내    용 : skul게임의 전체적인 프레임워크를 담당.
+* 수 정 일 :
+*******************************************************************************/
+/*include될 헤더*/
+#include <iostream>
 #include "Framework.h"
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Utils/Singleton.h"
-#include <iostream>
+#include "../Manager/InputManager.h"
 
 using namespace std;
-
-Framework::Framework()
-{
-}
-
-Framework::~Framework()
-{
-}
 /**********************************************************
 * 설명 : Framework를 초기화한다.
 ***********************************************************/
 bool Framework::Init()
-{
-	//해상도
-	VideoMode vm(1920, 1080);
-	//창그려주기
-	window = new RenderWindow(vm, "Skull", Style::Default);
-	//Default 창모드, fullscreen 풀모드
-
-	ResourceMgr::instance()->Init();//singleton패턴을 이용하여 ResourceMgr 클래스의 Init()함수 실행
-	sceneMgr.Init();		//장면들 초기화한다.
+{	
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
+	VideoMode vm(1920, 1080);                               // 해상도	
+	window = new RenderWindow(vm, "Skull", Style::Default); // 창그려주기
+	                                                        //Default 창모드, fullscreen 풀모드
+	mainView = new View(FloatRect(0, 0, resolution.x, resolution.y));
+	ResourceMgr::instance()->Init(); // singleton패턴을 이용하여 ResourceMgr 클래스의 Init()함수 실행
+	sceneMgr.Init();		         // 장면들 초기화한다.
 	return true;
 }
+
 /**********************************************************
 * 설명 : 게임루프를 시작한다.
 ***********************************************************/
@@ -36,6 +37,7 @@ void Framework::Run()
 	while (window->isOpen())
 	{
 		Time dt = clock.restart();
+		InputManager::ClearInput();
 		Event event;
 		while (window->pollEvent(event))
 		{
@@ -57,6 +59,7 @@ void Framework::Run()
 ***********************************************************/
 void Framework::ProcessEvent(Event event)
 {
+	InputManager::ProcessInput(event);
 }
 
 /**********************************************************
@@ -65,7 +68,9 @@ void Framework::ProcessEvent(Event event)
 void Framework::Update(float delaTime)
 {
 	sceneMgr.Update(delaTime);
+	InputManager::Update(delaTime, *window, *mainView);
 }
+
 /**********************************************************
 * 설명 : 화면에 scene을 그려준다.
 ***********************************************************/

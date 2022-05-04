@@ -1,7 +1,16 @@
+/******************************************************************************
+* ì‘ ì„± ì : ê¹€ ì¬ íœ˜
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : Animationì˜ ë™ì‘ì„ ì»¨íŠ¸ë¡¤í•œë‹¤.
+* ìˆ˜ ì • ì¼ : 2022-05-04 ì§„í˜„ì„­ 
+* ìˆ˜ì • ë‚´ìš©: ClearPlayQueueCheck()í•¨ìˆ˜ ì¶”ê°€
+*******************************************************************************/
+
+/*include ë  í—¤ë”íŒŒì¼*/
 #include "AnimationController.h"
 
 /**********************************************************
-* ¼³¸í : AnimationControllerÀÇ °´Ã¼ ÃÊ±âÈ­
+* ì„¤ëª… : AnimationControllerì˜ ê°ì²´ ì´ˆê¸°í™”
 ***********************************************************/
 AnimationController::AnimationController()
 	: clips(), currentClip(nullptr), isPlaying(false), currentFrame(-1),
@@ -10,7 +19,7 @@ AnimationController::AnimationController()
 }
 
 /**********************************************************
-* ¼³¸í : Å¸°ÙÀ» ÀâÀ½??
+* ì„¤ëª… : sprite ì§€ì •
 ***********************************************************/
 void AnimationController::SetTarget(Sprite *sprite)
 {
@@ -18,38 +27,41 @@ void AnimationController::SetTarget(Sprite *sprite)
 }
 
 /**********************************************************
-* ¼³¸í : Å¬¸³À» Ãß°¡??
+* ì„¤ëª… : AnimationClipì— ì•„ì´ë””ë¥¼ ì¶”ê°€í•œë‹¤.
 ***********************************************************/
 void AnimationController::AddClip(const AnimationClip &newClip)
 {
-	// ¸Ê¿¡ ³ÖÀ»¶§´Â ½À°üÀûÀ¸·Î ÀÖ³ª¾ø³ª °Ë»çÇÏ°í ³Ö±â
-	if (clips.find(newClip.id) == clips.end()) // ¾ø´Â°æ¿ì
+	// ë§µì— ë„£ì„ë•ŒëŠ” ìŠµê´€ì ìœ¼ë¡œ ìˆë‚˜ì—†ë‚˜ ê²€ì‚¬í•˜ê³  ë„£ê¸°
+	if (clips.find(newClip.id) == clips.end()) // ì—†ëŠ”ê²½ìš°
 	{
 		clips[newClip.id] = newClip;
 	}
 	else
 	{
-		// ¿À·ù, Áßº¹µÈ°Å °¡Áö°íÀÖÀ»¶§
+		// ì˜¤ë¥˜, ì¤‘ë³µëœê±° ê°€ì§€ê³ ìˆì„ë•Œ
+		// ì•ˆëë‹¤ê³  í‘œí˜„í•˜ê¸°?
 	}
 }
 
-
+/**********************************************************
+* ì„¤ëª… : Animationì„ ì—…ë°ì´íŠ¸ í•œë‹¤.
+***********************************************************/
 void AnimationController::Update(float dt)
 {
-	if (!isPlaying)
+	if (!isPlaying) // í”Œë ˆì´ì¤‘ì´ ì•„ë‹ ë•Œ
 	{
 		return;
 	}
 	accumTime += dt;
-	if (accumTime < frameDuration) // ´õ ÀÛ¾Æ¼­ ¾ÆÁ÷±³Ã¼ ¾ÈÇÔ
+	if (accumTime < frameDuration) // í˜„ì¬ì‹œê°„ì´ frameDurationë³´ë‹¤ ì‘ì„ ë•ŒëŠ” ë„˜ì–´ê°
 	{
 		return;
 	}
 	accumTime = 0.f;
-	++currentFrame;
-	if (currentFrame >= totalFrame)
+	++currentFrame; // ë‹¤ìŒ í”„ë ˆì„ìœ¼ë¡œ
+	if (currentFrame >= totalFrame) 
 	{
-		if (playQueue.empty())
+		if (playQueue.empty()) // íìŠ¤í…ì´ ë¹„ì—ˆëŠ”ì§€ ì°¬ê±´ì§€ ??
 		{
 			switch (currentClip->loopType)
 			{
@@ -65,18 +77,20 @@ void AnimationController::Update(float dt)
 		}
 		else
 		{
-			std::string nextClipId = playQueue.front();
-			playQueue.pop();
+			std::string nextClipId = playQueue.front(); // ì²«ë²ˆì§¸ ì›ì†Œì— ì ‘ê·¼
+			playQueue.pop();                            // ê°€ì¥ ë’¤ ì œê±°
 			Play(nextClipId, false);
 		}
-
 	}
-
-	// Å¸°ÙspriteÀÇ Á¶Àı
+	// íƒ€ê²Ÿspriteì˜ ì¡°ì ˆ
 	sprite->setTexture(currentClip->frames[currentFrame].texture);
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
 }
 
+
+/**********************************************************
+* ì„¤ëª… : Playí•œë‹¤.
+***********************************************************/
 void AnimationController::Play(std::string clipId, bool clear)
 {
 	if (clear)
@@ -86,28 +100,42 @@ void AnimationController::Play(std::string clipId, bool clear)
 	isPlaying = true;
 	currentClip = &clips[clipId];
 	currentFrame = 0;
+
 	totalFrame = currentClip->frames.size();
-	frameDuration = 1.f / currentClip->fps; // ÇÑ ÇÁ·¹ÀÓ´ç ¸î ÃÊ ¾²´ÂÁö
+	frameDuration = 1.f / currentClip->fps; // í•œ í”„ë ˆì„ë‹¹ ëª‡ ì´ˆ ì“°ëŠ”ì§€
 	//frameDurtion = currentClip->fps;
 }
 
+
+/**********************************************************
+* ì„¤ëª… : í ìë£Œêµ¬ì¡°ë¡œ play í•œë‹¤.
+***********************************************************/
 void AnimationController::PlayQueue(std::string clipId)
 {
 	isPlaying = true;
-	playQueue.push(clipId); // ÇØ´çÀÚ·á±¸Á¶¿¡ Áı¾î³Ö±â
+	playQueue.push(clipId); // í•´ë‹¹ìë£Œêµ¬ì¡°ì— ì§‘ì–´ë„£ê¸°
 }
 
+/**********************************************************
+* ì„¤ëª… : íìŠ¤íƒì„ ë¹„ìš´ë‹¤.
+***********************************************************/
 void AnimationController::Stop()
 {
 	isPlaying = false; 
 	ClearPlayQueue();
 }
 
+/**********************************************************
+* ì„¤ëª… : play ì¤‘ì¸ì§€ í™•ì¸í•œë‹¤.
+***********************************************************/
 bool AnimationController::IsPlaying()
 {
 	return isPlaying;
 }
 
+/**********************************************************
+* ì„¤ëª… : íë¥¼ ë¹„ìš´ë‹¤.
+***********************************************************/
 void AnimationController::ClearPlayQueue()
 {
 	while (!playQueue.empty())
@@ -115,3 +143,17 @@ void AnimationController::ClearPlayQueue()
 		playQueue.pop();
 	}
 }
+
+
+/**********************************************************
+* ì„¤ëª… : íê°€ ë¹„ì›Œì¡ŒëŠ”ì§€ bool í˜•ìœ¼ë¡œ íŒë‹¨í•˜ëŠ” í•¨ìˆ˜.
+***********************************************************/
+bool AnimationController::ClearPlayQueueCheck()
+{
+	while (playQueue.empty())
+	{
+		return true;
+	}
+	return false;
+}
+

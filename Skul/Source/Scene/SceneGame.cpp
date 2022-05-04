@@ -1,16 +1,26 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-03
+* 내    용 : 게임이 진행중인 Scene의 정보를 담당한다.
+* 수 정 일 : 2022-05-04(진현섭)
+*******************************************************************************/
+/*include될 헤더*/
 #include "SceneGame.h"
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
 
+
 void SceneGame::Init()
 {
-	/*spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
-	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINPLAYERTEX"));
-	spriteCloud.setTexture(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
-	spriteBee.setTexture(*ResourceMgr::instance()->GetTexture("MAINBEETEX"));
-	spriteBee.setPosition(500, 500);
-	spriteCloud.setPosition(300, 300);*/
+	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
+	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
+	tilemap.Init();
+	boss.Init();
+	player.Init();
+	ui.Init();
+	mouseCursor.Init();
+
 }
 
 void SceneGame::Release()
@@ -27,32 +37,26 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
-	//if (!beeActive)
-	//{
-	//	beeSpeed = RandomMgr::GetRandom(200, 200);
-	//	beeSpeed *= -1.f;
-	//	float y = RandomMgr::GetRandom(500, 500);
-	//	spriteBee.setPosition(2000, y);
-	//	beeActive = true;
-	//}
-	//else
-	//{
-	//	float deltaX = beeSpeed * dt;
-	//	Vector2f currPos = spriteBee.getPosition();
-	//	currPos.x += deltaX;
-	//	spriteBee.setPosition(currPos);
 
-	//	// ȭ�� ������ �������� �׽�Ʈ
-	//	if (currPos.x < -100)
-	//	{
-	//		beeActive = false;
-	//	}
-	//}
-	//
+	player.Update(dt);
+
+	boss.Update(dt);
+
+
+	tilemap.CreateBackGround();
+
+	mouseCursor.Update(dt);
+
 }
 
-void SceneGame::Draw(sf::RenderWindow* window)
+void SceneGame::Draw(sf::RenderWindow *window)
 {
-	/*window->draw(spriteBackground);*/
-	/*window->draw(spriteBee);*/
+
+	window->draw(spriteBackground);
+	tilemap.Draw(window);
+	player.Draw(*window);
+	boss.Draw(*window);
+	ui.Draw(window);
+	mouseCursor.Draw(window);
+
 }

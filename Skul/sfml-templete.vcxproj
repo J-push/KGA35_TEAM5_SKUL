@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationController.cpp" />
-    <ClCompile Include="Source\Boss\Boss.cpp" />
+    <ClCompile Include="Source\Boss\Boss.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Framework\Framework.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
@@ -36,12 +38,18 @@
     <ClCompile Include="Source\Scene\SceneGame.cpp" />
     <ClCompile Include="Source\Scene\SceneMenu.cpp" />
     <ClCompile Include="Source\Scene\SceneTitle.cpp" />
+    <ClCompile Include="Source\TileMap\Tilemap.cpp" />
+    <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="Source\Utils\Singleton.cpp" />
+    <ClCompile Include="Source\Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationController.h" />
-    <ClInclude Include="Source\Boss\Boss.h" />
+    <ClInclude Include="Source\Animation\rapidcsv.h" />
+    <ClInclude Include="Source\Boss\Boss.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Source\Framework\Framework.h" />
     <ClInclude Include="Source\Manager\InputManager.h" />
     <ClInclude Include="Source\Manager\RandomMgr.h" />
@@ -55,7 +63,11 @@
     <ClInclude Include="Source\Scene\SceneGame.h" />
     <ClInclude Include="Source\Scene\SceneMenu.h" />
     <ClInclude Include="Source\Scene\SceneTitle.h" />
+    <ClInclude Include="Source\TileMap\Tilemap.h" />
+    <ClInclude Include="Source\UIMaker.h" />
+    <ClInclude Include="Source\Utils\ChangeMouse.h" />
     <ClInclude Include="Source\Utils\Singleton.h" />
+    <ClInclude Include="Source\Utils\Utils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

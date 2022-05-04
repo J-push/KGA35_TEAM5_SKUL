@@ -29,7 +29,10 @@
       <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Boss">
-      <UniqueIdentifier>{0a8ca469-0f39-4246-9e07-aae77382aa37}</UniqueIdentifier>
+      <UniqueIdentifier>{528d4532-cb46-4bb6-9be5-534ab36b7e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TIleMap">
+      <UniqueIdentifier>{6aeafd8e-3697-4860-a982-cd8255288a37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +90,15 @@
     <ClCompile Include="Source\Boss\Boss.cpp">
       <Filter>Source\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TileMap\Tilemap.cpp">
+      <Filter>Source\TIleMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Utils.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIMaker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -137,8 +149,25 @@
     <ClInclude Include="Source\Animation\AnimationController.h">
       <Filter>Source\Animation</Filter>
     </ClInclude>
+
+    <ClInclude Include="Source\Utils\Utils.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Boss\Boss.h">
       <Filter>Source\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\Tilemap.h">
+      <Filter>Source\TIleMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation\rapidcsv.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\ChangeMouse.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIMaker.h">
+      <Filter>Source</Filter>
+
     </ClInclude>
   </ItemGroup>
 </Project>

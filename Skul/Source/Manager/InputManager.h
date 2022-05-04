@@ -2,16 +2,23 @@
 #include "SFML/Graphics.hpp"
 #include <list>
 #include <map>
+#include "../Utils/Singleton.h"
+
 
 using namespace sf;
 using namespace std;
 
+/**********************************************************
+* 설명 : 수직 수평 enum Class
+***********************************************************/
 enum class Axis
 {
 	Horizontal,
 	Vertical,
 };
-
+/**********************************************************
+* 설명 : 수직 수평을 통한 가속도?
+***********************************************************/
 struct AxisInfo
 {
 	Axis axis;
@@ -22,8 +29,10 @@ struct AxisInfo
 	float limit;
 	float value;	//-1.0 ~ 1.0
 };
-
-class InputManager
+/**********************************************************
+* 설명 : InputManager Class
+***********************************************************/
+class InputManager : public Singleton<InputManager>
 {
 private:
 	static map<Axis, AxisInfo> mapAxis;
@@ -37,7 +46,7 @@ private:
 	static list<Mouse::Button>upButtons;
 
 	static Vector2i mousePosition;
-	static Vector2f mouseWorldPosition;
+	static Vector2f mouseWorldPosition;		//??
 
 public:
 	static void Init();

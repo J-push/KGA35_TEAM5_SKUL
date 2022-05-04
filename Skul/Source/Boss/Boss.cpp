@@ -1,327 +1,343 @@
-//#include "Boss.h"
-//#include "CVS.h"
-//
-//#include <iostream>
-//#include <ctime>
-//#include <random>
-//
-////#define DELTA_TIME Timer::GetDeltaTime()
-//
-//void Boss::Init()
-//{
-//	srand((int)time(NULL));
-//
-//	position.x = 1920 * 0.5f; // 960
-//	position.y = 1080 * 0.5f; // 540
-//	sprite.setPosition(position);
-//	sprite.setOrigin(60, 60);
-//	//sprite.setScale(-1.f, 1.f);
-//	animation.SetTarget(&sprite);
-//
-//	/*spriteAttackDrop.setPosition(1920 * 0.5f, 510);
-//	spriteAttackDrop.setOrigin(60, 60);
-//	aniAttackDrop.SetTarget(&spriteAttackDrop);
-//
-//	spriteIntro.setPosition(1920 * 0.5f, 520);
-//	spriteIntro.setOrigin(60, 60);
-//	aniIntro.SetTarget(&spriteIntro);*/
-//
-//	rapidcsv::Document clips("data_tables/animatioins/boss/boss_animation_clips.csv");
-//	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // ÀÏ¹İÈ­ÀÎÀÚ¸¦ ¹ŞÀ½
-//	std::vector<int> colFps = clips.GetColumn<int>("FPS");
-//	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
-//	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
-//
-//	int totalClips = colId.size();
-//
-//	for (int i = 0; i < totalClips; ++i)
-//	{
-//		AnimationClip clip;
-//		clip.id = colId[i];
-//		clip.fps = colFps[i];
-//		clip.loopTypes = (AnimationLoopTypes)colLoop[i];
-//
-//		//std::string path = colPath[i];
-//		rapidcsv::Document frames(colPath[i]);
-//		std::vector<std::string> colTexture = frames.GetColumn<std::string>("TEXTURE PATH");
-//		std::vector<int> colL = frames.GetColumn<int>("L");
-//		std::vector<int> colT = frames.GetColumn<int>("T");
-//		std::vector<int> colW = frames.GetColumn<int>("W");
-//		std::vector<int> colH = frames.GetColumn<int>("H");
-//
-//		int totalFrames = colTexture.size();
-//		for (int j = 0; j < totalFrames; ++j)
-//		{
-//			if (texMap.find(colTexture[j]) == texMap.end())
-//			{
-//				auto& ref = texMap[colTexture[j]];
-//				ref.loadFromFile(colTexture[j]);
-//			}
-//			clip.frames.push_back(AnimationFrame(texMap[colTexture[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
-//		}
-//		animation.AddClip(clip);
-//		/*	aniAttackDrop.AddClip(clip);
-//			aniIntro.AddClip(clip);*/
-//	}
-//	animation.Play("Intro1(Left)");
-//
-//
-//	status = BossStatus::Intro1;
-//	mHp = START_BOSS_HEALTH;
-//	damage = START_BOSS_DAMAGE;
-//	speed = START_BOSS_SPEED;
-//	hitReady = true;
-//	attackReady = true;
-//
-//	Idlestart = true;
-//	Intro1start = true;
-//	Intro2start = true;
-//
-//	attackDelay = 3;
-//	mIntroTime = 5;
-//	mIntro2Time = 1.f;
-//	mActionTime = 1.5f;
-//	mAttack2Time = 5.f;
-//	mOutroTime = 5;
-//
-//	testNum = 2;
-//
-//	currentPosition = position;
-//
-//	randomNum = rand() % 5 + 1;
-//}
-//
-//Boss::~Boss()
-//{
-//}
-//
-//bool Boss::OnHitted()
-//{
-//	return false;
-//}
-//
-//void Boss::UpdateInput(Event event)
-//{
-//	switch (event.type)
-//	{
-//	case Event::KeyPressed:
-//		switch (event.key.code)
-//		{
-//		case Keyboard::A:
-//			animation.Play("Idle");
-//			break;
-//			/*	case Keyboard::Num4:
-//					animation.PlayQueue("Idle");
-//					break;
-//				case Keyboard::Num5:
-//					animation.PlayQueue("Move");
-//					break;
-//				case Keyboard::Num6:
-//					animation.PlayQueue("Jump");
-//					break;
-//			*/
-//		}
-//	}
-//}
-//
-//void Boss::Update(float dt)
-//{
-//	animation.Update(dt);
-//	//aniAttackDrop.Update(dt);
-//	//aniIntro.Update(dt);
-//
-//	if (status != BossStatus::Death)
-//	{
-//		if (!attackReady)
-//		{
-//			mNextAttackTime += dt;
-//		}
-//		if (mNextAttackTime > attackDelay)
-//		{
-//			mNextAttackTime = 0;
-//			attackReady = true;
-//		}
-//		switch (status)
-//		{
-//		case BossStatus::Intro1:
-//		{
-//			// Æ¯Á¤ÇÑ Á¶°ÇÀ» °¡Áú ¶§ ½ºÅ×ÀÌÅÍ½º¸¦ ³Ñ±â°Ô ÇØ¾ß ÇÑ´Ù.
-//			/*
-//			Á¶°ÇÀ» Á¤ÇØÁà¼­(½Ã°£ÀÇ Á¶°ÇÀ» ÁÖµç,
-//			Å° ÀÔ·ÂÀ» ¹Şµç, ¾Ö´Ï¸ŞÀÌ¼Ç ·ÎµùÀÌ ³¡³ª¸é ³Ñ±â°Ô ÇÏµç)
-//			Áö±İ ÇöÀç »óÅÂ´Â Á¶°ÇÀÌ ¾ø±â ¶§¹®¿¡ °è¼Ó Ã¹ ÇÁ·¹ÀÓÀÇ È­¸é¸¸ ³ª¿Â´Ù.
-//
-//			°¢°¢ÀÇ »óÅÂ(ÄÉÀÌ½º)¿¡¼­ °¢°¢ÀÇ ½Ã°£À» ¹Ş¾Æ¼­ ±× µô·¹ÀÌ ½Ã°£ÀÌ Áö³­ ÈÄ¿¡ µ¿ÀÛµÇ°Ô
-//			ÇØ¾ß ÇÑ´Ù.
-//			*/
-//			sprite.setPosition(1920 * 0.5f, 1080 * 0.5f);
-//			animation.PlayQueue("Intro1(Left)");
-//			status = BossStatus::Intro2;
-//			break;
-//		}
-//		case BossStatus::Intro2:
-//			mIntro2Time -= dt;
-//			if (mIntro2Time < 0)
-//			{
-//				sprite.setPosition(960, 400);
-//				animation.Play("Intro2");
-//				mIntro2Time = 1.f;
-//				std::cout << "gd";
-//				animation.ClearPlayQueue();
-//				if (animation.ClearPlayQueueCheck())
-//				{
-//					status = BossStatus::Idle;
-//				}
-//				break;
-//			}
-//		case BossStatus::Idle:
-//			mActionTime -= dt;
-//			if (mActionTime < 0)
-//			{
-//				std::cout << "Idle";
-//				animation.PlayQueue("Idle");
-//				mActionTime = 1.5f;
-//				status = BossStatus::Attack;
-//
-//				if (position.y != currentPosition.y)
-//				{
-//					std::cout << "¿ø»óÅÂ";
-//					currentPosition.y -= 30;
-//					sprite.setPosition(position);
-//				}
-//			}
-//			break;
-//		case BossStatus::Attack:
-//			switch (testNum)
-//			{
-//			case 1:
-//				BossAction::Attack1FireBall;
-//				break;
-//			case 2:
-//				// ÃßÈÄ x ÁÂÇ¥´Â ÇÃ·¹ÀÌ¾î ÁÂÇ¥¸¦ ¹Ş¾Æ¿Í¼­ ±× À§Ä¡·Î ÀÌµ¿ ÈÄ ³«ÇÏ½ºÅ³ ¹ßµ¿.
-//				BossAction::Attack2DropSkill;
-//				mAttack2Time -= dt;
-//				if (mAttack2Time < 0)
-//				{
-//					mAttack2Time = 5.f;
-//					animation.PlayQueue("Attack2(LeftReady)");
-//					animation.PlayQueue("Attack2(LeftReady2)");
-//					sprite.setPosition(960, 600);
-//					animation.PlayQueue("Attack2(LeftEnd)");
-//					std::cout << "drop";
-//					break;
-//				}
-//			case 3:
-//				BossAction::Attack4Meteo;
-//				break;
-//			case 4:
-//				BossAction::Walk;
-//				std::cout << "Walk";
-//				break;
-//			case 5:
-//				BossAction::Potion;
-//				break;
-//			}
-//			break;
-//		case BossStatus::Groggy:
-//			break;
-//		case BossStatus::Hit:
-//			break;
-//		case BossStatus::Death:
-//			mOutroTime -= dt;
-//			animation.PlayQueue("Die(Left)");
-//			if (mOutroTime < 0)
-//			{
-//
-//			}
-//			break;
-//		}
-//	}
-//}
-//
-//void Boss::Attack(float dt)
-//{
-//	switch (testNum)
-//	{
-//	case 1:
-//		BossAction::Attack1FireBall;
-//		break;
-//	case 2:
-//		BossAction::Attack2DropSkill;
-//		mAttack2Time -= dt;
-//		animation.PlayQueue("Attack2(LeftReady)");
-//		animation.PlayQueue("Attack2(LeftReady2)");
-//		animation.PlayQueue("Attack2(LeftEnd)");
-//		status = BossStatus::Idle;
-//		if (mAttack2Time < 0)
-//		{
-//			testNum = 4;
-//			std::cout << "drop";
-//			Update(dt);
-//			break;
-//		}
-//	case 3:
-//		BossAction::Attack4Meteo;
-//		break;
-//	case 4:
-//		BossAction::Walk;
-//		std::cout << "Walk";
-//		break;
-//	case 5:
-//		BossAction::Potion;
-//		break;
-//	default:
-//		break;
-//	}
-//
-//}
-//
-//void Boss::Idle()
-//{
-//}
-//
-//void Boss::Hit()
-//{
-//}
-//
-//void Boss::Damage(int Damage)
-//{
-//}
-//
-//void Boss::AttackDamage()
-//{
-//}
-//
-//void Boss::CurrentSet(std::string clipId, BossStatus status, Direction direction)
-//{
-//}
-//
-//void Boss::MoveReset()
-//{
-//}
-//
-//bool Boss::AttackCheck(int area)
-//{
-//	return false;
-//}
-//
-//void Boss::Animation()
-//{
-//}
-//
-//bool Boss::UpdateCollision()
-//{
-//	return false;
-//}
-//
-//FloatRect Boss::GetGlobalBound()
-//{
-//	return sprite.getGlobalBounds();
-//}
-//
-//void Boss::Draw(RenderWindow& window)
-//{
-//	window.draw(sprite);
-//	window.draw(spriteAttackDrop);
-//	window.draw(spriteIntro);
-//}
+/******************************************************************************
+* ì‘ ì„± ì : ì§„ í˜„ ì„­
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : Bossì˜ ë™ì‘ì„ êµ¬í˜„í•œë‹¤.
+* ìˆ˜ ì • ì¼ :
+*******************************************************************************/
+/*includeë  í—¤ë”*/
+#include "Boss.h"
+#include "../Animation/rapidcsv.h"
+
+#include <iostream>
+#include <ctime>
+#include <random>
+
+
+/**********************************************************
+* ì„¤ëª… : ë³´ìŠ¤ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
+***********************************************************/
+void Boss::Init()
+{
+	srand((int)time(NULL));
+
+	position.x = 1920 * 0.5f; // 960
+	position.y = 1080 * 0.5f; // 540
+	sprite.setScale(2.f, 2.f);
+	sprite.setPosition(position);
+	sprite.setOrigin(60, 60);
+	//sprite.setScale(-1.f, 1.f);
+	animation.SetTarget(&sprite);
+
+	/*spriteAttackDrop.setPosition(1920 * 0.5f, 510);
+	spriteAttackDrop.setOrigin(60, 60);
+	aniAttackDrop.SetTarget(&spriteAttackDrop);
+
+	spriteIntro.setPosition(1920 * 0.5f, 520);
+	spriteIntro.setOrigin(60, 60);
+	aniIntro.SetTarget(&spriteIntro);*/
+
+	rapidcsv::Document clipsBoss("data_tables/animations/boss/boss_animation_clips.csv");
+	std::vector<std::string> colId = clipsBoss.GetColumn<std::string>("ID"); // ì¼ë°˜í™”ì¸ìë¥¼ ë°›ìŒ
+	std::vector<int> colFps = clipsBoss.GetColumn<int>("FPS");
+	std::vector<int> colLoop = clipsBoss.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
+	std::vector<std::string> colPath = clipsBoss.GetColumn<std::string>("CLIP PATH");
+
+	int totalclips = colId.size();
+
+	for (int i = 0; i < totalclips; ++i)
+	{
+		AnimationClip clip;
+		clip.id = colId[i];
+		clip.fps = colFps[i];
+		clip.loopType = (AnimationLoopTypes)colLoop[i];
+
+		//std::string path = colPath[i];
+		rapidcsv::Document frames(colPath[i]);
+		std::vector<std::string> colTexture = frames.GetColumn<std::string>("TEXTURE PATH");
+		std::vector<int> colL = frames.GetColumn<int>("L");
+		std::vector<int> colT = frames.GetColumn<int>("T");
+		std::vector<int> colW = frames.GetColumn<int>("W");
+		std::vector<int> colH = frames.GetColumn<int>("H");
+
+		int totalFrames = colTexture.size();
+		for (int j = 0; j < totalFrames; ++j)
+		{
+			if (texMap.find(colTexture[j]) == texMap.end())
+			{
+				auto& ref = texMap[colTexture[j]];
+				ref.loadFromFile(colTexture[j]);
+			}
+			clip.frames.push_back(AnimationFrame(texMap[colTexture[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
+		}
+		animation.AddClip(clip);
+		/*	aniAttackDrop.AddClip(clip);
+			aniIntro.AddClip(clip);*/
+	}
+	animation.Play("Intro1(Left)");
+
+
+	status = BossStatus::Intro1;
+	mHp = START_BOSS_HEALTH;
+	damage = START_BOSS_DAMAGE;
+	speed = START_BOSS_SPEED;
+	hitReady = true;
+	attackReady = true;
+	afterIdle = false;
+
+	attackDelay = 3;
+
+	mIntro2Time = 1.f;
+	mActionTime = 1.5f;
+	mAttack2Time = 5.f;
+	mOutroTime = 5;
+
+	testNum = 2;
+}
+
+Boss::~Boss()
+{
+}
+
+/**********************************************************
+* ì„¤ëª… : ì•„ì§ êµ¬í˜„ì€ ì•ˆ í–ˆì§€ë§Œ ë³´ìŠ¤ê°€ ê³µê²©ì„ ë°›ì•˜ì„ ë•Œì˜ ì²˜ë¦¬ í•¨ìˆ˜
+***********************************************************/
+bool Boss::OnHitted()
+{
+	return false;
+}
+
+/**********************************************************
+* ì„¤ëª… : ë³´ìŠ¤ ì• ë‹ˆë©”ì´ì…˜ì´ ì œëŒ€ë¡œ êµ¬í˜„ì´ Â‰æ¦®ì© í™•ì¸í•˜ê¸° ìœ„í•œ í•¨ìˆ˜.
+***********************************************************/
+void Boss::UpdateInput(Event event)
+{
+	switch (event.type)
+	{
+	case Event::KeyPressed:
+		switch (event.key.code)
+		{
+		case Keyboard::A:
+			animation.Play("Idle");
+			break;
+			/*	case Keyboard::Num4:
+					animation.PlayQueue("Idle");
+					break;
+				case Keyboard::Num5:
+					animation.PlayQueue("Move");
+					break;
+				case Keyboard::Num6:
+					animation.PlayQueue("Jump");
+					break;
+			*/
+		}
+	}
+}
+
+/**********************************************************
+* ì„¤ëª… : ë³´ìŠ¤ ë™ì‘ ì²˜ë¦¬ í•¨ìˆ˜
+***********************************************************/
+void Boss::Update(float dt)
+{
+	Player player;
+	animation.Update(dt);
+	//aniAttackDrop.Update(dt);
+	//aniIntro.Update(dt);
+
+	if (status != BossStatus::Death)
+	{
+		if (!attackReady)
+		{
+			mNextAttackTime += dt;
+		}
+		if (mNextAttackTime > attackDelay)
+		{
+			mNextAttackTime = 0;
+			attackReady = true;
+		}
+		switch (status)
+		{
+		case BossStatus::Intro1:
+		{
+			// íŠ¹ì •í•œ ì¡°ê±´ì„ ê°€ì§ˆ ë•Œ ìŠ¤í…Œì´í„°ìŠ¤ë¥¼ ë„˜ê¸°ê²Œ í•´ì•¼ í•œë‹¤.
+			/*
+			ì¡°ê±´ì„ ì •í•´ì¤˜ì„œ(ì‹œê°„ì˜ ì¡°ê±´ì„ ì£¼ë“ ,
+			í‚¤ ì…ë ¥ì„ ë°›ë“ , ì• ë‹ˆë©”ì´ì…˜ ë¡œë”©ì´ ëë‚˜ë©´ ë„˜ê¸°ê²Œ í•˜ë“ )
+			ì§€ê¸ˆ í˜„ì¬ ìƒíƒœëŠ” ì¡°ê±´ì´ ì—†ê¸° ë•Œë¬¸ì— ê³„ì† ì²« í”„ë ˆì„ì˜ í™”ë©´ë§Œ ë‚˜ì˜¨ë‹¤.
+
+			ê°ê°ì˜ ìƒíƒœ(ì¼€ì´ìŠ¤)ì—ì„œ ê°ê°ì˜ ì‹œê°„ì„ ë°›ì•„ì„œ ê·¸ ë”œë ˆì´ ì‹œê°„ì´ ì§€ë‚œ í›„ì— ë™ì‘ë˜ê²Œ
+			í•´ì•¼ í•œë‹¤.
+			*/
+			sprite.setPosition(1800, 770);
+			animation.PlayQueue("Intro1(Left)");
+			status = BossStatus::Intro2;
+			break;
+		}
+		case BossStatus::Intro2:
+			mIntro2Time -= dt;
+			if (mIntro2Time < 0)
+			{
+				sprite.setPosition(1800, 370);
+				sprite.setOrigin(20.5, 31.5);
+				animation.Play("Intro2");
+				mIntro2Time = 1.f;
+				std::cout << "gd";
+				animation.ClearPlayQueue();
+				if (animation.ClearPlayQueueCheck())
+				{
+					status = BossStatus::Idle;
+				}
+				break;
+			}
+		case BossStatus::Idle:
+			mActionTime -= dt;
+			if (mActionTime < 0 && status == BossStatus::Idle)
+			{
+				sprite.setPosition(1800, 400);
+				sprite.setOrigin(21, 31);
+				if (afterIdle)
+				{
+					std::cout << "ì „íˆ¬ ì‹œì‘";
+					position.x = position.x;
+					position.y = 600 - 200;
+					sprite.setPosition(position);
+				}
+				std::cout << "Idle";
+				animation.PlayQueue("Idle");
+				mActionTime = 3.3f;
+				status = BossStatus::Attack;
+			}
+			break;
+		case BossStatus::Attack:
+			switch (testNum)
+			{
+			case 1:
+				BossAction::Attack1FireBall;
+				break;
+			case 2:
+				// ì¶”í›„ x,y ì¢Œí‘œëŠ” í”Œë ˆì´ì–´ ì¢Œí‘œë¥¼ ë°›ì•„ì™€ì„œ ê·¸ ìœ„ì¹˜ë¡œ ì´ë™ í›„ ë‚™í•˜ìŠ¤í‚¬ ë°œë™.
+				BossAction::Attack2DropSkill;
+				mAttack2Time -= dt;
+				if (mAttack2Time < 0)
+				{
+					afterIdle = true;
+					mAttack2Time = 5.f;
+					sprite.setPosition(960, 600);
+					animation.PlayQueue("Attack2(LeftReady)");
+					animation.PlayQueue("Attack2(LeftReady2)");
+					// ------------------------------------------
+					animation.PlayQueue("Attack2(LeftEnd)");
+					std::cout << "drop";
+					status = BossStatus::Idle;
+					break;
+				}
+			case 3:
+				BossAction::Attack4Meteo;
+				break;
+			case 4:
+				BossAction::Walk;
+				std::cout << "Walk";
+				break;
+			case 5:
+				BossAction::Potion;
+				break;
+			}
+			break;
+		case BossStatus::Groggy:
+			break;
+		case BossStatus::Hit:
+			break;
+		case BossStatus::Death:
+			mOutroTime -= dt;
+			animation.PlayQueue("Die(Left)");
+			if (mOutroTime < 0)
+			{
+
+			}
+			break;
+		}
+	}
+}
+
+/**********************************************************
+* ì„¤ëª… : ì•„ë§ˆ ì¶”í›„ì— ë³´ìŠ¤ íŒ¨í„´ ë‹¤ì‹œ êµ¬í˜„í•˜ê²Œ ëœë‹¤ë©´ ìˆ˜ì •í•  í•¨ìˆ˜
+***********************************************************/
+void Boss::Attack(float dt)
+{
+	switch (testNum)
+	{
+	case 1:
+		BossAction::Attack1FireBall;
+		break;
+	case 2:
+		BossAction::Attack2DropSkill;
+		mAttack2Time -= dt;
+		animation.PlayQueue("Attack2(LeftReady)");
+		animation.PlayQueue("Attack2(LeftReady2)");
+		animation.PlayQueue("Attack2(LeftEnd)");
+		status = BossStatus::Idle;
+		if (mAttack2Time < 0)
+		{
+			testNum = 4;
+			std::cout << "drop";
+			Update(dt);
+			break;
+		}
+	case 3:
+		BossAction::Attack4Meteo;
+		break;
+	case 4:
+		BossAction::Walk;
+		std::cout << "Walk";
+		break;
+	case 5:
+		BossAction::Potion;
+		break;
+	default:
+		break;
+	}
+
+}
+
+void Boss::Idle()
+{
+}
+
+void Boss::Hit()
+{
+}
+
+void Boss::Damage(int Damage)
+{
+}
+
+void Boss::AttackDamage()
+{
+}
+
+void Boss::MoveReset()
+{
+}
+
+bool Boss::AttackCheck(int area)
+{
+	return false;
+}
+
+void Boss::Animation()
+{
+}
+
+bool Boss::UpdateCollision()
+{
+	return false;
+}
+
+FloatRect Boss::GetGlobalBound()
+{
+	return sprite.getGlobalBounds();
+}
+
+void Boss::Draw(RenderWindow& window)
+{
+	window.draw(sprite);
+}
