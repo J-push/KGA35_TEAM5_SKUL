@@ -10,7 +10,6 @@ private:
 	sf::Sprite  spriteCursor;
 	FloatRect CursorBounds;
 
-
 public:
 	MouseCursor()
 	{
@@ -24,7 +23,6 @@ public:
 
 	virtual void Draw(sf::RenderWindow *window)
 	{
-		window->setMouseCursorVisible(false);
 		window->draw(spriteCursor);
 	}
 

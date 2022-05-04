@@ -19,7 +19,7 @@ Framework::~Framework()
 bool Framework::Init()
 {	
 	VideoMode vm(1920, 1080);                               // 해상도	
-	window = new RenderWindow(vm, "Skull", Style::Default); // 창그려주기
+	window = new RenderWindow(vm, "Skull", Style::Fullscreen); // 창그려주기
 	                                                        //Default 창모드, fullscreen 풀모드
 
 	ResourceMgr::instance()->Init(); // singleton패턴을 이용하여 ResourceMgr 클래스의 Init()함수 실행

@@ -20,14 +20,11 @@ void SceneTitle::Init()
 	//spriteStart1.setPosition(900, 700);
 	//spriteStart2.setPosition(900, 700);
 
-	//spriteStart.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX"));	
-
 	spriteStart.setPosition(880, 700);
 	animationGameStart.SetTarget(&spriteStart);
 
 	spriteMapEdit.setPosition(880, 750);
 	animationMapEdit.SetTarget(&spriteMapEdit);
-
 
 	rapidcsv::Document clips("data_tables/animations/title/title_animation_clips.csv");
 	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // 일반화인자를 받음
@@ -69,7 +66,7 @@ void SceneTitle::Init()
 	animationGameStart.Play("STARTTEX");
 	animationMapEdit.Play("MAPTEX");
 
-	mouseCurse.GetSprite().setPosition(300, 30);
+	
 }
 
 void SceneTitle::Release()
@@ -115,7 +112,6 @@ void SceneTitle::Draw(sf::RenderWindow* window)
 	window->draw(spriteStart);
 	window->draw(spriteMapEdit);
 
-	window->setMouseCursorVisible(false);
+	//window->setMouseCursorVisible(false);
 	window->draw(mouseCurse.GetSprite());
-	/*window->draw(spriteStart1);*/
 }
