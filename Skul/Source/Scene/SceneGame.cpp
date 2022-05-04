@@ -3,14 +3,14 @@
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
 
+
 void SceneGame::Init()
 {
-	/*spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("MAINBGTEX"));
-	spritePlayer.setTexture(*ResourceMgr::instance()->GetTexture("MAINPLAYERTEX"));
-	spriteCloud.setTexture(*ResourceMgr::instance()->GetTexture("MAINCLOUDTEX"));
-	spriteBee.setTexture(*ResourceMgr::instance()->GetTexture("MAINBEETEX"));
-	spriteBee.setPosition(500, 500);
-	spriteCloud.setPosition(300, 300);*/
+	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
+	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
+	tilemap.Init();
+  
+  player.Init();
 }
 
 void SceneGame::Release()
@@ -27,6 +27,8 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
+
+	player.Update(dt);
 	//if (!beeActive)
 	//{
 	//	beeSpeed = RandomMgr::GetRandom(200, 200);
@@ -42,17 +44,27 @@ void SceneGame::Update(float dt)
 	//	currPos.x += deltaX;
 	//	spriteBee.setPosition(currPos);
 
-	//	// È­¸é ¹ÛÀ¸·Î ³ª°¬´ÂÁö Å×½ºÆ®
+	//	// È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®
 	//	if (currPos.x < -100)
 	//	{
 	//		beeActive = false;
 	//	}
 	//}
 	//
+
+	tilemap.CreateBackGround();
+
 }
 
-void SceneGame::Draw(sf::RenderWindow* window)
+void SceneGame::Draw(sf::RenderWindow *window)
 {
+
+	//window->draw(player.Draw(window));
+	player.Draw(*window);
 	/*window->draw(spriteBackground);*/
 	/*window->draw(spriteBee);*/
+
+	window->draw(spriteBackground);
+	tilemap.Draw(window);
+
 }

@@ -25,6 +25,9 @@
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Player\Skul">
+      <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Animation">
       <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
     </Filter>
@@ -149,14 +152,14 @@
     <ClInclude Include="Source\rapidcsv.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Utils\Utils.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Boss\Boss.h">
       <Filter>Source\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Source\TileMap\Tilemap.h">
       <Filter>Source\TIleMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utils\Utils.h">
-      <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\ChangeMouse.h">
       <Filter>Source</Filter>

@@ -2,9 +2,13 @@
 #include "SFML/Graphics.hpp"
 #include <list>
 #include <map>
+#include "../Utils/Singleton.h"
+
 
 using namespace sf;
 using namespace std;
+
+//class singleton;
 
 enum class Axis
 {
@@ -23,7 +27,7 @@ struct AxisInfo
 	float value;	//-1.0 ~ 1.0
 };
 
-class InputManager
+class InputManager : public Singleton<InputManager>
 {
 private:
 	static map<Axis, AxisInfo> mapAxis;

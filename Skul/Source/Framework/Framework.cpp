@@ -3,6 +3,7 @@
 #include "../Manager/RandomMgr.h"
 #include "../Utils/Singleton.h"
 #include <iostream>
+#include "../Manager/InputManager.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ void Framework::Run()
 	while (window->isOpen())
 	{
 		Time dt = clock.restart();
+		InputManager::ClearInput();
 		Event event;
 		while (window->pollEvent(event))
 		{
@@ -44,7 +46,8 @@ void Framework::Run()
 				window->close();
 				break;
 			}
-			ProcessEvent(event);
+			InputManager::ProcessInput(event);
+			//ProcessEvent(event);
 		}
 
 		Update(dt.asSeconds());

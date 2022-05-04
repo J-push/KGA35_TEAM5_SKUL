@@ -3,9 +3,9 @@
 #include "../rapidcsv.h"
 #include <iostream>
 
-
 void SceneTitle::Init()
 {
+
 	StartShape.setSize(Vector2f(158, 39));
 	StartShape.setPosition(880, 700);
 
@@ -26,8 +26,9 @@ void SceneTitle::Init()
 	spriteMapEdit.setPosition(880, 750);
 	animationMapEdit.SetTarget(&spriteMapEdit);
 
+
 	rapidcsv::Document clips("data_tables/animations/title/title_animation_clips.csv");
-	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // ÀÏ¹İÈ­ÀÎÀÚ¸¦ ¹ŞÀ½
+	std::vector<std::string> colId = clips.GetColumn<std::string>("ID"); // Ã€ÃÂ¹ÃÃˆÂ­Ã€ÃÃ€ÃšÂ¸Â¦ Â¹ÃÃ€Â½
 	std::vector<int> colFps = clips.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
@@ -91,7 +92,7 @@ void SceneTitle::Update(float dt)
 
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
-		mgr.ChangeScene(Scenes::MENU);
+		mgr.ChangeScene(Scenes::GAME);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
