@@ -19,20 +19,18 @@
     <Filter Include="Source\Utils">
       <UniqueIdentifier>{885118df-d297-4b63-98a1-c5fec3394b0f}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="Source\Player">
       <UniqueIdentifier>{68469b71-9b4d-4214-9ce4-1f399729b5ba}</UniqueIdentifier>
-    </Filter>
-
-    <Filter Include="Boss">
-      <UniqueIdentifier>{39033c39-7bed-4be4-a17c-b8f0a48ef7b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Player\Skul">
       <UniqueIdentifier>{e061f7c7-955d-40df-85db-60d949210264}</UniqueIdentifier>
     </Filter>
-	<Filter Include="Source\Animation">
-	  <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
-	</Filter>
+    <Filter Include="Source\Animation">
+      <UniqueIdentifier>{78e2d15c-517e-454d-9a77-8d9465fef3f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Boss">
+      <UniqueIdentifier>{0a8ca469-0f39-4246-9e07-aae77382aa37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -80,15 +78,14 @@
     <ClCompile Include="Source\Player\Skul\LittleBone.cpp">
       <Filter>Source\Player\Skul</Filter>
     </ClCompile>
-	<ClCompile Include="Source\Animation\AnimationClip.cpp">
-	  <Filter>Source\Animation</Filter>
+    <ClCompile Include="Source\Animation\AnimationClip.cpp">
+      <Filter>Source\Animation</Filter>
     </ClCompile>
-	<ClCompile Include="Source\Animation\AnimationController.cpp">
-	  <Filter>Source\Animation</Filter>
-
+    <ClCompile Include="Source\Animation\AnimationController.cpp">
+      <Filter>Source\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>Boss</Filter>
+    <ClCompile Include="Source\Boss\Boss.cpp">
+      <Filter>Source\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +131,14 @@
     <ClInclude Include="Source\Player\Skul\LittleBone.h">
       <Filter>Source\Player\Skul</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Boss\Boss.h">
-      <Filter>Boss</Filter>
+    <ClInclude Include="Source\Animation\AnimationClip.h">
+      <Filter>Source\Animation</Filter>
     </ClInclude>
-
+    <ClInclude Include="Source\Animation\AnimationController.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\Boss.h">
+      <Filter>Source\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

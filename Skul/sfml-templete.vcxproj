@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationController.cpp" />
+    <ClCompile Include="Source\Boss\Boss.cpp" />
     <ClCompile Include="Source\Framework\Framework.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
