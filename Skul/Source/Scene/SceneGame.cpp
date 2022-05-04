@@ -10,7 +10,7 @@ void SceneGame::Init()
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
   
-  player.Init();
+	player.Init();
 }
 
 void SceneGame::Release()
@@ -60,11 +60,11 @@ void SceneGame::Draw(sf::RenderWindow *window)
 {
 
 	//window->draw(player.Draw(window));
-	player.Draw(*window);
+	
 	/*window->draw(spriteBackground);*/
 	/*window->draw(spriteBee);*/
 
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
-
+	player.Draw(*window);
 }

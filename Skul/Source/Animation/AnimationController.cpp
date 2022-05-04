@@ -99,6 +99,11 @@ void AnimationController::Play(std::string clipId, bool clear)
 	isPlaying = true;
 	currentClip = &clips[clipId];
 	currentFrame = 0;
+
+
+
+
+
 	totalFrame = currentClip->frames.size();
 	frameDuration = 1.f / currentClip->fps; // 한 프레임당 몇 초 쓰는지
 	//frameDurtion = currentClip->fps;
