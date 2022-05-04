@@ -1,25 +1,28 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : ÀÓ º´ ·Ï
-* ÀÛ ¼º ÀÏ : 2022-05-04
-* ³»    ¿ë : PlayerÀÇ µ¿ÀÛÀ» ±¸ÇöÇÑ´Ù.
-* ¼ö Á¤ ÀÏ :
+* ì‘ ì„± ì : ì„ ë³‘ ë¡
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : Playerì˜ ë™ì‘ì„ êµ¬í˜„í•œë‹¤.
+* ìˆ˜ ì • ì¼ :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*includeë  í—¤ë”*/
 #include "Player.h"
 #include "../Animation/rapidcsv.h"
 #include "../Utils/Utils.h"
 
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾î¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
 ***********************************************************/
 void Player::Init()
 {
+	Player player;
 	mPlayerPosition.x = 512.f;
-	mPlayerPosition.y = 512.f;
+	mPlayerPosition.y = 750.f;
 	mSpeed = START_PLAYER_SPEED;
 
+	mPlayerAttacking = false;
+
 	SpritePlayer.setPosition(880, 700);
-	SpritePlayer.setOrigin(100, 100);
+	SpritePlayer.setOrigin(70, 100);
 	SpritePlayer.setScale(2.f, 2.f);
 	animation.SetTarget(&SpritePlayer);
 	rapidcsv::Document clips("data_tables/animations/Player/player_animation_clips.csv");
@@ -28,8 +31,15 @@ void Player::Init()
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
 
-	int totalclips = colId.size();
-	for (int i = 0; i < totalclips; ++i)
+	View mainView(FloatRect(0, 0, resolution.x, resolution.y));
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
+
+	mainView.setCenter(player.GetPosition());
+
+	int totalClips = colId.size();
+	for (int i = 0; i < totalClips; ++i)
+
 	{
 		AnimationClip clip;
 		clip.id = colId[i];
@@ -59,38 +69,55 @@ void Player::Init()
 	animation.Play("Idle");
 }
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾îÀÇ ÃÊ±â »ı¼º À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ì˜ ì´ˆê¸° ìƒì„± ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
 ***********************************************************/
 void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 {
 
 }
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾îÀÇ Å°º¸µå ÀÔ·Â°ª¿¡ µû¸¥ µ¿ÀÛÀ» ±¸ÇöÇÑ´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ì˜ í‚¤ë³´ë“œ ì…ë ¥ê°’ì— ë”°ë¥¸ ë™ì‘ì„ êµ¬í˜„í•œë‹¤.
 ***********************************************************/
 void Player::UpdateInput()
 {
-	//Play¸¦ ¿©·¯¹ø ÇØÁÖ¸é ÇÁ·¹ÀÓ¿¡¼­ ¸ØÃá´Ù?
+	
+	//Playë¥¼ ì—¬ëŸ¬ë²ˆ í•´ì£¼ë©´ í”„ë ˆì„ì—ì„œ ë©ˆì¶˜ë‹¤?
 	if (InputManager::instance()->GetKeyDown(Keyboard::Right))
 	{
-		animation.Play("RightWalk");
+		
+		animation.Play("Walk");
+		SpritePlayer.setScale(2.f, 2.f);
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Left))
 	{
-		animation.Play("LeftWalk");
+		SpritePlayer.setScale(-2.f, 2.f);
+		animation.Play("Walk");
+		//animation.Play("LeftWalk");
+		
 	}
 
 	if (InputManager::instance()->GetKeyUp(Keyboard::Right) ||
 		InputManager::instance()->GetKeyUp(Keyboard::Left))
 	{
+		//SpritePlayer.setScale(3.f, 3.f);
 		animation.Play("Idle");
 		animation.PlayQueue("Idle");
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::X))
 	{
 		
-		animation.Play("Attack");
+		animation.Play("Attack1");
+		mPlayerAttacking = true;
+	
+		if (mPlayerAttacking == true && InputManager::instance()->GetKeyDown(Keyboard::X))
+		{
+			animation.PlayQueue("Attack2");
+			mPlayerAttacking = false;
+			animation.PlayQueue("Idle");
+		}
+		animation.PlayQueue("Idle");
 	}
+	
 
 	/*switch (event.type)
 	{
@@ -111,58 +138,67 @@ void Player::UpdateInput()
 	}*/
 }
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾î¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤.
 ***********************************************************/
 void Player::Update(float dt)
 {
 	UpdateInput();
 	
-	float h = InputManager::GetAxisRaw(Axis::Horizontal);
+	/*float h = InputManager::GetAxisRaw(Axis::Horizontal);
 	float v = InputManager::GetAxisRaw(Axis::Vertical);
 	Vector2f dir(h, v);
 
-	Utils::Normalize(dir);
-
-	//ÀÌµ¿Ã³¸®¸¦ ÇÏ´Â °÷ÀÌ±äÇÑµ¥... ¾ÆÁ÷ ºı¼÷ ºÒ°¡...
-	//if (dir.x == 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("Idle");
-	//	
-	//}
-	//if (dir.x > 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("RightWalk");
-	//	mPlayerPosition.x += dir.x * mSpeed * dt;
-	//}
-	//if (dir.x < 0.f && mLastDir != dir)
-	//{
-	//	animation.Play("LeftWalk");
-	//	mPlayerPosition.x -= dir.x * mSpeed * dt;
-	//}
-	//Å¾ºäµç »çÀÌµå ºäµç ³ë»ó°ü~
-	//À§´Â X
+	Utils::Normalize(dir);*/
 	if (InputManager::instance()->GetKey(Keyboard::Right))
 	{
-		mPlayerPosition.x +=  mSpeed * dt;
+		mPlayerPosition.x += mSpeed * dt;
 	}
-
-	mLastDir = dir;
+	if (InputManager::instance()->GetKey(Keyboard::Left))
+	{
+		mPlayerPosition.x -= mSpeed * dt;
+	}
+	//ì´ë™ì²˜ë¦¬ë¥¼ í•˜ëŠ” ê³³ì´ê¸´í•œë°... ì•„ì§ ë¹¡ìˆ™ ë¶ˆê°€...
+	/*if (dir.x == 0.f && mLastDir != dir)
+	{
+		animation.Play("Idle");
+		
+	}
+	if (dir.x > 0.f && mLastDir != dir)
+	{
+		animation.Play("RightWalk");
+		mPlayerPosition.x += dir.x * mSpeed * dt;
+	}
+	if (dir.x < 0.f && mLastDir != dir)
+	{
+		animation.Play("LeftWalk");
+		mPlayerPosition.x -= dir.x * mSpeed * dt;
+	}*/
+	//íƒ‘ë·°ë“  ì‚¬ì´ë“œ ë·°ë“  ë…¸ìƒê´€~
+	//ìœ„ëŠ” X
+	
+	//mLastDir = dir;
 	SpritePlayer.setPosition(mPlayerPosition);
 
 	animation.Update(dt);
 }
 
+Vector2f Player::GetPosition()
+{
+	return mPlayerPosition;
+}
+
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾îÀÇ sprite¸¦ µé°í ¿Â´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ì˜ spriteë¥¼ ë“¤ê³  ì˜¨ë‹¤.
 ***********************************************************/
 Sprite Player::GetSprite()
 {
 	return SpritePlayer;
 }
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ¾î¸¦ ±×¸°´Ù.
+* ì„¤ëª… : í”Œë ˆì´ì–´ë¥¼ ê·¸ë¦°ë‹¤.
 ***********************************************************/
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(SpritePlayer);
+	//window.setView(mainView);
 }

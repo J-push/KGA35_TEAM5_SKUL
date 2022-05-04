@@ -14,6 +14,7 @@ private:
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
 	const float GRAVITY_POWER = 980.f;			//중력
 
+	
 	Texture texture;
 
 	Sprite SpritePlayer;						//player 그리기
@@ -26,6 +27,8 @@ private:
 
 	std::map<std::string, Texture> texMap;
 
+	
+
 
 	int mTileSize;								//타일의 크기
 
@@ -37,6 +40,8 @@ private:
 	int mCurrentPlayerHealth;					//player 현재 체력
 
 	int mPlayerType;							//뼈 타입? 아직 미정
+
+	bool mPlayerAttacking;						//플레이어 공격중?
 
 	bool mPlayerDash;							//player대쉬 유무
 	float mDashCoolTime;						//대쉬 쿨타임
@@ -55,9 +60,11 @@ public:
 	void Dash();
 	void Jump();
 
+	
+
 	void UpdateInput();
 	void Update(float dt);
-
+	Vector2f GetPosition();
 	Sprite GetSprite();
 
 	void Draw(RenderWindow &window);

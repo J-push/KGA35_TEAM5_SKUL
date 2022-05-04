@@ -12,10 +12,17 @@ private:
 	sf::Sprite  spriteCursor;
 	FloatRect CursorBounds;
 
+	RectangleShape shape;
+
+
 public:
 	void Init()
 	{
 		spriteCursor.setTexture(*ResourceMgr::instance()->GetTexture("CURSORTEX"));
+		
+		
+		shape.setSize(Vector2f(10, 10));
+		shape.setPosition(0,0);
 
 		//Utils::SetOrigin(spriteCursor, Pivots::CC);
 
@@ -23,17 +30,21 @@ public:
 
 	void Update(float dt)
 	{
-		spriteCursor.setPosition(InputManager::GetMouseWorldPosition());
-
-		//spriteCursor.setPosition().x = 100;
-
-
-		//std::cout << spriteCursor.getPosition().x;
+		spriteCursor.setPosition(Mouse::getPosition().x, Mouse::getPosition().y);
+		shape.setPosition(Mouse::getPosition().x, Mouse::getPosition().y);
+		
 	}
 
 	virtual void Draw(sf::RenderWindow *window)
 	{
+		window->setMouseCursorVisible(false);
 		window->draw(spriteCursor);
+	}
+
+
+	FloatRect GetGlobalBounds()
+	{
+		return shape.getGlobalBounds();
 	}
 
 	Sprite GetSprite()

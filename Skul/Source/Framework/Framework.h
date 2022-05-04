@@ -10,6 +10,10 @@ private:
 	RenderWindow* window;	// SFML기본 윈도우
 	Clock clock;			// 시계
 	SceneMgr sceneMgr;		// scene 매니저
+	//InputManager inputManager;
+
+	View* mainView;
+	Vector2i resolution;
 
 	Framework(const Framework& ref) {} 
 	Framework& operator=(const Framework& ref) {}
