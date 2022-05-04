@@ -152,14 +152,14 @@
     <ClInclude Include="Source\rapidcsv.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TileMap\Tilemap.h">
-      <Filter>Source\TIleMap</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utils\Utils.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Boss\Boss.h">
       <Filter>Source\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\Tilemap.h">
+      <Filter>Source\TIleMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
