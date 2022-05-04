@@ -1,9 +1,9 @@
 #pragma once
-/*include µÉ Çì´õÆÄÀÏ*/
+/*include ë  í—¤ë”íŒŒì¼*/
 #include "AnimationClip.h"
 #include <map>
-#include <queue> // stl ÀÚ·á±¸Á¶
-#include <iostream> // cpp¿¡ ¾²ÀÓ
+#include <queue> // stl ìë£Œêµ¬ì¡°
+#include <iostream> // cppì— ì“°ì„
 using namespace sf;
 
 
@@ -11,17 +11,17 @@ class AnimationController
 {
 private:
 	std::map<std::string, AnimationClip> clips; // map <key type, value type>
-	std::queue<std::string> playQueue;          // FIFO ÀÚ·á±¸Á¶
+	std::queue<std::string> playQueue;          // FIFO ìë£Œêµ¬ì¡°
 
 	AnimationClip *currentClip;
-	bool isPlaying;							//ÇÃ·¹ÀÌ À¯¹«
-	int currentFrame;						//ÇöÀç ÇÁ·¹ÀÓ
-	int totalFrame;							//ÀüÃ¼ ÇÁ·¹ÀÓ
+	bool isPlaying;							//í”Œë ˆì´ ìœ ë¬´
+	int currentFrame;						//í˜„ì¬ í”„ë ˆì„
+	int totalFrame;							//ì „ì²´ í”„ë ˆì„
 	float frameDuration; 
 
 	float accumTime;
 
-	Sprite *sprite;						// Æ÷ÀÎÅÍ ÀÌÀ¯??
+	Sprite *sprite;						// í¬ì¸í„° ì´ìœ ??
 
 public:
 	AnimationController();
@@ -38,7 +38,7 @@ public:
 
 	bool IsPlaying();
 	void ClearPlayQueue();
+	bool ClearPlayQueueCheck();
 
-	
 };
 

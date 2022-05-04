@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationController.cpp" />
-    <ClCompile Include="Source\Boss\Boss.cpp" />
+    <ClCompile Include="Source\Boss\Boss.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Source\Framework\Framework.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
@@ -45,7 +47,9 @@
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationController.h" />
     <ClInclude Include="Source\Animation\rapidcsv.h" />
-    <ClInclude Include="Source\Boss\Boss.h" />
+    <ClInclude Include="Source\Boss\Boss.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Source\Framework\Framework.h" />
     <ClInclude Include="Source\Manager\InputManager.h" />
     <ClInclude Include="Source\Manager\RandomMgr.h" />
