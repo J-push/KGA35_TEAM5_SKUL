@@ -46,6 +46,7 @@ void SceneGame::Update(float dt)
 	tilemap.CreateBackGround();
 
 	mouseCursor.Update(dt);
+	ui.Update(dt);
 
 }
 

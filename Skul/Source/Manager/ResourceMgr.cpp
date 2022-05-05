@@ -13,7 +13,7 @@
 ***********************************************************/
 void ResourceMgr::Init()
 {
-	std::list<Resource*> loaded;	//리스트에
+	std::list<Resource*> loaded;	//리스트에 // 나중에지울것들?
 	loaded.push_back(new Resource("MAINFONT", "fonts/KOMIKAP_.ttf", ResourceTypes::Font));
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));

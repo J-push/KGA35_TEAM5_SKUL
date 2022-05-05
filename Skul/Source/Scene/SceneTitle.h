@@ -3,6 +3,8 @@
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
 #include "../Utils/ChangeMouse.h"
+#include "../UIMaker.h"
+
 
 
 class SceneTitle : public Scene
@@ -15,7 +17,7 @@ private:
 	AnimationController animationMapEdit;
 
 	RectangleShape shapeGameStart;
-	Vector2f positionGameStart;
+	RectangleShape shapeMapEdit;
 
 	sf::Sprite spriteStart;
 	sf::Sprite spriteMapEdit;
@@ -23,10 +25,9 @@ private:
 	std::map<std::string, Texture> texMap;
 
 	sf::Sprite spriteTitle;
-	sf::Sprite spriteStart1;
-	sf::Sprite spriteStart2;
 
-	
+	UIMaker ui;
+
 
 
 public:

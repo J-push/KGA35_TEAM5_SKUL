@@ -7,35 +7,22 @@
 /*include될 헤더*/
 #include "SceneTitle.h"
 #include "../Manager/ResourceMgr.h"
-#include "../Animation/rapidcsv.h"
+//#include "../Animation/rapidcsv.h" // 애니컨트롤러에 추가함 지워도댐
 #include <iostream>
 /**********************************************************
 * 설명 : SceneTitle을 초기화한다.
 ***********************************************************/
 void SceneTitle::Init()
 {
-
-	/*StartShape.setSize(Vector2f(158, 39));
-	StartShape.setPosition(880, 700);*/
-
-	/*test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
-	test.setString("MAIN");
-	test.setFillColor(Color::White);
-	test.setCharacterSize(100);
-	test.setPosition(0, 0);*/
-	//spriteStart1.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX1"));
-	//spriteStart2.setTexture(*ResourceMgr::instance()->GetTexture("STARTTEX2"));
-	//spriteStart1.setPosition(900, 700);
-	//spriteStart2.setPosition(900, 700);
-
 	spriteTitle.setTexture(*ResourceMgr::instance()->GetTexture("TITLETEX"));
 
 	shapeGameStart.setPosition(880, 700);
 	shapeGameStart.setSize(Vector2f(158, 39));
-
 	spriteStart.setPosition(880, 700);
 	animationGameStart.SetTarget(&spriteStart);
 
+	shapeMapEdit.setPosition(880, 750);
+	shapeMapEdit.setSize(Vector2f(153, 39));
 	spriteMapEdit.setPosition(880, 750);
 	animationMapEdit.SetTarget(&spriteMapEdit);
 
@@ -78,7 +65,7 @@ void SceneTitle::Init()
 		animationMapEdit.AddClip(clip);
 
 	}
-	//animationGameStart.Play("STARTTEX");
+	animationGameStart.Play("STARTTEX");
 	animationMapEdit.Play("MAPTEX");
 
 	mouseCursor.Init();
@@ -96,41 +83,51 @@ void SceneTitle::Start()
 
 void SceneTitle::End()
 {
-
+	
 }
 /**********************************************************
 * 설명 : SceneTitle을 업데이트한다.
 ***********************************************************/
 void SceneTitle::Update(float dt)
 {
+	mouseCursor.Update(dt);
 	animationGameStart.Update(dt);
 	animationMapEdit.Update(dt);
 
-	mouseCursor.Update(dt);
+	
 
 	FloatRect mouseBound = mouseCursor.GetGlobalBounds();
-	bool check = mouseBound.intersects(shapeGameStart.getGlobalBounds());
+	bool checkGameStart = mouseBound.intersects(shapeGameStart.getGlobalBounds());
+	bool checkMapEdit = mouseBound.intersects(shapeMapEdit.getGlobalBounds());
 
-	if (check)
+	if (checkGameStart)
+	{
+		animationGameStart.Play("STARTMOUSETEX");
+		if (Mouse::isButtonPressed(Mouse::Left))
+		{
+			mgr.ChangeScene(Scenes::GAME);
+		}
+	}
+	else
 	{
 		animationGameStart.Play("STARTTEX");
-		
+	}
+	if (checkMapEdit)
+	{
+		animationMapEdit.Play("MAPMOUSETEX");
+	}
+	else
+	{
+		animationMapEdit.Play("MAPTEX");
 	}
 	
 
-
+	
 	if (Keyboard::isKeyPressed(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
 	}
-	if (Keyboard::isKeyPressed(Keyboard::Num0))
-	{
-		animationGameStart.Play("MAPTEX");
-	}
-	if (Keyboard::isKeyPressed(Keyboard::Num9))
-	{
-		animationGameStart.Play("STARTTEX");
-	}	
+
 }
 
 /**********************************************************
@@ -142,7 +139,8 @@ void SceneTitle::Draw(sf::RenderWindow* window)
 
 	window->draw(spriteStart);
 	window->draw(spriteMapEdit);
-
+	
 	mouseCursor.Draw(window);
+
 }
 
