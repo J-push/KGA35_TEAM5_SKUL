@@ -16,6 +16,10 @@ void Player::Init()
 {
 	Player player;
 
+
+	// 재휘 현재,최대체력 초기화
+	mMaxPlayerHealth = START_PLAYER_HEALTH;
+	mCurrentPlayerHealth = START_PLAYER_HEALTH;
 	mPlayerPosition.x = 900.f;
 	mPlayerPosition.y = 750.f;
 
@@ -354,4 +358,20 @@ void Player::Draw(RenderWindow& window)
 	window.draw(SpritePlayer);
 	window.draw(spriteSkill);
 	//window.setView(mainView);
+}
+
+/**********************************************************
+* 설명 : 플레이어의 최대 체력을 받아온다.
+***********************************************************/
+int Player::GetMaxPlayerHealth()
+{
+	return mMaxPlayerHealth;
+}
+
+/**********************************************************
+* 설명 : 플레이어의 현재 체력을 받아온다.
+***********************************************************/
+int Player::GetCurrentPlayerHealth()
+{
+	return mCurrentPlayerHealth;
 }
