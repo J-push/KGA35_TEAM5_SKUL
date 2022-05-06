@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "../Player/Player.h"
+#include "../SwordMan/SwordMan.h"
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
@@ -16,6 +17,7 @@ private:
 	sf::Sprite spriteBackground;
 	Player player;
 
+	SwordMan SwordMan;
 	MouseCursor mouseCursor;
 	UIMaker ui;
 
