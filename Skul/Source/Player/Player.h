@@ -9,6 +9,8 @@ using namespace sf;
 class Player
 {
 private:
+	const float Player_Size = 1.5f;
+	const float Left_Player_Size = -1.5f;
 	const float START_PLAYER_HEALTH = 100;		//시작 플레이어 체력;
 	const float START_PLAYER_SPEED = 200;		//시작 플레이어 속도;
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
@@ -21,6 +23,7 @@ private:
 	Vector2f mPlayerPosition;					//player 좌표
 	Vector2f mLastDir;
 	AnimationController animation;
+	AnimationController skillAni;
 
 	IntRect gameMap;
 	Vector2i resolution;
@@ -54,8 +57,17 @@ private:
 	int mPlayerAttackDamage;					//공격 데미지
 
 	float mSkillCoolTime;						//스킬 쿨타임
+
+
+	Sprite spriteSkill;							//스킬 그리기
+	Vector2f skillPosition;						//스킬 위치
+
+
+
+
 public:
 	void Init();
+	void SkillInit();
 	void Start();
 	void End();
 

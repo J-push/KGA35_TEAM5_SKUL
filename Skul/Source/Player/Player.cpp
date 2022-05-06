@@ -16,12 +16,11 @@ void Player::Init()
 {
 	Player player;
 
+
 	// 재휘 현재,최대체력 초기화
 	mMaxPlayerHealth = START_PLAYER_HEALTH;
 	mCurrentPlayerHealth = START_PLAYER_HEALTH;
-	//
-
-	mPlayerPosition.x = 1100.f;
+	mPlayerPosition.x = 900.f;
 	mPlayerPosition.y = 750.f;
 
 	mSpeed = START_PLAYER_SPEED;
@@ -31,13 +30,15 @@ void Player::Init()
 
 	SpritePlayer.setPosition(mPlayerPosition);
 	SpritePlayer.setOrigin(150, 100);
-	SpritePlayer.setScale(2.f, 2.f);
+	SpritePlayer.setScale(Player_Size, Player_Size);
 	animation.SetTarget(&SpritePlayer);
 	rapidcsv::Document clips("data_tables/animations/Player/player_animation_clips.csv");
 	std::vector<std::string> colId = clips.GetColumn<std::string>("ID");
 	std::vector<int> colFps = clips.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
+
+
 
 	View mainView(FloatRect(0, 0, resolution.x, resolution.y));
 	resolution.x = VideoMode::getDesktopMode().width;
@@ -74,7 +75,101 @@ void Player::Init()
 
 		animation.AddClip(clip);
 	}
+
+
+	skillPosition.x = 200;
+	skillPosition.y = 500;
+
+	spriteSkill.setPosition(skillPosition);
+	spriteSkill.setOrigin(50, 50);
+	spriteSkill.setScale(2.f, 2.f);
+	skillAni.SetTarget(&spriteSkill);
+	rapidcsv::Document clips2("data_tables/animations/PlayerSkill/playerSkill_animation_clips.csv");
+	std::vector<std::string> colId2 = clips2.GetColumn<std::string>("ID");
+	std::vector<int> colFps2 = clips2.GetColumn<int>("FPS");
+	std::vector<int> colLoop2 = clips2.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
+	std::vector<std::string> colPath2 = clips2.GetColumn<std::string>("CLIP PATH");
+
+	int totalClips2 = colId2.size();
+	for (int i = 0; i < totalClips2; ++i)
+
+	{
+		AnimationClip skill;
+		skill.id = colId2[i];
+		skill.fps = colFps2[i];
+		skill.loopType = (AnimationLoopTypes)colLoop2[i];
+
+		rapidcsv::Document frames(colPath2[i]);
+		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
+		std::vector<int> colL = frames.GetColumn<int>("L");
+		std::vector<int> colT = frames.GetColumn<int>("T");
+		std::vector<int> colW = frames.GetColumn<int>("W");
+		std::vector<int> colH = frames.GetColumn<int>("H");
+
+		int totalFrames = colTexure.size();
+		for (int j = 0; j < totalFrames; ++j)
+		{
+			if (texMap.find(colTexure[j]) == texMap.end())
+			{
+				auto& ref = texMap[colTexure[j]];
+				ref.loadFromFile(colTexure[j]);
+			}
+			skill.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
+		}
+
+		skillAni.AddClip(skill);
+	}
+
 	animation.Play("Idle");
+}
+/**********************************************************
+* 설명 : 플레이어의 스킬을 초기화한다.
+***********************************************************/
+void Player::SkillInit()
+{
+	/*skillPosition.x = 200;
+	skillPosition.y = 500;
+
+	spriteSkill.setPosition(skillPosition);
+	spriteSkill.setOrigin(50, 50);
+	spriteSkill.setScale(2.f, 2.f);
+	skillAni.SetTarget(&spriteSkill);
+	rapidcsv::Document clips("data_tables/animations/PlayerSkill/playerSkill_animation_clips.csv");
+	std::vector<std::string> colId = clips.GetColumn<std::string>("ID");
+	std::vector<int> colFps = clips.GetColumn<int>("FPS");
+	std::vector<int> colLoop = clips.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
+	std::vector<std::string> colPath = clips.GetColumn<std::string>("CLIP PATH");
+
+	int totalClips = colId.size();
+	for (int i = 0; i < totalClips; ++i)
+
+	{
+		AnimationClip skill;
+		skill.id = colId[i];
+		skill.fps = colFps[i];
+		skill.loopType = (AnimationLoopTypes)colLoop[i];
+
+		rapidcsv::Document frames(colPath[i]);
+		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
+		std::vector<int> colL = frames.GetColumn<int>("L");
+		std::vector<int> colT = frames.GetColumn<int>("T");
+		std::vector<int> colW = frames.GetColumn<int>("W");
+		std::vector<int> colH = frames.GetColumn<int>("H");
+
+		int totalFrames = colTexure.size();
+		for (int j = 0; j < totalFrames; ++j)
+		{
+			if (texMap.find(colTexure[j]) == texMap.end())
+			{
+				auto& ref = texMap[colTexure[j]];
+				ref.loadFromFile(colTexure[j]);
+			}
+			skill.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
+		}
+
+		skillAni.AddClip(skill);
+	}*/
+	//skillAni.Play("SoulBurn");
 }
 /**********************************************************
 * 설명 : 플레이어의 초기 생성 위치를 설정한다.
@@ -92,13 +187,13 @@ void Player::UpdateInput()
 	{
 		isLeft = false;
 		animation.Play("Walk");
-		SpritePlayer.setScale(2.f, 2.f);
+		SpritePlayer.setScale(Player_Size, Player_Size);
 
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Left))
 	{
 		isLeft = true;
-		SpritePlayer.setScale(-2.f, 2.f);
+		SpritePlayer.setScale(Left_Player_Size, Player_Size);
 		animation.Play("Walk");
 
 	}
@@ -154,6 +249,13 @@ void Player::UpdateInput()
 		animation.PlayQueue("Jump");
 	}
 
+	if (InputManager::instance()->GetKeyDown(Keyboard::A))
+	{
+		skillAni.Play("SoulBurn");
+		animation.PlayQueue("Skill1");
+		
+		animation.PlayQueue("Idle");
+	}
 
 }
 /**********************************************************
@@ -254,6 +356,7 @@ FloatRect Player::GetGlobalBound()
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(SpritePlayer);
+	window.draw(spriteSkill);
 	//window.setView(mainView);
 }
 
