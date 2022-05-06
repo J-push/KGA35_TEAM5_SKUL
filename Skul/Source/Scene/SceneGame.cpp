@@ -51,7 +51,10 @@ void SceneGame::Update(float dt)
 	//	}
 	//}
 	//
-
+	if (Keyboard::isKeyPressed(Keyboard::Escape))
+	{
+		mgr.ChangeScene(Scenes::TITLE);
+	}
 	tilemap.CreateBackGround();
 
 }

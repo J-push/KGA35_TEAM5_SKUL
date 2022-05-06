@@ -46,6 +46,10 @@ void Framework::Run()
 				window->close();
 				break;
 			}
+			if (event.key.code == Keyboard::Escape)
+			{
+				window->close();
+			}
 			InputManager::ProcessInput(event);
 			//ProcessEvent(event);
 		}

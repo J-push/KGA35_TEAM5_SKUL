@@ -92,20 +92,18 @@ void SceneTitle::Update(float dt)
 
 	mouseCurse.Update(dt);
 
-	if (Keyboard::isKeyPressed(Keyboard::Return))
+	if (InputManager::GetKeyDown(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
-		animationGameStart.Play("MAPTEX");
+		mgr.ChangeScene(Scenes::EDITOR);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num9))
 	{
 		animationGameStart.Play("STARTTEX");
 	}
-
-	
 }
 
 void SceneTitle::Draw(sf::RenderWindow* window)

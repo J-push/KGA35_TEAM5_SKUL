@@ -63,7 +63,7 @@
     <ClCompile Include="Source\Scene\Scene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneCharacter.cpp">
+    <ClCompile Include="Source\Scene\SceneMapEditor.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\SceneGame.cpp">
@@ -99,6 +99,7 @@
     <ClCompile Include="Source\Utils\Utils.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TestRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Framework.h">
@@ -122,7 +123,7 @@
     <ClInclude Include="Source\Scene\Scene.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneCharacter.h">
+    <ClInclude Include="Source\Scene\SceneMapEditor.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\SceneGame.h">
@@ -164,5 +165,6 @@
     <ClInclude Include="Source\Utils\ChangeMouse.h">
       <Filter>Source\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="TestRectangle.h" />
   </ItemGroup>
 </Project>

@@ -9,8 +9,12 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "../Manager/ResourceMgr.h"
+#include "../../TestRectangle.h"
+
+
 enum class TileType
 {
+	None,
 	Null,
 	Wall,
 	Ground,
@@ -43,13 +47,17 @@ private:
 	const int VERTS_IN_QUAD = 4;
 	const int BACKGROUND_WIDTH = 3200;
 	const int BACKGROUND_HEIGHT = 3200;
+	const int WIN_X = 1920;
+	const int WIN_Y = 1080;
+	std::vector <TestRectangle *> rects;
 	VertexArray tileMap;
 	IntRect backGround;
 	Sprite spriteTile;
-	Texture texTile;
+	int texIndex;
 public:
 	void Init();
 	int CreateBackGround();
+	void CreateTestRect();
 	virtual void Draw(sf::RenderWindow *window);
 };
 

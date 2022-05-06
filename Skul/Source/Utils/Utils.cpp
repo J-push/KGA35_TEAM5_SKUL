@@ -65,6 +65,10 @@ int Utils::RandomRange(int min, int excludeMax)
 	return min + gen() % range;
 }
 
+/**********************************************************
+* 설명 : 여기서 standRect는 다른 클래스에서 불러오는 거고 testRect는 현재 클래스, 즉 기준이 된다.
+* ex) 플레이어와 벽과의 충돌을 적으려 할 때 플레이어 클래스에서 이용하면 된다. standRect -> Wall  , testRect -> Player 
+***********************************************************/
 Pivots Utils::CollisionDir(FloatRect standRect, FloatRect testRect)
 {
 	//testRect를 기준

@@ -1,7 +1,7 @@
 #include "SceneMgr.h"
 #include "../Scene/SceneTitle.h"
 #include "../Scene/SceneGame.h"
-#include "../Scene/SceneCharacter.h"
+#include "../Scene/SceneMapEditor.h"
 #include "../Scene/SceneMenu.h"
 /**********************************************************
 * 설명 : Scene들을 초기화한다.
@@ -10,12 +10,12 @@ void SceneMgr::Init()
 {
 	scenes[(int)Scenes::TITLE] = new SceneTitle(*this);
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
-	scenes[(int)Scenes::CHARACTER] = new SceneCharacter(*this);
+	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
 
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
-	scenes[(int)Scenes::CHARACTER]->Init();
+	scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::GAME]->Init();
 }
 /*******************************************************************
