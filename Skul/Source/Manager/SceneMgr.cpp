@@ -17,13 +17,13 @@ void SceneMgr::Init()
 {
 	scenes[(int)Scenes::TITLE] = new SceneTitle(*this);
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
-	scenes[(int)Scenes::CHARACTER] = new SceneCharacter(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
+	scenes[(int)Scenes::CHARACTER] = new SceneCharacter(*this);
 
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
-	scenes[(int)Scenes::CHARACTER]->Init();
 	scenes[(int)Scenes::GAME]->Init();
+	scenes[(int)Scenes::CHARACTER]->Init();
 }
 /*******************************************************************
 * 설명 : Scene하나하나가 끝날때마다 새로운 Scene을 받아와 시작한다.
@@ -49,3 +49,14 @@ void SceneMgr::Draw(sf::RenderWindow* window)
 {
 	scenes[(int)currentScene]->Draw(window);
 }
+
+Scenes SceneMgr::GetCurrentScene()
+{
+	return currentScene;
+}
+
+
+
+
+
+

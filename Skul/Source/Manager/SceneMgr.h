@@ -16,8 +16,9 @@ class SceneMgr
 {
 private:
 	Scene* scenes[(int)Scenes::COUNT];
-
 	Scenes currentScene;
+
+
 public:
 	void Init();
 	void Release() {}
@@ -25,5 +26,8 @@ public:
 
 	void Update(float dt);
 	void Draw(sf::RenderWindow* window);
+	
+	Scenes GetCurrentScene();
+
 };
 

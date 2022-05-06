@@ -4,6 +4,8 @@
 #include <map>
 #include <queue> // stl 자료구조
 #include <iostream> // cpp에 쓰임
+#include "../Animation/rapidcsv.h"
+
 using namespace sf;
 
 

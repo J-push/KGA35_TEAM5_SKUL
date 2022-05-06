@@ -45,6 +45,7 @@ void SceneGame::Update(float dt)
 	tilemap.CreateBackGround();
 
 	mouseCursor.Update(dt);
+	ui.Update(dt);
 
 }
 
@@ -54,8 +55,9 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
+	//boss.Draw(*window);
+	ui.DrawSceneGame(window);
+
 	SwordMan.Draw(*window);
-	ui.Draw(window);
-	mouseCursor.Draw(window);
 
 }

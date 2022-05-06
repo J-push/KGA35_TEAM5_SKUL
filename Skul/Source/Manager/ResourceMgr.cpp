@@ -13,7 +13,7 @@
 ***********************************************************/
 void ResourceMgr::Init()
 {
-	std::list<Resource*> loaded;	//리스트에
+	std::list<Resource*> loaded;	//리스트에 // 나중에지울것들?
 	loaded.push_back(new Resource("MAINFONT", "fonts/KOMIKAP_.ttf", ResourceTypes::Font));
 	loaded.push_back(new Resource("TITLETEX", "graphics/menu/title.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("STARTTEX1", "graphics/menu/GameStartIcon.png", ResourceTypes::Texture));
@@ -28,8 +28,13 @@ void ResourceMgr::Init()
 	// ui추가
 	loaded.push_back(new Resource("MAINFRAMETEX", "graphics/UI/PlayerFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("HPBARTEX", "graphics/UI/HpBar.png", ResourceTypes::Texture));
-	loaded.push_back(new Resource("REAPERICONTEX", "graphics/UI/GrimReaper3.png", ResourceTypes::Texture));
+
+	loaded.push_back(new Resource("REAPERICONTEX1", "graphics/UI/GrimReaper1.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("REAPERICONTEX3", "graphics/UI/GrimReaper3.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("REAPERSKILLTEX", "graphics/UI/GrimReaperSkill.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BONEICONTEX1", "graphics/UI/LittleBone1.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BONEICONTEX3", "graphics/UI/LittleBone3.png", ResourceTypes::Texture));
+
 
 
 	
