@@ -29,10 +29,15 @@ private:
 
 	
 
-
+	float val;									//중력
 	int mTileSize;								//타일의 크기
 
 	bool isJump;								//점프했니?
+	bool isDash;								//대쉬했니?
+
+	bool isLeft;
+
+	Vector2f dirDash;
 
 	float mSpeed;								//player 속도
 
@@ -57,7 +62,7 @@ public:
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
 
 	void Move(float speed);
-	void Dash();
+	void Dash(bool isDash, float dt);
 	void Jump();
 
 	
