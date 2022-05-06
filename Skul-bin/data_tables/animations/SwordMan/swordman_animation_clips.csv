@@ -1,0 +1,5 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+Idle,10,1,data_tables/animations/SwordMan/swordman_animation_idle.csv
+Attack,10,0,data_tables/animations/SwordMan/swordman_animation_attack.csv
+Hit,10,0,data_tables/animations/SwordMan/swordman_animation_hit.csv
+Walk,10,1,data_tables/animations/SwordMan/swordman_animation_walk.csv

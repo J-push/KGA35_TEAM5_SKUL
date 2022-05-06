@@ -1,6 +1,10 @@
 TEXTURE PATH,L,T,W,H
-graphics/SkulPlayer/skul_grim_reaper.png,0,300,140,100
-graphics/SkulPlayer/skul_grim_reaper.png,140,300,140,100
-graphics/SkulPlayer/skul_grim_reaper.png,280,300,140,100
-graphics/SkulPlayer/skul_grim_reaper.png,420,300,140,100
-graphics/SkulPlayer/skul_grim_reaper.png,560,300,140,100
+graphics/SkulPlayer/skul_grim_reaper.png,0,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,300,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,600,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,900,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,1200,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,1500,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,1800,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,2100,1500,300,150
+graphics/SkulPlayer/skul_grim_reaper.png,2400,1500,300,150

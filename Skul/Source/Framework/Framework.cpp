@@ -46,6 +46,13 @@ void Framework::Run()
 			case Event::Closed:
 				window->close();
 				break;
+			case Event::KeyPressed:
+				switch (event.key.code)
+				{
+				case Keyboard::Escape:
+					window->close();
+					break;
+				}
 			}
 			ProcessEvent(event);
 		}
