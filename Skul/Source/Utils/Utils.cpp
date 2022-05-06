@@ -1,40 +1,40 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : ±è Àç ÈÖ
-* ÀÛ ¼º ÀÏ : 2022-05-03
-* ³»    ¿ë : °ÔÀÓÀÇ ÀüÃ¼ÀûÀÎ Utility(ÇÔ¼ö)µéÀ» ´ã´çÇÑ´Ù.
-* ¼ö Á¤ ÀÏ :
+* ì‘ ì„± ì : ê¹€ ì¬ íœ˜
+* ì‘ ì„± ì¼ : 2022-05-03
+* ë‚´    ìš© : ê²Œì„ì˜ ì „ì²´ì ì¸ Utility(í•¨ìˆ˜)ë“¤ì„ ë‹´ë‹¹í•œë‹¤.
+* ìˆ˜ ì • ì¼ :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*includeë  í—¤ë”*/
 #include "Utils.h"
 #include <iostream>
 #include <cmath>
-/*static º¯¼ö ¼±¾ğ*/
+/*static ë³€ìˆ˜ ì„ ì–¸*/
 std::random_device Utils::rd;
 std::mt19937 Utils::gen(rd());
 
 /**********************************************************
-* ¼³¸í : ÅØ½ºÆ® ÁÂÇ¥ÀÇ °ªÀ» presetÀ¸·Î ÁöÁ¤ÇÑ´Ù.
+* ì„¤ëª… : í…ìŠ¤íŠ¸ ì¢Œí‘œì˜ ê°’ì„ presetìœ¼ë¡œ ì§€ì •í•œë‹¤.
 ***********************************************************/
 void Utils::SetOrigin(sf::Text &text, Pivots preset)
 {
 	SetOrigin(text, text.getLocalBounds(), preset);
 }
 /**********************************************************
-* ¼³¸í : µµÇüÀÇ ÁÂÇ¥ÀÇ °ªÀ» presetÀ¸·Î ÁöÁ¤ÇÑ´Ù.
+* ì„¤ëª… : ë„í˜•ì˜ ì¢Œí‘œì˜ ê°’ì„ presetìœ¼ë¡œ ì§€ì •í•œë‹¤.
 ***********************************************************/
 void Utils::SetOrigin(sf::Shape &shape, Pivots preset)
 {
 	SetOrigin(shape, shape.getLocalBounds(), preset);
 }
 /**********************************************************
-* ¼³¸í : ±×¸²ÀÇ ÁÂÇ¥ÀÇ °ªÀ» presetÀ¸·Î ÁöÁ¤ÇÑ´Ù.
+* ì„¤ëª… : ê·¸ë¦¼ì˜ ì¢Œí‘œì˜ ê°’ì„ presetìœ¼ë¡œ ì§€ì •í•œë‹¤.
 ***********************************************************/
 void Utils::SetOrigin(sf::Sprite &sprite, Pivots preset)
 {
 	SetOrigin(sprite, sprite.getLocalBounds(), preset);
 }
 /**********************************************************
-* ¼³¸í : ÀüÃ¼ÀûÀÎ OriginÀ» ¼³Á¤ÇÏ±â À§ÇÑ ÇÔ¼ö.
+* ì„¤ëª… : ì „ì²´ì ì¸ Originì„ ì„¤ì •í•˜ê¸° ìœ„í•œ í•¨ìˆ˜.
 ***********************************************************/
 void Utils::SetOrigin(sf::Transformable &tr, sf::FloatRect bounds, Pivots preset)
 {
@@ -75,39 +75,41 @@ void Utils::SetOrigin(sf::Transformable &tr, sf::FloatRect bounds, Pivots preset
 	}
 }
 /**********************************************************
-* ¼³¸í : ·£´ı ¹üÀ§¸¦ ¼³Á¤ÇÑ´Ù.
+* ì„¤ëª… : ëœë¤ ë²”ìœ„ë¥¼ ì„¤ì •í•œë‹¤.
 ***********************************************************/
 int Utils::RandomRange(int min, int excludeMax)
 {
 	int range = excludeMax - min;
 	return min + gen() % range;
 }
+
 /**********************************************************
-* ¼³¸í : Ãæµ¹ Ã³¸®¸¦ ÇÑ´Ù.
+* ì„¤ëª… : ì—¬ê¸°ì„œ standRectëŠ” ë‹¤ë¥¸ í´ë˜ìŠ¤ì—ì„œ ë¶ˆëŸ¬ì˜¤ëŠ” ê±°ê³  testRectëŠ” í˜„ì¬ í´ë˜ìŠ¤, ì¦‰ ê¸°ì¤€ì´ ëœë‹¤.
+* ex) í”Œë ˆì´ì–´ì™€ ë²½ê³¼ì˜ ì¶©ëŒì„ ì ìœ¼ë ¤ í•  ë•Œ í”Œë ˆì´ì–´ í´ë˜ìŠ¤ì—ì„œ ì´ìš©í•˜ë©´ ëœë‹¤. standRect -> Wall  , testRect -> Player 
 ***********************************************************/
 Pivots Utils::CollisionDir(FloatRect standRect, FloatRect testRect)
 {
-	//testRect¸¦ ±âÁØ
+	//testRectë¥¼ ê¸°ì¤€
 
-	//testRectÀÇ ¿ŞÂÊ
+	//testRectì˜ ì™¼ìª½
 	if (testRect.left < standRect.left + standRect.width
 		&& testRect.left + testRect.width > standRect.left + standRect.width)
 	{
 		return Pivots::LC;
 	}
-	//¿À¸¥ÂÊ
+	//ì˜¤ë¥¸ìª½
 	else if (testRect.left + testRect.width > standRect.left && testRect.left < standRect.left)
 	{
 		return Pivots::RC;
 	}
 
-	//À§
+	//ìœ„
 	else if (testRect.top < standRect.top + standRect.height && testRect.top + testRect.height > standRect.top + standRect.height)
 	{
 		return Pivots::CT;
 	}
 
-	//¾Æ·¡
+	//ì•„ë˜
 	else
 	{
 		return Pivots::CB;
@@ -116,14 +118,14 @@ Pivots Utils::CollisionDir(FloatRect standRect, FloatRect testRect)
 	return Pivots();
 }
 /**********************************************************
-* ¼³¸í : ±æÀÌ¸¦ µé°í¿Â´Ù.
+* ì„¤ëª… : ê¸¸ì´ë¥¼ ë“¤ê³ ì˜¨ë‹¤.
 ***********************************************************/
 float Utils::GetLength(const Vector2f &vector)
 {
 	return sqrt(vector.x * vector.x + vector.y * vector.y);
 }
 /**********************************************************
-* ¼³¸í : Á¤±ÔÈ­ÇÑ´Ù.
+* ì„¤ëª… : ì •ê·œí™”í•œë‹¤.
 ***********************************************************/
 Vector2f Utils::Normalize(const Vector2f &vector)
 {
@@ -138,7 +140,7 @@ Vector2f Utils::Normalize(const Vector2f &vector)
 	return v;
 }
 /**********************************************************
-* ¼³¸í : È¸Àü. ¾²Áö¾ÊÀ» µí?
+* ì„¤ëª… : íšŒì „. ì“°ì§€ì•Šì„ ë“¯?
 ***********************************************************/
 float Utils::GetAngel(const Vector2f &from, const Vector2f &to)
 {

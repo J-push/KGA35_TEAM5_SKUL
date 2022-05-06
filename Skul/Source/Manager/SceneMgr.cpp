@@ -1,32 +1,32 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : ±è Àç ÈÖ
-* ÀÛ ¼º ÀÏ : 2022-05-04
-* ³»    ¿ë : SceneµéÀ» °ü¸®ÇÏ´Â ¸Å´ÏÀú ÆÄÀÏ
-* ¼ö Á¤ ÀÏ :
+* ì‘ ì„± ì : ê¹€ ì¬ íœ˜
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : Sceneë“¤ì„ ê´€ë¦¬í•˜ëŠ” ë§¤ë‹ˆì € íŒŒì¼
+* ìˆ˜ ì • ì¼ :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*includeë  í—¤ë”*/
 #include "SceneMgr.h"
 #include "../Scene/SceneTitle.h"
 #include "../Scene/SceneGame.h"
-#include "../Scene/SceneCharacter.h"
+#include "../Scene/SceneMapEditor.h"
 #include "../Scene/SceneMenu.h"
 /**********************************************************
-* ¼³¸í : SceneµéÀ» ÃÊ±âÈ­ÇÑ´Ù.
+* ì„¤ëª… : Sceneë“¤ì„ ì´ˆê¸°í™”í•œë‹¤.
 ***********************************************************/
 void SceneMgr::Init()
 {
 	scenes[(int)Scenes::TITLE] = new SceneTitle(*this);
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
+	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
-	scenes[(int)Scenes::CHARACTER] = new SceneCharacter(*this);
-
+  
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
+	scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::GAME]->Init();
-	scenes[(int)Scenes::CHARACTER]->Init();
 }
 /*******************************************************************
-* ¼³¸í : SceneÇÏ³ªÇÏ³ª°¡ ³¡³¯¶§¸¶´Ù »õ·Î¿î SceneÀ» ¹Ş¾Æ¿Í ½ÃÀÛÇÑ´Ù.
+* ì„¤ëª… : Sceneí•˜ë‚˜í•˜ë‚˜ê°€ ëë‚ ë•Œë§ˆë‹¤ ìƒˆë¡œìš´ Sceneì„ ë°›ì•„ì™€ ì‹œì‘í•œë‹¤.
 ********************************************************************/
 void SceneMgr::ChangeScene(Scenes newScene)
 {
@@ -35,7 +35,7 @@ void SceneMgr::ChangeScene(Scenes newScene)
 	scenes[(int)currentScene]->Start();
 }
 /*******************************************************************
-* ¼³¸í : Àå¸éÀ» ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+* ì„¤ëª… : ì¥ë©´ì„ ì—…ë°ì´íŠ¸ í•œë‹¤.
 ********************************************************************/
 void SceneMgr::Update(float dt)
 {
@@ -43,7 +43,7 @@ void SceneMgr::Update(float dt)
 }
 
 /*******************************************************************
-* ¼³¸í : ÇöÀç Àå¸éµéÀ» ±×¸°´Ù.
+* ì„¤ëª… : í˜„ì¬ ì¥ë©´ë“¤ì„ ê·¸ë¦°ë‹¤.
 ********************************************************************/
 void SceneMgr::Draw(sf::RenderWindow* window)
 {

@@ -8,7 +8,7 @@
 ***********************************************************/
 enum class Scenes
 {
-	TITLE, MENU, GAME, CHARACTER, COUNT
+	TITLE, MENU, GAME, EDITOR, COUNT
 };
 class Scene;
 

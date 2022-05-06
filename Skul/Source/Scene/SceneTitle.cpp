@@ -47,15 +47,15 @@ void SceneTitle::Update(float dt)
 	
 
 
-	if (Keyboard::isKeyPressed(Keyboard::Return))
+	if (InputManager::GetKeyDown(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
 	}
-
-
-
+	if (Keyboard::isKeyPressed(Keyboard::Num0))
+	{
+		mgr.ChangeScene(Scenes::EDITOR);
+	}
 	ui.Update(dt);
-
 
 }
 

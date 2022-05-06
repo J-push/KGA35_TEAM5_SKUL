@@ -1,10 +1,10 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : ±è Àç ÈÖ
-* ÀÛ ¼º ÀÏ : 2022-05-04
-* ³»    ¿ë : skul°ÔÀÓÀÇ ÀüÃ¼ÀûÀÎ ÇÁ·¹ÀÓ¿öÅ©¸¦ ´ã´ç.
-* ¼ö Á¤ ÀÏ :
+* ì‘ ì„± ì : ê¹€ ì¬ íœ˜
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : skulê²Œì„ì˜ ì „ì²´ì ì¸ í”„ë ˆì„ì›Œí¬ë¥¼ ë‹´ë‹¹.
+* ìˆ˜ ì • ì¼ :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*includeë  í—¤ë”*/
 #include <iostream>
 #include "Framework.h"
 #include "../Manager/ResourceMgr.h"
@@ -14,23 +14,23 @@
 
 using namespace std;
 /**********************************************************
-* ¼³¸í : Framework¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+* ì„¤ëª… : Frameworkë¥¼ ì´ˆê¸°í™”í•œë‹¤.
 ***********************************************************/
 bool Framework::Init()
 {	
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
-	VideoMode vm(1920, 1080);                               // ÇØ»óµµ	
-	window = new RenderWindow(vm, "Skull", Style::Default); // Ã¢±×·ÁÁÖ±â
-	                                                        //Default Ã¢¸ğµå, fullscreen Ç®¸ğµå
+	VideoMode vm(1920, 1080);                               // í•´ìƒë„	
+	window = new RenderWindow(vm, "Skull", Style::Default); // ì°½ê·¸ë ¤ì£¼ê¸°
+	                                                        //Default ì°½ëª¨ë“œ, fullscreen í’€ëª¨ë“œ
 	mainView = new View(FloatRect(0, 0, resolution.x, resolution.y));
-	ResourceMgr::instance()->Init(); // singletonÆĞÅÏÀ» ÀÌ¿ëÇÏ¿© ResourceMgr Å¬·¡½ºÀÇ Init()ÇÔ¼ö ½ÇÇà
-	sceneMgr.Init();		         // Àå¸éµé ÃÊ±âÈ­ÇÑ´Ù.
+	ResourceMgr::instance()->Init(); // singletoníŒ¨í„´ì„ ì´ìš©í•˜ì—¬ ResourceMgr í´ë˜ìŠ¤ì˜ Init()í•¨ìˆ˜ ì‹¤í–‰
+	sceneMgr.Init();		         // ì¥ë©´ë“¤ ì´ˆê¸°í™”í•œë‹¤.
 	return true;
 }
 
 /**********************************************************
-* ¼³¸í : °ÔÀÓ·çÇÁ¸¦ ½ÃÀÛÇÑ´Ù.
+* ì„¤ëª… : ê²Œì„ë£¨í”„ë¥¼ ì‹œì‘í•œë‹¤.
 ***********************************************************/
 void Framework::Run()
 {
@@ -54,7 +54,12 @@ void Framework::Run()
 					break;
 				}
 			}
-			ProcessEvent(event);
+			if (event.key.code == Keyboard::Escape)
+			{
+				window->close();
+			}
+			InputManager::ProcessInput(event);
+			//ProcessEvent(event);
 		}
 
 		Update(dt.asSeconds());
@@ -62,7 +67,7 @@ void Framework::Run()
 	}
 }
 /**********************************************************
-* ¼³¸í : Å° ÀÔ·Â Ã³¸®¸¦ ÇÑ´Ù.
+* ì„¤ëª… : í‚¤ ì…ë ¥ ì²˜ë¦¬ë¥¼ í•œë‹¤.
 ***********************************************************/
 void Framework::ProcessEvent(Event event)
 {
@@ -70,7 +75,7 @@ void Framework::ProcessEvent(Event event)
 }
 
 /**********************************************************
-* ¼³¸í : ¾÷µ¥ÀÌÆ®¸¦ Ã³¸®ÇÑ´Ù.
+* ì„¤ëª… : ì—…ë°ì´íŠ¸ë¥¼ ì²˜ë¦¬í•œë‹¤.
 ***********************************************************/
 void Framework::Update(float delaTime)
 {
@@ -79,7 +84,7 @@ void Framework::Update(float delaTime)
 }
 
 /**********************************************************
-* ¼³¸í : È­¸é¿¡ sceneÀ» ±×·ÁÁØ´Ù.
+* ì„¤ëª… : í™”ë©´ì— sceneì„ ê·¸ë ¤ì¤€ë‹¤.
 ***********************************************************/
 void Framework::Draw(RenderWindow* window)
 {
