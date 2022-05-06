@@ -5,9 +5,9 @@
 class Scene
 {
 protected:
-	sf::Text test;
+	//Text test;
+	//Texture texture;
 	SceneMgr& mgr;
-	sf::Texture texture;
 
 public:
 	Scene(SceneMgr& mgr);

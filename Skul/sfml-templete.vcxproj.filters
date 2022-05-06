@@ -60,7 +60,7 @@
     <ClCompile Include="Source\Scene\Scene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\SceneCharacter.cpp">
+    <ClCompile Include="Source\Scene\SceneMapEditor.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\SceneGame.cpp">
@@ -93,6 +93,8 @@
     <ClCompile Include="Source\Utils\Utils.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TestRectangle.cpp" />
+    </ClCompile>
     <ClCompile Include="Source\UIMaker.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -122,7 +124,7 @@
     <ClInclude Include="Source\Scene\Scene.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\SceneCharacter.h">
+    <ClInclude Include="Source\Scene\SceneMapEditor.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\SceneGame.h">
@@ -160,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="Source\Utils\ChangeMouse.h">
       <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRectangle.h" />
+     <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Source\UIMaker.h">
       <Filter>Source</Filter>

@@ -1,20 +1,19 @@
 #pragma once
 #include "Scene.h"
 
-class SceneCharacter : public Scene
+class SceneMapEditor : public Scene
 {
 private:
-	sf::Sprite spriteBackground;
-
+	sf::Sprite spriteTile;
 public:
-	SceneCharacter(SceneMgr& mgr) : Scene(mgr) {};
+	SceneMapEditor(SceneMgr& mgr) : Scene(mgr) {};
 
 	// Scene을(를) 통해 상속됨
 	virtual void Init() override;
 	virtual void Release() override;
+	virtual void Update(float dt) override;
 	virtual void Start() override;
 	virtual void End() override;
-	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow* window) override;
 };
 

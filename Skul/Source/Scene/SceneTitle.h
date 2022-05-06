@@ -3,6 +3,8 @@
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
 #include "../Utils/ChangeMouse.h"
+#include "../UIMaker.h"
+
 
 
 class SceneTitle : public Scene
@@ -10,23 +12,11 @@ class SceneTitle : public Scene
 private:
 
 	MouseCursor mouseCursor;
+	UIMaker ui;
 
-	AnimationController animationGameStart;
-	AnimationController animationMapEdit;
+	Sprite spriteTitle;
 
-	RectangleShape shapeGameStart;
-	Vector2f positionGameStart;
 
-	sf::Sprite spriteStart;
-	sf::Sprite spriteMapEdit;
-
-	std::map<std::string, Texture> texMap;
-
-	sf::Sprite spriteTitle;
-	sf::Sprite spriteStart1;
-	sf::Sprite spriteStart2;
-
-	
 
 
 public:

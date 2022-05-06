@@ -72,7 +72,7 @@ public:
 	Vector2f GetPosition();
 	Sprite GetSprite();
 
-	FloatRect GetGlobalBound();
+	virtual FloatRect GetGlobalBound();
 
 	void Draw(RenderWindow &window);
 

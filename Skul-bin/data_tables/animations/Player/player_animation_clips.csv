@@ -5,3 +5,4 @@ Attack1,17,0,data_tables/animations/Player/player_animation_Attack1.csv
 Attack2,17,0,data_tables/animations/Player/player_animation_Attack2.csv
 Attack3,17,0,data_tables/animations/Player/player_animation_Attack3.csv
 Dash,10,0,data_tables/animations/Player/player_animation_Dash.csv
+Jump,10,1,data_tables/animations/Player/player_animation_Jump.csv

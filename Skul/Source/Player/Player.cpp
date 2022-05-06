@@ -15,14 +15,16 @@
 void Player::Init()
 {
 	Player player;
-	mPlayerPosition.x = 512.f;
+
+	mPlayerPosition.x = 1100.f;
 	mPlayerPosition.y = 750.f;
+
 	mSpeed = START_PLAYER_SPEED;
 
 	mPlayerAttacking = false;
 	isDash = false;
 
-	SpritePlayer.setPosition(880, 700);
+	SpritePlayer.setPosition(mPlayerPosition);
 	SpritePlayer.setOrigin(150, 100);
 	SpritePlayer.setScale(2.f, 2.f);
 	animation.SetTarget(&SpritePlayer);
@@ -75,41 +77,6 @@ void Player::Init()
 void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 {
 
-}
-/**********************************************************
-* ���� : �÷��̾��� �뽬 ����� ����Ѵ�.
-***********************************************************/
-void Player::Dash(bool isDash, float dt)
-{
-	(this)->isDash = isDash;
-	if (isDash)
-	{
-		if (isLeft == true)
-		{
-			if (mPlayerPosition.x > dirDash.x - 300.f)
-			{
-				mPlayerPosition.x -= dt * mSpeed * 6.f;
-			}
-			else
-			{
-				isDash = false;
-			}
-		}
-		else if (isLeft == false)
-		{
-
-			if (mPlayerPosition.x < dirDash.x + 300.f)
-			{
-				mPlayerPosition.x += dt * mSpeed * 6.f;
-			}
-			else
-			{
-				isDash = false;
-			}
-		}
-		
-	}
-	
 }
 /**********************************************************
 * 설명 : 플레이어의 키보드 입력값에 따른 동작을 구현한다.
@@ -176,11 +143,11 @@ void Player::UpdateInput()
 		}
 		animation.PlayQueue("Idle");
 	}
-	/*if (InputManager::instance()->GetKeyUp(Keyboard::Z))
+
+	if (InputManager::instance()->GetKeyDown(Keyboard::C))
 	{
-		isDash = false;
-	}*/
-	
+		animation.PlayQueue("Jump");
+	}
 
 
 }
@@ -190,10 +157,36 @@ void Player::UpdateInput()
 void Player::Update(float dt)
 {
 	UpdateInput();
-	//�뽬 �ؾ���
+	
 	if (isDash)
 	{
-		Dash(isDash, dt);
+		if (isDash)
+		{
+			if (isLeft == true)
+			{
+				if (mPlayerPosition.x > dirDash.x - 300.f)
+				{
+					mPlayerPosition.x -= dt * mSpeed * 6.f;
+				}
+				else
+				{
+					isDash = false;
+				}
+			}
+			else if (isLeft == false)
+			{
+
+				if (mPlayerPosition.x < dirDash.x + 300.f)
+				{
+					mPlayerPosition.x += dt * mSpeed * 6.f;
+				}
+				else
+				{
+					isDash = false;
+				}
+			}
+
+		}
 	}
 	else
 	{
@@ -222,12 +215,9 @@ void Player::Update(float dt)
 		animation.Play("LeftWalk");
 		mPlayerPosition.x -= dir.x * mSpeed * dt;
 	}*/
-	//탑뷰든 사이드 뷰든 노상관~
-	//위는 X
-	
-	//mLastDir = dir;
-	val += 980.f * dt;
-	mPlayerPosition.y += val * dt;
+
+	//val += 980.f * dt;
+	//mPlayerPosition.y += val * dt;
 	SpritePlayer.setPosition(mPlayerPosition);
 
 	animation.Update(dt);

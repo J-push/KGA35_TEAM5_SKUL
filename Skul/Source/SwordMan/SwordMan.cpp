@@ -1,6 +1,6 @@
 ﻿/******************************************************************************
 * 작 성 자 : 진 현 섭
-* 작 성 일 : 2022-05-04
+* 작 성 일 : 2022-05-06
 * 내    용 : SwordMan의 동작을 구현한다.
 * 수 정 일 :
 *******************************************************************************/
@@ -19,8 +19,8 @@ void SwordMan::Init()
 {
 	srand((int)time(NULL));
 
-	position.x = 1920 * 0.5f; // 960
-	position.y = 1080 * 0.5f; // 540
+	position.x = 1400; // 960
+	position.y = 920; // 540
 	sprite.setScale(2.f, 2.f);
 	sprite.setPosition(position);
 	sprite.setOrigin(60, 60);
@@ -72,25 +72,30 @@ void SwordMan::Init()
 		/*	aniAttackDrop.AddClip(clip);
 			aniIntro.AddClip(clip);*/
 	}
-	animation.Play("Idle");
+	animation.Play("Walk");
 
 	mHp = START_SwordMan_HEALTH;
 	damage = START_SwordMan_DAMAGE;
 	speed = START_SwordMan_SPEED;
 	hitReady = true;
 	attackReady = false;
-	afterIdle = false;
 
-	attackDelay = 3;
+	attackDelay = 0;
+	walkDelay = 3;
 
-	mActionTime = 1.5f;
-	mAttack2Time = 5.f;
-
-	shape.setPosition(1160, 800);
+	shape.setPosition(1165, 800);
 	shape.setSize(Vector2f(430.f, 100.f));
 	shape.setFillColor(Color::Red);
-	rangeBound = shape.getGlobalBounds();
-	attackAble = rangeBound.intersects(player.GetGlobalBound());
+
+	shapeLeftMap.setPosition(1050, 800);
+	shapeLeftMap.setSize(Vector2f(100.f, 100.f));
+	shapeLeftMap.setFillColor(Color::Blue);
+
+	shapeRightMap.setPosition(1600, 800);
+	shapeRightMap.setSize(Vector2f(100.f, 100.f));
+	shapeRightMap.setFillColor(Color::Green);
+
+	action = SwordManAction::Idle;
 }
 
 SwordMan::~SwordMan()
@@ -134,33 +139,65 @@ void SwordMan::UpdateInput(Event event)
 /**********************************************************
 * 설명 : 보스 동작 처리 함수
 ***********************************************************/
-void SwordMan::Update(float dt)
+void SwordMan::Update(float dt, FloatRect playerBound)
 {
-	Player player;
+	// 플레이어 포인터로 받아오든 레퍼런스로 받아오던
 	animation.Update(dt);
+
+	rangeBound = shape.getGlobalBounds();
+	attackAble = rangeBound.intersects(playerBound);
+
+	leftMapBound = shapeLeftMap.getGlobalBounds();
+	leftMapCrash = leftMapBound.intersects(leftMapBound);
+
+	if (mHp <= 0)
+	{
+		action = SwordManAction::Death;
+	}
 
 	if (!attackReady)
 	{
 		attackDelay -= dt;
 	}
-	if (attackDelay < 0)
+	if (attackAble && attackDelay < 0)
 	{
 		attackDelay = 3;
 		attackReady = true;
 	}
 	if (action != SwordManAction::Death)
 	{
-		if (attackReady && action != SwordManAction::Hit && attackAble)
+		if (action == SwordManAction::Attack)
 		{
-			action = SwordManAction::Attack;
-			animation.Play("Attack");
+			std::cout << "공격";
+			animation.ClearPlayQueue();
+			animation.PlayQueue("Attack");
+			attackReady = false;
+			if (!attackReady)
+			{
+				action = SwordManAction::Walk;
+			}
 		}
-		else if (action != SwordManAction::Attack && action != SwordManAction::Hit)
+		if (action == SwordManAction::Idle)
 		{
-			action = SwordManAction::Idle;
-			sprite.setPosition(1400, 920);
-			animation.Play("Idle");
+			animation.PlayQueue("Idle");
+			if (attackReady && attackAble)
+			{
+				action = SwordManAction::Attack;
+			}
 		}
+		if (action == SwordManAction::Walk)
+		{
+			animation.PlayQueue("Walk");
+			if (attackReady && attackAble)
+			{
+				action = SwordManAction::Attack;
+			}
+
+		}
+	}
+	else if (action == SwordManAction::Death)
+	{
+		animation.Stop();
 	}
 }
 
@@ -207,23 +244,77 @@ bool SwordMan::UpdateCollision()
 	return false;
 }
 
+/**********************************************************
+* 설명 : 소드맨 그림 반환
+***********************************************************/
+Sprite SwordMan::GetSprite()
+{
+	return sprite;
+}
+
+/**********************************************************
+* 설명 : 소드맨 그림 4좌표의 틀 반환
+***********************************************************/
 FloatRect SwordMan::GetGlobalBound()
 {
 	return sprite.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 : 플레이어와의 충돌 더미 반환해줄 함수
+***********************************************************/
 FloatRect SwordMan::RangeGetGlobalBound()
 {
 	return shape.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 : 플레이어와의 충돌 더미를 반환해주는 함수
+***********************************************************/
 const RectangleShape SwordMan::GetShape()
 {
 	return shape;
 }
 
+/**********************************************************
+* 설명 :좌측 맵과의 충돌 더미 반환 함수
+***********************************************************/
+FloatRect SwordMan::LeftMapGetGlobalBound()
+{
+	return shapeLeftMap.getGlobalBounds();
+}
+
+/**********************************************************
+* 설명 : 좌측 맵과의 충돌 더미를 반환해주는 함수
+***********************************************************/
+const RectangleShape SwordMan::GetLeftMapShape()
+{
+	return shapeLeftMap;
+}
+
+/**********************************************************
+* 설명 :우측 맵과의 충돌 더미 반환 함수
+***********************************************************/
+FloatRect SwordMan::RightMapGetGlobalBound()
+{
+	return shapeRightMap.getGlobalBounds();
+}
+
+/**********************************************************
+* 설명 :우측 맵과의 충돌 더미를 반환해주는 함수
+***********************************************************/
+const RectangleShape SwordMan::GetRightMapShape()
+{
+	return shapeRightMap;
+}
+
+/**********************************************************
+* 설명 :그림 그려주는 함수
+***********************************************************/
 void SwordMan::Draw(RenderWindow& window)
 {
-	window.draw(sprite);
 	window.draw(shape);
+	window.draw(shapeLeftMap);
+	window.draw(shapeRightMap);
+	window.draw(sprite);
 }
