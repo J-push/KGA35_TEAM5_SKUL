@@ -24,7 +24,6 @@ private:
 public:
 	SceneGame(SceneMgr& mgr) : Scene(mgr) {};
 
-	// SceneÀ»(¸¦) ÅëÇØ »ó¼ÓµÊ
 	virtual void Init() override;
 	virtual void Release() override;
 	virtual void Start() override;
