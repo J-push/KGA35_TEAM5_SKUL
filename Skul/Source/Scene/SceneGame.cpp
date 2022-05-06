@@ -52,8 +52,8 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	tilemap.Draw(window);
 	player.Draw(*window);
 	//boss.Draw(*window);
-	ui.DrawSceneGame(window);
 
 	SwordMan.Draw(*window);
+	ui.DrawSceneGame(window);
 
 }

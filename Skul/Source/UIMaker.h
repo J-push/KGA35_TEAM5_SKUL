@@ -5,6 +5,7 @@
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/ChangeMouse.h"
 #include "../Source/Manager/InputManager.h"
+#include "../Source/Player/Player.h"
 
 enum class Heads
 {
@@ -14,14 +15,13 @@ enum class Heads
 };
 
 
-
 class UIMaker
 {
 private:
 
 	Scenes currentScene;
 	MouseCursor mouseCursor;
-
+	Player player;
 
 	// Title UI
 	AnimationController animationGameStart;
@@ -41,6 +41,7 @@ private:
 	// Game UI
 	Sprite spriteMainFrame;
 	Sprite spriteHpBar;
+	Sprite spriteAbutton;
 	
 	Sprite spriteGrimReaperIcon1;
 	Sprite spriteGrimReaperIcon3;
@@ -49,11 +50,13 @@ private:
 	Sprite spriteLittleBoneIcon1;
 	Sprite spriteLittleBoneIcon3;
 
-
 	int nowHead = 2;
 	int subHead = 0;
 
 	float hp = 2.5f;
+
+	Text textHp;
+
 
 public:
 
@@ -65,6 +68,8 @@ public:
 	const int PORTRAIT_Y = MAIN_FRAME_Y - 16;
 	const int SKIIL1_X = MAIN_FRAME_X + 142;
 	const int SKIIL1_Y = MAIN_FRAME_Y + 33;
+	const int A_X = MAIN_FRAME_X + 160;
+	const int A_Y = MAIN_FRAME_Y + 15;
 	const int MINI_HEAD_X = MAIN_FRAME_X;
 	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
 

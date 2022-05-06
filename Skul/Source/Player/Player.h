@@ -76,6 +76,11 @@ public:
 
 	void Draw(RenderWindow &window);
 
+	// 재휘 추가 최대, 현재체력 받아오기
+	int GetMaxPlayerHealth();
+	int GetCurrentPlayerHealth();
+
+
 
 
 };
