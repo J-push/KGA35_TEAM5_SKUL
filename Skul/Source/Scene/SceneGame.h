@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "../Player/Player.h"
-#include "../Boss/Boss.h"
+#include "../SwordMan/SwordMan.h"
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
@@ -17,7 +17,7 @@ private:
 	sf::Sprite spriteBackground;
 	Player player;
 
-	Boss boss;
+	SwordMan SwordMan;
 	MouseCursor mouseCursor;
 	UIMaker ui;
 

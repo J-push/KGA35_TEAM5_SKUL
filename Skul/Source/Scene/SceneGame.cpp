@@ -16,7 +16,7 @@ void SceneGame::Init()
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-	boss.Init();
+	SwordMan.Init();
 	player.Init();
 	ui.Init();
 	mouseCursor.Init();
@@ -40,8 +40,7 @@ void SceneGame::Update(float dt)
 
 	player.Update(dt);
 
-	boss.Update(dt);
-
+	SwordMan.Update(dt);
 
 	tilemap.CreateBackGround();
 
@@ -55,7 +54,7 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
-	boss.Draw(*window);
+	SwordMan.Draw(*window);
 	ui.Draw(window);
 	mouseCursor.Draw(window);
 
