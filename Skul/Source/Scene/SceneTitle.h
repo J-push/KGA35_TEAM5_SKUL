@@ -3,27 +3,20 @@
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
 #include "../Utils/ChangeMouse.h"
+#include "../UIMaker.h"
+
 
 
 class SceneTitle : public Scene
 {
 private:
 
-	MouseCursor mouseCurse;
+	MouseCursor mouseCursor;
+	UIMaker ui;
 
-	AnimationController animationGameStart;
-	AnimationController animationMapEdit;
+	Sprite spriteTitle;
 
-	std::map<std::string, Texture> texMap;
 
-	sf::Sprite spriteTitle;
-	sf::Sprite spriteStart1;
-	sf::Sprite spriteStart2;
-
-	sf::Sprite spriteStart;
-	sf::RectangleShape StartShape;
-
-	sf::Sprite spriteMapEdit;
 
 
 public:
@@ -36,5 +29,7 @@ public:
 	virtual void End() override;
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow* window) override;
+
+
 };
 

@@ -1,10 +1,17 @@
+/******************************************************************************
+* ìž‘ ì„± ìž : ê¹€ ìž¬ íœ˜
+* ìž‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : Sceneë“¤ì„ ê´€ë¦¬í•˜ëŠ” ë§¤ë‹ˆì € íŒŒì¼
+* ìˆ˜ ì • ì¼ :
+*******************************************************************************/
+/*includeë  í—¤ë”*/
 #include "SceneMgr.h"
 #include "../Scene/SceneTitle.h"
 #include "../Scene/SceneGame.h"
 #include "../Scene/SceneMapEditor.h"
 #include "../Scene/SceneMenu.h"
 /**********************************************************
-* ¼³¸í : SceneµéÀ» ÃÊ±âÈ­ÇÑ´Ù.
+* ì„¤ëª… : Sceneë“¤ì„ ì´ˆê¸°í™”í•œë‹¤.
 ***********************************************************/
 void SceneMgr::Init()
 {
@@ -12,14 +19,14 @@ void SceneMgr::Init()
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
 	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
-
+  
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
 	scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::GAME]->Init();
 }
 /*******************************************************************
-* ¼³¸í : SceneÇÏ³ªÇÏ³ª°¡ ³¡³¯¶§¸¶´Ù »õ·Î¿î SceneÀ» ¹Þ¾Æ¿Í ½ÃÀÛÇÑ´Ù.
+* ì„¤ëª… : Sceneí•˜ë‚˜í•˜ë‚˜ê°€ ëë‚ ë•Œë§ˆë‹¤ ìƒˆë¡œìš´ Sceneì„ ë°›ì•„ì™€ ì‹œìž‘í•œë‹¤.
 ********************************************************************/
 void SceneMgr::ChangeScene(Scenes newScene)
 {
@@ -28,7 +35,7 @@ void SceneMgr::ChangeScene(Scenes newScene)
 	scenes[(int)currentScene]->Start();
 }
 /*******************************************************************
-* ¼³¸í : Àå¸éÀ» ¾÷µ¥ÀÌÆ® ÇÑ´Ù.
+* ì„¤ëª… : ìž¥ë©´ì„ ì—…ë°ì´íŠ¸ í•œë‹¤.
 ********************************************************************/
 void SceneMgr::Update(float dt)
 {
@@ -36,9 +43,20 @@ void SceneMgr::Update(float dt)
 }
 
 /*******************************************************************
-* ¼³¸í : ÇöÀç Àå¸éµéÀ» ±×¸°´Ù.
+* ì„¤ëª… : í˜„ìž¬ ìž¥ë©´ë“¤ì„ ê·¸ë¦°ë‹¤.
 ********************************************************************/
 void SceneMgr::Draw(sf::RenderWindow* window)
 {
 	scenes[(int)currentScene]->Draw(window);
 }
+
+Scenes SceneMgr::GetCurrentScene()
+{
+	return currentScene;
+}
+
+
+
+
+
+

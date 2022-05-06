@@ -3,8 +3,8 @@
 
 void SceneMenu::Init()
 {
-	test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
-	test.setString("MENU");
+	//test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+	//test.setString("MENU");
 }
 
 void SceneMenu::Release()
@@ -29,5 +29,5 @@ void SceneMenu::Update(float dt)
 
 void SceneMenu::Draw(sf::RenderWindow* window)
 {
-	window->draw(test);
+	//window->draw(test);
 }

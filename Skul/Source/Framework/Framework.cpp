@@ -1,35 +1,36 @@
+/******************************************************************************
+* ì‘ ì„± ì : ê¹€ ì¬ íœ˜
+* ì‘ ì„± ì¼ : 2022-05-04
+* ë‚´    ìš© : skulê²Œì„ì˜ ì „ì²´ì ì¸ í”„ë ˆì„ì›Œí¬ë¥¼ ë‹´ë‹¹.
+* ìˆ˜ ì • ì¼ :
+*******************************************************************************/
+/*includeë  í—¤ë”*/
+#include <iostream>
 #include "Framework.h"
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Utils/Singleton.h"
-#include <iostream>
 #include "../Manager/InputManager.h"
 
 using namespace std;
-
-Framework::Framework()
-{
-}
-Framework::~Framework()
-{
-}
-
 /**********************************************************
-* ¼³¸í : Framework¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+* ì„¤ëª… : Frameworkë¥¼ ì´ˆê¸°í™”í•œë‹¤.
 ***********************************************************/
 bool Framework::Init()
 {	
-	VideoMode vm(1920, 1080);                               // ÇØ»óµµ	
-	window = new RenderWindow(vm, "Skull", Style::Default); // Ã¢±×·ÁÁÖ±â
-	                                                        //Default Ã¢¸ğµå, fullscreen Ç®¸ğµå
-
-	ResourceMgr::instance()->Init(); // singletonÆĞÅÏÀ» ÀÌ¿ëÇÏ¿© ResourceMgr Å¬·¡½ºÀÇ Init()ÇÔ¼ö ½ÇÇà
-	sceneMgr.Init();		         // Àå¸éµé ÃÊ±âÈ­ÇÑ´Ù.
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
+	VideoMode vm(1920, 1080);                               // í•´ìƒë„	
+	window = new RenderWindow(vm, "Skull", Style::Default); // ì°½ê·¸ë ¤ì£¼ê¸°
+	                                                        //Default ì°½ëª¨ë“œ, fullscreen í’€ëª¨ë“œ
+	mainView = new View(FloatRect(0, 0, resolution.x, resolution.y));
+	ResourceMgr::instance()->Init(); // singletoníŒ¨í„´ì„ ì´ìš©í•˜ì—¬ ResourceMgr í´ë˜ìŠ¤ì˜ Init()í•¨ìˆ˜ ì‹¤í–‰
+	sceneMgr.Init();		         // ì¥ë©´ë“¤ ì´ˆê¸°í™”í•œë‹¤.
 	return true;
 }
 
 /**********************************************************
-* ¼³¸í : °ÔÀÓ·çÇÁ¸¦ ½ÃÀÛÇÑ´Ù.
+* ì„¤ëª… : ê²Œì„ë£¨í”„ë¥¼ ì‹œì‘í•œë‹¤.
 ***********************************************************/
 void Framework::Run()
 {
@@ -45,6 +46,13 @@ void Framework::Run()
 			case Event::Closed:
 				window->close();
 				break;
+			case Event::KeyPressed:
+				switch (event.key.code)
+				{
+				case Keyboard::Escape:
+					window->close();
+					break;
+				}
 			}
 			if (event.key.code == Keyboard::Escape)
 			{
@@ -59,22 +67,24 @@ void Framework::Run()
 	}
 }
 /**********************************************************
-* ¼³¸í : Å° ÀÔ·Â Ã³¸®¸¦ ÇÑ´Ù.
+* ì„¤ëª… : í‚¤ ì…ë ¥ ì²˜ë¦¬ë¥¼ í•œë‹¤.
 ***********************************************************/
 void Framework::ProcessEvent(Event event)
 {
+	InputManager::ProcessInput(event);
 }
 
 /**********************************************************
-* ¼³¸í : ¾÷µ¥ÀÌÆ®¸¦ Ã³¸®ÇÑ´Ù.
+* ì„¤ëª… : ì—…ë°ì´íŠ¸ë¥¼ ì²˜ë¦¬í•œë‹¤.
 ***********************************************************/
 void Framework::Update(float delaTime)
 {
 	sceneMgr.Update(delaTime);
+	InputManager::Update(delaTime, *window, *mainView);
 }
 
 /**********************************************************
-* ¼³¸í : È­¸é¿¡ sceneÀ» ±×·ÁÁØ´Ù.
+* ì„¤ëª… : í™”ë©´ì— sceneì„ ê·¸ë ¤ì¤€ë‹¤.
 ***********************************************************/
 void Framework::Draw(RenderWindow* window)
 {

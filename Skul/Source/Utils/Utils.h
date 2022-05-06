@@ -3,7 +3,9 @@
 #include <random>
 
 using namespace sf;
-
+/**********************************************************
+* 설명 : 좌표를 지정해주기 위한 틀.
+***********************************************************/
 enum class Pivots
 {
 	// L, CH, R
@@ -12,7 +14,9 @@ enum class Pivots
 	LC, CC, RC,
 	LB, CB, RB
 };
-
+/**********************************************************
+* 설명 : Utils 클래스
+***********************************************************/
 class Utils
 {
 private:
@@ -21,7 +25,7 @@ private:
 
 public:
 	static void SetOrigin(Text &text, Pivots preset);
-
+	
 	static void SetOrigin(Sprite &sprite, Pivots preset);
 
 	static void SetOrigin(Shape &shape, Pivots preset);

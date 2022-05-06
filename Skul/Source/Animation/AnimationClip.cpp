@@ -1,9 +1,16 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-04
+* 내    용 : Animation을 넣기 위한 기본틀
+* 수 정 일 :
+*******************************************************************************/
+/*include될 헤더*/
 #include "AnimationClip.h"
 
 /**********************************************************
 * 설명 : AnimationFrame구조체의 객체 초기화
 ***********************************************************/
-AnimationFrame::AnimationFrame(const Texture tex, const IntRect coord)\
+AnimationFrame::AnimationFrame(const Texture tex, const IntRect coord)
 	:texture(tex), texCoord(coord)
 {
 }
