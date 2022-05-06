@@ -40,7 +40,7 @@ void SceneGame::Update(float dt)
 
 	player.Update(dt);
 
-	SwordMan.Update(dt);
+	SwordMan.Update(dt, player.GetGlobalBound());
 
 	tilemap.CreateBackGround();
 

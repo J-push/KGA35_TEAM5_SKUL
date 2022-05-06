@@ -15,8 +15,10 @@
 void Player::Init()
 {
 	Player player;
+
 	mPlayerPosition.x = 1100.f;
 	mPlayerPosition.y = 750.f;
+
 	mSpeed = START_PLAYER_SPEED;
 
 	mPlayerAttacking = false;
@@ -213,7 +215,7 @@ void Player::Update(float dt)
 		animation.Play("LeftWalk");
 		mPlayerPosition.x -= dir.x * mSpeed * dt;
 	}*/
-		
+
 	//val += 980.f * dt;
 	//mPlayerPosition.y += val * dt;
 	SpritePlayer.setPosition(mPlayerPosition);
