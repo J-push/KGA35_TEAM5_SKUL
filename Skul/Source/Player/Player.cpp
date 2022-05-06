@@ -15,14 +15,14 @@
 void Player::Init()
 {
 	Player player;
-	mPlayerPosition.x = 512.f;
-	mPlayerPosition.y = 750.f;
+	mPlayerPosition.x = 880.f;
+	mPlayerPosition.y = 765.f;
 	mSpeed = START_PLAYER_SPEED;
 
 	mPlayerAttacking = false;
 	isDash = false;
 
-	SpritePlayer.setPosition(880, 700);
+	SpritePlayer.setPosition(mPlayerPosition);
 	SpritePlayer.setOrigin(150, 100);
 	SpritePlayer.setScale(2.f, 2.f);
 	animation.SetTarget(&SpritePlayer);
@@ -226,8 +226,8 @@ void Player::Update(float dt)
 	//위는 X
 	
 	//mLastDir = dir;
-	val += 980.f * dt;
-	mPlayerPosition.y += val * dt;
+	//val += 980.f * dt;
+	//mPlayerPosition.y += val * dt;
 	SpritePlayer.setPosition(mPlayerPosition);
 
 	animation.Update(dt);
