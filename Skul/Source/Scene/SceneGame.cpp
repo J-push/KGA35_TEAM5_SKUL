@@ -57,7 +57,7 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	tilemap.Draw(window);
 	player.Draw(*window);
 	boss.Draw(*window);
-	ui.Draw(window);
-	mouseCursor.Draw(window);
+	ui.DrawSceneGame(window);
+	
 
 }

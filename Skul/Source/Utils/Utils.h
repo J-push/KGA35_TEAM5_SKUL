@@ -25,7 +25,7 @@ private:
 
 public:
 	static void SetOrigin(Text &text, Pivots preset);
-
+	
 	static void SetOrigin(Sprite &sprite, Pivots preset);
 
 	static void SetOrigin(Shape &shape, Pivots preset);

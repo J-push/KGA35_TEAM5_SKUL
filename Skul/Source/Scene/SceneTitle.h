@@ -12,21 +12,10 @@ class SceneTitle : public Scene
 private:
 
 	MouseCursor mouseCursor;
-
-	AnimationController animationGameStart;
-	AnimationController animationMapEdit;
-
-	RectangleShape shapeGameStart;
-	RectangleShape shapeMapEdit;
-
-	sf::Sprite spriteStart;
-	sf::Sprite spriteMapEdit;
-
-	std::map<std::string, Texture> texMap;
-
-	sf::Sprite spriteTitle;
-
 	UIMaker ui;
+
+	Sprite spriteTitle;
+
 
 
 

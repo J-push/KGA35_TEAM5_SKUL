@@ -2,9 +2,12 @@
 
 #include <iostream>
 
+
 void UIMaker::Init()
 {
-	//mouseCursor.Init();
+	clickGameStart = false;
+	mouseCursor.Init();
+
 
 	// Title UI
 	shapeGameStart.setPosition(880, 700);
@@ -62,96 +65,143 @@ void UIMaker::Init()
 	spriteMainFrame.setTexture(*ResourceMgr::instance()->GetTexture("MAINFRAMETEX"));
 	spriteMainFrame.setPosition(MAIN_FRAME_X, MAIN_FRAME_Y);
 	spriteMainFrame.setScale(2.5, 2.5);
-
 	spriteHpBar.setTexture(*ResourceMgr::instance()->GetTexture("HPBARTEX"));
-	spriteHpBar.setPosition(HP_BAR_X, HP_BAR_Y); // +58, +110
+	spriteHpBar.setPosition(HP_BAR_X, HP_BAR_Y);
 	spriteHpBar.setScale(hp, 2.5);
 
-	SpriteGrimReaperIcon.setTexture(*ResourceMgr::instance()->GetTexture("REAPERICONTEX"));
-	SpriteGrimReaperIcon.setPosition(PORTRAIT_X, PORTRAIT_Y); // =20, 0
-	SpriteGrimReaperIcon.setScale(2.0, 2.0);
+	spriteGrimReaperIcon1.setTexture(*ResourceMgr::instance()->GetTexture("REAPERICONTEX1"));
+	spriteGrimReaperIcon1.setPosition(MINI_HEAD_X, MINI_HEAD_Y);
+	spriteGrimReaperIcon1.setScale(1.0, 1.0);
+	spriteGrimReaperIcon3.setTexture(*ResourceMgr::instance()->GetTexture("REAPERICONTEX3"));
+	spriteGrimReaperIcon3.setPosition(PORTRAIT_X, PORTRAIT_Y);
+	spriteGrimReaperIcon3.setScale(2.0, 2.0);
+	spriteGrimReaperSkill.setTexture(*ResourceMgr::instance()->GetTexture("REAPERSKILLTEX"));
+	spriteGrimReaperSkill.setPosition(SKIIL1_X, SKIIL1_Y);
+	spriteGrimReaperSkill.setScale(2.8, 2.8);	
 
-	SpriteGrimReaperSkill.setTexture(*ResourceMgr::instance()->GetTexture("REAPERSKILLTEX"));
-	SpriteGrimReaperSkill.setPosition(SKIIL1_X, SKIIL1_Y); // +142, +33
-	SpriteGrimReaperSkill.setScale(2.8, 2.8);	
+
+	spriteLittleBoneIcon1.setTexture(*ResourceMgr::instance()->GetTexture("BONEICONTEX1"));
+	spriteLittleBoneIcon1.setPosition(MINI_HEAD_X, MINI_HEAD_Y);
+	spriteLittleBoneIcon1.setScale(1.0, 1.0);
+	spriteLittleBoneIcon3.setTexture(*ResourceMgr::instance()->GetTexture("BONEICONTEX3"));
+	spriteLittleBoneIcon3.setPosition(PORTRAIT_X + 35, PORTRAIT_Y + 18);
+	spriteLittleBoneIcon3.setScale(2.5, 2.5);
+
+	
 }
 
 
 void UIMaker::Update(float dt)
 {
-	currentScene = mgr.GetCurrentScene();
+	animationGameStart.Update(dt);
+	animationMapEdit.Update(dt);
 
-	/*if (currentScene == 0)
+	mouseCursor.Update(dt);
+
+	FloatRect mouseBound = mouseCursor.GetGlobalBounds();
+	bool checkGameStart = mouseBound.intersects(shapeGameStart.getGlobalBounds());
+	bool checkMapEdit = mouseBound.intersects(shapeMapEdit.getGlobalBounds());
+
+	if (checkGameStart)
 	{
-		animationGameStart.Update(dt);
-		animationMapEdit.Update(dt);
-
-		mouseCursor.Update(dt);
-
-		FloatRect mouseBound = mouseCursor.GetGlobalBounds();
-		bool checkGameStart = mouseBound.intersects(shapeGameStart.getGlobalBounds());
-		bool checkMapEdit = mouseBound.intersects(shapeMapEdit.getGlobalBounds());
-
-		if (checkGameStart)
+		animationGameStart.Play("STARTMOUSETEX");
+		if (Mouse::isButtonPressed(Mouse::Left))
 		{
-			animationGameStart.Play("STARTMOUSETEX");
-			if (Mouse::isButtonPressed(Mouse::Left))
-			{
-				mgr.ChangeScene(Scenes::GAME);
-			}
+			clickGameStart = true;
 		}
 		else
 		{
-			animationGameStart.Play("STARTTEX");
+			clickGameStart = false;
 		}
-		if (checkMapEdit)
-		{
-			animationMapEdit.Play("MAPMOUSETEX");
-		}
-		else
-		{
-			animationMapEdit.Play("MAPTEX");
-		}
-	}*/
-
-
-	if (currentScene == Scenes::GAME)
+	}
+	else
 	{
-		animationGameStart.Stop();
-		animationMapEdit.Stop();
-		if (Keyboard::isKeyPressed(Keyboard::Num5) && hp > 0.f)
-		{
-			hp -= 0.01f;
-			spriteHpBar.setScale(hp, 2.5);
-		}
-		if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
-		{
-			hp += 0.01f;
-			spriteHpBar.setScale(hp, 2.5);
-		}
+		animationGameStart.Play("STARTTEX");
+	}
+	if (checkMapEdit)
+	{
+		animationMapEdit.Play("MAPMOUSETEX");
+	}
+	else
+	{
+		animationMapEdit.Play("MAPTEX");
+	}
+	
+
+
+	// Game UI
+	if (Keyboard::isKeyPressed(Keyboard::Num5) && hp > 0.f)
+	{
+		hp -= 0.01f;
+		spriteHpBar.setScale(hp, 2.5);
+	}
+	if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
+	{
+		hp += 0.01f;
+		spriteHpBar.setScale(hp, 2.5);
+	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ¸®Æ²º» ¸ÔÀ½
+	{
+		subHead = (int)Heads::LITTLEBORN;
+	}
+
+	if (InputManager::GetKeyDown(Keyboard::Space) && subHead != 0)
+	{
+		int change = 0;
+		change = subHead;
+		subHead = nowHead;
+		nowHead = change;
+	
 	}
 }
 
 
-void UIMaker::Draw(sf::RenderWindow *window)
+
+
+void UIMaker::DrawSceneTitle(sf::RenderWindow *window)
 {
-	/*if (currentScene == 0)
+
+	window->draw(spriteStart);
+	window->draw(spriteMapEdit);
+	mouseCursor.Draw(window);
+}
+
+bool UIMaker::GetClickGameStart()
+{
+	return clickGameStart;
+}
+
+
+void UIMaker::DrawSceneGame(sf::RenderWindow *window)
+{
+
+	window->draw(spriteMainFrame);
+	window->draw(spriteHpBar);
+
+	switch (nowHead)
 	{
-		window->draw(spriteStart);
-		window->draw(spriteMapEdit);
-
-		
-	}*/
-
-
-	if (currentScene == Scenes::GAME)
-	{
-		window->draw(spriteMainFrame);
-		window->draw(spriteHpBar);
-		window->draw(SpriteGrimReaperIcon);
-		window->draw(SpriteGrimReaperSkill);
+	case 1:
+		window->draw(spriteLittleBoneIcon3);
+		break;
+	case 2:
+		window->draw(spriteGrimReaperIcon3);
+		window->draw(spriteGrimReaperSkill);
+		break;
+	
 	}
 
+	switch (subHead)
+	{
+	case 1:
+		window->draw(spriteLittleBoneIcon1);
+		break;
+	case 2:
+		window->draw(spriteGrimReaperIcon1);
+		break;	
+	}
+
+	mouseCursor.Draw(window);
 }
 
 

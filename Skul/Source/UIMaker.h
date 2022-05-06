@@ -4,12 +4,21 @@
 #include "../Source/Manager/SceneMgr.h"
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/ChangeMouse.h"
+#include "../Source/Manager/InputManager.h"
+
+enum class Heads
+{
+	NONE,
+	LITTLEBORN,
+	REAPER,
+};
+
+
 
 class UIMaker
 {
 private:
 
-	SceneMgr mgr;
 	Scenes currentScene;
 	MouseCursor mouseCursor;
 
@@ -21,17 +30,28 @@ private:
 	RectangleShape shapeGameStart;
 	RectangleShape shapeMapEdit;
 
-	sf::Sprite spriteStart;
-	sf::Sprite spriteMapEdit;
+	Sprite spriteStart;
+	Sprite spriteMapEdit;
 
 	std::map<std::string, Texture> texMap;
+
+	bool clickGameStart;
 
 
 	// Game UI
 	Sprite spriteMainFrame;
 	Sprite spriteHpBar;
-	Sprite SpriteGrimReaperIcon;
-	Sprite SpriteGrimReaperSkill;
+	
+	Sprite spriteGrimReaperIcon1;
+	Sprite spriteGrimReaperIcon3;
+	Sprite spriteGrimReaperSkill;
+
+	Sprite spriteLittleBoneIcon1;
+	Sprite spriteLittleBoneIcon3;
+
+
+	int nowHead = 2;
+	int subHead = 0;
 
 	float hp = 2.5f;
 
@@ -45,12 +65,18 @@ public:
 	const int PORTRAIT_Y = MAIN_FRAME_Y - 16;
 	const int SKIIL1_X = MAIN_FRAME_X + 142;
 	const int SKIIL1_Y = MAIN_FRAME_Y + 33;
-
+	const int MINI_HEAD_X = MAIN_FRAME_X;
+	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
 
 	void Init();
 
 	virtual void Update(float dt);
-	virtual void Draw(sf::RenderWindow *window);
+	//virtual void Draw(sf::RenderWindow *window);
+
+	bool GetClickGameStart();
+
+	virtual void DrawSceneTitle(sf::RenderWindow *window);
+	virtual void DrawSceneGame(sf::RenderWindow *window);
 
 };
 
