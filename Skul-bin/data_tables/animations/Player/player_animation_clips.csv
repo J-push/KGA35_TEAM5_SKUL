@@ -6,3 +6,4 @@ Attack2,17,0,data_tables/animations/Player/player_animation_Attack2.csv
 Attack3,17,0,data_tables/animations/Player/player_animation_Attack3.csv
 Dash,10,0,data_tables/animations/Player/player_animation_Dash.csv
 Jump,10,1,data_tables/animations/Player/player_animation_Jump.csv
+Skill1,17,0,data_tables/animations/Player/player_animation_Skill1.csv
