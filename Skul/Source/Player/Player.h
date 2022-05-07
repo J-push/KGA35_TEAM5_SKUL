@@ -3,6 +3,8 @@
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
+#include "../Utils/Utils.h"
+#include "../TileMap/Tilemap.h"
 
 using namespace sf;
 
@@ -16,6 +18,8 @@ private:
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
 	const float GRAVITY_POWER = 980.f;			//중력
 
+	const float DASH_COOLTIME = 3.f;
+	
 	
 	Texture texture;
 
@@ -30,13 +34,16 @@ private:
 
 	std::map<std::string, Texture> texMap;
 
-	
+	Tilemap tileMap;
+
 
 	float val;									//중력
 	int mTileSize;								//타일의 크기
 
 	bool isJump;								//점프했니?
 	bool isDash;								//대쉬했니?
+
+	bool canUseDash;							//대쉬 사용 가능 유무
 
 	bool isLeft;
 
@@ -75,11 +82,11 @@ public:
 
 	void Move(float speed);
 	void Dash(bool isDash, float dt);
-	void Jump();
+	void Jump(float dt);
 
 	
 
-	void UpdateInput();
+	void UpdateInput(float dt);
 	void Update(float dt);
 	Vector2f GetPosition();
 	Sprite GetSprite();

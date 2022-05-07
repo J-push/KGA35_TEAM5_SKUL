@@ -1,4 +1,7 @@
 TEXTURE PATH,L,T,W,H
+graphics/PlayerSkill/soulBurn.png,0,0,0,0
+graphics/PlayerSkill/soulBurn.png,0,0,0,0
+graphics/PlayerSkill/soulBurn.png,0,0,0,0
 graphics/PlayerSkill/soulBurn.png,0,0,100,100
 graphics/PlayerSkill/soulBurn.png,100,0,100,100
 graphics/PlayerSkill/soulBurn.png,200,0,100,100
@@ -24,3 +27,4 @@ graphics/PlayerSkill/soulBurn.png,100,400,100,100
 graphics/PlayerSkill/soulBurn.png,200,400,100,100
 graphics/PlayerSkill/soulBurn.png,300,400,100,100
 graphics/PlayerSkill/soulBurn.png,400,400,100,100
+graphics/PlayerSkill/soulBurn.png,0,0,0,0
