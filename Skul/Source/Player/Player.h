@@ -5,57 +5,76 @@
 #include "../Manager/InputManager.h"
 #include "../TileMap/Tilemap.h"
 #include "../../TestRectangle.h"
+#include "../Utils/Utils.h"
 
 using namespace sf;
 
 class Player
 {
 private:
-	const float START_PLAYER_HEALTH = 100;		//½ÃÀÛ ÇÃ·¹ÀÌ¾î Ã¼·Â;
-	const float START_PLAYER_SPEED = 200;		//½ÃÀÛ ÇÃ·¹ÀÌ¾î ¼Óµµ;
-	const float START_PLAYER_STR = 10;			//½ÃÀÛ ÇÃ·¹ÀÌ¾î °ø°İ·Â
-	const float GRAVITY_POWER = 980.f;			//Áß·Â
+	const float Player_Size = 1.5f;
+	const float Left_Player_Size = -1.5f;
+	const float START_PLAYER_HEALTH = 100;		//ì‹œì‘ í”Œë ˆì´ì–´ ì²´ë ¥;
+	const float START_PLAYER_SPEED = 200;		//ì‹œì‘ í”Œë ˆì´ì–´ ì†ë„;
+	const float START_PLAYER_STR = 10;			//ì‹œì‘ í”Œë ˆì´ì–´ ê³µê²©ë ¥
+	const float GRAVITY_POWER = 980.f;			//ì¤‘ë ¥
 
+	const float DASH_COOLTIME = 3.f;
+	
 	
 	Texture texture;
 
-	Sprite SpritePlayer;						//player ±×¸®±â
-	Vector2f mPlayerPosition;					//player ÁÂÇ¥
+	Sprite SpritePlayer;						//player ê·¸ë¦¬ê¸°
+	Vector2f mPlayerPosition;					//player ì¢Œí‘œ
 	Vector2f mLastDir;
 	AnimationController animation;
+	AnimationController skillAni;
 
 	IntRect gameMap;
 	Vector2i resolution;
 
 	std::map<std::string, Texture> texMap;
 
-	float val;									//Áß·Â
-	int mTileSize;								//Å¸ÀÏÀÇ Å©±â
+	Tilemap tileMap;
 
-	bool isJump;								//Á¡ÇÁÇß´Ï?
-	bool isDash;								//´ë½¬Çß´Ï?
+	float val;									//ì¤‘ë ¥
+	int mTileSize;								//íƒ€ì¼ì˜ í¬ê¸°
+
+	bool isJump;								//ì í”„í–ˆë‹ˆ?
+	bool isDash;								//ëŒ€ì‰¬í–ˆë‹ˆ?
+
+	bool canUseDash;							//ëŒ€ì‰¬ ì‚¬ìš© ê°€ëŠ¥ ìœ ë¬´
 
 	bool isLeft;
 
 	Vector2f dirDash;
 
-	float mSpeed;								//player ¼Óµµ
+	float mSpeed;								//player ì†ë„
 
-	int mMaxPlayerHealth;						//player ÃÖ´ë Ã¼·Â
-	int mCurrentPlayerHealth;					//player ÇöÀç Ã¼·Â
+	int mMaxPlayerHealth;						//player ìµœëŒ€ ì²´ë ¥
+	int mCurrentPlayerHealth;					//player í˜„ì¬ ì²´ë ¥
 
-	int mPlayerType;							//»À Å¸ÀÔ? ¾ÆÁ÷ ¹ÌÁ¤
+	int mPlayerType;							//ë¼ˆ íƒ€ì…? ì•„ì§ ë¯¸ì •
 
-	bool mPlayerAttacking;						//ÇÃ·¹ÀÌ¾î °ø°İÁß?
+	bool mPlayerAttacking;						//í”Œë ˆì´ì–´ ê³µê²©ì¤‘?
 
-	bool mPlayerDash;							//player´ë½¬ À¯¹«
-	float mDashCoolTime;						//´ë½¬ ÄğÅ¸ÀÓ
+	bool mPlayerDash;							//playerëŒ€ì‰¬ ìœ ë¬´
+	float mDashCoolTime;						//ëŒ€ì‰¬ ì¿¨íƒ€ì„
 
-	int mPlayerAttackDamage;					//°ø°İ µ¥¹ÌÁö
+	int mPlayerAttackDamage;					//ê³µê²© ë°ë¯¸ì§€
 
-	float mSkillCoolTime;						//½ºÅ³ ÄğÅ¸ÀÓ
+	float mSkillCoolTime;						//ìŠ¤í‚¬ ì¿¨íƒ€ì„
+
+
+	Sprite spriteSkill;							//ìŠ¤í‚¬ ê·¸ë¦¬ê¸°
+	Vector2f skillPosition;						//ìŠ¤í‚¬ ìœ„ì¹˜
+
+
+
+
 public:
 	void Init();
+	void SkillInit();
 	void Start();
 	void End();
 
@@ -63,15 +82,22 @@ public:
 
 	void Move(float speed);
 	void Dash(bool isDash, float dt);
-	void Jump();
+	void Jump(float dt);
 
-	void UpdateInput();
+	void UpdateInput(float dt);
 	void Update(float dt, std::vector<TestRectangle *> rects);
+
+
 	Vector2f GetPosition();
 	Sprite GetSprite();
 	virtual FloatRect GetGlobalBound();
 
 	void Draw(RenderWindow &window);
+
+	// ì¬íœ˜ ì¶”ê°€ ìµœëŒ€, í˜„ì¬ì²´ë ¥ ë°›ì•„ì˜¤ê¸°
+	int GetMaxPlayerHealth();
+	int GetCurrentPlayerHealth();
+
 
 
 

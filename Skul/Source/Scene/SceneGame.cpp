@@ -17,6 +17,7 @@ void SceneGame::Init()
 	tilemap.Init();
 	SwordMan.Init();
 	player.Init();
+	player.SkillInit();
 	ui.Init();
 	mouseCursor.Init();
 
@@ -36,6 +37,7 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
+
 	player.Update(dt, tilemap.GetRects());
 	SwordMan.Update(dt, player.GetGlobalBound());
 	tilemap.CreateBackGround();
@@ -51,8 +53,8 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	tilemap.Draw(window);
 	player.Draw(*window);
 	//boss.Draw(*window);
-	ui.DrawSceneGame(window);
 
 	SwordMan.Draw(*window);
+	ui.DrawSceneGame(window);
 
 }
