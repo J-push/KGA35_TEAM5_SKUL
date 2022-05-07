@@ -22,11 +22,13 @@ void Player::Init()
 	mCurrentPlayerHealth = START_PLAYER_HEALTH;
 	mPlayerPosition.x = 900.f;
 	mPlayerPosition.y = 750.f;
+	mDashCoolTime = DASH_COOLTIME;
 
 	mSpeed = START_PLAYER_SPEED;
 
 	mPlayerAttacking = false;
 	isDash = false;
+	canUseDash = true;
 
 	SpritePlayer.setPosition(mPlayerPosition);
 	SpritePlayer.setOrigin(150, 100);
@@ -76,50 +78,6 @@ void Player::Init()
 		animation.AddClip(clip);
 	}
 
-
-	skillPosition.x = 200;
-	skillPosition.y = 500;
-
-	spriteSkill.setPosition(skillPosition);
-	spriteSkill.setOrigin(50, 50);
-	spriteSkill.setScale(2.f, 2.f);
-	skillAni.SetTarget(&spriteSkill);
-	rapidcsv::Document clips2("data_tables/animations/PlayerSkill/playerSkill_animation_clips.csv");
-	std::vector<std::string> colId2 = clips2.GetColumn<std::string>("ID");
-	std::vector<int> colFps2 = clips2.GetColumn<int>("FPS");
-	std::vector<int> colLoop2 = clips2.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
-	std::vector<std::string> colPath2 = clips2.GetColumn<std::string>("CLIP PATH");
-
-	int totalClips2 = colId2.size();
-	for (int i = 0; i < totalClips2; ++i)
-
-	{
-		AnimationClip skill;
-		skill.id = colId2[i];
-		skill.fps = colFps2[i];
-		skill.loopType = (AnimationLoopTypes)colLoop2[i];
-
-		rapidcsv::Document frames(colPath2[i]);
-		std::vector<std::string> colTexure = frames.GetColumn<std::string>("TEXTURE PATH");
-		std::vector<int> colL = frames.GetColumn<int>("L");
-		std::vector<int> colT = frames.GetColumn<int>("T");
-		std::vector<int> colW = frames.GetColumn<int>("W");
-		std::vector<int> colH = frames.GetColumn<int>("H");
-
-		int totalFrames = colTexure.size();
-		for (int j = 0; j < totalFrames; ++j)
-		{
-			if (texMap.find(colTexure[j]) == texMap.end())
-			{
-				auto& ref = texMap[colTexure[j]];
-				ref.loadFromFile(colTexure[j]);
-			}
-			skill.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
-		}
-
-		skillAni.AddClip(skill);
-	}
-
 	animation.Play("Idle");
 }
 /**********************************************************
@@ -127,12 +85,11 @@ void Player::Init()
 ***********************************************************/
 void Player::SkillInit()
 {
-	/*skillPosition.x = 200;
-	skillPosition.y = 500;
+	
 
 	spriteSkill.setPosition(skillPosition);
 	spriteSkill.setOrigin(50, 50);
-	spriteSkill.setScale(2.f, 2.f);
+	spriteSkill.setScale(4.f, 4.f);
 	skillAni.SetTarget(&spriteSkill);
 	rapidcsv::Document clips("data_tables/animations/PlayerSkill/playerSkill_animation_clips.csv");
 	std::vector<std::string> colId = clips.GetColumn<std::string>("ID");
@@ -168,8 +125,7 @@ void Player::SkillInit()
 		}
 
 		skillAni.AddClip(skill);
-	}*/
-	//skillAni.Play("SoulBurn");
+	}
 }
 /**********************************************************
 * 설명 : 플레이어의 초기 생성 위치를 설정한다.
@@ -181,13 +137,14 @@ void Player::Spawn(IntRect arena, Vector2i res, int tileSize)
 /**********************************************************
 * 설명 : 플레이어의 키보드 입력값에 따른 동작을 구현한다.
 ***********************************************************/
-void Player::UpdateInput()
+void Player::UpdateInput(float dt)
 {
 	if (InputManager::instance()->GetKeyDown(Keyboard::Right))
 	{
 		isLeft = false;
 		animation.Play("Walk");
 		SpritePlayer.setScale(Player_Size, Player_Size);
+		spriteSkill.setScale(4.0f, 4.0f);
 
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Left))
@@ -195,7 +152,7 @@ void Player::UpdateInput()
 		isLeft = true;
 		SpritePlayer.setScale(Left_Player_Size, Player_Size);
 		animation.Play("Walk");
-
+		spriteSkill.setScale(-4.0f, 4.0f);
 	}
 	if (InputManager::instance()->GetKeyUp(Keyboard::Right) ||
 		InputManager::instance()->GetKeyUp(Keyboard::Left))
@@ -231,6 +188,9 @@ void Player::UpdateInput()
 		dirDash.x = mPlayerPosition.x;
 		dirDash.y = mPlayerPosition.y;
 		isDash = true;
+		canUseDash = false;
+
+		
 		animation.Play("Dash");
 
 		if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
@@ -242,6 +202,7 @@ void Player::UpdateInput()
 			animation.Play("Idle");
 		}
 		animation.PlayQueue("Idle");
+		
 	}
 
 	if (InputManager::instance()->GetKeyDown(Keyboard::C))
@@ -251,9 +212,19 @@ void Player::UpdateInput()
 
 	if (InputManager::instance()->GetKeyDown(Keyboard::A))
 	{
-		skillAni.Play("SoulBurn");
-		animation.PlayQueue("Skill1");
+		if (isLeft)
+		{
+			skillPosition.x = mPlayerPosition.x - 300.f;
+			skillPosition.y = mPlayerPosition.y - 100.f;
+		}
+		else if (!isLeft) 
+		{
+			skillPosition.x = mPlayerPosition.x + 300.f;
+			skillPosition.y = mPlayerPosition.y - 100.f;
+		}
 		
+		skillAni.Play("SoulBurn");
+		animation.Play("Skill1");
 		animation.PlayQueue("Idle");
 	}
 
@@ -263,36 +234,38 @@ void Player::UpdateInput()
 ***********************************************************/
 void Player::Update(float dt)
 {
-	UpdateInput();
+	
+	UpdateInput(dt);
 	
 	if (isDash)
 	{
-		if (isDash)
+		
+		if (isLeft == true)
 		{
-			if (isLeft == true)
+			if (mPlayerPosition.x > dirDash.x - 300.f)
 			{
-				if (mPlayerPosition.x > dirDash.x - 300.f)
-				{
-					mPlayerPosition.x -= dt * mSpeed * 6.f;
-				}
-				else
-				{
-					isDash = false;
-				}
+				mPlayerPosition.x -= dt * mSpeed * 6.f;
 			}
-			else if (isLeft == false)
+			else
 			{
-
-				if (mPlayerPosition.x < dirDash.x + 300.f)
-				{
-					mPlayerPosition.x += dt * mSpeed * 6.f;
-				}
-				else
-				{
-					isDash = false;
-				}
+				isDash = false;
+				if (mDashCoolTime < 0)
+				canUseDash = true;
 			}
+		}
+		else if (isLeft == false)
+		{
 
+			if (mPlayerPosition.x < dirDash.x + 300.f)
+			{
+				mPlayerPosition.x += dt * mSpeed * 6.f;
+			}
+			else
+			{
+				isDash = false;
+				if (mDashCoolTime < 0)
+				canUseDash = true;
+			}
 		}
 	}
 	else
@@ -306,28 +279,37 @@ void Player::Update(float dt)
 			mPlayerPosition.x -= mSpeed * dt;
 		}
 	}
-  
-	/*if (dir.x == 0.f && mLastDir != dir)
-	{
-		animation.Play("Idle");
-		
-	}
-	if (dir.x > 0.f && mLastDir != dir)
-	{
-		animation.Play("RightWalk");
-		mPlayerPosition.x += dir.x * mSpeed * dt;
-	}
-	if (dir.x < 0.f && mLastDir != dir)
-	{
-		animation.Play("LeftWalk");
-		mPlayerPosition.x -= dir.x * mSpeed * dt;
-	}*/
+	//점프
+	//if(mPlayerPosition > Utils::CollisionDir())
 
+
+
+
+	//충돌
+
+
+
+	//중력
 	//val += 980.f * dt;
 	//mPlayerPosition.y += val * dt;
+
+
+
+
+	
+
+
+	if (mDashCoolTime == 0)
+	{
+		canUseDash = true;
+	}
+
 	SpritePlayer.setPosition(mPlayerPosition);
+	spriteSkill.setPosition(skillPosition);
+
 
 	animation.Update(dt);
+	skillAni.Update(dt);
 }
 
 Vector2f Player::GetPosition()
