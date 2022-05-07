@@ -154,7 +154,7 @@ void Player::UpdateInput()
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt)
+void Player::Update(float dt, std::vector<TestRectangle *> rects)
 {
 	UpdateInput();
 	
@@ -221,6 +221,41 @@ void Player::Update(float dt)
 	SpritePlayer.setPosition(mPlayerPosition);
 
 	animation.Update(dt);
+
+	for (auto v : rects)
+	{
+		if (SpritePlayer.getGlobalBounds().intersects(v->GetRect()))
+		{
+			Pivots pivot = Utils::CollisionDir(v->GetRect(), SpritePlayer.getGlobalBounds());
+
+			switch (pivot)
+			{
+			case Pivots::LC:
+				mPlayerPosition.x += (v->GetRect().left + v->GetRect().width) - (SpritePlayer.getGlobalBounds().left);
+				InputManager::HorizontalInit();
+				break;
+
+			case Pivots::RC:
+				mPlayerPosition.x -= (SpritePlayer.getGlobalBounds().left + SpritePlayer.getGlobalBounds().width) - (v->GetRect().left);
+				InputManager::HorizontalInit();
+				break;
+
+			case Pivots::CT:
+				mPlayerPosition.y += (v->GetRect().top + v->GetRect().height) - (SpritePlayer.getGlobalBounds().top);
+				InputManager::VerticalInit();
+				break;
+
+			case Pivots::CB:
+				mPlayerPosition.y -= (SpritePlayer.getGlobalBounds().top + SpritePlayer.getGlobalBounds().height) - (v->GetRect().top);
+				InputManager::VerticalInit();
+				break;
+
+			defalut:
+				break;
+			}
+			SpritePlayer.setPosition(mPlayerPosition);
+		}
+	}
 }
 
 Vector2f Player::GetPosition()

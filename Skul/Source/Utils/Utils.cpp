@@ -97,12 +97,13 @@ Pivots Utils::CollisionDir(FloatRect standRect, FloatRect testRect)
 	{
 		return Pivots::LC;
 	}
+
 	//오른쪽
 	else if (testRect.left + testRect.width > standRect.left && testRect.left < standRect.left)
 	{
 		return Pivots::RC;
 	}
-
+	
 	//위
 	else if (testRect.top < standRect.top + standRect.height && testRect.top + testRect.height > standRect.top + standRect.height)
 	{

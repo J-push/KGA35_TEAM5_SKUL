@@ -58,6 +58,7 @@ public:
 	void Init();
 	int CreateBackGround();
 	void CreateTestRect();
+	std::vector <TestRectangle *> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
 };
 

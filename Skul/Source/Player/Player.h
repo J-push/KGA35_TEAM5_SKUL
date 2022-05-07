@@ -3,6 +3,8 @@
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
+#include "../TileMap/Tilemap.h"
+#include "../../TestRectangle.h"
 
 using namespace sf;
 
@@ -26,8 +28,6 @@ private:
 	Vector2i resolution;
 
 	std::map<std::string, Texture> texMap;
-
-	
 
 	float val;									//중력
 	int mTileSize;								//타일의 크기
@@ -65,13 +65,10 @@ public:
 	void Dash(bool isDash, float dt);
 	void Jump();
 
-	
-
 	void UpdateInput();
-	void Update(float dt);
+	void Update(float dt, std::vector<TestRectangle *> rects);
 	Vector2f GetPosition();
 	Sprite GetSprite();
-
 	virtual FloatRect GetGlobalBound();
 
 	void Draw(RenderWindow &window);

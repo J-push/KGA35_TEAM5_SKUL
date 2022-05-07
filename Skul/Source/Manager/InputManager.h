@@ -50,6 +50,8 @@ private:
 
 public:
 	static void Init();
+	static void HorizontalInit();
+	static void VerticalInit();
 	static void ClearInput();
 	static void ProcessInput(const Event& event);
 	static void Update(float dt, RenderWindow& window, View& worldView);

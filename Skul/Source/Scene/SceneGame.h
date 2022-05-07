@@ -5,6 +5,9 @@
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
+#include "../../TestRectangle.h"
+#include <vector>
+
 
 
 
