@@ -9,17 +9,30 @@
 
 using namespace sf;
 
+enum class PlayerStatus		//추가
+{
+	IDLE,
+	MOVE,
+	ATTACK,
+	COMBOATTACK,
+	JUMP,
+	DOWN,
+	DASH,
+};
+
+
 class Player
 {
 private:
-	const float Player_Size = 1.5f;
-	const float Left_Player_Size = -1.5f;
+	const float PLAYER_SIZE = 1.5f;
+	const float LEFT_PLAYER_SIZE = -1.5f;
 	const float START_PLAYER_HEALTH = 100;		//시작 플레이어 체력;
 	const float START_PLAYER_SPEED = 200;		//시작 플레이어 속도;
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
 	const float GRAVITY_POWER = 980.f;			//중력
 
 	const float DASH_COOLTIME = 3.f;
+	const float ATTACK_DELAY = 0.3f;
 	
 	
 	Texture texture;
@@ -37,15 +50,29 @@ private:
 
 	Tilemap tileMap;
 
+	RectangleShape playerRect;
+	RectangleShape playerAttackRect;
+	RectangleShape playerSkillRect;
+
+
 	float val;									//중력
 	int mTileSize;								//타일의 크기
 
 	bool isJump;								//점프했니?
+	bool doDown;								//점프후 내려가는지
+	float jumpForce = 0.0f;						//점프 위치
+	Vector2f oldJumpPos;						//점프 전 위치
+
+
 	bool isDash;								//대쉬했니?
+	bool isAttack;								//공격했니?
+	bool isSkill;								//스킬썻니?
+
+	float attackDelay;							//공격딜레이
 
 	bool canUseDash;							//대쉬 사용 가능 유무
 
-	bool isLeft;
+	bool isLeft;								//왼쪽으로 바라보는지 오른쪽으로 바라보는지
 
 	Vector2f dirDash;
 
@@ -55,8 +82,6 @@ private:
 	int mCurrentPlayerHealth;					//player 현재 체력
 
 	int mPlayerType;							//뼈 타입? 아직 미정
-
-	bool mPlayerAttacking;						//플레이어 공격중?
 
 	bool mPlayerDash;							//player대쉬 유무
 	float mDashCoolTime;						//대쉬 쿨타임
@@ -68,7 +93,8 @@ private:
 
 	Sprite spriteSkill;							//스킬 그리기
 	Vector2f skillPosition;						//스킬 위치
-
+	float skillDown;
+	Vector2f tempPos;
 
 
 
