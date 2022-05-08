@@ -39,7 +39,7 @@ void SceneGame::End()
 void SceneGame::Update(float dt)
 {
 
-	player.Update(dt);
+	//player.Update(dt);
 	player.Update(dt, tilemap.GetRects());
 	SwordMan.Update(dt, player.GetGlobalBound());
 	tilemap.CreateBackGround();
