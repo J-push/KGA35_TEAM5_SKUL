@@ -6,7 +6,7 @@ class Scene
 {
 protected:
 	//Text test;
-	//Texture texture;
+	//Texture texture; 
 	SceneMgr& mgr;
 
 public:
