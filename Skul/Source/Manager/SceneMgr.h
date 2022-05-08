@@ -1,5 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "../Utils/Singleton.h"
+
+
 //#include "Scene.h"
 // TITLE, MENU, GAME, CHARACTER
 
@@ -8,16 +11,15 @@
 ***********************************************************/
 enum class Scenes
 {
-	TITLE, MENU, GAME, EDITOR, COUNT
+	TITLE, MENU, GAME, EDITOR, END, COUNT
 };
 class Scene;
 
-class SceneMgr 
+class SceneMgr : public Singleton<SceneMgr>
 {
 private:
 	Scene* scenes[(int)Scenes::COUNT];
 	Scenes currentScene;
-
 
 public:
 	void Init();

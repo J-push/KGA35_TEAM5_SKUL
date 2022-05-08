@@ -499,3 +499,25 @@ int Player::GetCurrentPlayerHealth()
 {
 	return mCurrentPlayerHealth;
 }
+
+
+
+
+
+
+
+
+
+void Player::JeaHit()
+{	
+	if (mCurrentPlayerHealth > 0)
+	{			
+		mCurrentPlayerHealth -= 10;		
+	}
+}
+
+Vector2f Player::GetPlayerPosition()
+{
+	return mPlayerPosition;
+}
+

@@ -10,6 +10,8 @@
 #include "../Scene/SceneGame.h"
 #include "../Scene/SceneMapEditor.h"
 #include "../Scene/SceneMenu.h"
+#include "../SceneEnd.h"
+
 /**********************************************************
 * 설명 : Scene들을 초기화한다.
 ***********************************************************/
@@ -17,13 +19,15 @@ void SceneMgr::Init()
 {
 	scenes[(int)Scenes::TITLE] = new SceneTitle(*this);
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
-	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
+	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
+	scenes[(int)Scenes::END] = new SceneEnd(*this);
   
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
-	scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::GAME]->Init();
+	scenes[(int)Scenes::EDITOR]->Init();
+	scenes[(int)Scenes::END]->Init();
 }
 /*******************************************************************
 * 설명 : Scene하나하나가 끝날때마다 새로운 Scene을 받아와 시작한다.

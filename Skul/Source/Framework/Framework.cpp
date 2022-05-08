@@ -12,6 +12,9 @@
 #include "../Utils/Singleton.h"
 #include "../Manager/InputManager.h"
 
+// http://rapapa.net/?p=381
+// https://maxlevel-trace.tistory.com/4
+
 using namespace std;
 /**********************************************************
 * 설명 : Framework를 초기화한다.

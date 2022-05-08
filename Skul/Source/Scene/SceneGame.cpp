@@ -19,7 +19,8 @@ void SceneGame::Init()
 	player.Init();
 	player.SkillInit();
 	ui.Init();
-	mouseCursor.Init();
+
+	
 
 }
 
@@ -38,12 +39,32 @@ void SceneGame::End()
 void SceneGame::Update(float dt)
 {
 
+	player.Update(dt);
 	player.Update(dt, tilemap.GetRects());
 	SwordMan.Update(dt, player.GetGlobalBound());
 	tilemap.CreateBackGround();
-	mouseCursor.Update(dt);
+
 	ui.Update(dt);
 
+
+	// 마우스 충돌시 피 까임 확인용
+	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
+	if (checkHpHit)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			player.JeaHit();
+			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+			ui.UnderAttack(player.GetPosition(), dt);
+		} 
+	}
+
+
+	if (InputManager::GetKeyDown(Keyboard::Num7))
+	{
+		mgr.ChangeScene(Scenes::END);
+	}
 }
 
 void SceneGame::Draw(sf::RenderWindow *window)
@@ -56,5 +77,11 @@ void SceneGame::Draw(sf::RenderWindow *window)
 
 	SwordMan.Draw(*window);
 	ui.DrawSceneGame(window);
-
 }
+
+//int SceneGame::GetMaxPlayerHealthReal()
+//{
+//	return  player.GetMaxPlayerHealth();
+//}
+
+

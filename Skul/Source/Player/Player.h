@@ -97,7 +97,6 @@ private:
 	Vector2f tempPos;
 
 
-
 public:
 	void Init();
 	void SkillInit();
@@ -123,6 +122,8 @@ public:
 	// 재휘 추가 최대, 현재체력 받아오기
 	int GetMaxPlayerHealth();
 	int GetCurrentPlayerHealth();
+	void JeaHit();
+	Vector2f GetPlayerPosition();					
 
 
 

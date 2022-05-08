@@ -1,12 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../Manager/SceneMgr.h"
+#include "../Manager/ResourceMgr.h"
+#include "../UIMaker.h"
 
 class Scene
 {
 protected:
-	//Text test;
-	//Texture texture; 
+	Sprite spriteScoreFrame;
+	UIMaker ui;
 	SceneMgr& mgr;
 
 public:
