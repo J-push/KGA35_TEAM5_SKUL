@@ -1,13 +1,23 @@
 #include "UIMaker.h"
+#include "Scene/SceneGame.h"
 
 #include <iostream>
 
 
+UIMaker::UIMaker() : hp(2.5f)
+{
+}
+
+
+UIMaker::UIMaker(SceneGame *hp) : hpinfo(hp)
+{
+}
+
 void UIMaker::Init()
 {
+
 	clickGameStart = false;
 	mouseCursor.Init();
-
 
 	// Title UI
 	shapeGameStart.setPosition(880, 700);
@@ -68,7 +78,10 @@ void UIMaker::Init()
 	spriteHpBar.setTexture(*ResourceMgr::instance()->GetTexture("HPBARTEX"));
 	spriteHpBar.setPosition(HP_BAR_X, HP_BAR_Y);
 	spriteHpBar.setScale(hp, 2.5);
-
+	spriteAbutton.setTexture(*ResourceMgr::instance()->GetTexture("ABUTTONTEX"));
+	spriteAbutton.setPosition(A_X, A_Y);
+	spriteAbutton.setScale(0.8, 0.8);
+	
 	spriteGrimReaperIcon1.setTexture(*ResourceMgr::instance()->GetTexture("REAPERICONTEX1"));
 	spriteGrimReaperIcon1.setPosition(MINI_HEAD_X, MINI_HEAD_Y);
 	spriteGrimReaperIcon1.setScale(1.0, 1.0);
@@ -79,7 +92,6 @@ void UIMaker::Init()
 	spriteGrimReaperSkill.setPosition(SKIIL1_X, SKIIL1_Y);
 	spriteGrimReaperSkill.setScale(2.8, 2.8);	
 
-
 	spriteLittleBoneIcon1.setTexture(*ResourceMgr::instance()->GetTexture("BONEICONTEX1"));
 	spriteLittleBoneIcon1.setPosition(MINI_HEAD_X, MINI_HEAD_Y);
 	spriteLittleBoneIcon1.setScale(1.0, 1.0);
@@ -87,7 +99,20 @@ void UIMaker::Init()
 	spriteLittleBoneIcon3.setPosition(PORTRAIT_X + 35, PORTRAIT_Y + 18);
 	spriteLittleBoneIcon3.setScale(2.5, 2.5);
 
-	
+	textHp.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+	textHp.setString("100 / 100");
+	textHp.setCharacterSize(20);
+	textHp.setPosition(246, 911);
+
+	// Damage
+	underAttackText.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+	underAttackText.setString("-10");
+	underAttackText.setCharacterSize(20);
+	underAttackText.setPosition(6000,400);
+	underAttackText.setFillColor(Color::Red);
+	textSpeed = 5.0f;
+	deleteDistance = 100.f;
+	isActive = false;
 }
 
 
@@ -130,16 +155,23 @@ void UIMaker::Update(float dt)
 
 
 	// Game UI
-	if (Keyboard::isKeyPressed(Keyboard::Num5) && hp > 0.f)
+
+	/*stringstream HP;
+	HP << hpinfo->GetMaxPlayerHealthReal() << " / ";
+	textHp.setString(HP.str());*/
+
+
+
+	/*if (InputManager::GetMouseButtonDown(Mouse::Left) && hp > 0.f)
 	{
-		hp -= 0.01f;
+		hp *= 0.9f;
 		spriteHpBar.setScale(hp, 2.5);
-	}
-	if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
+	}*/
+	/*if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
 	{
 		hp += 0.01f;
 		spriteHpBar.setScale(hp, 2.5);
-	}
+	}*/
 
 	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ¸®Æ²º» ¸ÔÀ½
 	{
@@ -172,12 +204,32 @@ bool UIMaker::GetClickGameStart()
 	return clickGameStart;
 }
 
+FloatRect UIMaker::GetMouseBound()
+{
+	return mouseCursor.GetGlobalBounds();
+}
+
+void UIMaker::SetHpbarText(int CurHp, int MaxHp)
+{
+	stringstream HP;
+	HP << CurHp << " / " << MaxHp;
+	textHp.setString(HP.str());
+}
+
+void UIMaker::SetHpbarSize(int CurHp, int MaxHp)
+{
+	hp = 2.5f * ((float)CurHp / MaxHp);
+	spriteHpBar.setScale(hp, 2.5);
+}
+
+
 
 void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 {
 
 	window->draw(spriteMainFrame);
 	window->draw(spriteHpBar);
+	
 
 	switch (nowHead)
 	{
@@ -190,7 +242,6 @@ void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 		break;
 	
 	}
-
 	switch (subHead)
 	{
 	case 1:
@@ -201,7 +252,18 @@ void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 		break;	
 	}
 
+	window->draw(spriteAbutton);
+	window->draw(textHp);
+	window->draw(underAttackText);
+
 	mouseCursor.Draw(window);
+}
+
+void UIMaker::UnderAttack(Vector2f position, float dt)
+{
+	position.y -= 100;
+	underAttackText.setPosition(position);
+	position.y -= textSpeed * dt;
 }
 
 

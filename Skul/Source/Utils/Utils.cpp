@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include <iostream>
 #include <cmath>
+
 /*static 변수 선언*/
 std::random_device Utils::rd;
 std::mt19937 Utils::gen(rd());
@@ -49,7 +50,6 @@ void Utils::SetOrigin(sf::Transformable &tr, sf::FloatRect bounds, Pivots preset
 	case Pivots::LB:
 		tr.setOrigin(bounds.left, bounds.height);
 		break;
-
 	case Pivots::CT:
 		tr.setOrigin(bounds.width * 0.5f, bounds.top);
 		break;
@@ -59,7 +59,6 @@ void Utils::SetOrigin(sf::Transformable &tr, sf::FloatRect bounds, Pivots preset
 	case Pivots::CB:
 		tr.setOrigin(bounds.width * 0.5f, bounds.height);
 		break;
-
 	case Pivots::RT:
 		tr.setOrigin(bounds.width, bounds.top);
 		break;
@@ -97,12 +96,13 @@ Pivots Utils::CollisionDir(FloatRect standRect, FloatRect testRect)
 	{
 		return Pivots::LC;
 	}
+
 	//오른쪽
 	else if (testRect.left + testRect.width > standRect.left && testRect.left < standRect.left)
 	{
 		return Pivots::RC;
 	}
-
+	
 	//위
 	else if (testRect.top < standRect.top + standRect.height && testRect.top + testRect.height > standRect.top + standRect.height)
 	{

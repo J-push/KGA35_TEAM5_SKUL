@@ -8,8 +8,6 @@ using namespace sf;
 ***********************************************************/
 enum class Pivots
 {
-	// L, CH, R
-	// T, CV, R
 	LT, CT, RT,
 	LC, CC, RC,
 	LB, CB, RB

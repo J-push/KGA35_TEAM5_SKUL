@@ -10,7 +10,6 @@
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
 
-
 void SceneGame::Init()
 {
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
@@ -18,8 +17,10 @@ void SceneGame::Init()
 	tilemap.Init();
 	SwordMan.Init();
 	player.Init();
+	player.SkillInit();
 	ui.Init();
-	mouseCursor.Init();
+
+	
 
 }
 
@@ -37,12 +38,33 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
-  player.Update(dt);
+
 	SwordMan.Update(dt, player.GetGlobalBound(), tilemap.GetRects());
+	player.Update(dt, tilemap.GetRects());
+
 	tilemap.CreateBackGround();
-	mouseCursor.Update(dt);
+
 	ui.Update(dt);
 
+
+	// 마우스 충돌시 피 까임 확인용
+	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
+	if (checkHpHit)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			player.JeaHit();
+			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+			ui.UnderAttack(player.GetPosition(), dt);
+		} 
+	}
+
+
+	if (InputManager::GetKeyDown(Keyboard::Num7))
+	{
+		mgr.ChangeScene(Scenes::END);
+	}
 }
 
 void SceneGame::Draw(sf::RenderWindow *window)
@@ -51,8 +73,13 @@ void SceneGame::Draw(sf::RenderWindow *window)
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
-	ui.DrawSceneGame(window);
-
 	SwordMan.Draw(*window);
-
+	ui.DrawSceneGame(window);
 }
+
+//int SceneGame::GetMaxPlayerHealthReal()
+//{
+//	return  player.GetMaxPlayerHealth();
+//}
+
+

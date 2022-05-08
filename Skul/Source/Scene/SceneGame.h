@@ -5,6 +5,9 @@
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
+#include "../../TestRectangle.h"
+#include <vector>
+
 
 
 
@@ -18,10 +21,12 @@ private:
 	Player player;
 
 	SwordMan SwordMan;
-	MouseCursor mouseCursor;
-	UIMaker ui;
 
 public:
+
+	int curHp;
+	int maxHp;
+
 	SceneGame(SceneMgr& mgr) : Scene(mgr) {};
 
 	virtual void Init() override;
@@ -30,5 +35,8 @@ public:
 	virtual void End() override;
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow* window) override;
+
+	int GetMaxPlayerHealthReal();
+	/*int GetCurrentPlayerHealthReal();*/
 };
 

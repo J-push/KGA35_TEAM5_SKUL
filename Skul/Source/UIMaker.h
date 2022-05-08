@@ -5,6 +5,9 @@
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/ChangeMouse.h"
 #include "../Source/Manager/InputManager.h"
+#include "../Source/Player/Player.h"
+
+class SceneGame;
 
 enum class Heads
 {
@@ -13,15 +16,14 @@ enum class Heads
 	REAPER,
 };
 
-
-
 class UIMaker
 {
 private:
 
+	SceneGame *hpinfo;
+
 	Scenes currentScene;
 	MouseCursor mouseCursor;
-
 
 	// Title UI
 	AnimationController animationGameStart;
@@ -41,6 +43,7 @@ private:
 	// Game UI
 	Sprite spriteMainFrame;
 	Sprite spriteHpBar;
+	Sprite spriteAbutton;
 	
 	Sprite spriteGrimReaperIcon1;
 	Sprite spriteGrimReaperIcon3;
@@ -49,11 +52,19 @@ private:
 	Sprite spriteLittleBoneIcon1;
 	Sprite spriteLittleBoneIcon3;
 
-
 	int nowHead = 2;
 	int subHead = 0;
 
-	float hp = 2.5f;
+	float hp;
+
+	Text textHp;
+
+	// DamageText
+	Text underAttackText;
+	float textSpeed;
+	float deleteDistance;
+	bool isActive;
+
 
 public:
 
@@ -65,8 +76,13 @@ public:
 	const int PORTRAIT_Y = MAIN_FRAME_Y - 16;
 	const int SKIIL1_X = MAIN_FRAME_X + 142;
 	const int SKIIL1_Y = MAIN_FRAME_Y + 33;
+	const int A_X = MAIN_FRAME_X + 160;
+	const int A_Y = MAIN_FRAME_Y + 15;
 	const int MINI_HEAD_X = MAIN_FRAME_X;
 	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
+
+	UIMaker();
+	UIMaker(SceneGame *hp);
 
 	void Init();
 
@@ -74,6 +90,14 @@ public:
 	//virtual void Draw(sf::RenderWindow *window);
 
 	bool GetClickGameStart();
+
+	FloatRect GetMouseBound();
+	void SetHpbarText(int CurHp, int MaxHp);
+	void SetHpbarSize(int CurHp, int MaxHp);
+
+	// Damage
+	void UnderAttack(Vector2f position, float dt);
+
 
 	virtual void DrawSceneTitle(sf::RenderWindow *window);
 	virtual void DrawSceneGame(sf::RenderWindow *window);

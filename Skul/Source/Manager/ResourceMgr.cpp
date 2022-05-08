@@ -28,6 +28,7 @@ void ResourceMgr::Init()
 	// ui추가
 	loaded.push_back(new Resource("MAINFRAMETEX", "graphics/UI/PlayerFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("HPBARTEX", "graphics/UI/HpBar.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("ABUTTONTEX", "graphics/UI/Abutton.png", ResourceTypes::Texture));
 
 	loaded.push_back(new Resource("REAPERICONTEX1", "graphics/UI/GrimReaper1.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("REAPERICONTEX3", "graphics/UI/GrimReaper3.png", ResourceTypes::Texture));
@@ -35,9 +36,8 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("BONEICONTEX1", "graphics/UI/LittleBone1.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BONEICONTEX3", "graphics/UI/LittleBone3.png", ResourceTypes::Texture));
 
-
-
-	
+	// endScene용
+	loaded.push_back(new Resource("SCORETEX", "graphics/UI/ScoreFrame.png", ResourceTypes::Texture));
 
 	for (std::list<Resource*>::iterator it = loaded.begin(); it != loaded.end(); ++it)
 	{

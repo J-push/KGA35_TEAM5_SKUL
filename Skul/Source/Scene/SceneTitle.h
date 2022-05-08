@@ -3,7 +3,7 @@
 #include "../Animation/AnimationController.h"
 #include "../Manager/InputManager.h"
 #include "../Utils/ChangeMouse.h"
-#include "../UIMaker.h"
+
 
 
 
@@ -11,8 +11,7 @@ class SceneTitle : public Scene
 {
 private:
 
-	MouseCursor mouseCursor;
-	UIMaker ui;
+	//UIMaker ui;
 
 	Sprite spriteTitle;
 
