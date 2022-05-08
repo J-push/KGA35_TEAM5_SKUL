@@ -221,6 +221,11 @@ void Tilemap::CreateTestRect()
     rects.push_back(rect5);
 }
 
+std::vector<TestRectangle*> Tilemap::GetRects()
+{
+    return rects;   
+}
+
 /**********************************************************
 * 설명 : 샘플 사진을 이용하여 tileMap을 그려준다. (게임씬에는 이 draw함수를 호출)
 ***********************************************************/
