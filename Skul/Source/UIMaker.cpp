@@ -1,13 +1,23 @@
 #include "UIMaker.h"
+#include "Scene/SceneGame.h"
 
 #include <iostream>
 
 
+UIMaker::UIMaker() : hp(2.5f)
+{
+}
+
+
+UIMaker::UIMaker(SceneGame *hp) : hpinfo(hp)
+{
+}
+
 void UIMaker::Init()
 {
+
 	clickGameStart = false;
 	mouseCursor.Init();
-
 
 	// Title UI
 	shapeGameStart.setPosition(880, 700);
@@ -90,9 +100,19 @@ void UIMaker::Init()
 	spriteLittleBoneIcon3.setScale(2.5, 2.5);
 
 	textHp.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
-	textHp.setString("50 / 50");
+	textHp.setString("100 / 100");
 	textHp.setCharacterSize(20);
 	textHp.setPosition(246, 911);
+
+	// Damage
+	underAttackText.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
+	underAttackText.setString("-10");
+	underAttackText.setCharacterSize(20);
+	underAttackText.setPosition(6000,400);
+	underAttackText.setFillColor(Color::Red);
+	textSpeed = 5.0f;
+	deleteDistance = 100.f;
+	isActive = false;
 }
 
 
@@ -136,22 +156,22 @@ void UIMaker::Update(float dt)
 
 	// Game UI
 
-	stringstream HP;
-	HP << player.GetCurrentPlayerHealth() << " / " << player.GetMaxPlayerHealth();
-	textHp.setString(HP.str());
+	/*stringstream HP;
+	HP << hpinfo->GetMaxPlayerHealthReal() << " / ";
+	textHp.setString(HP.str());*/
 
 
 
-	if (Keyboard::isKeyPressed(Keyboard::Num5) && hp > 0.f)
+	/*if (InputManager::GetMouseButtonDown(Mouse::Left) && hp > 0.f)
 	{
-		hp -= 0.01f;
+		hp *= 0.9f;
 		spriteHpBar.setScale(hp, 2.5);
-	}
-	if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
+	}*/
+	/*if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
 	{
 		hp += 0.01f;
 		spriteHpBar.setScale(hp, 2.5);
-	}
+	}*/
 
 	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ¸®Æ²º» ¸ÔÀ½
 	{
@@ -184,6 +204,25 @@ bool UIMaker::GetClickGameStart()
 	return clickGameStart;
 }
 
+FloatRect UIMaker::GetMouseBound()
+{
+	return mouseCursor.GetGlobalBounds();
+}
+
+void UIMaker::SetHpbarText(int CurHp, int MaxHp)
+{
+	stringstream HP;
+	HP << CurHp << " / " << MaxHp;
+	textHp.setString(HP.str());
+}
+
+void UIMaker::SetHpbarSize(int CurHp, int MaxHp)
+{
+	hp = 2.5f * ((float)CurHp / MaxHp);
+	spriteHpBar.setScale(hp, 2.5);
+}
+
+
 
 void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 {
@@ -215,8 +254,16 @@ void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 
 	window->draw(spriteAbutton);
 	window->draw(textHp);
+	window->draw(underAttackText);
 
 	mouseCursor.Draw(window);
+}
+
+void UIMaker::UnderAttack(Vector2f position, float dt)
+{
+	position.y -= 100;
+	underAttackText.setPosition(position);
+	position.y -= textSpeed * dt;
 }
 
 
