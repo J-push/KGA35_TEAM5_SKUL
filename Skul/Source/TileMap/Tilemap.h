@@ -22,7 +22,7 @@ enum class TileType
 };
 
 /******************************************************************************
-* ¼³¸í : Å¸ÀÏ¸¶´Ù ¹¹ ºÎµúÈ÷´ÂÁö
+* ì„¤ëª… : íƒ€ì¼ë§ˆë‹¤ ë­ ë¶€ë”ªíˆëŠ”ì§€
 *******************************************************************************/
 enum class ColliderTag
 {
@@ -58,7 +58,8 @@ public:
 	void Init();
 	int CreateBackGround();
 	void CreateTestRect();
-	std::vector <TestRectangle *> GetRects();
+
+	std::vector<TestRectangle*> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
 };
 

@@ -202,7 +202,7 @@ void Tilemap::CreateTestRect()
     rects.push_back(rect5);
 }
 
-std::vector<TestRectangle *> Tilemap::GetRects()
+std::vector<TestRectangle*> Tilemap::GetRects()
 {
     return rects;
 }
