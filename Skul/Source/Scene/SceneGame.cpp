@@ -10,7 +10,6 @@
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
 
-
 void SceneGame::Init()
 {
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
@@ -39,7 +38,9 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
+
 	player.Update(dt);
+	player.Update(dt, tilemap.GetRects());
 	SwordMan.Update(dt, player.GetGlobalBound());
 	tilemap.CreateBackGround();
 

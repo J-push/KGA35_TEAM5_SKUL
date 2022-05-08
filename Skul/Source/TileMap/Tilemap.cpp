@@ -42,26 +42,7 @@ int Tilemap::CreateBackGround()
             tileMap[vertexIndex + 3].position = Vector2f(x, y + TILE_SIZE);
 
             texIndex = 5;
-            if (texIndex == 0 || texIndex == 1 || texIndex == 4 || texIndex == 6 || texIndex == 7 || texIndex == 31)
-            {
-                TileType::Ground;
-            }
-            else if (texIndex == 2)
-            {
-                TileType::Null;
-            }
-            else if (texIndex == 3 || texIndex == 9 || texIndex == 15 || texIndex == 24)
-            {
-                TileType::HalfGround;
-            }
-            else if (texIndex == 27 || texIndex == 25 || texIndex == 18 || texIndex == 13 || texIndex == 12)
-            {
-                TileType::Wall;
-            }
-            else if (texIndex == 5)
-            {
-                TileType::None;
-            }
+           
             //r , c 값에 따른 타일 샘플 세팅
             if (r <= 25 && c <= 3)
             {
@@ -219,6 +200,11 @@ void Tilemap::CreateTestRect()
     //위에 떠있는 지형
     TestRectangle *rect5 = new TestRectangle(992, 714, 320, 16);
     rects.push_back(rect5);
+}
+
+std::vector<TestRectangle *> Tilemap::GetRects()
+{
+    return rects;
 }
 
 /**********************************************************
