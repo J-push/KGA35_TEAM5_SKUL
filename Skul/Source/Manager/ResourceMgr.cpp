@@ -23,6 +23,7 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("CURSORTEX", "graphics/menu/Cursor.png", ResourceTypes::Texture));
 	//loaded.push_back(new Resource("CHOPSOUND", "sound/chop.wav", ResourceTypes::SoundBuffer));
 	loaded.push_back(new Resource("BACKGROUNDTEX", "graphics/background.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("EDITORBACKGROUNDTEX", "graphics/editorbackground.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("TILETEX", "graphics/TileGrass.png", ResourceTypes::Texture));
 
 	// ui추가

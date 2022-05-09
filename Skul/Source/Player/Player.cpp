@@ -404,6 +404,7 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 				mPlayerPosition.y -= (playerRect.getGlobalBounds().top + playerRect.getGlobalBounds().height) - (v->GetRect().top);
 				graviteSpeed = 0;
 				InputManager::VerticalInit();
+				val = 0;
 				break;
 
 			defalut:
@@ -423,6 +424,7 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 	skillPosition.y += skillDown * dt;
 	tempPos = mPlayerPosition;
 	if (skillPosition.y > tempPos.y)
+
 	{
 		skillPosition.y = tempPos.y;
 		isSkill = false;

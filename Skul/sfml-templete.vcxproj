@@ -44,6 +44,7 @@
     <ClCompile Include="TestRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DefineList.h" />
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationController.h" />
     <ClInclude Include="Source\Framework\Framework.h" />

@@ -62,6 +62,7 @@
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="TestRectangle.cpp" />
+    
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">
@@ -127,6 +128,7 @@
     <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\UIMaker.h" />
     <ClInclude Include="TestRectangle.h" />
+    <ClInclude Include="DefineList.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
