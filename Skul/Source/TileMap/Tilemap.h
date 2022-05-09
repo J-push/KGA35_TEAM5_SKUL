@@ -34,7 +34,8 @@ public:
 	void Init();
 	int CreateBackGround();
 	void CreateTestRect();
-	std::vector <TestRectangle *> GetRects();
+
+	std::vector<TestRectangle*> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
 	inline void SetTileType(TileType type) { this->tileType = type; }
 };

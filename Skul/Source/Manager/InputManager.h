@@ -71,5 +71,6 @@ public:
 
 	static Vector2i GetMousePosition();
 	static Vector2f GetMouseWorldPosition();
+
 };
 

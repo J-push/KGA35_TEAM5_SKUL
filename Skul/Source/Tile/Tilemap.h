@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 
-#include "Utils.h"
+#include "../Utils/Utils.h"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
