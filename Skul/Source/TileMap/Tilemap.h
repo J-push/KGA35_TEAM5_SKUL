@@ -10,33 +10,7 @@
 #include "SFML/Graphics.hpp"
 #include "../Manager/ResourceMgr.h"
 #include "../../TestRectangle.h"
-
-
-enum class TileType
-{
-	None,
-	Null,
-	Wall,
-	Ground,
-	HalfGround,
-};
-
-/******************************************************************************
-* 설명 : 타일마다 뭐 부딪히는지
-*******************************************************************************/
-enum class ColliderTag
-{
-	None,
-	Ground,
-	HalfGround,
-	Player,
-	Monster,
-	Exit,
-	NPC,
-	RayCast,
-	PlayerAttack,
-	MonsterAttack,
-};
+#include "../../DefineList.h"
 
 using namespace sf;
 class Tilemap
@@ -53,7 +27,9 @@ private:
 	VertexArray tileMap;
 	IntRect backGround;
 	Sprite spriteTile;
+	TileType tileType;
 	int texIndex;
+
 public:
 	void Init();
 	int CreateBackGround();
@@ -61,5 +37,6 @@ public:
 
 	std::vector<TestRectangle*> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
+	inline void SetTileType(TileType type) { this->tileType = type; }
 };
 
