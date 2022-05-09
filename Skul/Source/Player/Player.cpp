@@ -531,6 +531,11 @@ FloatRect Player::GetPlayerAttackRect()
 	return playerAttackRect.getGlobalBounds();
 }
 
+FloatRect Player::GetPlayerSkiilRect()
+{
+	return playerSkillRect.getGlobalBounds();
+}
+
 int Player::GetPlayerDamage()
 {
 	return mPlayerAttackDamage;

@@ -75,6 +75,7 @@ private:
 	bool rightMapCollision;	// 현재 우측 맵이랑 충돌했는지, 했다면 트루
 	bool swordmanScopeCollision;	// 아직 구현x, 추후 플레이어 인식범위로 쓸 수도 있어서 남겨만 놓았음
 	bool swordmanHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
+	bool swordmanSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
 public:
 	void Init();
 	void Init2();
@@ -84,7 +85,7 @@ public:
 
 	bool OnHitted();
 
-	void Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects);
+	void Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound,Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects);
 
 	Sprite GetSprite();
 
