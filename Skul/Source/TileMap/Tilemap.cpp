@@ -36,32 +36,13 @@ int Tilemap::CreateBackGround()
 
             int vertexIndex = index * VERTS_IN_QUAD;
 
-            tileMap[vertexIndex + 0].position = Vector2f(x, y);  
+            tileMap[vertexIndex + 0].position = Vector2f(x, y);
             tileMap[vertexIndex + 1].position = Vector2f(x + TILE_SIZE, y);
             tileMap[vertexIndex + 2].position = Vector2f(x + TILE_SIZE, y + TILE_SIZE);
             tileMap[vertexIndex + 3].position = Vector2f(x, y + TILE_SIZE);
 
             texIndex = 5;
-            if (texIndex == 0 || texIndex == 1 || texIndex == 4 || texIndex == 6 || texIndex == 7 || texIndex == 31)
-            {
-                TileType::Ground;
-            }
-            else if (texIndex == 2)
-            {
-                TileType::Null;
-            }
-            else if (texIndex == 3 || texIndex == 9 || texIndex == 15 || texIndex == 24)
-            {
-                TileType::HalfGround;
-            }
-            else if (texIndex == 27 || texIndex == 25 || texIndex == 18 || texIndex == 13 || texIndex == 12)
-            {
-                TileType::Wall;
-            }
-            else if (texIndex == 5)
-            {
-                TileType::None;
-            }
+
             //r , c 값에 따른 타일 샘플 세팅
             if (r <= 25 && c <= 3)
             {
@@ -106,7 +87,7 @@ int Tilemap::CreateBackGround()
                 {
                     texIndex = 27;
                 }
-                if (c > 35 && c < 50 && r < 28 )
+                if (c > 35 && c < 50 && r < 28)
                 {
                     texIndex = 5;
                 }
@@ -131,15 +112,15 @@ int Tilemap::CreateBackGround()
                     texIndex = 31;
                 }
             }
-            else if (r == 22 && c ==25)
+            else if (r == 18 && c == 25)
             {
                 texIndex = 3;
             }
-            else if (r == 22 && c > 25 && c < 35)
+            else if (r == 18 && c > 25 && c < 35)
             {
                 texIndex = 15;
             }
-            else if (r == 22 && c == 35)
+            else if (r == 18 && c == 35)
             {
                 texIndex = 9;
             }
@@ -204,7 +185,7 @@ void Tilemap::CreateTestRect()
 
     rects.clear();
 
-   // 왼쪽벽
+    // 왼쪽벽
     TestRectangle *rect1 = new TestRectangle(64.f, 540.f, 128.f, 1080.f);
     rects.push_back(rect1);
     //지형
@@ -217,7 +198,7 @@ void Tilemap::CreateTestRect()
     TestRectangle *rect4 = new TestRectangle(1776.f, 954.f, 354.f, 308.f);
     rects.push_back(rect4);
     //위에 떠있는 지형
-    TestRectangle *rect5 = new TestRectangle(992, 714, 320, 16);
+    TestRectangle *rect5 = new TestRectangle(975, 585, 355, 16);
     rects.push_back(rect5);
 }
 

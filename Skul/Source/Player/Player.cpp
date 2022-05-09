@@ -312,6 +312,7 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 			case Pivots::CB:
 				mPlayerPosition.y -= (SpritePlayer.getGlobalBounds().top + SpritePlayer.getGlobalBounds().height) - (v->GetRect().top);
 				InputManager::VerticalInit();
+				val = 0;
 				break;
 
 			defalut:
@@ -323,8 +324,8 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 
 
 	//중력
-	//val += 980.f * dt;
-	//mPlayerPosition.y += val * dt;
+	val += 980.f * dt;
+	mPlayerPosition.y += val * dt;
 
 
 
