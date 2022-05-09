@@ -1,11 +1,11 @@
 ﻿/******************************************************************************
 * 작 성 자 : 진 현 섭
 * 작 성 일 : 2022-05-06
-* 내    용 : SwordMan의 동작을 구현한다.
+* 내    용 : swordman의 동작을 구현한다.
 * 수 정 일 :
 *******************************************************************************/
 /*include될 헤더*/
-#include "../SwordMan/SwordMan.h"
+#include "../swordman/swordman.h"
 #include "../Animation/rapidcsv.h"
 #include <iostream>
 #include <ctime>
@@ -13,24 +13,24 @@
 
 
 /**********************************************************
-* 설명 : 보스를 초기화한다.
+* 설명 : 소드맨를 초기화한다.
 ***********************************************************/
-void SwordMan::Init()
+void swordman::Init()
 {
 	srand((int)time(NULL));
 
-	position.x = 1400; // 960
-	position.y = 920; // 540
+	//position.x = 1400; // 960
+	//position.y = 920; // 540
 	sprite.setScale(2.f, 2.f);
 	sprite.setOrigin(60, 65);
 	sprite.setPosition(position);
 	animation.SetTarget(&sprite);
 
-	rapidcsv::Document clipsSwordMan("data_tables/animations/SwordMan/swordman_animation_clips.csv");
-	std::vector<std::string> colId = clipsSwordMan.GetColumn<std::string>("ID"); // 일반화인자를 받음
-	std::vector<int> colFps = clipsSwordMan.GetColumn<int>("FPS");
-	std::vector<int> colLoop = clipsSwordMan.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
-	std::vector<std::string> colPath = clipsSwordMan.GetColumn<std::string>("CLIP PATH");
+	rapidcsv::Document clipsswordman("data_tables/animations/swordman/swordman_animation_clips.csv");
+	std::vector<std::string> colId = clipsswordman.GetColumn<std::string>("ID"); // 일반화인자를 받음
+	std::vector<int> colFps = clipsswordman.GetColumn<int>("FPS");
+	std::vector<int> colLoop = clipsswordman.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
+	std::vector<std::string> colPath = clipsswordman.GetColumn<std::string>("CLIP PATH");
 
 	int totalclips = colId.size();
 
@@ -63,20 +63,16 @@ void SwordMan::Init()
 	}
 	animation.Play("Walk(Left)");
 
-	mHp = START_SwordMan_HEALTH;
-	damage = START_SwordMan_DAMAGE;
-	speed = START_SwordMan_SPEED;
+	mHp = START_swordman_HEALTH;
+	damage = START_swordman_DAMAGE;
+	speed = START_swordman_SPEED;
 	hitReady = true;
 	attackReady = false;
 
 	attackDelay = 0;
 	walkDelay = 2;
 	afterAttack = 3;
-	IdleDelay = 2;
-
-	//shape.setPosition(1165, 800);
-	//shape.setSize(Vector2f(430.f, 100.f));
-	//shape.setFillColor(Color::Red);
+	hitDelay = 1.f;
 
 	shapeMonster.setFillColor(Color::Transparent);
 	shapeMonster.setOutlineColor(Color::Yellow);
@@ -84,11 +80,19 @@ void SwordMan::Init()
 
 	shapeLeftMap.setPosition(1050, 800);
 	shapeLeftMap.setSize(Vector2f(100.f, 100.f));
-	shapeLeftMap.setFillColor(Color::Blue);
+	shapeLeftMap.setFillColor(Color::Transparent);
+	shapeLeftMap.setOutlineColor(Color::Blue);
+	shapeLeftMap.setOutlineThickness(2);
 
-	shapeRightMap.setPosition(1580, 800);
+	shapeRightMap.setPosition(1600, 800);
 	shapeRightMap.setSize(Vector2f(100.f, 100.f));
-	shapeRightMap.setFillColor(Color::Magenta);
+	shapeRightMap.setFillColor(Color::Transparent);
+	shapeRightMap.setOutlineColor(Color::Magenta);
+	shapeRightMap.setOutlineThickness(2);
+
+	shapeScope.setFillColor(Color::Transparent);
+	shapeScope.setOutlineColor(Color::Black);
+	shapeScope.setOutlineThickness(2);
 
 	dir.x = -1.f;
 	dir.y = 0.f;
@@ -98,40 +102,50 @@ void SwordMan::Init()
 		dir /= length;
 	}
 
-	action = SwordManAction::Idle;
+	action = swordmanAction::Idle;
 }
 
-SwordMan::~SwordMan()
+swordman::swordman(int x, int y)
+{
+	position = Vector2f(x, y);
+}
+
+swordman::~swordman()
 {
 }
 
 /**********************************************************
-* 설명 : 아직 구현은 안 했지만 보스가 공격을 받았을 때의 처리 함수
+* 설명 : 아직 구현은 안 했지만 소드맨이 공격을 받았을 때의 처리 함수
 ***********************************************************/
-bool SwordMan::OnHitted()
+bool swordman::OnHitted()
 {
 	return false;
 }
 
 /**********************************************************
-* 설명 : 보스 동작 처리 함수
+* 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
-void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle*> rects)
+void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects)
 {
 	animation.Update(dt);
 
-	swordManBound = shapeMonster.getGlobalBounds();
-	// 플레이어의 히트박스 가져와서 충돌처리 할 변수
-	//playerCollision = swordManBound.intersects();
+	swordmanBound = shapeMonster.getGlobalBounds();
 
 	rangeBound = shapeMonster.getGlobalBounds();
 	attackAble = rangeBound.intersects(playerBound);
 
-	leftMapCollision = swordManBound.intersects(shapeLeftMap.getGlobalBounds());
-	rightMapCollision = swordManBound.intersects(shapeRightMap.getGlobalBounds());
+	swordmanScope = shapeScope.getGlobalBounds();
+
+	leftMapCollision = swordmanBound.intersects(shapeLeftMap.getGlobalBounds());
+	rightMapCollision = swordmanBound.intersects(shapeRightMap.getGlobalBounds());
+	swordmanScopeCollision = swordmanScope.intersects(playerBound);	// 만들어만 놓고 아직 안 썼음
+	swordmanHitCollision = swordmanBound.intersects(playerAttackBound);
 
 	prevMapCollision = false;
 	prevRightMapCollision = false;
+
+	shapeScope.setSize(Vector2f(150.f, 100.f));
+	shapeScope.setPosition(position.x - 140, position.y - 120);
 
 	if (!attackReady)
 	{
@@ -142,9 +156,40 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 		attackDelay = 3;
 		attackReady = true;
 	}
-	if (action != SwordManAction::Death)
+
+	if (action != swordmanAction::Death)
 	{
-		if (action == SwordManAction::Idle)
+		if (swordmanHitCollision && hitReady)
+		{
+			hitReady = false;
+			action = swordmanAction::Hit;
+		}
+		if (action == swordmanAction::Hit)
+		{
+			hitDelay -= dt;
+			if (mHp <= 0)
+			{
+				action = swordmanAction::Death;
+			}
+			if (playerPosition.x < position.x)
+			{
+				animation.Play("Hit(Left)");
+			}
+			else
+			{
+				animation.Play("Hit(Right)");
+			}
+			if (hitDelay < 0)
+			{
+				mHp -= playerDamage;
+				std::cout << "공격받음";
+				hitReady = true;
+				hitDelay = 1.f;
+				swordmanHitCollision = false;
+				action = swordmanAction::Idle;
+			}
+		}
+		if (action == swordmanAction::Idle)
 		{
 			animation.ClearPlayQueue();
 			walkDelay -= dt;
@@ -158,22 +203,23 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 
 			if (attackReady && attackAble)
 			{
-				action = SwordManAction::Attack;
+				action = swordmanAction::Attack;
 			}
-			else if(!attackAble && walkDelay < 0)
+			else if (!attackAble && walkDelay < 0 && dir.x == 1.f)
+			{
+				walkDelay = 2;
+				animation.Play("Walk(Right)");
+				action = swordmanAction::Walk;
+			}
+			else if (!attackAble && walkDelay < 0 && dir.x == -1.f)
 			{
 				walkDelay = 2;
 				animation.Play("Walk(Left)");
-				action = SwordManAction::Walk;
+				action = swordmanAction::Walk;
 			}
-			//else if (!attackAble && walkDelay < 0)
-			//{
-			//	walkDelay = 2;
-			//	action = SwordManAction::Walk;
-			//}
 		}
 	}
-	if (action == SwordManAction::Walk)
+	if (action == swordmanAction::Walk)
 	{
 		shapeMonster.setOrigin(60, 60);
 		shapeMonster.setSize(Vector2f(60.f, 80.f));
@@ -181,17 +227,21 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 
 		sprite.setPosition(position);
 		sprite.setOrigin(60, 60);
-		
+
 		if (attackReady && attackAble)
 		{
-			action = SwordManAction::Attack;
+			action = swordmanAction::Attack;
 		}
+		// 플레이어가 인식 범위에 들어오면 행해줄 조건
+	/*	if (swordmanScopeCollision)
+		{
+		}*/
 
 		if (!prevMapCollision && leftMapCollision)
 		{
 			animation.ClearPlayQueue();
 			animation.Play("Walk(Right)");
-			action = SwordManAction::RightWalk;
+			action = swordmanAction::RightWalk;
 			prevMapCollision = true;
 			leftMapCollision = false;
 			dir.x = 1.f;
@@ -206,7 +256,7 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 		{
 			animation.ClearPlayQueue();
 			animation.Play("Walk(Left)");
-			action = SwordManAction::LeftWalk;
+			action = swordmanAction::LeftWalk;
 			prevRightMapCollision = true;
 			rightMapCollision = false;
 			dir.x = -1.f;
@@ -220,23 +270,27 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 		position += dir * dt * speed;
 		sprite.setPosition(position);
 	}
-	if (action == SwordManAction::LeftWalk)
+	if (action == swordmanAction::LeftWalk)
 	{
 		animation.PlayQueue("Walk(Left)");
-		action = SwordManAction::Walk;
+		action = swordmanAction::Walk;
 	}
-	if (action == SwordManAction::RightWalk)
+	if (action == swordmanAction::RightWalk)
 	{
 		animation.PlayQueue("Walk(Right)");
-		action = SwordManAction::Walk;
+		action = swordmanAction::Walk;
 	}
-	if (action == SwordManAction::Attack)
+	if (action == swordmanAction::Attack)
 	{
 		afterAttack -= dt;
-
-		std::cout << "공격";
-		//animation.ClearPlayQueue();
-		animation.Play("Attack");
+		if (playerPosition.x < position.x)
+		{
+			animation.Play("Attack(Left)");
+		}
+		else
+		{
+			animation.Play("Attack(Right)");
+		}
 		attackReady = false;
 
 		shapeMonster.setOrigin(60, 80);
@@ -248,22 +302,16 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 
 		if (!attackReady)
 		{
-			action = SwordManAction::Idle;
+			action = swordmanAction::Idle;
 		}
 		else if (!attackAble && !attackReady)
 		{
-			action = SwordManAction::Walk;
+			action = swordmanAction::Walk;
 		}
 	}
-	if (action == SwordManAction::Hit)
+	else if (action == swordmanAction::Death)
 	{
-		if (playerCollision)	// 플레이어한테 공격을 받았을 때
-		{
-			mHp -= 20;	// 5대 맞으면 사망
-		}
-	}
-	else if (action == SwordManAction::Death)
-	{
+		animation.ClearPlayQueue();
 		animation.Stop();
 	}
 }
@@ -271,7 +319,7 @@ void SwordMan::Update(float dt, FloatRect playerBound, std::vector<TestRectangle
 /**********************************************************
 * 설명 : 소드맨 그림 반환
 ***********************************************************/
-Sprite SwordMan::GetSprite()
+Sprite swordman::GetSprite()
 {
 	return sprite;
 }
@@ -279,12 +327,15 @@ Sprite SwordMan::GetSprite()
 /**********************************************************
 * 설명 : 소드맨 그림 4좌표의 틀 반환
 ***********************************************************/
-FloatRect SwordMan::GetGlobalBound()
+FloatRect swordman::GetGlobalBound()
 {
 	return sprite.getGlobalBounds();
 }
 
-FloatRect SwordMan::MonsterGetGlobalBound()
+/**********************************************************
+* 설명 : 소드맨의 바디 히트박스
+***********************************************************/
+FloatRect swordman::MonsterGetGlobalBound()
 {
 	return shapeMonster.getGlobalBounds();
 }
@@ -292,7 +343,7 @@ FloatRect SwordMan::MonsterGetGlobalBound()
 /**********************************************************
 * 설명 : 플레이어와의 충돌 더미 반환해줄 함수
 ***********************************************************/
-FloatRect SwordMan::RangeGetGlobalBound()
+FloatRect swordman::RangeGetGlobalBound()
 {
 	return shape.getGlobalBounds();
 }
@@ -300,85 +351,45 @@ FloatRect SwordMan::RangeGetGlobalBound()
 /**********************************************************
 * 설명 : 플레이어와의 충돌 더미를 반환해주는 함수
 ***********************************************************/
-const RectangleShape SwordMan::GetShape()
+const RectangleShape swordman::GetShape()
 {
 	return shape;
 }
 
-FloatRect SwordMan::LeftMapGetGlobalBound()
+/**********************************************************
+* 설명 : 좌측 더미맵의 글로벌 바운즈
+***********************************************************/
+FloatRect swordman::LeftMapGetGlobalBound()
 {
 	return shapeLeftMap.getGlobalBounds();
 }
 
-FloatRect SwordMan::RightMapGetGlobalBound()
+/**********************************************************
+* 설명 :우측 더미맵의 글러벌 바운즈
+***********************************************************/
+FloatRect swordman::RightMapGetGlobalBound()
 {
 	return shapeRightMap.getGlobalBounds();
 }
 
-void SwordMan::InitialLeftDir()
+/**********************************************************
+* 설명 : 아직 쓰지는 않지만 소드맨의 적 인식 범위 글로벌 바운즈
+***********************************************************/
+FloatRect swordman::ScopeGetGlobalBound()
 {
-	dir.x *= -1.f;
-}
-
-void SwordMan::InitialRightDir()
-{
-	dir.x = 2.f;
-	dir.y = 2.f;
+	return shapeScope.getGlobalBounds();
 }
 
 /**********************************************************
 * 설명 :그림 그려주는 함수
 ***********************************************************/
-void SwordMan::Draw(RenderWindow& window)
+void swordman::Draw(RenderWindow& window)
 {
-	window.draw(shapeMonster);
 	window.draw(shapeLeftMap);
 	window.draw(shapeRightMap);
-	window.draw(sprite);
+	if (action != swordmanAction::Death)
+	{
+		window.draw(shapeMonster);
+		window.draw(sprite);
+	}
 }
-
-/*Pivots pivot = Utils::CollisionDir(v->GetRect(), swordManBound);
-				switch (pivot)
-				{
-				case Pivots::LC:
-					position.x += (v->GetRect().left + v->GetRect().width) - (swordManBound.left);
-					break;
-				case Pivots::RC:
-					position.x -= (swordManBound.left + swordManBound.width) - (v->GetRect().left);
-					break;
-				}*/
-
-				//else if (prevMapCollision && !leftMapCollision)
-				//{
-				//	dir *= -1.f;
-				//}
-
-				//else
-				//{
-				//	action = SwordManAction::Idle;
-				//	leftMapCollision = false;
-				//	if (walkDelay < 0)
-				//	{
-				//		walkDelay = 2;
-				//		animation.Play("Walk(Right)");
-				//		dir *= -1.f;
-				//	}
-				//}
-
-				/*for (auto v : rects)
-				{
-					swordManCollision = swordManBound.intersects(v->GetRect());
-					if (!swordManCollision)
-					{
-						std::cout << "좌보";
-						animation.Play("Walk(Left)");
-					}*/
-					/*	else
-						{
-							action = SwordManAction::Idle;
-							std::cout << "우보";
-							swordManCollision = false;
-							animation.Play("Walk(Right)");
-							dir *= -1.f;
-						}*/
-						/*}*/

@@ -19,6 +19,7 @@ void Player::Init()
 	// 재휘 현재,최대체력 초기화
 	mMaxPlayerHealth = START_PLAYER_HEALTH;
 	mCurrentPlayerHealth = START_PLAYER_HEALTH;
+	mPlayerAttackDamage = START_PLAYER_STR;
 	mPlayerPosition.x = 900.f;
 	mPlayerPosition.y = 250.f;
 	
@@ -87,7 +88,7 @@ void Player::Init()
 	playerAttackRect.setFillColor(Color::Transparent);
 	playerAttackRect.setOutlineColor(Color::Yellow);
 	playerAttackRect.setOutlineThickness(2);
-	
+
 	playerSkillRect.setSize(Vector2f(80, 80));
 	playerSkillRect.setScale(4.f, 4.f);
 	playerSkillRect.setOrigin(Vector2f(40, 40));
@@ -170,6 +171,7 @@ void Player::Attack()
 ***********************************************************/
 void Player::Jump(float dt)
 {
+
 	if (isJump == true)
 	{
 		jumpForce = 600.f;
@@ -181,7 +183,6 @@ void Player::Jump(float dt)
 		{
 			graviteSpeed = 0;
 		}
-
 	}
 
 
@@ -203,6 +204,8 @@ void Player::Jump(float dt)
 ***********************************************************/
 void Player::UpdateInput(float dt)
 {
+
+	//오른쪽
 	if (InputManager::instance()->GetKeyDown(Keyboard::Right))
 	{
 		action = PlayerStatus::MOVE;
@@ -236,7 +239,17 @@ void Player::UpdateInput(float dt)
 		animation.Play("Attack1");
 
 		isAttack = true;
-		
+		//if (isAttack == true && InputManager::instance()->GetKeyDown(Keyboard::X))
+		//{
+		//	animation.PlayQueue("Attack2");
+
+		//	if (isAttack == true && InputManager::instance()->GetKeyDown(Keyboard::X))
+		//	{
+		//		animation.PlayQueue("Attack3");
+		//		animation.PlayQueue("Idle");
+		//		
+		//	}
+		//	animation.PlayQueue("Idle");
 		animation.PlayQueue("Idle");
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Z))
@@ -245,7 +258,7 @@ void Player::UpdateInput(float dt)
 		dashPosition.x = mPlayerPosition.x;
 		dashPosition.y = mPlayerPosition.y;
 		isDash = true;
-
+    
 		animation.Play("Dash");
 
 		if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
@@ -259,7 +272,7 @@ void Player::UpdateInput(float dt)
 		}*/
 		action = PlayerStatus::IDLE;
 		animation.PlayQueue("Idle");
-		
+
 	}
 
 	if (InputManager::instance()->GetKeyDown(Keyboard::C))
@@ -281,13 +294,13 @@ void Player::UpdateInput(float dt)
 			skillPosition.y = mPlayerPosition.y - 400.f;
 			spriteSkill.setScale(4.0f, 4.0f);
 		}
-		else if (!isLeft) 
+		else if (!isLeft)
 		{
 			skillPosition.x = mPlayerPosition.x + 300.f;
 			skillPosition.y = mPlayerPosition.y - 400.f;
 			spriteSkill.setScale(-4.0f, 4.0f);
 		}
-		
+
 		skillAnimation.Play("SoulBurn");
 		animation.Play("Skill1");
 		animation.PlayQueue("Idle");
@@ -298,7 +311,7 @@ void Player::UpdateInput(float dt)
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<TestRectangle *> rects)
+void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	UpdateInput(dt);
 	attackDelay -= dt;
@@ -336,11 +349,9 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 	default:
 		break;
 	}
-
-	
 	if (isDash)
 	{
-		
+
 		if (isLeft == true)
 		{
 			if (mPlayerPosition.x > dashPosition.x - 300.f)
@@ -365,12 +376,6 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 			}
 		}
 	}
-
-	
-	
-	
-
-
 
 	//충돌
 	for (auto v : rects)
@@ -430,7 +435,7 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 		skillPosition.y = tempPos.y;
 		isSkill = false;
 	}
-	
+
 
 
 
@@ -473,7 +478,6 @@ void Player::Draw(RenderWindow& window)
 	window.draw(SpritePlayer);
 	window.draw(spriteSkill);
 	window.draw(playerRect);
-	
 	if (action == PlayerStatus::ATTACK)
 	{
 		window.draw(playerAttackRect);
@@ -483,8 +487,8 @@ void Player::Draw(RenderWindow& window)
 	{
 		window.draw(playerSkillRect);
 	}
-	
-	
+
+
 	//window.setView(mainView);
 }
 
@@ -505,15 +509,30 @@ int Player::GetCurrentPlayerHealth()
 }
 
 void Player::JeaHit()
-{	
+{
 	if (mCurrentPlayerHealth > 0)
-	{			
-		mCurrentPlayerHealth -= 10;		
+	{
+		mCurrentPlayerHealth -= 10;
 	}
 }
 
 Vector2f Player::GetPlayerPosition()
 {
 	return mPlayerPosition;
+}
+
+FloatRect Player::GetPlayerRect()
+{
+	return playerRect.getGlobalBounds();
+}
+
+FloatRect Player::GetPlayerAttackRect()
+{
+	return playerAttackRect.getGlobalBounds();
+}
+
+int Player::GetPlayerDamage()
+{
+	return mPlayerAttackDamage;
 }
 

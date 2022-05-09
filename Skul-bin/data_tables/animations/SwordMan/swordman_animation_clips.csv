@@ -1,6 +1,8 @@
 ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
 Idle,10,1,data_tables/animations/SwordMan/swordman_animation_idle.csv
-Attack,10,0,data_tables/animations/SwordMan/swordman_animation_attack.csv
-Hit,10,0,data_tables/animations/SwordMan/swordman_animation_hit.csv
+Attack(Left),10,0,data_tables/animations/SwordMan/swordman_animation_attack(Left).csv
+Attack(Right),10,0,data_tables/animations/SwordMan/swordman_animation_attack(Right).csv
+Hit(Left),10,0,data_tables/animations/SwordMan/swordman_animation_hit(Left).csv
+Hit(Right),10,0,data_tables/animations/SwordMan/swordman_animation_hit(Right).csv
 Walk(Left),10,1,data_tables/animations/SwordMan/swordman_animation_walk(Left).csv
 Walk(Right),10,1,data_tables/animations/SwordMan/swordman_animation_walk(Right).csv

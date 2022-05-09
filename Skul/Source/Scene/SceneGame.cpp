@@ -15,13 +15,10 @@ void SceneGame::Init()
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-	SwordMan.Init();
+	CreateSwordMan(mSwordMans, 5);
 	player.Init();
 	player.SkillInit();
 	ui.Init();
-
-	
-
 }
 
 void SceneGame::Release()
@@ -38,8 +35,11 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
-
-	SwordMan.Update(dt, player.GetGlobalBound(), tilemap.GetRects());
+	for (auto SwordMan : mSwordMans)
+	{
+		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
+	}
+	
 	player.Update(dt, tilemap.GetRects());
 
 	tilemap.CreateBackGround();
@@ -57,7 +57,7 @@ void SceneGame::Update(float dt)
 			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 			ui.UnderAttack(player.GetPosition(), dt);
-		} 
+		}
 	}
 
 
@@ -67,14 +67,35 @@ void SceneGame::Update(float dt)
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow *window)
+void SceneGame::Draw(sf::RenderWindow* window)
 {
 
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
-	SwordMan.Draw(*window);
+	for (auto SwordMan : mSwordMans)
+	{
+		SwordMan->Draw(*window);
+	}
 	ui.DrawSceneGame(window);
+}
+
+void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
+{
+	for (auto swordman : mSwordMans)
+	{
+		delete swordman;
+	}
+	mSwordMans.clear();
+
+	for (int i = 0; i < count; i++)
+	{
+		int x = RandomMgr::GetRandom(1200,1500);
+		int y = 920;
+		mSwordman = new swordman(x, y);
+		mSwordman->Init();
+		mSwordMans.push_back(mSwordman);
+	}
 }
 
 //int SceneGame::GetMaxPlayerHealthReal()
