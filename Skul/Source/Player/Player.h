@@ -130,6 +130,7 @@ public:
 
 	FloatRect GetPlayerRect();
 	FloatRect GetPlayerAttackRect();
+	FloatRect GetPlayerSkiilRect();
 
 	int GetPlayerDamage();	// 평타 데미지
 };

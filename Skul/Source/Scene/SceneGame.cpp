@@ -37,7 +37,7 @@ void SceneGame::Update(float dt)
 {
 	for (auto SwordMan : mSwordMans)
 	{
-		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
+		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
 	}
 	
 	player.Update(dt, tilemap.GetRects());

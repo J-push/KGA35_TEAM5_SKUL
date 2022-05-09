@@ -17,8 +17,6 @@
 ***********************************************************/
 void swordman::Init()
 {
-	srand((int)time(NULL));
-
 	//position.x = 1400; // 960
 	//position.y = 920; // 540
 	sprite.setScale(2.f, 2.f);
@@ -125,7 +123,7 @@ bool swordman::OnHitted()
 /**********************************************************
 * 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
-void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects)
+void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound, Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects)
 {
 	animation.Update(dt);
 
@@ -140,6 +138,7 @@ void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBou
 	rightMapCollision = swordmanBound.intersects(shapeRightMap.getGlobalBounds());
 	swordmanScopeCollision = swordmanScope.intersects(playerBound);	// 만들어만 놓고 아직 안 썼음
 	swordmanHitCollision = swordmanBound.intersects(playerAttackBound);
+	swordmanSkillHitCollision = swordmanBound.intersects(playerSkiilBound);
 
 	prevMapCollision = false;
 	prevRightMapCollision = false;
@@ -159,7 +158,7 @@ void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBou
 
 	if (action != swordmanAction::Death)
 	{
-		if (swordmanHitCollision && hitReady)
+		if (swordmanHitCollision && hitReady || swordmanSkillHitCollision && hitReady)
 		{
 			hitReady = false;
 			action = swordmanAction::Hit;
@@ -182,10 +181,10 @@ void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBou
 			if (hitDelay < 0)
 			{
 				mHp -= playerDamage;
-				std::cout << "공격받음";
 				hitReady = true;
 				hitDelay = 1.f;
 				swordmanHitCollision = false;
+				swordmanSkillHitCollision = false;
 				action = swordmanAction::Idle;
 			}
 		}
