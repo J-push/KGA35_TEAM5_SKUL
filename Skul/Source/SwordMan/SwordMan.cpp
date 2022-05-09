@@ -78,7 +78,9 @@ void SwordMan::Init()
 	//shape.setSize(Vector2f(430.f, 100.f));
 	//shape.setFillColor(Color::Red);
 
-	shapeMonster.setFillColor(Color::Yellow);
+	shapeMonster.setFillColor(Color::Transparent);
+	shapeMonster.setOutlineColor(Color::Yellow);
+	shapeMonster.setOutlineThickness(2);
 
 	shapeLeftMap.setPosition(1050, 800);
 	shapeLeftMap.setSize(Vector2f(100.f, 100.f));
