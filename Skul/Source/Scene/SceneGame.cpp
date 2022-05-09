@@ -19,6 +19,8 @@ void SceneGame::Init()
 	player.Init();
 	player.SkillInit();
 	ui.Init();
+
+	boss.Init();
 }
 
 void SceneGame::Release()
@@ -65,6 +67,8 @@ void SceneGame::Update(float dt)
 	{
 		mgr.ChangeScene(Scenes::END);
 	}
+
+	boss.Update(dt);
 }
 
 void SceneGame::Draw(sf::RenderWindow* window)
@@ -78,6 +82,7 @@ void SceneGame::Draw(sf::RenderWindow* window)
 		SwordMan->Draw(*window);
 	}
 	ui.DrawSceneGame(window);
+	boss.Draw(*window);
 }
 
 void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
@@ -96,11 +101,9 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);
 	}
+	
 }
 
-//int SceneGame::GetMaxPlayerHealthReal()
-//{
-//	return  player.GetMaxPlayerHealth();
-//}
+
 
 

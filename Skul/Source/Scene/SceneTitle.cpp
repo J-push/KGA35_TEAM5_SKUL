@@ -55,6 +55,10 @@ void SceneTitle::Update(float dt)
 	{
 		mgr.ChangeScene(Scenes::EDITOR);
 	}
+	if (InputManager::GetKeyDown(Keyboard::Num9))
+	{
+		mgr.ChangeScene(Scenes::END);
+	}
 	ui.Update(dt);
 
 }

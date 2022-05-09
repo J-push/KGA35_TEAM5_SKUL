@@ -10,6 +10,7 @@
 #include <vector>
 
 
+#include "../Boss.h"
 
 
 class SceneGame : public Scene
@@ -24,6 +25,9 @@ private:
 	swordman* mSwordman;
 	swordman* mSwordman1;
 	swordman* mSwordman2;
+
+	Boss boss;
+
 public:
 
 	int curHp;
