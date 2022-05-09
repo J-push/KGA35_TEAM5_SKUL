@@ -33,8 +33,8 @@ private:
 
 	const float DASH_COOLTIME = 3.f;
 	const float ATTACK_DELAY = 0.3f;
-	
-	
+
+
 	Texture texture;
 
 	Sprite SpritePlayer;						//player 그리기
@@ -110,23 +110,24 @@ public:
 	void Jump(float dt);
 
 	void UpdateInput(float dt);
-	void Update(float dt, std::vector<TestRectangle *> rects);
+	void Update(float dt, std::vector<TestRectangle*> rects);
 
 
 	Vector2f GetPosition();
 	Sprite GetSprite();
 	virtual FloatRect GetGlobalBound();
 
-	void Draw(RenderWindow &window);
+	void Draw(RenderWindow& window);
 
 	// 재휘 추가 최대, 현재체력 받아오기
 	int GetMaxPlayerHealth();
 	int GetCurrentPlayerHealth();
 	void JeaHit();
-	Vector2f GetPlayerPosition();					
+	Vector2f GetPlayerPosition();
 
+	FloatRect GetPlayerRect();
+	FloatRect GetPlayerAttackRect();
 
-
-
+	int GetPlayerDamage();	// 평타 데미지
 };
 

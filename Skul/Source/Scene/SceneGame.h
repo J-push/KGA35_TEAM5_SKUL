@@ -1,11 +1,12 @@
 #pragma once
 #include "Scene.h"
 #include "../Player/Player.h"
-#include "../SwordMan/SwordMan.h"
+#include "../swordman/swordman.h"
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
 #include "../../TestRectangle.h"
+#include "../swordman/swordman.h"
 #include <vector>
 
 
@@ -19,9 +20,10 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
-
-	SwordMan SwordMan;
-
+	std::vector<swordman*> mSwordMans;	// 좀비 여러마리 생성
+	swordman* mSwordman;
+	swordman* mSwordman1;
+	swordman* mSwordman2;
 public:
 
 	int curHp;
@@ -36,6 +38,7 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw(sf::RenderWindow* window) override;
 
+	void CreateSwordMan(std::vector<swordman*>& mSwordMans, int count);
 	int GetMaxPlayerHealthReal();
 	/*int GetCurrentPlayerHealthReal();*/
 };
