@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "../Animation/rapidcsv.h"
 #include "../Utils/Utils.h"
+#include <iostream>
 
 /**********************************************************
 * 설명 : 플레이어를 초기화한다.
@@ -15,7 +16,6 @@
 void Player::Init()
 {
 	Player player;
-
 	// 재휘 현재,최대체력 초기화
 	mMaxPlayerHealth = START_PLAYER_HEALTH;
 	mCurrentPlayerHealth = START_PLAYER_HEALTH;
@@ -224,6 +224,7 @@ void Player::UpdateInput(float dt)
 	if (InputManager::instance()->GetKeyUp(Keyboard::Right) ||
 		InputManager::instance()->GetKeyUp(Keyboard::Left))
 	{
+		
 		action = PlayerStatus::IDLE;
 		animation.Play("Idle");
 	}
@@ -235,7 +236,7 @@ void Player::UpdateInput(float dt)
 		animation.Play("Attack1");
 
 		isAttack = true;
-
+		
 		animation.PlayQueue("Idle");
 	}
 	if (InputManager::instance()->GetKeyDown(Keyboard::Z))
@@ -404,7 +405,7 @@ void Player::Update(float dt, std::vector<TestRectangle *> rects)
 				mPlayerPosition.y -= (playerRect.getGlobalBounds().top + playerRect.getGlobalBounds().height) - (v->GetRect().top);
 				graviteSpeed = 0;
 				InputManager::VerticalInit();
-				val = 0;
+				graviteSpeed = 0;
 				break;
 
 			defalut:
