@@ -68,7 +68,7 @@ void SceneGame::Update(float dt)
 		mgr.ChangeScene(Scenes::END);
 	}
 
-	boss.Update(dt);
+	boss.Update(dt, player.GetPlayerPosition());
 }
 
 void SceneGame::Draw(sf::RenderWindow* window)
@@ -82,6 +82,7 @@ void SceneGame::Draw(sf::RenderWindow* window)
 		SwordMan->Draw(*window);
 	}
 	ui.DrawSceneGame(window);
+
 	boss.Draw(*window);
 }
 

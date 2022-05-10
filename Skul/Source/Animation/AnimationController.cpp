@@ -83,7 +83,7 @@ void AnimationController::Update(float dt)
 		}
 	}
 	// 타겟sprite의 조절
-	sprite->setTexture(*currentClip->frames[currentFrame].texture);
+	sprite->setTexture(*(currentClip->frames[currentFrame].texture));
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
 }
 

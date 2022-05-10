@@ -1,27 +1,39 @@
 #include "Boss.h"
 
-Boss::Boss()
+
+
+Boss::~Boss()
 {
+	for (auto bullet : unuseFires)
+	{
+		delete bullet;
+	}
+	unuseFires.clear();
+	for (auto bullet : useFires)
+	{
+		delete bullet;
+	}
+	useFires.clear();
 }
 
 void Boss::Init()
 {
-	bossPosition.x = 500;
-	bossPosition.y = 500;
+	int launcher1 = 0;
+	int launcher2 = 0;
+	int launcher3 = 0;
+	bossPosition.x = 1700;
+	bossPosition.y = 700;
 
-	// 피격판정 초기화
-	bossRect.setSize(Vector2f(28, 60));
-	bossRect.setScale(1.5f, 1.5f);
-	bossRect.setOrigin(Vector2f(14, 0));
-	bossRect.setFillColor(Color::Transparent);
-	bossRect.setOutlineColor(Color::Red);
-	bossRect.setOutlineThickness(2);
+	// 피격판정
+	bossRect.setSize(Vector2f(38, 110));
+	bossRect.setFillColor(Color(255,0,0,70));
+	Utils::SetOrigin(bossRect, Pivots::CC);
+	bossRect.setPosition(bossPosition);
 
-
-	spriteBoss.setScale(5.f, 5.f);
-	spriteBoss.setOrigin(150, 100);
+	spriteBoss.setScale(1.7f, 1.7f);
 	spriteBoss.setPosition(bossPosition);
 	animation.SetTarget(&spriteBoss);
+
 
 	rapidcsv::Document clipsBoss("data_tables/animations/Boss/boss_animation_clips.csv");
 	std::vector<std::string> colId = clipsBoss.GetColumn<std::string>("ID");
@@ -58,22 +70,202 @@ void Boss::Init()
 		animation.AddClip(clip);
 	}
 	animation.Play("intro1");
+
+
+	for (int i = 0; i < FIRE_SIZE; ++i)
+	{
+		unuseFires.push_back(new BossFire());
+	}
+}
+
+void Boss::Fire(Vector2f dir)
+{
+	Vector2f realdir = dir - bossPosition;
+	realdir = Utils::Normalize(realdir);
+
+	Vector2f spawnPos = bossPosition + realdir;
+
+	if (unuseFires.empty()) //	비어있을때 true
+	{
+		for (int i = 0; i < FIRE_SIZE; ++i)
+		{
+			unuseFires.push_back(new BossFire());
+		}
+	}
+
+	BossFire *bossFire = unuseFires.front();
+	unuseFires.pop_front();
+	useFires.push_back(bossFire);
+	bossFire->Shoot(spawnPos, realdir);
+
+}
+
+void Boss::SuperFire(Vector2f dir)
+{ 	
+	Vector2f realdir = dir - Vector2f(150,150);
+	realdir = Utils::Normalize(realdir);
+
+	Vector2f spawnPos = Vector2f(150, 150);
+
+	if (unuseFires.empty()) //	비어있을때 true
+	{
+		for (int i = 0; i < FIRE_SIZE; ++i)
+		{
+			unuseFires.push_back(new BossFire());
+		}
+	}
+
+	BossFire *bossFire = unuseFires.front();
+	unuseFires.pop_front();
+	useFires.push_back(bossFire);
+	bossFire->Shoot(spawnPos, realdir);
+
+
+
+	//if (launcher1 == 0) // 첫
+	//{
+	//	Vector2f spawnPos = Vector2f(100,300);
+	//	
+	//	Vector2f realdir = dir - spawnPos;
+	//	realdir = Utils::Normalize(realdir);
+
+	//	if (unuseFires.empty()) //	비어있을때 true
+	//	{
+	//		for (int i = 0; i < FIRE_SIZE; ++i)
+	//		{
+	//			unuseFires.push_back(new BossFire());
+	//		}
+	//	}
+
+	//	BossFire *bossFire = unuseFires.front();
+	//	unuseFires.pop_front();
+	//	useFires.push_back(bossFire);
+	//	bossFire->SuperShoot(spawnPos, realdir);
+
+	//	++launcher1;
+	//}
+	//if (launcher1 == 1) // 첫 둘
+	//{
+	//	Vector2f spawnPos = Vector2f(100, 300);
+
+	//	Vector2f realdir = dir - spawnPos;
+	//	realdir = Utils::Normalize(realdir);
+
+	//	if (unuseFires.empty()) //	비어있을때 true
+	//	{
+	//		for (int i = 0; i < FIRE_SIZE; ++i)
+	//		{
+	//			unuseFires.push_back(new BossFire());
+	//		}
+	//	}
+
+	//	BossFire *bossFire = unuseFires.front();
+	//	unuseFires.pop_front();
+	//	useFires.push_back(bossFire);
+	//	bossFire->SuperShoot(spawnPos, realdir);
+
+	//	spawnPos = Vector2f(1000, 100);
+
+	//	realdir = dir - spawnPos;
+	//	realdir = Utils::Normalize(realdir);
+
+	//	if (unuseFires.empty()) //	비어있을때 true
+	//	{
+	//		for (int i = 0; i < FIRE_SIZE; ++i)
+	//		{
+	//			unuseFires.push_back(new BossFire());
+	//		}
+	//	}
+
+	//	bossFire = unuseFires.front();
+	//	unuseFires.pop_front();
+	//	useFires.push_back(bossFire);
+	//	bossFire->SuperShoot(spawnPos, realdir);
+	//	launcher1++;
+	//	launcher2++;
+	//}
+	//if (launcher2 == 1) // 둘 셋
+	//{
+	//	launcher2++;
+	//	launcher3++;
+	//}
+	//if (launcher3 == 1) // 셋
+	//{
+	//	launcher3++;
+	//}
 }
 
 
 
-void Boss::Update(float dt)
+void Boss::Update(float dt, Vector2f dir)
 {
-	animation.PlayQueue("intro2");
+	// 체크용
+	if (InputManager::GetKeyDown(Keyboard::Q))
+	{
+		bossPosition.y -= 200;
+		animation.Play("intro2");
+	}
+
+	if (InputManager::GetKeyDown(Keyboard::W))
+	{
+		animation.Play("attackready");
+	}
+
+	if (InputManager::GetKeyDown(Keyboard::E))
+	{
+		animation.Play("attack");
+		Fire(dir);
+	}
+
+	if (InputManager::GetKeyDown(Keyboard::R))
+	{
+		Fire(dir);
+	}
+
+	if (InputManager::GetKeyDown(Keyboard::T))
+	{
+		SuperFire(dir);
+		//superSkill.Shoot(Vector2f(150,150), dir);
+	}
+
+	
+	// 불 부분
+	auto it = useFires.begin();
+	while (it != useFires.end())
+	{
+		BossFire *fire = *it;
+		fire->Update(dt);
+
+		if (!fire->IsActive())
+		{
+			it = useFires.erase(it);
+			unuseFires.push_back(fire);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	Utils::SetOrigin(spriteBoss, Pivots::CC);
 	animation.Update(dt);
 	bossRect.setPosition(bossPosition);
+	spriteBoss.setPosition(bossPosition);
+
+	superSkill.Update(dt);
 }
 
 
 
 void Boss::Draw(RenderWindow &window)
 {
-	window.draw(bossRect);
 	window.draw(spriteBoss);
-
+	window.draw(bossRect);
+	for (auto fire : useFires)
+	{
+		window.draw(fire->GetSprite());
+		window.draw(fire->GetRect());
+	}
+	window.draw(superSkill.GetSprite());
+	window.draw(superSkill.GetEffectSprite());
 }

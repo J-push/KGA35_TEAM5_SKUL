@@ -12,6 +12,7 @@ protected:
 	UIMaker ui;
 	SceneMgr& mgr;
 
+
 public:
 	Scene(SceneMgr& mgr);
 
