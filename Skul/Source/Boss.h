@@ -4,7 +4,7 @@
 #include "../Source/Utils/Utils.h"
 #include <map>
 #include "../Source/BossFire.h"
-#include "../Source/BossSuper.h"
+#include "../Source/Manager/RandomMgr.h"
 
 // ½ÇÇè¿ë
 #include "../Source/Manager/InputManager.h"
@@ -27,6 +27,7 @@ private:
 	int hp;
 	float speed = 100;
 
+	BossStatus action = BossStatus::INTRO;
 
 	Sprite spriteBoss;
 	Vector2f bossPosition;
@@ -47,8 +48,6 @@ private:
 	int launcher2;
 	int launcher3;
 
-	BossSuper superSkill;
-
 
 
 
@@ -58,14 +57,18 @@ public:
 	void Init();
 
 	void Fire(Vector2f dir);
-	void SuperFire(Vector2f dir);
+	void FireRutine(Vector2f dir);
 
+	void SuperFire(Vector2f dir, Vector2f pos);
+	void SuperFireRutine(Vector2f dir);
+
+	void Move(float dt, Vector2f dir);
 
 	void Update(float dt, Vector2f dir);
 
 	void Draw(RenderWindow &window);
 
 
-
 };
+//void check() { cout << "dsf" << endl; }
 

@@ -10,6 +10,10 @@ BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 	spriteFireBall.setScale(0.8f, 0.8f);
 	animation.SetTarget(&spriteFireBall);
 
+	spriteSuperEffect.setScale(2.0f, 2.0f);
+	spriteSuperEffect.setPosition(Vector2f(100, 100));
+	animationSuperEffect.SetTarget(&spriteSuperEffect);
+
 	rapidcsv::Document clipsFire("data_tables/animations/BossFireball/bossfireball_animation_clips.csv");
 	std::vector<std::string> colId = clipsFire.GetColumn<std::string>("ID");
 	std::vector<int> colFps = clipsFire.GetColumn<int>("FPS");
@@ -43,9 +47,8 @@ BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 			clip.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
 		}
 		animation.AddClip(clip);
+		animationSuperEffect.AddClip(clip);
 	}
-	animation.Play("fireball");
-
 }
 
 BossFire::~BossFire()
@@ -64,8 +67,16 @@ bool BossFire::IsActive()
 
 void BossFire::Shoot(Vector2f pos, Vector2f dir)
 {
+	animation.Play("fireball");
+
 	SetActive(true);
 	
+	fireRect.setSize(Vector2f(80, 40));
+	fireRect.setFillColor(Color(140, 72, 19, 70));
+	fireRect.setPosition(position);
+
+	spriteFireBall.setScale(0.8f, 0.8f);
+
 	distance = 0.f;
 	position = pos;
 	spriteFireBall.setPosition(pos);
@@ -79,10 +90,22 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 
 void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 {
+	animation.Play("fireball");
+	animationSuperEffect.Play("supereffect");
+	
+	position = pos;
+
 	SetActive(true);
+	spriteSuperEffect.setPosition(position);
+
+	fireRect.setSize(Vector2f(160, 80));
+	fireRect.setFillColor(Color(140, 72, 19, 70));
+	fireRect.setPosition(position);
+
+	spriteFireBall.setScale(2.0f, 2.0f);
 
 	distance = 0.f;
-	position = pos;
+	
 	spriteFireBall.setPosition(pos);
 	direction = Utils::Normalize(dir);
 	float dgree = Utils::GetAngel(position, position + dir);
@@ -101,6 +124,8 @@ void BossFire::Stop()
 void BossFire::Update(float dt)
 {
 	animation.Update(dt);
+	animationSuperEffect.Update(dt);
+
 	position += direction * speed * dt;
 	fireRect.setPosition(position);
 	spriteFireBall.setPosition(position);
@@ -117,6 +142,11 @@ void BossFire::Update(float dt)
 Sprite BossFire::GetSprite()
 {
 	return spriteFireBall;
+}
+
+Sprite BossFire::GetSuperEffectSprite()
+{
+	return spriteSuperEffect;
 }
 
 RectangleShape BossFire::GetRect()

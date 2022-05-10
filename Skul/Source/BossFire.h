@@ -11,6 +11,10 @@ private:
 
 	Sprite spriteFireBall;
 	AnimationController animation;
+
+	Sprite spriteSuperEffect;
+	AnimationController animationSuperEffect;
+
 	std::map<std::string, Texture> texMap;
 
 	bool isActive; // È°¼ºÈ­
@@ -38,7 +42,9 @@ public:
 
 
 	void Update(float dt);
+
 	Sprite GetSprite();
+	Sprite GetSuperEffectSprite();
 
 	RectangleShape GetRect();
 

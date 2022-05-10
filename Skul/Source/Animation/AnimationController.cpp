@@ -14,7 +14,7 @@
 ***********************************************************/
 AnimationController::AnimationController()
 	: clips(), currentClip(nullptr), isPlaying(false), currentFrame(-1),
-	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr)
+	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr), isEnding(false)
 {
 }
 
@@ -68,11 +68,17 @@ void AnimationController::Update(float dt)
 			case AnimationLoopTypes::Single:
 				currentFrame = totalFrame - 1;
 				break;
-			case AnimationLoopTypes::Loop:
+			case AnimationLoopTypes::Loop:				
 				currentFrame = 0;
 				break;
 			default:
 				break;
+			}
+			
+			if (OnComplete != nullptr)
+			{
+				OnComplete();
+				OnComplete = nullptr;
 			}
 		}
 		else
@@ -82,6 +88,8 @@ void AnimationController::Update(float dt)
 			Play(nextClipId, false);
 		}
 	}
+
+
 	// 타겟sprite의 조절
 	sprite->setTexture(*(currentClip->frames[currentFrame].texture));
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
@@ -104,6 +112,10 @@ void AnimationController::Play(std::string clipId, bool clear)
 	totalFrame = currentClip->frames.size();
 	frameDuration = 1.f / currentClip->fps; // 한 프레임당 몇 초 쓰는지
 	//frameDurtion = currentClip->fps;
+	if (currentFrame >= totalFrame)
+	{
+		isEnding = true;
+	}
 }
 
 
@@ -155,5 +167,10 @@ bool AnimationController::ClearPlayQueueCheck()
 		return true;
 	}
 	return false;
+}
+
+bool AnimationController::GetisEnding()
+{
+	return isEnding;
 }
 
