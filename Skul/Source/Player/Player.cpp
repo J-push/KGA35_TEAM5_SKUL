@@ -115,7 +115,6 @@ void Player::SkillInit()
 
 	int totalClips = colId.size();
 	for (int i = 0; i < totalClips; ++i)
-
 	{
 		AnimationClip skill;
 		skill.id = colId[i];
@@ -184,9 +183,6 @@ void Player::Jump(float dt)
 			graviteSpeed = 0;
 		}
 	}
-
-
-
 
 	/*if (isJump == false)
 	{
@@ -420,7 +416,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		}
 	}
 
-
 	//중력
 	graviteSpeed += 980.f * dt;
 	mPlayerPosition.y += graviteSpeed * dt;
@@ -435,9 +430,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		skillPosition.y = tempPos.y;
 		isSkill = false;
 	}
-
-
-
 
 	SpritePlayer.setPosition(mPlayerPosition);
 	spriteSkill.setPosition(skillPosition.x, skillPosition.y - 50);

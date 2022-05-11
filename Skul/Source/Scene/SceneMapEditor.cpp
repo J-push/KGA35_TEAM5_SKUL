@@ -6,11 +6,11 @@ void SceneMapEditor::Init()
 	//tileView = new View(FloatRect(0, 0, 1080.f, 1080.f));
 	//tileView->setViewport(sf::FloatRect(0.f, 0.f, 0.56f, 0.56f));
 	//mapSampleView->setViewport(sf::FloatRect(0.56f, 0.56f, 1.f, 1.f));
-	//spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("EDITORBACKGROUNDTEX"));
-	//spriteBackground.setScale(Vector2f(0.5f, 1.f));
-	//spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
-	//spriteTile.setPosition(1335.f, 0.f);
-	//spriteTile.setScale(3.f, 3.f);
+	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("EDITORBACKGROUNDTEX"));
+	spriteBackground.setScale(Vector2f(0.5f, 1.f));
+	spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
+	spriteTile.setPosition(1335.f, 0.f);
+	spriteTile.setScale(3.f, 3.f);
 }
 
 void SceneMapEditor::Release()
@@ -48,10 +48,10 @@ void SceneMapEditor::Update(float dt)
 void SceneMapEditor::Draw(sf::RenderWindow* window)
 {
 	window->clear();
-	window->setView(*tileView);
+	//window->setView(*tileView);
 
-	window->clear();
-	window->setView(*mapSampleView);
+	//window->clear();
+	//window->setView(*mapSampleView);
 	window->draw(spriteBackground);
 	window->draw(spriteTile);
 }

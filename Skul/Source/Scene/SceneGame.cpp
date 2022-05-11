@@ -16,6 +16,7 @@ void SceneGame::Init()
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
 	CreateSwordMan(mSwordMans, 5);
+	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
 	player.SkillInit();
 	ui.Init();
@@ -38,6 +39,11 @@ void SceneGame::Update(float dt)
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
+	}
+
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Update(dt, player);
 	}
 	
 	player.Update(dt, tilemap.GetRects());
@@ -77,6 +83,10 @@ void SceneGame::Draw(sf::RenderWindow* window)
 	{
 		SwordMan->Draw(*window);
 	}
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Draw(*window);
+	}
 	ui.DrawSceneGame(window);
 }
 
@@ -90,11 +100,29 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 
 	for (int i = 0; i < count; i++)
 	{
-		int x = RandomMgr::GetRandom(1200,1500);
+		int x = RandomMgr::GetRandom(1240,1500);
 		int y = 920;
 		mSwordman = new swordman(x, y);
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);
+	}
+}
+
+void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
+{
+	for (auto pinkEnt : mpinkEnt)
+	{
+		delete pinkEnt;
+	}
+	mpinkEnt.clear();
+
+	for (int i = 0; i < count; i++)
+	{
+		int x = RandomMgr::GetRandom(900,1100);
+		int y = 575;
+		pinkEnt = new PinkEnt(x, y);
+		pinkEnt->Init();
+		mpinkEnt.push_back(pinkEnt);
 	}
 }
 

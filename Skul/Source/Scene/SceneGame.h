@@ -7,6 +7,7 @@
 #include "../Utils/ChangeMouse.h"
 #include "../../TestRectangle.h"
 #include "../swordman/swordman.h"
+#include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
 
 
@@ -20,10 +21,10 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
-	std::vector<swordman*> mSwordMans;	// 좀비 여러마리 생성
+	std::vector<swordman*> mSwordMans;	// 소드맨 여러마리 생성
 	swordman* mSwordman;
-	swordman* mSwordman1;
-	swordman* mSwordman2;
+	std::vector<PinkEnt*> mPinkEnt;	// 핑크엔트 여러마리 생성
+	PinkEnt* pinkEnt;
 public:
 
 	int curHp;
@@ -39,6 +40,7 @@ public:
 	virtual void Draw(sf::RenderWindow* window) override;
 
 	void CreateSwordMan(std::vector<swordman*>& mSwordMans, int count);
+	void CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count);
 	int GetMaxPlayerHealthReal();
 	/*int GetCurrentPlayerHealthReal();*/
 };

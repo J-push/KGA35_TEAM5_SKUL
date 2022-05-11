@@ -1,0 +1,11 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+Idle,10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_idle.csv
+Attack(Left),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Attack(Left).csv
+Attack(Right),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Attack(Right).csv
+Hit(Left),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Hit(Left).csv
+Hit(Right),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Hit(Right).csv
+Walk(Left),10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Walk(Left).csv
+Walk(Right),10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Walk(Right).csv
+AttackReady(Left),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_AttackReady(Left).csv
+AttackReady(Right),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_AttackReady(Right).csv
+EntGas,10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_EntGas.csv
