@@ -8,7 +8,6 @@
 
 using namespace sf;
 
-
 class AnimationController
 {
 private:
@@ -26,6 +25,8 @@ private:
 	Sprite *sprite;						// 포인터 이유??
 
 public:
+	std::function<void()> OnComplete;
+
 	AnimationController();
 
 	void SetTarget(Sprite *sprite);

@@ -74,6 +74,7 @@ void AnimationController::Update(float dt)
 			default:
 				break;
 			}
+
 			if (OnComplete != nullptr)
 			{
 				OnComplete();

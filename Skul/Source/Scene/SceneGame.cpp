@@ -28,6 +28,7 @@ void SceneGame::Release()
 
 void SceneGame::Start()
 {
+	//Init();
 }
 
 void SceneGame::End()
