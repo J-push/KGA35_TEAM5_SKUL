@@ -45,8 +45,6 @@ void SceneTitle::Update(float dt)
 		mgr.ChangeScene(Scenes::GAME);
 	}
 	
-
-
 	if (InputManager::GetKeyDown(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);

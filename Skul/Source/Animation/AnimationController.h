@@ -8,7 +8,6 @@
 
 using namespace sf;
 
-
 class AnimationController
 {
 private:
@@ -28,6 +27,8 @@ private:
 
 
 public:
+	std::function<void()> OnComplete;
+
 	AnimationController();
 
 	void SetTarget(Sprite *sprite);
@@ -43,10 +44,5 @@ public:
 	bool IsPlaying();
 	void ClearPlayQueue();
 	bool ClearPlayQueueCheck();
-
-	void (*OnComplete)(void);
-
-
-
 };
 

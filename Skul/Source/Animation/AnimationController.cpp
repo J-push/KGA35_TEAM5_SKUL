@@ -74,7 +74,6 @@ void AnimationController::Update(float dt)
 			default:
 				break;
 			}
-			
 			if (OnComplete != nullptr)
 			{
 				OnComplete();
@@ -91,7 +90,9 @@ void AnimationController::Update(float dt)
 
 
 	// 타겟sprite의 조절
+
 	sprite->setTexture(*(currentClip->frames[currentFrame].texture));
+	//sprite->setTexture(*currentClip->frames[currentFrame].texture);
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
 }
 

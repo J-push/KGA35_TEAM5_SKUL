@@ -1,6 +1,6 @@
 ﻿/******************************************************************************
 * 작 성 자 : 진 현 섭
-* 작 성 일 : 2022-05-06
+* 작 성 일 : 2022-05-09
 * 내    용 : swordman의 동작을 구현한다.
 * 수 정 일 :
 *******************************************************************************/
@@ -59,7 +59,6 @@ void swordman::Init()
 		}
 		animation.AddClip(clip);
 	}
-	animation.Play("Walk(Left)");
 
 	mHp = START_swordman_HEALTH;
 	damage = START_swordman_DAMAGE;
@@ -87,10 +86,6 @@ void swordman::Init()
 	shapeRightMap.setFillColor(Color::Transparent);
 	shapeRightMap.setOutlineColor(Color::Magenta);
 	shapeRightMap.setOutlineThickness(2);
-
-	shapeScope.setFillColor(Color::Transparent);
-	shapeScope.setOutlineColor(Color::Black);
-	shapeScope.setOutlineThickness(2);
 
 	dir.x = -1.f;
 	dir.y = 0.f;
@@ -129,22 +124,15 @@ void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBou
 
 	swordmanBound = shapeMonster.getGlobalBounds();
 
-	rangeBound = shapeMonster.getGlobalBounds();
-	attackAble = rangeBound.intersects(playerBound);
-
-	swordmanScope = shapeScope.getGlobalBounds();
+	attackAble = swordmanBound.intersects(playerBound);
 
 	leftMapCollision = swordmanBound.intersects(shapeLeftMap.getGlobalBounds());
 	rightMapCollision = swordmanBound.intersects(shapeRightMap.getGlobalBounds());
-	swordmanScopeCollision = swordmanScope.intersects(playerBound);	// 만들어만 놓고 아직 안 썼음
 	swordmanHitCollision = swordmanBound.intersects(playerAttackBound);
 	swordmanSkillHitCollision = swordmanBound.intersects(playerSkiilBound);
 
 	prevMapCollision = false;
 	prevRightMapCollision = false;
-
-	shapeScope.setSize(Vector2f(150.f, 100.f));
-	shapeScope.setPosition(position.x - 140, position.y - 120);
 
 	if (!attackReady)
 	{
@@ -231,10 +219,6 @@ void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBou
 		{
 			action = swordmanAction::Attack;
 		}
-		// 플레이어가 인식 범위에 들어오면 행해줄 조건
-	/*	if (swordmanScopeCollision)
-		{
-		}*/
 
 		if (!prevMapCollision && leftMapCollision)
 		{
@@ -340,22 +324,6 @@ FloatRect swordman::MonsterGetGlobalBound()
 }
 
 /**********************************************************
-* 설명 : 플레이어와의 충돌 더미 반환해줄 함수
-***********************************************************/
-FloatRect swordman::RangeGetGlobalBound()
-{
-	return shape.getGlobalBounds();
-}
-
-/**********************************************************
-* 설명 : 플레이어와의 충돌 더미를 반환해주는 함수
-***********************************************************/
-const RectangleShape swordman::GetShape()
-{
-	return shape;
-}
-
-/**********************************************************
 * 설명 : 좌측 더미맵의 글로벌 바운즈
 ***********************************************************/
 FloatRect swordman::LeftMapGetGlobalBound()
@@ -369,14 +337,6 @@ FloatRect swordman::LeftMapGetGlobalBound()
 FloatRect swordman::RightMapGetGlobalBound()
 {
 	return shapeRightMap.getGlobalBounds();
-}
-
-/**********************************************************
-* 설명 : 아직 쓰지는 않지만 소드맨의 적 인식 범위 글로벌 바운즈
-***********************************************************/
-FloatRect swordman::ScopeGetGlobalBound()
-{
-	return shapeScope.getGlobalBounds();
 }
 
 /**********************************************************
