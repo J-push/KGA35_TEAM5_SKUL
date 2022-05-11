@@ -62,6 +62,8 @@ public:
 	void SuperFire(Vector2f dir, Vector2f pos);
 	void SuperFireRutine(Vector2f dir);
 
+	void Landing(Vector2f dir);
+
 	void Move(float dt, Vector2f dir);
 
 	void Update(float dt, Vector2f dir);

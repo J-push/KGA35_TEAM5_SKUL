@@ -14,7 +14,7 @@
 ***********************************************************/
 AnimationController::AnimationController()
 	: clips(), currentClip(nullptr), isPlaying(false), currentFrame(-1),
-	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr), isEnding(false)
+	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr)
 {
 }
 
@@ -112,10 +112,6 @@ void AnimationController::Play(std::string clipId, bool clear)
 	totalFrame = currentClip->frames.size();
 	frameDuration = 1.f / currentClip->fps; // 한 프레임당 몇 초 쓰는지
 	//frameDurtion = currentClip->fps;
-	if (currentFrame >= totalFrame)
-	{
-		isEnding = true;
-	}
 }
 
 
@@ -169,8 +165,4 @@ bool AnimationController::ClearPlayQueueCheck()
 	return false;
 }
 
-bool AnimationController::GetisEnding()
-{
-	return isEnding;
-}
 

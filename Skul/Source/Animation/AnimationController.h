@@ -25,7 +25,7 @@ private:
 
 	Sprite *sprite;						// 포인터 이유??
 
-	bool isEnding;
+
 
 public:
 	AnimationController();
@@ -46,7 +46,7 @@ public:
 
 	void (*OnComplete)(void);
 
-	bool GetisEnding();
+
 
 };
 

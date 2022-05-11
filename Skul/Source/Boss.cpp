@@ -172,6 +172,16 @@ void Boss::SuperFireRutine(Vector2f dir)
 	}
 }
 
+void Boss::Landing(Vector2f dir)
+{
+	speed = 500;
+	while (bossPosition.x == dir.x)
+	{
+		bossPosition.x = speed;
+	}
+	animation.Play("landingready");
+}
+
 
 
 
@@ -208,8 +218,7 @@ void Boss::Move(float dt, Vector2f dir)
 	}
 }
 
-//intro1 intro2 attackready attack idle walkback walkfront
-
+//intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
 
 void Boss::Update(float dt, Vector2f dir)
 {
@@ -217,11 +226,10 @@ void Boss::Update(float dt, Vector2f dir)
 	{
 	case BossStatus::INTRO:
 		animation.Play("intro1");		
-		if (animation.GetisEnding())
-		{
-			animation.Play("intro2");
-			action = BossStatus::IDLE;
-		}
+		
+		animation.Play("intro2");
+		action = BossStatus::IDLE;
+		
 		break;
 
 	case BossStatus::IDLE:
@@ -232,6 +240,7 @@ void Boss::Update(float dt, Vector2f dir)
 		Move(dt, dir);
 		break;
 	case BossStatus::FIREBALL:
+
 		break;
 	case BossStatus::LANDING:
 		break;
