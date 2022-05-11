@@ -1,7 +1,5 @@
 #include "Boss.h"
 
-
-
 Boss::~Boss()
 {
 	for (auto bullet : unuseFires)
@@ -18,7 +16,7 @@ Boss::~Boss()
 
 void Boss::Init()
 {
-	int launcher1 = 0;
+	int superCount = 0;
 	int launcher2 = 0;
 	int launcher3 = 0;
 	bossPosition.x = 1700;
@@ -77,11 +75,32 @@ void Boss::Init()
 	action = BossStatus::INTRO;
 }
 
+void Boss::Intro(float dt)
+{
+	if (introCount == 0 && timer < 99.9)
+	{
+		animation.Play("intro1");
+		introCount++;
+	}
+	if (introCount == 1 && timer < 95.7)
+	{
+		bossPosition.y -= 200;
+		animation.Play("intro2");
+		introCount++;
+	}
+	if (introCount == 2 && timer < 94.4)
+	{
+		//bossPosition.y += 7;
+		introCount++;
+		timer = 100;
+		moveWhere = RandomMgr::GetRandom(1,2);
+		action = BossStatus::MOVE;
+	}
+}
+
+
 void Boss::Fire(Vector2f dir)
 {
-	launcher1 = 0;
-	launcher2 = 0;
-	launcher3 = 0;
 
 	Vector2f realdir = dir - bossPosition;
 	realdir = Utils::Normalize(realdir);
@@ -103,7 +122,7 @@ void Boss::Fire(Vector2f dir)
 
 }
 
-void Boss::FireRutine(Vector2f dir)
+void Boss::FireRutine(Vector2f dir, float dt)
 {
 	if (bossPosition.x - dir.x > 0) // 플레이어가 보스의 왼쪽
 	{
@@ -115,14 +134,42 @@ void Boss::FireRutine(Vector2f dir)
 		spriteBoss.setScale(-1.7f, 1.7f);
 		animation.Play("attack");
 	}
-
-	Fire(dir);
+	
+	if (fireCount == 0 && timer < 99.5f)
+	{
+		Fire(dir);
+		fireCount++;
+	}
+	if (fireCount == 1 && timer < 99.f)
+	{
+		Fire(dir);
+		fireCount++;
+	}
+	if (fireCount == 2 && timer < 98.5f)
+	{
+		Fire(dir);
+		fireCount++;
+	}
+	if (fireCount == 3 && timer < 98.f)
+	{
+		Fire(dir);
+		fireCount++;
+	}
+	if (fireCount == 4 && timer < 97.5f)
+	{
+		Fire(dir);
+		fireCount = 0;
+		timer = 100;
+		action = BossStatus::IDLE;
+	}
 }
-
-
 
 void Boss::SuperFire(Vector2f dir, Vector2f pos)
 {
+	pos.x -= 230;
+	pos.y -= 180;
+	dir.x -= 170;
+
 	Vector2f realdir = dir - pos;
 	realdir = Utils::Normalize(realdir);
 
@@ -142,33 +189,41 @@ void Boss::SuperFire(Vector2f dir, Vector2f pos)
 	bossFire->SuperShoot(spawnPos, realdir);
 }
 
-void Boss::SuperFireRutine(Vector2f dir)
-{
-	if (launcher1 == 0)
+void Boss::SuperFireRutine(Vector2f dir, float dt)
+{	
+	if (superCount == 0 && timer < 98)
 	{
-		SuperFire(dir, Vector2f(150, 50));
-		launcher1++;
+		SuperFire(dir, Vector2f(380, 230));
+		superCount++;
 	}
-	if (launcher1 == 1)
+	if (superCount == 1 && timer < 96)
 	{
-		SuperFire(dir, Vector2f(150, 50));
-		SuperFire(dir, Vector2f(800, 0));
-		launcher1++;
-		launcher2++;
+		SuperFire(dir, Vector2f(380, 230));
+		SuperFire(dir, Vector2f(1030, 180));
+		superCount++;
 	}
-	if (launcher1 == 2)
+
+	if (superCount == 2 && timer < 94)
 	{
-		SuperFire(dir, Vector2f(800, 0));
-		SuperFire(dir, Vector2f(1500, 50));
-		launcher1++;
-		launcher2++;
-		launcher3++;
+		SuperFire(dir, Vector2f(1030, 180));
+		SuperFire(dir, Vector2f(1730, 230));
+		superCount++;
 	}
-	if (launcher2 == 2)
+
+	if (superCount == 3 && timer < 92)
 	{
-		SuperFire(dir, Vector2f(1500, 50));
-		launcher2++;
-		launcher3++;
+		SuperFire(dir, Vector2f(1730, 230));
+		superCount++;
+	}
+
+	if (superCount == 4 && timer < 90)
+	{
+		SuperFire(dir, Vector2f(380, 230));
+		SuperFire(dir, Vector2f(1030, 180));
+		SuperFire(dir, Vector2f(1730, 230));
+		superCount = 0;
+		timer = 100;
+		//action = BossStatus::IDLE;
 	}
 }
 
@@ -182,13 +237,9 @@ void Boss::Landing(Vector2f dir)
 	animation.Play("landingready");
 }
 
-
-
-
-void Boss::Move(float dt, Vector2f dir)
+void Boss::Move(float dt, Vector2f dir, int moving)
 {
-	int move = RandomMgr::GetRandom(1, 2);
-	if (move == 1)
+	if (moving == 1 || bossPosition.x < 300)
 	{
 		if (bossPosition.x - dir.x > 0) // 왼쪽보면서 오른쪽으로 이동
 		{
@@ -202,7 +253,7 @@ void Boss::Move(float dt, Vector2f dir)
 		}
 		bossPosition.x += speed * dt;
 	}
-	if (move == 2)
+	if (moving == 2 || bossPosition.x > 1700)
 	{
 		if (bossPosition.x - dir.x < 0) // 오른쪽보면서 왼쪽으로 이동
 		{
@@ -218,35 +269,47 @@ void Boss::Move(float dt, Vector2f dir)
 	}
 }
 
+void Boss::Idle()
+{
+	animation.PlayQueue("idle");
+	moveWhere = RandomMgr::GetRandom(1, 2);
+}
+
 //intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
 
 void Boss::Update(float dt, Vector2f dir)
 {
+	cout << timer << endl;
+
 	switch (action)
 	{
 	case BossStatus::INTRO:
-		animation.Play("intro1");		
-		
-		animation.Play("intro2");
-		action = BossStatus::IDLE;
-		
+		timer -= dt;
+		Intro(dt);
 		break;
 
 	case BossStatus::IDLE:
-		animation.Play("idle");
+		Idle();
 		break;
 
 	case BossStatus::MOVE:
-		Move(dt, dir);
+		Move(dt, dir, moveWhere);
 		break;
-	case BossStatus::FIREBALL:
 
-		break;
 	case BossStatus::LANDING:
 		break;
-	case BossStatus::METEO:
-		SuperFireRutine(dir);
+
+	case BossStatus::FIREBALL:
+		timer -= dt;
+		FireRutine(dir, dt);
 		break;
+
+	case BossStatus::METEO:
+		bossPosition.x = 950;
+		timer -= dt;
+		SuperFireRutine(dir, dt);
+		break;
+
 	default:
 		break;
 	}
@@ -278,21 +341,19 @@ void Boss::Update(float dt, Vector2f dir)
 	// 체크용
 	if (InputManager::GetKeyDown(Keyboard::Q))
 	{
-		bossPosition.y -= 200;
-		animation.Play("intro1");
+		action = BossStatus::INTRO;
 	}
 	if (InputManager::GetKeyDown(Keyboard::W))
 	{
-		animation.Play("attackready");
+		animation.Play("intro1");
 	}
 	if (InputManager::GetKeyDown(Keyboard::E))
 	{
-		animation.Play("attack");
-		Fire(dir);
+		Move(dt, dir, moveWhere);
 	}
 	if (InputManager::GetKeyDown(Keyboard::R))
 	{
-		Fire(dir);
+		action = BossStatus::FIREBALL;
 	}
 	if (InputManager::GetKeyDown(Keyboard::T))
 	{
@@ -303,8 +364,6 @@ void Boss::Update(float dt, Vector2f dir)
 		action = BossStatus::MOVE;
 	}
 }
-
-
 
 void Boss::Draw(RenderWindow &window)
 {
@@ -318,4 +377,10 @@ void Boss::Draw(RenderWindow &window)
 	}
 	//window.draw(superSkill.GetSprite());
 	//window.draw(superSkill.GetEffectSprite());
+}
+
+
+void Boss::SetStateIdle()
+{
+	action = BossStatus::IDLE;
 }
