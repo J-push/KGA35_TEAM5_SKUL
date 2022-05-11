@@ -20,10 +20,10 @@ enum class AnimationLoopTypes
 ***********************************************************/
 struct AnimationFrame
 {
-	Texture texture;
+	Texture *texture;
 	IntRect texCoord; // LT좌표와, 사각형의 사이즈를 인자로 받음
 
-	AnimationFrame(const Texture tex, const IntRect coord);
+	AnimationFrame(Texture &tex, const IntRect &coord);
 };
 
 /**********************************************************

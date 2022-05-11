@@ -14,7 +14,7 @@
 ***********************************************************/
 AnimationController::AnimationController()
 	: clips(), currentClip(nullptr), isPlaying(false), currentFrame(-1),
-	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr)
+	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr)
 {
 }
 
@@ -74,6 +74,12 @@ void AnimationController::Update(float dt)
 			default:
 				break;
 			}
+
+			if (OnComplete != nullptr)
+			{
+				OnComplete();
+				OnComplete = nullptr;
+			}
 		}
 		else
 		{
@@ -83,7 +89,7 @@ void AnimationController::Update(float dt)
 		}
 	}
 	// 타겟sprite의 조절
-	sprite->setTexture(currentClip->frames[currentFrame].texture);
+	sprite->setTexture(*currentClip->frames[currentFrame].texture);
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
 }
 

@@ -36,6 +36,7 @@ void SceneMgr::ChangeScene(Scenes newScene)
 {
 	scenes[(int)currentScene]->End();
 	currentScene = newScene;
+	//scenes[(int)currentScene]->Init();
 	scenes[(int)currentScene]->Start();
 }
 /*******************************************************************
