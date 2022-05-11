@@ -24,6 +24,8 @@ private:
 
 	Sprite *sprite;						// 포인터 이유??
 
+
+
 public:
 	std::function<void()> OnComplete;
 
@@ -42,8 +44,5 @@ public:
 	bool IsPlaying();
 	void ClearPlayQueue();
 	bool ClearPlayQueueCheck();
-
-	void (*OnComplete)(void);
-
 };
 

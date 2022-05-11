@@ -1,0 +1,12 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+intro1,10,1,data_tables/animations/Boss/boss_animation_intro1.csv
+intro2,10,1,data_tables/animations/Boss/boss_animation_intro2.csv
+attackready,10,1,data_tables/animations/Boss/boss_animation_attack(ready).csv
+attack,10,1,data_tables/animations/Boss/boss_animation_attack.csv
+idle,10,1,data_tables/animations/Boss/boss_animation_idle.csv
+walkback,10,1,data_tables/animations/Boss/boss_animation_walk(back).csv
+walkfront,10,1,data_tables/animations/Boss/boss_animation_walk(front).csv
+landingready,10,1,data_tables/animations/Boss/boss_animation_landing(Ready).csv
+landingbomb,10,1,data_tables/animations/Boss/boss_animation_landing(Bomb).csv
+landingdown,10,1,data_tables/animations/Boss/boss_animation_landing(Down).csv
+bomb,10,1,data_tables/animations/Boss/boss_animation_bomb.csv

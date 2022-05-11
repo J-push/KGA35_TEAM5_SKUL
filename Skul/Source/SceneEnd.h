@@ -1,8 +1,13 @@
 #pragma once
+
 #include "../Source/Scene/Scene.h"
+#include "../Source/Boss.h"
+#include "../Source/Player/Player.h"
+
 // SCORETEX
 class SceneEnd : public Scene
 {
+	
 
 public:
 

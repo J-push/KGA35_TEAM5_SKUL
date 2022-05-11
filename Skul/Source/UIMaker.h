@@ -101,6 +101,5 @@ public:
 
 	virtual void DrawSceneTitle(sf::RenderWindow *window);
 	virtual void DrawSceneGame(sf::RenderWindow *window);
-
 };
 

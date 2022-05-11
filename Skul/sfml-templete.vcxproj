@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Animation\AnimationClip.cpp" />
     <ClCompile Include="Source\Animation\AnimationController.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\BossFire.cpp" />
+    <ClCompile Include="Source\BossSuper.cpp" />
     <ClCompile Include="Source\Framework\Framework.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Manager\InputManager.cpp" />
@@ -48,6 +51,9 @@
     <ClInclude Include="DefineList.h" />
     <ClInclude Include="Source\Animation\AnimationClip.h" />
     <ClInclude Include="Source\Animation\AnimationController.h" />
+    <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\BossFire.h" />
+    <ClInclude Include="Source\BossSuper.h" />
     <ClInclude Include="Source\Framework\Framework.h" />
     <ClInclude Include="Source\Manager\InputManager.h" />
     <ClInclude Include="Source\Manager\RandomMgr.h" />

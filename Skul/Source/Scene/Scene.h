@@ -4,12 +4,14 @@
 #include "../Manager/ResourceMgr.h"
 #include "../UIMaker.h"
 
+
 class Scene
 {
 protected:
 	Sprite spriteScoreFrame;
 	UIMaker ui;
 	SceneMgr& mgr;
+
 
 public:
 	Scene(SceneMgr& mgr);

@@ -9,8 +9,7 @@
 #include "../swordman/swordman.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
-
-
+#include "../Boss.h"
 
 
 class SceneGame : public Scene
@@ -21,9 +20,12 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
-	std::vector<swordman*> mSwordMans;	// ¼Òµå¸Ç ¿©·¯¸¶¸® »ı¼º
+	std::vector<swordman*> mSwordMans;	// ì†Œë“œë§¨ ì—¬ëŸ¬ë§ˆë¦¬ ìƒì„±
 	swordman* mSwordman;
-	std::vector<PinkEnt*> mPinkEnt;	// ÇÎÅ©¿£Æ® ¿©·¯¸¶¸® »ı¼º
+
+	Boss boss;
+
+	std::vector<PinkEnt*> mPinkEnt;	// í•‘í¬ì—”íŠ¸ ì—¬ëŸ¬ë§ˆë¦¬ ìƒì„±
 	PinkEnt* pinkEnt;
 public:
 

@@ -68,13 +68,12 @@ void AnimationController::Update(float dt)
 			case AnimationLoopTypes::Single:
 				currentFrame = totalFrame - 1;
 				break;
-			case AnimationLoopTypes::Loop:
+			case AnimationLoopTypes::Loop:				
 				currentFrame = 0;
 				break;
 			default:
 				break;
 			}
-
 			if (OnComplete != nullptr)
 			{
 				OnComplete();
@@ -88,8 +87,12 @@ void AnimationController::Update(float dt)
 			Play(nextClipId, false);
 		}
 	}
+
+
 	// 타겟sprite의 조절
-	sprite->setTexture(*currentClip->frames[currentFrame].texture);
+
+	sprite->setTexture(*(currentClip->frames[currentFrame].texture));
+	//sprite->setTexture(*currentClip->frames[currentFrame].texture);
 	sprite->setTextureRect(currentClip->frames[currentFrame].texCoord);
 }
 
@@ -162,4 +165,5 @@ bool AnimationController::ClearPlayQueueCheck()
 	}
 	return false;
 }
+
 

@@ -62,9 +62,13 @@
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="TestRectangle.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\BossFire.cpp" />
+    <ClCompile Include="Source\BossSuper.cpp" />
     <ClCompile Include="Source\Monster\PinkEnt\PinkEnt.cpp">
       <Filter>Monster\PinkEnt</Filter>
     </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">
@@ -89,9 +93,6 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player\Skul\LittleBone.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Source\Resource\Resource.h">
@@ -131,6 +132,12 @@
     <ClInclude Include="Source\UIMaker.h" />
     <ClInclude Include="TestRectangle.h" />
     <ClInclude Include="DefineList.h" />
+    <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\BossFire.h" />
+    <ClInclude Include="Source\BossSuper.h" />
+    <ClInclude Include="Source\Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Monster\PinkEnt\PinkEnt.h">
       <Filter>Monster\PinkEnt</Filter>
     </ClInclude>
