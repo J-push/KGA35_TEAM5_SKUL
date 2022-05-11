@@ -20,7 +20,7 @@ void Boss::Init()
 	int launcher2 = 0;
 	int launcher3 = 0;
 	bossPosition.x = 1700;
-	bossPosition.y = 700;
+	bossPosition.y = 750;
 
 	// 피격판정
 	bossRect.setSize(Vector2f(38, 110));
@@ -91,13 +91,12 @@ void Boss::Intro(float dt)
 	if (introCount == 2 && timer < 94.4)
 	{
 		//bossPosition.y += 7;
-		introCount++;
+		introCount = 0;
 		timer = 100;
 		moveWhere = RandomMgr::GetRandom(1,2);
 		action = BossStatus::MOVE;
 	}
 }
-
 
 void Boss::Fire(Vector2f dir)
 {
@@ -126,41 +125,42 @@ void Boss::FireRutine(Vector2f dir, float dt)
 {
 	if (bossPosition.x - dir.x > 0) // 플레이어가 보스의 왼쪽
 	{
-		spriteBoss.setScale(-1.7f, 1.7f);
-		animation.Play("attack");
+		spriteBoss.setScale(1.7f, 1.7f);
 	}
-	if (bossPosition.x - dir.x < 0) // 플레이어가 보스의 왼쪽
+	if (bossPosition.x - dir.x < 0) // 플레이어가 보스의 오른쪽
 	{
-		spriteBoss.setScale(-1.7f, 1.7f);
-		animation.Play("attack");
+		spriteBoss.setScale(-1.7f, 1.7f);		
 	}
 	
-	if (fireCount == 0 && timer < 99.5f)
+	if (count == 0 && timer < 99.9f)
 	{
+		animation.Play("attack");
 		Fire(dir);
-		fireCount++;
+		count++;
 	}
-	if (fireCount == 1 && timer < 99.f)
+	if (count == 1 && timer < 99.4f)
 	{
 		Fire(dir);
-		fireCount++;
+		count++;
 	}
-	if (fireCount == 2 && timer < 98.5f)
+	if (count == 2 && timer < 98.9f)
 	{
 		Fire(dir);
-		fireCount++;
+		count++;
 	}
-	if (fireCount == 3 && timer < 98.f)
+	if (count == 3 && timer < 98.4f)
 	{
 		Fire(dir);
-		fireCount++;
+		count++;
 	}
-	if (fireCount == 4 && timer < 97.5f)
+	if (count == 4 && timer < 97.9f)
 	{
 		Fire(dir);
-		fireCount = 0;
+		count++;
 		timer = 100;
-		action = BossStatus::IDLE;
+		moveWhere = RandomMgr::GetRandom(1, 2);
+		FirstMove(dir, moveWhere);
+		action = BossStatus::MOVE;
 	}
 }
 
@@ -191,55 +191,102 @@ void Boss::SuperFire(Vector2f dir, Vector2f pos)
 
 void Boss::SuperFireRutine(Vector2f dir, float dt)
 {	
-	if (superCount == 0 && timer < 98)
+	if (superCount == 0 && timer < 99.9)
 	{
+		if (bossPosition.x - dir.x > 0) // 플레이어가 보스의 왼쪽
+		{
+			spriteBoss.setScale(1.7f, 1.7f);
+		}
+		if (bossPosition.x - dir.x < 0) // 플레이어가 보스의 오른쪽
+		{
+			spriteBoss.setScale(-1.7f, 1.7f);
+		}
+		animation.Play("superready");
+		superCount++;
+	}
+	if (superCount == 1 && timer < 99.1)
+	{
+		animation.Play("supergo");
+		superCount++;
+	}
+	if (superCount == 2 && timer < 97.9)
+	{
+		animation.Play("superdoing");
 		SuperFire(dir, Vector2f(380, 230));
 		superCount++;
 	}
-	if (superCount == 1 && timer < 96)
+	if (superCount == 3 && timer < 95.9)
 	{
 		SuperFire(dir, Vector2f(380, 230));
 		SuperFire(dir, Vector2f(1030, 180));
 		superCount++;
 	}
 
-	if (superCount == 2 && timer < 94)
+	if (superCount == 4 && timer < 93.9)
 	{
 		SuperFire(dir, Vector2f(1030, 180));
 		SuperFire(dir, Vector2f(1730, 230));
 		superCount++;
 	}
 
-	if (superCount == 3 && timer < 92)
+	if (superCount == 5 && timer < 91.9)
 	{
 		SuperFire(dir, Vector2f(1730, 230));
 		superCount++;
 	}
 
-	if (superCount == 4 && timer < 90)
+	if (superCount == 6 && timer < 89.9)
 	{
 		SuperFire(dir, Vector2f(380, 230));
 		SuperFire(dir, Vector2f(1030, 180));
 		SuperFire(dir, Vector2f(1730, 230));
+		superCount++;
+	}
+	if (superCount == 7 && timer < 87.9)
+	{
 		superCount = 0;
 		timer = 100;
-		//action = BossStatus::IDLE;
+		moveWhere = RandomMgr::GetRandom(1, 2);
+		FirstMove(dir, moveWhere);
+		action = BossStatus::MOVE;
 	}
 }
 
 void Boss::Landing(Vector2f dir)
 {
-	speed = 500;
-	while (bossPosition.x == dir.x)
+	if (superCount == 0 && timer < 99.9)
 	{
-		bossPosition.x = speed;
+		bossPosition.x = dir.x;
+		animation.Play("landingready");
+		superCount++;
 	}
-	animation.Play("landingready");
+	if (superCount == 1 && timer < 98.9)
+	{
+		bossPosition.y = dir.y - 10;
+		animation.Play("landingbomb");
+		superCount++;
+	}
+	if (superCount == 2 && timer < 96.9)
+	{
+		animation.Play("landingdown");
+		superCount++;
+	}
+	if (superCount == 3 && timer < 94.9)
+	{
+		animation.Play("Move");
+		bossPosition.y = 550;
+		superCount = 0;
+		timer = 100;
+		moveWhere = RandomMgr::GetRandom(1, 2);
+		FirstMove(dir, moveWhere);
+		action = BossStatus::MOVE;
+	}	
 }
 
-void Boss::Move(float dt, Vector2f dir, int moving)
+void Boss::FirstMove(Vector2f dir, int moving)
 {
-	if (moving == 1 || bossPosition.x < 300)
+
+	if (moving == 1)
 	{
 		if (bossPosition.x - dir.x > 0) // 왼쪽보면서 오른쪽으로 이동
 		{
@@ -251,9 +298,8 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 			spriteBoss.setScale(-1.7f, 1.7f);
 			animation.Play("walkfront");
 		}
-		bossPosition.x += speed * dt;
 	}
-	if (moving == 2 || bossPosition.x > 1700)
+	if (moving == 2)
 	{
 		if (bossPosition.x - dir.x < 0) // 오른쪽보면서 왼쪽으로 이동
 		{
@@ -265,7 +311,82 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 			spriteBoss.setScale(1.7f, 1.7f);
 			animation.Play("walkfront");
 		}
-		bossPosition.x -= speed * dt;
+	}
+}
+
+void Boss::Move(float dt, Vector2f dir, int moving)
+{
+	if (200 > bossPosition.x || bossPosition.x > 1600)
+	{
+		timer = 100;
+		count = 0;
+		action = BossStatus::LANDING;
+	}
+	if (timer > 96)
+	{
+		if (moving == 1)
+		{		
+			if (bossPosition.x - dir.x > 0) // 왼쪽보면서 오른쪽으로 이동
+			{
+				spriteBoss.setScale(-1.7f, 1.7f);
+				if (bossLook)
+				{
+					animation.Play("walkback");
+					bossLook = false;
+				}
+			}
+			else
+			{
+				spriteBoss.setScale(-1.7f, 1.7f);
+				if (!bossLook)
+				{
+					animation.Play("walkfront");
+					bossLook = true;
+				}
+			}					
+			bossPosition.x += speed * dt;
+		}
+		if (moving == 2)
+		{		
+			if (bossPosition.x - dir.x < 0) // 오른쪽보면서 왼쪽으로 이동
+			{
+				spriteBoss.setScale(1.7f, 1.7f);
+				if (!bossLook)
+				{
+					animation.Play("walkback");						
+					bossLook = true;
+				}
+			}
+			else
+			{
+				spriteBoss.setScale(1.7f, 1.7f);
+				if (bossLook)
+				{						
+					animation.Play("walkfront");
+					bossLook = false;
+				}
+			}				
+			bossPosition.x -= speed * dt;
+		}
+	}
+	else
+	{
+		timer = 100;
+		count = 0;
+	
+		whatAction = RandomMgr::GetRandom(1, 3);
+		if (whatAction == 1)
+		{
+			action = BossStatus::FIREBALL;
+		}
+		if (whatAction == 2)
+		{
+			action = BossStatus::METEO;
+		}
+		if (whatAction == 3)
+		{
+			action = BossStatus::LANDING;
+		}	
 	}
 }
 
@@ -275,12 +396,11 @@ void Boss::Idle()
 	moveWhere = RandomMgr::GetRandom(1, 2);
 }
 
-//intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
+// intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
+// superdoing superready supergo
 
 void Boss::Update(float dt, Vector2f dir)
 {
-	cout << timer << endl;
-
 	switch (action)
 	{
 	case BossStatus::INTRO:
@@ -293,10 +413,13 @@ void Boss::Update(float dt, Vector2f dir)
 		break;
 
 	case BossStatus::MOVE:
+		timer -= dt;
 		Move(dt, dir, moveWhere);
 		break;
 
 	case BossStatus::LANDING:
+		timer -= dt;
+		Landing(dir);
 		break;
 
 	case BossStatus::FIREBALL:
@@ -305,7 +428,6 @@ void Boss::Update(float dt, Vector2f dir)
 		break;
 
 	case BossStatus::METEO:
-		bossPosition.x = 950;
 		timer -= dt;
 		SuperFireRutine(dir, dt);
 		break;
@@ -313,7 +435,6 @@ void Boss::Update(float dt, Vector2f dir)
 	default:
 		break;
 	}
-
 
 	// 불 부분
 	auto it = useFires.begin();
@@ -375,8 +496,6 @@ void Boss::Draw(RenderWindow &window)
 		window.draw(fire->GetRect());
 		window.draw(fire->GetSuperEffectSprite());
 	}
-	//window.draw(superSkill.GetSprite());
-	//window.draw(superSkill.GetEffectSprite());
 }
 
 

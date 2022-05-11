@@ -282,8 +282,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		SkillAttack();
 	}
 
-	std::cout << (int)currentAction << std::endl;
-	//std::cout << jumpForce << std::endl;
+
 	if (jumpForce < 0)
 	{
 		jumpForce = 0;
@@ -638,7 +637,7 @@ void Player::Jump()
 		playerPosition.y -= jumpForce * stateDt;
 
 		jumpForce -= valocity;
-		//std::cout << "돼";
+
 	}
 	
 

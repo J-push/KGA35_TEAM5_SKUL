@@ -43,11 +43,13 @@ private:
 	list<BossFire *> useFires;
 
 	int introCount;
-	int fireCount;
+	int count;
 	int superCount;
+	bool bossLook; // ture¸é walkback
 
 	float timer = 100;
 	int moveWhere;
+	int whatAction;
 
 	Time lastTime;
 
@@ -67,6 +69,7 @@ public:
 
 	void Landing(Vector2f dir);
 
+	void FirstMove(Vector2f dir, int moving);
 	void Move(float dt, Vector2f dir, int moving);
 
 	void Idle();
@@ -78,5 +81,5 @@ public:
 	void SetStateIdle();
 
 };
-//void check() { cout << "dsf" << endl; }
+
 
