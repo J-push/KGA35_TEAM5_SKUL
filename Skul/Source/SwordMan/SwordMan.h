@@ -29,9 +29,6 @@ private:
 
 	swordmanAction action;	// 소드맨 액션 클래스의 변수
 
-	Vector2f positionRange;	// 플레이어 인식 범위 더미틀
-	RectangleShape shape;
-
 	Vector2f positionMonster;// 몬스터 히트 박스
 	RectangleShape shapeMonster;
 
@@ -41,15 +38,14 @@ private:
 	Vector2f positionRightMap;// 우측 벽 충돌
 	RectangleShape shapeRightMap;
 
-	Vector2f positionPlayer;// 플레이어 인식 범위
-	RectangleShape shapeScope;
-
 	Sprite sprite;	// 소드맨 그림
 	AnimationController animation;	// 애니메이션 변수
 
 	std::map<std::string, Texture> texMap;	// 소드맨 cvs 파일로 애니메이션 소스 그리는 변수
 
 	Vector2f dir;	// 
+
+	FloatRect swordmanBound;	// 몬스터 그림 크기의 Rect
 
 	int mHp; // 소드맨 현재 체력
 	int damage;	 // 소드맨 현재 데미지
@@ -63,22 +59,15 @@ private:
 	float walkDelay;	// action이 다시 walk로 돌아가기 전까지의 딜레이시간
 	float hitDelay;	// 소드맨한테 추가타가 있는지 확인하는 시간
 
-	FloatRect rangeBound;	// 플레이어 인식 더미 틀과의 충돌 처리 체크
-	bool attackAble;
-
-	FloatRect swordmanBound;	// 몬스터 그림 크기의 Rect
-	FloatRect swordmanScope;	// 몬스터 적 인식 범위 Rect
-
+	bool attackAble;	// 플레이어 히트 박스와의 충돌로 공격 가능 판단
 	bool prevMapCollision;	// 이전에 좌측 더미 맵이랑 충돌했는지 확인하는 변수
 	bool prevRightMapCollision;	// 이전에 우측 더미 맵이랑 충돌했는지 확인하는 변수
 	bool leftMapCollision;	// 현재 좌측 맵이랑 충돌했는지, 충돌했으면 트루
 	bool rightMapCollision;	// 현재 우측 맵이랑 충돌했는지, 했다면 트루
-	bool swordmanScopeCollision;	// 아직 구현x, 추후 플레이어 인식범위로 쓸 수도 있어서 남겨만 놓았음
 	bool swordmanHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool swordmanSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
 public:
 	void Init();
-	void Init2();
 	swordman(int x, int y);
 	swordman() {};
 	~swordman();
@@ -91,11 +80,8 @@ public:
 
 	FloatRect GetGlobalBound();
 	FloatRect MonsterGetGlobalBound();
-	FloatRect RangeGetGlobalBound();
-	const RectangleShape GetShape();
 	FloatRect LeftMapGetGlobalBound();
 	FloatRect RightMapGetGlobalBound();
-	FloatRect ScopeGetGlobalBound();
 
 	void Draw(RenderWindow& window);
 };

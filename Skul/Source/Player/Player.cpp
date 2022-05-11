@@ -117,7 +117,6 @@ void Player::SkillInit()
 
 	int totalClips = colId.size();
 	for (int i = 0; i < totalClips; ++i)
-
 	{
 		AnimationClip skill;
 		skill.id = colId[i];
@@ -289,7 +288,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		jumpForce = 0;
 	}
 
-
 	AnimationUpdate(dt);
 
 	//충돌
@@ -306,7 +304,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
 	animation.Update(dt);
 	skillAnimation.Update(dt);
-
 }
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)

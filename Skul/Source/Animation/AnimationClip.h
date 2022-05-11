@@ -7,7 +7,7 @@
 
 using namespace sf;
 /**********************************************************
-* ¼³¸í : LoopÀÇ À¯¹«¸¦ ÆÇ´ÜÇÏ´Â enum class
+* ì„¤ëª… : Loopì˜ ìœ ë¬´ë¥¼ íŒë‹¨í•˜ëŠ” enum class
 ***********************************************************/
 enum class AnimationLoopTypes
 {
@@ -16,25 +16,25 @@ enum class AnimationLoopTypes
 };
 
 /**********************************************************
-* ¼³¸í : Texture¿Í ÁÂÇ¥°ªÀ» ÃÊ±âÈ­ÇÏ´Â ±¸Á¶Ã¼
+* ì„¤ëª… : Textureì™€ ì¢Œí‘œê°’ì„ ì´ˆê¸°í™”í•˜ëŠ” êµ¬ì¡°ì²´
 ***********************************************************/
 struct AnimationFrame
 {
 	Texture *texture;
-	IntRect texCoord; // LTÁÂÇ¥¿Í, »ç°¢ÇüÀÇ »çÀÌÁî¸¦ ÀÎÀÚ·Î ¹ŞÀ½
+	IntRect texCoord; // LTì¢Œí‘œì™€, ì‚¬ê°í˜•ì˜ ì‚¬ì´ì¦ˆë¥¼ ì¸ìë¡œ ë°›ìŒ
+	AnimationFrame(Texture &tex, const IntRect coord);
 
-	AnimationFrame(Texture &tex, const IntRect &coord);
 };
 
 /**********************************************************
-* ¼³¸í : ÀüÃ¼ÀûÀÎ Æ²
+* ì„¤ëª… : ì „ì²´ì ì¸ í‹€
 ***********************************************************/
 struct AnimationClip
 {
 	std::string id;
-	std::vector<AnimationFrame> frames; // °¢ ÇÁ·¹ÀÓÀ» º¤ÅÍ¿¡ ÀúÀå?
+	std::vector<AnimationFrame> frames; // ê° í”„ë ˆì„ì„ ë²¡í„°ì— ì €ì¥?
 	AnimationLoopTypes loopType;
-	int fps; // 1ÃÊ´ç ¾ó¸¶³ª ÂïÀ»²«°¡
+	int fps; // 1ì´ˆë‹¹ ì–¼ë§ˆë‚˜ ì°ì„ê»€ê°€
 };
 
 

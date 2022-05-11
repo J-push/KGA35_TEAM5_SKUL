@@ -47,7 +47,7 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\SwordMan\SwordMan.cpp">
-      <Filter>SwordMan</Filter>
+      <Filter>Monster\SwordMan</Filter>
     </ClCompile>
     <ClCompile Include="Source\TileMap\Tilemap.cpp">
       <Filter>TileMap</Filter>
@@ -62,7 +62,9 @@
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="TestRectangle.cpp" />
-    
+    <ClCompile Include="Source\Monster\PinkEnt\PinkEnt.cpp">
+      <Filter>Monster\PinkEnt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">
@@ -111,7 +113,7 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\SwordMan\SwordMan.h">
-      <Filter>SwordMan</Filter>
+      <Filter>Monster\SwordMan</Filter>
     </ClInclude>
     <ClInclude Include="Source\TileMap\Tilemap.h">
       <Filter>TileMap</Filter>
@@ -129,6 +131,9 @@
     <ClInclude Include="Source\UIMaker.h" />
     <ClInclude Include="TestRectangle.h" />
     <ClInclude Include="DefineList.h" />
+    <ClInclude Include="Source\Monster\PinkEnt\PinkEnt.h">
+      <Filter>Monster\PinkEnt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">
@@ -152,11 +157,17 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{6f060816-9d40-4886-a624-18bcf442269a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SwordMan">
-      <UniqueIdentifier>{472bdc32-77d3-4d42-8670-d2363ed6c063}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TileMap">
       <UniqueIdentifier>{212b38a0-876f-4df5-a222-e78edf112457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster">
+      <UniqueIdentifier>{1db123b0-737d-406e-b6bb-75a142ded7bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\PinkEnt">
+      <UniqueIdentifier>{c871cdfa-d2c6-4696-a283-56221a822267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monster\SwordMan">
+      <UniqueIdentifier>{472bdc32-77d3-4d42-8670-d2363ed6c063}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

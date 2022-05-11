@@ -43,5 +43,7 @@ public:
 	void ClearPlayQueue();
 	bool ClearPlayQueueCheck();
 
+	void (*OnComplete)(void);
+
 };
 
