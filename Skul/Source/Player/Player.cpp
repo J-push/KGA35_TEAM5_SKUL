@@ -196,7 +196,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		SkillAttack();
 	}
 
-
 	//std::cout << (int)currentAction << std::endl;
 	//std::cout << jumpSpeed << std::endl;
 
@@ -446,6 +445,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::ATTACK:
+
 		if (isSkulChange)
 		{
 			animation.Play("L_Attack");
@@ -458,6 +458,7 @@ void Player::SetState(PlayerState newAction)
 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 			animation.PlayQueue("Idle");
 		}
+
 
 		break;
 
@@ -507,6 +508,7 @@ void Player::SetState(PlayerState newAction)
 
 	case PlayerState::DASH:
 		isDash = true;
+
 		gravity = 0;
 		dashPosition = playerPosition;
 		dashDelay = DASH_COOLTIME;
@@ -624,12 +626,9 @@ void Player::Jump()
 {
 	if (isJump == true)
 	{
+
 		jumpSpeed -= gravity * stateDt;
 		playerPosition.y -= jumpSpeed * stateDt;
-		if (jumpSpeed > 600)
-		{
-			isJump = false;
-		}
 	}
 }
 /**********************************************************

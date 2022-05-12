@@ -15,19 +15,19 @@ enum class BossStatus
 	INTRO,
 	IDLE,
 	MOVE,
-	FIREBALL,
 	LANDING,
+	FIREBALL,
 	METEO,
 };
 
 class Boss
 {
 private:
-	
-	int hp;
+	int maxHp = 400;
+	int currentHp = 400;
 	float speed = 100;
 
-	BossStatus action = BossStatus::INTRO;
+	BossStatus action;
 
 	Sprite spriteBoss;
 	Vector2f bossPosition;
@@ -43,12 +43,16 @@ private:
 	list<BossFire *> unuseFires;
 	list<BossFire *> useFires;
 
-	// ±Ã ¹ß»ç¿ë
-	int launcher1;
-	int launcher2;
-	int launcher3;
+	int introCount;
+	int count;
+	int superCount;
+	bool bossLook; // ture¸é walkback
 
+	float timer = 100;
+	int moveWhere;
+	int whatAction;
 
+	Time lastTime;
 
 
 public:
@@ -56,21 +60,34 @@ public:
 	~Boss();
 	void Init();
 
+	void Intro(float dt);
+
 	void Fire(Vector2f dir);
-	void FireRutine(Vector2f dir);
+	void FireRutine(Vector2f dir, float dt);
 
 	void SuperFire(Vector2f dir, Vector2f pos);
-	void SuperFireRutine(Vector2f dir);
+	void SuperFireRutine(Vector2f dir , float dt);
 
 	void Landing(Vector2f dir);
 
-	void Move(float dt, Vector2f dir);
+	void FirstMove(Vector2f dir, int moving);
+	void Move(float dt, Vector2f dir, int moving);
+
+	void Idle();
+
+	FloatRect GetGlobalBound();
 
 	void Update(float dt, Vector2f dir);
-
 	void Draw(RenderWindow &window);
 
 
+	int GetMaxHp();
+	int GetCurrentHp();
+	void underAttack(int damage);
+
+
+	void SetStateIdle();
+
 };
-//void check() { cout << "dsf" << endl; }
+
 
