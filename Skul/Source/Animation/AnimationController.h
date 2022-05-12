@@ -24,7 +24,7 @@ private:
 
 	Sprite *sprite;						// 포인터 이유??
 
-
+	bool lastFrame;
 
 public:
 	std::function<void()> OnComplete;
@@ -44,5 +44,7 @@ public:
 	bool IsPlaying();
 	void ClearPlayQueue();
 	bool ClearPlayQueueCheck();
+
+	bool isLastFrame();
 };
 

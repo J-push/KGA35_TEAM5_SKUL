@@ -48,7 +48,7 @@ private:
 
 	AnimationController animation;				//player 애니메이션
 	AnimationController skillAnimation;				//스킬 애니메이션
-
+	AnimationController littleBorn;
 
 	IntRect gameMap;
 
@@ -65,12 +65,12 @@ private:
 
 	float stateDt;								//델타타임
 
-	float valocity;							//중력
+	float gravity;								//중력
 
 	bool isLeft;								//왼쪽으로 바라보는지 오른쪽으로 바라보는지
 
 	bool isDash;								//대쉬했니?
-
+	float dashDelay;
 	
 
 	bool isJump;								//점프했니?
@@ -79,13 +79,14 @@ private:
 	bool isDown;								//점프후 내려가는지
 	bool isAttack;								//공격했니?
 	bool isSkill;								//스킬썻니?
+	float skillAlive = 2.5f;
+	float attackAlive = 0.5f;
 
-
-	float jumpForce = 0.0f;						//점프 위치
 	Vector2f oldJumpPos;						//점프 전 위치
 
 	float attackDelay;							//공격딜레이
 
+	float jumpSpeed;
 
 	Vector2f dashPosition;						
 
@@ -99,8 +100,7 @@ private:
 	float skillDown;							//스킬 내려오는 속도
 	Vector2f tempPos;
 
-
-
+	bool isSkulChange;
 
 public:
 
@@ -121,6 +121,8 @@ public:
 	void SkillAttack();
 	void Dash();
 	void Jump();
+
+
 	void PlayerConllision(std::vector<TestRectangle*> rects);
 
 
@@ -137,6 +139,7 @@ public:
 	int GetCurrentPlayerHealth();
 	void JeaHit();
 	Vector2f GetPlayerPosition();
+	bool GetIsAttack();
 
 	FloatRect GetPlayerRect();
 	FloatRect GetPlayerAttackRect();
@@ -146,5 +149,6 @@ public:
 
 	
 	void GetStateIdle();
+	void ChangeSkul();
 };
 

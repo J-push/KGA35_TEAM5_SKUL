@@ -251,7 +251,7 @@ void PinkEnt::Update(float dt, Player& player)
 			if (afterAttack < 0)
 			{
 				afterAttack = 2.f;
-				std::cout << "АјАн Сп";
+
 				spriteGas.setPosition(position.x - 140, position.y - 50);
 				animationGas.Play("EntGas");
 				attackReady = false;

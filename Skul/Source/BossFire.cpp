@@ -8,6 +8,8 @@ BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 	fireRect.setPosition(position);
 
 	spriteFireBall.setScale(0.8f, 0.8f);
+	Utils::SetOrigin(spriteFireBall, Pivots::CB);
+
 	animation.SetTarget(&spriteFireBall);
 
 	spriteSuperEffect.setScale(2.0f, 2.0f);
@@ -73,9 +75,12 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 	
 	fireRect.setSize(Vector2f(80, 40));
 	fireRect.setFillColor(Color(140, 72, 19, 70));
+
 	fireRect.setPosition(position);
 
+	Utils::SetOrigin(spriteFireBall, Pivots::LT);
 	spriteFireBall.setScale(0.8f, 0.8f);
+
 
 	distance = 0.f;
 	position = pos;
@@ -92,21 +97,24 @@ void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 {
 	animation.Play("fireball");
 	animationSuperEffect.Play("supereffect");
-	
+
 	position = pos;
 
 	SetActive(true);
 	spriteSuperEffect.setPosition(position);
 
-	fireRect.setSize(Vector2f(160, 80));
+	position.x += 230;
+	position.y += 180;
+
+	fireRect.setSize(Vector2f(200, 100));
 	fireRect.setFillColor(Color(140, 72, 19, 70));
 	fireRect.setPosition(position);
 
 	spriteFireBall.setScale(2.0f, 2.0f);
 
 	distance = 0.f;
-	
-	spriteFireBall.setPosition(pos);
+
+	spriteFireBall.setPosition(position);
 	direction = Utils::Normalize(dir);
 	float dgree = Utils::GetAngel(position, position + dir);
 	spriteFireBall.setRotation(dgree);

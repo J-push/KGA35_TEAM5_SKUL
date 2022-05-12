@@ -20,7 +20,6 @@ class UIMaker
 {
 private:
 
-	SceneGame *hpinfo;
 
 	Scenes currentScene;
 	MouseCursor mouseCursor;
@@ -56,14 +55,23 @@ private:
 	int subHead = 0;
 
 	float hp;
+	float bossHpText = 7.0f;
 
 	Text textHp;
+
+	// º¸½º UI
+	Sprite spriteBossFrame; // BOSSFRAMETEX
+	Sprite spriteBossHpBar; // BOSSHPBARTEX
+
+	float bossHp;
 
 	// DamageText
 	Text underAttackText;
 	float textSpeed;
 	float deleteDistance;
 	bool isActive;
+
+
 
 
 public:
@@ -81,6 +89,9 @@ public:
 	const int MINI_HEAD_X = MAIN_FRAME_X;
 	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
 
+	const int BOSS_FRAME_X = 500;
+	const int BOSS_FRAME_Y = 0;
+
 	UIMaker();
 	UIMaker(SceneGame *hp);
 
@@ -94,6 +105,9 @@ public:
 	FloatRect GetMouseBound();
 	void SetHpbarText(int CurHp, int MaxHp);
 	void SetHpbarSize(int CurHp, int MaxHp);
+
+	void SetBossHpbarSize(int CurHp, int MaxHp);
+
 
 	// Damage
 	void UnderAttack(Vector2f position, float dt);

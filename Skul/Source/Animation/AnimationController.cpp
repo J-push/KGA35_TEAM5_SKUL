@@ -14,7 +14,8 @@
 ***********************************************************/
 AnimationController::AnimationController()
 	: clips(), currentClip(nullptr), isPlaying(false), currentFrame(-1),
-	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr)
+	totalFrame(0), frameDuration(0.f), accumTime(0.f), sprite(nullptr), OnComplete(nullptr),
+	lastFrame(false)
 {
 }
 
@@ -164,6 +165,11 @@ bool AnimationController::ClearPlayQueueCheck()
 		return true;
 	}
 	return false;
+}
+
+bool AnimationController::isLastFrame()
+{
+	return lastFrame;
 }
 
 
