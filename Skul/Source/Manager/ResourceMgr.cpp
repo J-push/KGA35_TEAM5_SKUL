@@ -37,6 +37,12 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("BONEICONTEX1", "graphics/UI/LittleBone1.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BONEICONTEX3", "graphics/UI/LittleBone3.png", ResourceTypes::Texture));
 
+	loaded.push_back(new Resource("BOSSFRAMETEX", "graphics/UI/BossFrame.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BOSSHPBARTEX", "graphics/UI/BossHpBar.png", ResourceTypes::Texture));
+
+
+
+
 	// endScene용
 	loaded.push_back(new Resource("SCORETEX", "graphics/UI/ScoreFrame.png", ResourceTypes::Texture));
 

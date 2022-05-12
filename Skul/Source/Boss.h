@@ -23,7 +23,8 @@ enum class BossStatus
 class Boss
 {
 private:
-	int hp = 400;
+	int maxHp = 400;
+	int currentHp = 400;
 	float speed = 100;
 
 	BossStatus action;
@@ -74,9 +75,16 @@ public:
 
 	void Idle();
 
+	FloatRect GetGlobalBound();
 
 	void Update(float dt, Vector2f dir);
 	void Draw(RenderWindow &window);
+
+
+	int GetMaxHp();
+	int GetCurrentHp();
+	void underAttack(int damage);
+
 
 	void SetStateIdle();
 

@@ -396,6 +396,11 @@ void Boss::Idle()
 	moveWhere = RandomMgr::GetRandom(1, 2);
 }
 
+FloatRect Boss::GetGlobalBound()
+{
+	return spriteBoss.getGlobalBounds();
+}
+
 // intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
 // superdoing superready supergo
 
@@ -496,6 +501,21 @@ void Boss::Draw(RenderWindow &window)
 		window.draw(fire->GetRect());
 		window.draw(fire->GetSuperEffectSprite());
 	}
+}
+
+int Boss::GetMaxHp()
+{
+	return maxHp;
+}
+
+int Boss::GetCurrentHp()
+{
+	return currentHp;
+}
+
+void Boss::underAttack(int damage)
+{
+	currentHp -= damage;
 }
 
 

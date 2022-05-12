@@ -69,6 +69,22 @@ void SceneGame::Update(float dt)
 		}
 	}
 
+	if (InputManager::GetMouseButtonDown(Mouse::Right))
+	{
+		cout << "right " << endl;
+	}
+
+	bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
+	if (checkBossHIt)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			boss.underAttack(10);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+
+		}
+	}
+
 
 	if (InputManager::GetKeyDown(Keyboard::Num7))
 	{

@@ -483,6 +483,7 @@ void Player::SetState(PlayerState newAction)
 
 		break;
 	case PlayerState::MOVE:
+		valocity = 0;
 		if (isLeft)
 		{
 			animation.Play("Walk");
@@ -497,6 +498,7 @@ void Player::SetState(PlayerState newAction)
 		}
 		break;
 	case PlayerState::ATTACK:
+		valocity = 0;
 		animation.Play("Attack1");
 		animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 		animation.PlayQueue("Idle");
@@ -532,6 +534,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 	case PlayerState::DASH:
 		isDash = true;
+		valocity = 0;
 		dashPosition = playerPosition;
 		animation.Play("Dash");
 		animation.PlayQueue("Idle");
