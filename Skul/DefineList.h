@@ -7,8 +7,7 @@
 enum class InputState
 {
 	BLOCK,
-	GROUND,
-	NONE
+	IMAGE,
 };
 /******************************************************************************
 * 설명 : 타일마다 뭐 부딪히는지
@@ -21,8 +20,4 @@ enum class ColliderTag
 	Player,
 	Monster,
 	Exit,
-	NPC,
-	RayCast,
-	PlayerAttack,
-	MonsterAttack,
 };

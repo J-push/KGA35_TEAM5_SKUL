@@ -41,7 +41,7 @@
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="Source\Utils\Singleton.cpp" />
     <ClCompile Include="Source\Utils\Utils.cpp" />
-    <ClCompile Include="TestRectangle.cpp" />
+    <ClCompile Include="ColliderRect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefineList.h" />
@@ -67,7 +67,7 @@
     <ClInclude Include="Source\Utils\ChangeMouse.h" />
     <ClInclude Include="Source\Utils\Singleton.h" />
     <ClInclude Include="Source\Utils\Utils.h" />
-    <ClInclude Include="TestRectangle.h" />
+    <ClInclude Include="ColliderRect.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

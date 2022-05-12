@@ -85,7 +85,7 @@ public:
 
 	bool OnHitted();
 
-	void Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound,Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects);
+	void Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound,Vector2f playerPosition, int playerDamage, std::vector<ColliderRect*> rects);
 
 	Sprite GetSprite();
 

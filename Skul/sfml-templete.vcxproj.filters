@@ -61,7 +61,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
-    <ClCompile Include="TestRectangle.cpp" />
+    <ClCompile Include="ColliderRect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">
@@ -126,7 +126,7 @@
     </ClInclude>
     <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\UIMaker.h" />
-    <ClInclude Include="TestRectangle.h" />
+    <ClInclude Include="ColliderRect.h" />
     <ClInclude Include="DefineList.h" />
   </ItemGroup>
   <ItemGroup>

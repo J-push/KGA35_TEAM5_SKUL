@@ -3,13 +3,14 @@
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 #include "../Manager/InputManager.h"
+#include "../Player/Player.h"
 #include <sstream>
 #include <iostream>
 
 using namespace sf;
 using namespace std;
 
-class Tile;
+class Player;
 class SceneMapEditor : public Scene
 {
 private:
@@ -37,27 +38,30 @@ private:
 
 	Vector2u downGrid;
 	Vector2u upGrid;
+	Vector2u ingGrid;
 	vector<Vector2u> finalGrid;
 
 	vector<vector <RectangleShape>> tileMap;
-	vector <TestRectangle *> blocks;
+	vector <ColliderRect*> rects;
 
 	Text text;
 	Text text2;
 	Font font;
 
 	VertexArray palette;
-	InputState currentInput;
+	InputState currentInputState;
 
 	RectangleShape sampleSelector;
 	RectangleShape tileSelector;
 	RectangleShape *drag;
 
+	bool CurrentMousePosition;
 
 	int fromX;
 	int toX;
 	int fromY;
 	int toY;
+	int currentIndex;
 	int texIndex;
 	int saveNum;
 
@@ -73,6 +77,7 @@ public:
 	int CreateTile(int c, int r, int idx);
 
 	void CreateBlocks(int fromX, int toX, int fromY, int toY);
+	void CreateRects();
 	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
 	virtual void Start() override;
 	virtual void End() override;

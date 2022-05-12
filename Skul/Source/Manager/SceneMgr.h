@@ -30,6 +30,5 @@ public:
 	void Draw(sf::RenderWindow *window, sf::View *mainView, sf::View *uiView);
 	
 	Scenes GetCurrentScene();
-
 };
 

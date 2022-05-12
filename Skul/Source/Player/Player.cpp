@@ -185,9 +185,6 @@ void Player::Jump(float dt)
 		}
 	}
 
-
-
-
 	/*if (isJump == false)
 	{
 		action = PlayerStatus::IDLE;
@@ -311,7 +308,7 @@ void Player::UpdateInput(float dt)
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<TestRectangle*> rects)
+void Player::Update(float dt, std::vector<ColliderRect*> rects)
 {
 	UpdateInput(dt);
 	attackDelay -= dt;

@@ -3,6 +3,8 @@
 
 void SceneMapEditor::Init()
 {
+    CurrentMousePosition = true;
+    currentInputState = InputState::BLOCK;
     gridSizeU =static_cast<unsigned>(gridSizeF);
 
     tileMap.resize(MAPWIDTH, vector<RectangleShape>());
@@ -63,11 +65,11 @@ void SceneMapEditor::Release()
     delete uiView;
     delete spriteTile.getTexture();
     delete spriteBackground.getTexture();
-    for (auto it : blocks)
+    for (auto it : rects)
     {
         delete it;
     }
-    blocks.clear();
+    rects.clear();
 }
 
 int SceneMapEditor::CreateTile(int c, int r, int idx)
@@ -156,9 +158,23 @@ void SceneMapEditor::Start()
 void SceneMapEditor::End()
 {
 }
+void SceneMapEditor::CreateRects()
+{
+    for (auto v : rects)
+    {
+        delete v;
+    }
+
+    rects.clear();
+
+    // 왼쪽벽
+    ColliderRect *rect = new ColliderRect(downGrid.x, upGrid.x, downGrid.y, upGrid.y);
+    rects.push_back(rect);
+}
 void SceneMapEditor::CreateBlocks(int fromX, int toX, int fromY, int toY)
 {
 }
+
 void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
 {
     if (Keyboard::isKeyPressed(Keyboard::A))
@@ -198,11 +214,18 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     if (mousePosWindow.x < 960.f)
     {
         mousePosView = window->mapPixelToCoords(mousePosWindow);
+        CurrentMousePosition = true;
+        mousePosView2.x = 0;
+        mousePosView2.y = 0;
+ 
     }
     window->setView(*uiView);
     if (mousePosWindow.x >= 960.f)
     {
         mousePosView2 = window->mapPixelToCoords(mousePosWindow);
+        CurrentMousePosition = false;
+        mousePosView.x = 0;
+        mousePosView.y = 0;
     }
 
     window->setView(temp);
@@ -223,21 +246,18 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     }
 
     //타일 그리기 
-    /*if (InputManager::GetMouseButtonDown(Mouse::Button::Left))
+    if (InputManager::GetMouseButtonDown(Mouse::Button::Left) && currentInputState == InputState::BLOCK && CurrentMousePosition)
     {
         finalGrid.clear();
         downGrid = mousePosGrid;
         std::cout << "DGrid : " << downGrid.x << " " << downGrid.y << "\n";
 
-        if (currentInput == InputState::BLOCK)
-        {
-            drag = new RectangleShape(Vector2f(0.f, 0.f));
-            drag->setFillColor({ 100, 100, 200, 125 });
-            drag->setPosition(downGrid.x * gridSizeF, downGrid.y * gridSizeF);
-        }
+        drag = new RectangleShape(Vector2f(0.f, 0.f));
+        drag->setFillColor({ 100, 100, 200, 125 });
+        drag->setPosition(downGrid.x * gridSizeF, downGrid.y * gridSizeF);
     }
 
-    if (InputManager::GetMouseButton(Mouse::Button::Left) && currentInput == InputState::BLOCK)
+    if (InputManager::GetMouseButton(Mouse::Button::Left) && currentInputState == InputState::BLOCK && CurrentMousePosition)
     {
         drag->setSize(Vector2f(((int)mousePosGrid.x - (int)downGrid.x) * gridSizeF, ((int)mousePosGrid.y - (int)downGrid.y) * gridSizeF));
 
@@ -250,81 +270,54 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         {
             drag->setSize(Vector2f(drag->getSize().x, drag->getSize().y + gridSizeF));
         }
-    }*/
-
-    switch (currentInput)
+    }
+    switch (currentInputState)
     {
-    case::InputState::GROUND:
-        //클릭했을때 0
-        if (InputManager::GetMouseButtonUp(Mouse::Button::Left))
+    case::InputState::IMAGE:
+        if (InputManager::GetMouseButtonDown(Mouse::Button::Left))
         {
-            /*finalGrid.clear();*/
-            upGrid = mousePosGrid2; // 0 0
-            if (mousePosGrid2.x == 0 && mousePosGrid2.y == 0)
+            //타일 선택
+            int count = 0;
+            if (!CurrentMousePosition)
             {
-                texIndex = 0;
-            }
-            else if (mousePosGrid2.x == 1 && mousePosGrid2.y == 0)
-            {
-                texIndex = 6;
-            }
-            else if (mousePosGrid2.x == 0 && mousePosGrid2.y == 1)
-            {
-                texIndex = 1;
-            }
-            else if (mousePosGrid2.x == 1 && mousePosGrid2.y == 1)
-            {
-                texIndex = 7;
-            }
-            else if (mousePosGrid2.x == 0 && mousePosGrid2.y == 4)
-            {
-                texIndex = 4;
-            }
-            else if (mousePosGrid2.x == 5 && mousePosGrid2.y == 1)
-            {
-                texIndex = 31;
-            }
-        }
-        std::cout << "Ugrid : " << upGrid.x << " " << upGrid.y << "\n";
-        upGrid = downGrid;
-        downGrid = mousePosGrid;
-        CreateTile(downGrid.x, downGrid.y, texIndex);
-        break;
-
-        /*case::InputState::BLOCK:
-            if (InputManager::GetMouseButtonUp(Mouse::Button::Left))
-            {
-                TestRectangle *block = new TestRectangle(drag->getGlobalBounds(), downGrid);
-                blocks.push_back(block);
-
-                delete drag;
-
-                upGrid = mousePosGrid;
-                std::cout << "UGrid : " << upGrid.x << " " << upGrid.y << "\n";
-
-                CreateBlocks(downGrid.x, upGrid.x, downGrid.y, upGrid.y);
-            }
-            break;
-        }*/
-        /*if (InputManager::GetMouseButtonUp(Mouse::Button::Left))
-        {
-            upGrid = mousePosGrid;
-
-            for (unsigned int i = downGrid.x; i <= downGrid.x; i++)
-            {
-                for (unsigned int j = downGrid.y; j <= downGrid.y; j++)
+                for (int x = 0; x <= 5; x++)
                 {
-                    finalGrid.push_back(Vector2u(i, j));
+                    for (int y = 0; y <= 5; y++)
+                    {
+                        if (mousePosGrid2.x == x && mousePosGrid2.y == y)
+                        {
+                            currentIndex = count;
+                            break;
+                        }
+                        else
+                        {
+                            count++;
+                        }
+                    }
                 }
             }
+        }
+        if (InputManager::GetMouseButton(Mouse::Button::Left) && CurrentMousePosition)
+        {
+            CreateTile(mousePosGrid.x, mousePosGrid.y, currentIndex);
+        }
+        if (InputManager::GetMouseButton(Mouse::Button::Right) && CurrentMousePosition)
+        {
+            downGrid = mousePosGrid;
+            CreateTile(mousePosGrid.x, mousePosGrid.y, 5);
+        }
+        break;
+    case::InputState::BLOCK:
+        if (InputManager::GetMouseButtonUp(Mouse::Button::Left))
+        {
+            ColliderRect *block = new ColliderRect(drag->getGlobalBounds(), downGrid);
+            rects.push_back(block);
 
-            int i = 0;
+            upGrid = mousePosGrid;
 
-            for (auto it : finalGrid)
-            {
-                CreateTile(it.x, it.y);
-            }
-        }*/
+            CreateBlocks(downGrid.x, upGrid.x, downGrid.y, upGrid.y);
+        }
+        break;
     }
     //화면 나누기
     tileView->setViewport(sf::FloatRect(0.f, 0.f, 0.5f, 1.f));
@@ -337,6 +330,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     }
     else if (mousePosWindow.x > 960.f)
     {
+        CurrentMousePosition = false;
         sampleSelector.setPosition(mousePosGrid2.x * gridSizeF * 5.f, mousePosGrid2.y * gridSizeF * 5.f);
     }
 
@@ -353,7 +347,8 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     ss1 << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
         << "Window: " << mousePosWindow.x << " " << mousePosWindow.y << "\n"
         << "View: " << mousePosView2.x << " " << mousePosView2.y << "\n"
-        << "Grid: " << mousePosGrid2.x << " " << mousePosGrid2.y << "\n";
+        << "Grid: " << mousePosGrid2.x << " " << mousePosGrid2.y << "\n"
+        << "CurrentIndex: " << currentIndex << "\n";
 
     text.setString(ss.str());
     text2.setString(ss1.str());
@@ -370,30 +365,29 @@ void SceneMapEditor::Draw(sf::RenderWindow *window, View *mainView, View *uiView
             window->draw(tileMap[x][y]);
         }
     }
+    for (auto blockshape : rects)
+    {
+        window->draw(blockshape->GetRectShape());
+    }
     window->draw(palette, ResourceMgr::instance()->GetTexture("TILETEX"));
-    /*window->draw(shape);*/
-    /*fromX = mousePosGrid.x;
-    toX = mousePosGrid.x;
-    
-    fromY = mousePosGrid.y;
-    toY = mousePosGrid.y;*/
     window->draw(text);
-    window->draw(tileSelector);
-    /*if (InputManager::GetMouseButton(Mouse::Button::Left) && currentInput == InputState::BLOCK)
+    if (CurrentMousePosition)
+    {
+        window->draw(tileSelector);
+    }
+    if (InputManager::GetMouseButton(Mouse::Button::Left) && currentInputState == InputState::BLOCK)
     {
         window->draw(*drag);
-    }*/
-
-  /*  for (auto blockShape : blocks)
-    {
-        window->draw(blockShape->GetRectShape());
-    }*/
+    }
 
     window->setView(*(this->uiView));
     window->draw(spriteBackground);
     window->draw(spriteTile);
     window->draw(text2);
-    window->draw(sampleSelector);
+    if (!CurrentMousePosition)
+    {
+        window->draw(sampleSelector);
+    }
     window->setView(*tileView);
 }
 

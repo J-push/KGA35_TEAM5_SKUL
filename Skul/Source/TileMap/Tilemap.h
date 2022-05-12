@@ -9,7 +9,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "../Manager/ResourceMgr.h"
-#include "../../TestRectangle.h"
+#include "../../ColliderRect.h"
 #include "../../DefineList.h"
 
 using namespace sf;
@@ -23,7 +23,7 @@ private:
 	const int BACKGROUND_HEIGHT = 3200;
 	const int WIN_X = 1920;
 	const int WIN_Y = 1080;
-	std::vector <TestRectangle *> rects;
+	std::vector <ColliderRect*> rects;
 	VertexArray tileMap;
 	IntRect backGround;
 	Sprite spriteTile;
@@ -34,7 +34,7 @@ public:
 	int CreateBackGround();
 	void CreateTestRect();
 
-	std::vector<TestRectangle*> GetRects();
+	std::vector<ColliderRect*> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
 };
 

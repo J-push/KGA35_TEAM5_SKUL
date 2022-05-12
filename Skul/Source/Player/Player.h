@@ -4,7 +4,7 @@
 #include <map>
 #include "../Manager/InputManager.h"
 #include "../TileMap/Tilemap.h"
-#include "../../TestRectangle.h"
+#include "../../ColliderRect.h"
 #include "../Utils/Utils.h"
 
 using namespace sf;
@@ -113,7 +113,7 @@ public:
 	void Jump(float dt);
 
 	void UpdateInput(float dt);
-	void Update(float dt, std::vector<TestRectangle*> rects);
+	void Update(float dt, std::vector<ColliderRect *> rects);
 
 
 	Vector2f GetPosition();

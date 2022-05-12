@@ -123,7 +123,7 @@ bool swordman::OnHitted()
 /**********************************************************
 * 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
-void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound, Vector2f playerPosition, int playerDamage, std::vector<TestRectangle*> rects)
+void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound, Vector2f playerPosition, int playerDamage, std::vector<ColliderRect*> rects)
 {
 	animation.Update(dt);
 
