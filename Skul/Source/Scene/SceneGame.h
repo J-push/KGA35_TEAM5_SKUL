@@ -28,6 +28,10 @@ private:
 	std::vector<PinkEnt*> mPinkEnt;	// 핑크엔트 여러마리 생성
 	PinkEnt* pinkEnt;
 
+	Clock forCheckTime;
+	Time playTime;
+	Time check;
+
 public:
 
 	int curHp;

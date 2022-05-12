@@ -142,6 +142,7 @@ public:
 	void JeaHit();
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
+	bool GetIsSkill();
 
 
 	FloatRect GetPlayerRect();

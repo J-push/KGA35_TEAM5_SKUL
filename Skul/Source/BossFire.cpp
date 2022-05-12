@@ -91,6 +91,9 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 	
 	fireRect.setPosition(pos);
 	fireRect.setRotation(dgree);
+
+	spriteSuperEffect.setPosition(6000,6000);
+
 }
 
 void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
@@ -126,7 +129,6 @@ void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 void BossFire::Stop()
 {
 	SetActive(false);
-
 }
 
 void BossFire::Update(float dt)
@@ -160,4 +162,9 @@ Sprite BossFire::GetSuperEffectSprite()
 RectangleShape BossFire::GetRect()
 {
 	return fireRect;
+}
+
+FloatRect BossFire::GetGlobalBound()
+{
+	return spriteFireBall.getGlobalBounds();
 }

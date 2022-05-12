@@ -9,6 +9,7 @@
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
+#include "../BossFire.h"
 
 void SceneGame::Init()
 {
@@ -22,6 +23,8 @@ void SceneGame::Init()
 	ui.Init();
 
 	boss.Init();
+
+	check = forCheckTime.restart();
 }
 
 void SceneGame::Release()
@@ -39,6 +42,9 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {	
+	playTime += check;
+	std::cout << playTime.asMilliseconds() << std::endl;
+
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
@@ -56,16 +62,34 @@ void SceneGame::Update(float dt)
 	ui.Update(dt);
 
 
-	// 마우스 충돌시 피 까임 확인용
+	// 보스가 플레이어 기본공격에 맞음
 	bool checkBossHIt = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
 	if (checkBossHIt)
 	{
-		if (player.GetIsAttack() && boss.underAttack(framework.GetPlayTime()))
+		if (player.GetIsAttack() && boss.underAttack(dt))
 		{
 			boss.SetBossHp(10);
 			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
 		}
 	}
+	bool checkBossSkillHIt = boss.GetGlobalBound().intersects(player.GetPlayerSkiilRect());
+	if (checkBossSkillHIt)
+	{
+		if (player.GetIsSkill() && boss.underAttack(dt))
+		{
+			boss.SetBossHp(50);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+		}
+	}
+
+
+
+
+	// 플레이어가 보스 기본공격에 맞음
+
+
+
+	// 마우스 충돌시 피 까임 확인용
 	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
 	if (checkHpHit)
 	{

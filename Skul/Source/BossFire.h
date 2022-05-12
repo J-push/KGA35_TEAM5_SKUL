@@ -39,14 +39,14 @@ public:
 	void SuperShoot(Vector2f pos, Vector2f dir);
 	void Stop();
 
-
-
 	void Update(float dt);
 
 	Sprite GetSprite();
 	Sprite GetSuperEffectSprite();
 
 	RectangleShape GetRect();
+
+	FloatRect GetGlobalBound();
 
 };
 

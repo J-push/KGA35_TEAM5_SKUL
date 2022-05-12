@@ -99,8 +99,5 @@ void Framework::Draw(RenderWindow* window)
 	window->display();
 }
 
-Time Framework::GetPlayTime()
-{
-	return playTime;
-}
+
 
