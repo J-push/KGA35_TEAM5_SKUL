@@ -99,7 +99,7 @@ void SceneGame::Draw(sf::RenderWindow* window)
 
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
-	player.Draw(*window);
+	
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Draw(*window);
@@ -108,8 +108,9 @@ void SceneGame::Draw(sf::RenderWindow* window)
 	{
 		pinkEnt->Draw(*window);
 	}
+	player.Draw(*window);
 	ui.DrawSceneGame(window);
-
+	
 	boss.Draw(*window);
 }
 
