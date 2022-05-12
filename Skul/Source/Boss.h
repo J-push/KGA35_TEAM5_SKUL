@@ -39,7 +39,7 @@ private:
 
 	RectangleShape bossRect; // 보스 피격판정
 
-	const int FIRE_SIZE = 100;
+	const int FIRE_SIZE = 1;
 	list<BossFire *> unuseFires;
 	list<BossFire *> useFires;
 
