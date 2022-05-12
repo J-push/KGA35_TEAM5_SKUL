@@ -27,7 +27,6 @@ private:
 	VertexArray tileMap;
 	IntRect backGround;
 	Sprite spriteTile;
-	TileType tileType;
 	int texIndex;
 
 public:
@@ -37,6 +36,5 @@ public:
 
 	std::vector<TestRectangle*> GetRects();
 	virtual void Draw(sf::RenderWindow *window);
-	inline void SetTileType(TileType type) { this->tileType = type; }
 };
 

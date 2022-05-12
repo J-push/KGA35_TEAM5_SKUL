@@ -33,7 +33,7 @@ void SceneGame::End()
 {
 }
 
-void SceneGame::Update(float dt)
+void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 {
 	for (auto SwordMan : mSwordMans)
 	{
@@ -67,7 +67,7 @@ void SceneGame::Update(float dt)
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow* window)
+void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 
 	window->draw(spriteBackground);

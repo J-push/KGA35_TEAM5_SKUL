@@ -19,7 +19,7 @@ void SceneMenu::End()
 {
 }
 
-void SceneMenu::Update(float dt)
+void SceneMenu::Update(float dt, RenderWindow *window, View *mainView)
 {
 	if (Keyboard::isKeyPressed(Keyboard::Space))
 	{
@@ -27,7 +27,7 @@ void SceneMenu::Update(float dt)
 	}
 }
 
-void SceneMenu::Draw(sf::RenderWindow* window)
+void SceneMenu::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	//window->draw(test);
 }

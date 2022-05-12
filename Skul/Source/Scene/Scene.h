@@ -14,13 +14,13 @@ protected:
 public:
 	Scene(SceneMgr& mgr);
 
-	virtual void Init() = 0;
-	virtual void Release() = 0;
+	virtual void Init();
+	virtual void Release();
 
-	virtual void Start() = 0;
-	virtual void End() = 0;
+	virtual void Start();
+	virtual void End();
 
-	virtual void Update(float dt) = 0;
-	virtual void Draw(sf::RenderWindow* window) = 0;
+	virtual void Update(float dt, RenderWindow *window, View *mainView);
+	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView);
 };
 

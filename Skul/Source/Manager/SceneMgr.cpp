@@ -29,6 +29,10 @@ void SceneMgr::Init()
 	scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::END]->Init();
 }
+void SceneMgr::Release()
+{
+	delete scenes;
+}
 /*******************************************************************
 * 설명 : Scene하나하나가 끝날때마다 새로운 Scene을 받아와 시작한다.
 ********************************************************************/
@@ -41,17 +45,17 @@ void SceneMgr::ChangeScene(Scenes newScene)
 /*******************************************************************
 * 설명 : 장면을 업데이트 한다.
 ********************************************************************/
-void SceneMgr::Update(float dt)
+void SceneMgr::Update(float dt, RenderWindow *window, View *mainView)
 {
-	scenes[(int)currentScene]->Update(dt);
+	scenes[(int)currentScene]->Update(dt, window, mainView);
 }
 
 /*******************************************************************
 * 설명 : 현재 장면들을 그린다.
 ********************************************************************/
-void SceneMgr::Draw(sf::RenderWindow* window)
+void SceneMgr::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
-	scenes[(int)currentScene]->Draw(window);
+	scenes[(int)currentScene]->Draw(window, mainView ,uiView);
 }
 
 Scenes SceneMgr::GetCurrentScene()
