@@ -102,6 +102,8 @@ private:
 
 	bool isSkulChange;
 
+
+
 public:
 
 	void Init();
@@ -140,6 +142,7 @@ public:
 	void JeaHit();
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
+
 
 	FloatRect GetPlayerRect();
 	FloatRect GetPlayerAttackRect();

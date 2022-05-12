@@ -513,7 +513,20 @@ int Boss::GetCurrentHp()
 	return currentHp;
 }
 
-void Boss::underAttack(int damage)
+bool Boss::underAttack(Time timeHit)
+{
+	if (timeHit.asMilliseconds() - lastHit.asMilliseconds() > 1.0)
+	{
+		lastHit = timeHit;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Boss::SetBossHp(int damage)
 {
 	currentHp -= damage;
 }

@@ -766,11 +766,15 @@ FloatRect Player::GetPlayerSkiilRect()
 	return playerSkillRect.getGlobalBounds();
 }
 
+
+
 int Player::GetPlayerDamage()
 {
 
 	return playerAttackDamage;
 }
+
+
 
 void Player::GetStateIdle()
 {

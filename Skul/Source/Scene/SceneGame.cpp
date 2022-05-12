@@ -38,7 +38,7 @@ void SceneGame::End()
 }
 
 void SceneGame::Update(float dt)
-{
+{	
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
@@ -60,11 +60,10 @@ void SceneGame::Update(float dt)
 	bool checkBossHIt = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
 	if (checkBossHIt)
 	{
-		if (player.GetIsAttack())
+		if (player.GetIsAttack() && boss.underAttack(framework.GetPlayTime()))
 		{
-			boss.underAttack(10);
+			boss.SetBossHp(10);
 			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
-
 		}
 	}
 	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());

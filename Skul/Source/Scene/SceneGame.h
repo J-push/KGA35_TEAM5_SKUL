@@ -27,6 +27,7 @@ private:
 
 	std::vector<PinkEnt*> mPinkEnt;	// 핑크엔트 여러마리 생성
 	PinkEnt* pinkEnt;
+
 public:
 
 	int curHp;

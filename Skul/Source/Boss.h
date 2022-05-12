@@ -52,7 +52,7 @@ private:
 	int moveWhere;
 	int whatAction;
 
-	Time lastTime;
+	Time lastHit;
 
 
 public:
@@ -83,7 +83,8 @@ public:
 
 	int GetMaxHp();
 	int GetCurrentHp();
-	void underAttack(int damage);
+	bool underAttack(Time timeHit);
+	void SetBossHp(int damage);
 
 
 	void SetStateIdle();
