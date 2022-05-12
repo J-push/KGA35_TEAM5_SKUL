@@ -39,14 +39,14 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
-	for (auto SwordMan : mSwordMans)
-	{
-		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
-	}
-
 	for (auto pinkEnt : mPinkEnt)
 	{
 		pinkEnt->Update(dt, player);
+	}
+
+	for (auto SwordMan : mSwordMans)
+	{
+		SwordMan->Update(dt, player);
 	}
 	
 	player.Update(dt, tilemap.GetRects());
@@ -108,7 +108,7 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 	for (int i = 0; i < count; i++)
 	{
 		int x = RandomMgr::GetRandom(1240,1500);
-		int y = 920;
+		int y = 900;
 		mSwordman = new swordman(x, y);
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);

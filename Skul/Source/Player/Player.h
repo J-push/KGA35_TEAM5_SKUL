@@ -103,7 +103,7 @@ private:
 
 
 public:
-
+	Player() {}
 	void Init();
 	void SkillInit();
 
