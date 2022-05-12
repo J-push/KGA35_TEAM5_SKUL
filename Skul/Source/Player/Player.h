@@ -139,6 +139,7 @@ public:
 	int GetCurrentPlayerHealth();
 	void JeaHit();
 	Vector2f GetPlayerPosition();
+	bool GetIsAttack();
 
 	FloatRect GetPlayerRect();
 	FloatRect GetPlayerAttackRect();

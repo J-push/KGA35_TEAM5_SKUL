@@ -756,6 +756,11 @@ FloatRect Player::GetPlayerAttackRect()
 	return playerAttackRect.getGlobalBounds();
 }
 
+bool Player::GetIsAttack()
+{
+	return isAttack;
+}
+
 FloatRect Player::GetPlayerSkiilRect()
 {
 	return playerSkillRect.getGlobalBounds();

@@ -57,6 +57,16 @@ void SceneGame::Update(float dt)
 
 
 	// 마우스 충돌시 피 까임 확인용
+	bool checkBossHIt = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
+	if (checkBossHIt)
+	{
+		if (player.GetIsAttack())
+		{
+			boss.underAttack(10);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+
+		}
+	}
 	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
 	if (checkHpHit)
 	{
@@ -68,13 +78,7 @@ void SceneGame::Update(float dt)
 			ui.UnderAttack(player.GetPosition(), dt);
 		}
 	}
-
-	if (InputManager::GetMouseButtonDown(Mouse::Right))
-	{
-		cout << "right " << endl;
-	}
-
-	bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
+	/*bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
 	if (checkBossHIt)
 	{
 		if (InputManager::GetMouseButtonDown(Mouse::Left))
@@ -83,7 +87,8 @@ void SceneGame::Update(float dt)
 			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
 
 		}
-	}
+	}*/
+
 
 
 	if (InputManager::GetKeyDown(Keyboard::Num7))
