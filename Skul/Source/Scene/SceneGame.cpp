@@ -9,6 +9,7 @@
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
+#include "../BossFire.h"
 
 void SceneGame::Init()
 {
@@ -22,6 +23,8 @@ void SceneGame::Init()
 	ui.Init();
 
 	boss.Init();
+
+	check = forCheckTime.restart();
 }
 
 void SceneGame::Release()
@@ -40,6 +43,10 @@ void SceneGame::End()
 void SceneGame::Update(float dt)
 {
 	for (auto pinkEnt : mPinkEnt)
+
+	playTime += check;
+
+	for (auto SwordMan : mSwordMans)
 	{
 		pinkEnt->Update(dt, player);
 	}
@@ -56,6 +63,33 @@ void SceneGame::Update(float dt)
 	ui.Update(dt);
 
 
+	// 보스가 플레이어 기본공격에 맞음
+	bool checkBossHIt = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
+	if (checkBossHIt)
+	{
+		if (player.GetIsAttack() && boss.underAttack(dt))
+		{
+			boss.SetBossHp(10);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+		}
+	}
+	bool checkBossSkillHIt = boss.GetGlobalBound().intersects(player.GetPlayerSkiilRect());
+	if (checkBossSkillHIt)
+	{
+		if (player.GetIsSkill() && boss.underAttack(dt))
+		{
+			boss.SetBossHp(50);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+		}
+	}
+
+
+
+
+	// 플레이어가 보스 기본공격에 맞음
+
+
+
 	// 마우스 충돌시 피 까임 확인용
 	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
 	if (checkHpHit)
@@ -68,6 +102,17 @@ void SceneGame::Update(float dt)
 			ui.UnderAttack(player.GetPosition(), dt);
 		}
 	}
+	/*bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
+	if (checkBossHIt)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			boss.underAttack(10);
+			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+
+		}
+	}*/
+
 
 
 	if (InputManager::GetKeyDown(Keyboard::Num7))
@@ -83,7 +128,7 @@ void SceneGame::Draw(sf::RenderWindow* window)
 
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
-	player.Draw(*window);
+	
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Draw(*window);
@@ -92,8 +137,9 @@ void SceneGame::Draw(sf::RenderWindow* window)
 	{
 		pinkEnt->Draw(*window);
 	}
+	player.Draw(*window);
 	ui.DrawSceneGame(window);
-
+	
 	boss.Draw(*window);
 }
 

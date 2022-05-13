@@ -94,8 +94,8 @@ void InputManager::ProcessInput(const Event& event)
 	case Event::MouseButtonPressed:
 		if (!GetMouseButton(event.mouseButton.button))
 		{
-			downButtons.push_back(event.mouseButton.button);
 			ingButtons.push_back(event.mouseButton.button);
+			downButtons.push_back(event.mouseButton.button);
 		}
 		break;
 	case Event::MouseButtonReleased:

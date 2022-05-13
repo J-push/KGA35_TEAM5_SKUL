@@ -15,12 +15,12 @@
 ***********************************************************/
 void Player::Init()
 {
-
 	Player player;
 	// 재휘 현재,최대체력 초기화
 	maxPlayerHealth = START_PLAYER_HEALTH;
 	currentPlayerHealth = START_PLAYER_HEALTH;
 	playerAttackDamage = START_PLAYER_STR;
+
 	playerPosition.x = 900.f;
 	playerPosition.y = 250.f;
 
@@ -30,6 +30,7 @@ void Player::Init()
 	isAttack = false;
 	isDash = false;
 	isSkill = false;
+	isSkulChange = true;
 
 	SpritePlayer.setPosition(playerPosition);
 	SpritePlayer.setOrigin(150, 100);
@@ -76,7 +77,9 @@ void Player::Init()
 
 		animation.AddClip(clip);
 	}
-	animation.Play("Idle");
+
+	animation.Play("L_Idle");
+	currentAction = PlayerState::IDLE;
 
 	playerRect.setSize(Vector2f(28, 60));
 	playerRect.setScale(1.5f, 1.5f);
@@ -100,6 +103,8 @@ void Player::Init()
 	playerSkillRect.setOutlineThickness(2);
 
 }
+
+
 
 /**********************************************************
 * 설명 : 플레이어의 스킬을 초기화한다.
@@ -151,98 +156,6 @@ void Player::SkillInit()
 ***********************************************************/
 void Player::UpdateInput(float dt)
 {
-	//오른쪽
-	//if (InputManager::instance()->GetKeyDown(Keyboard::Right))
-	//{
-	//	currentAction = PlayerState::MOVE;
-	//	isLeft = false;
-
-	//	animation.Play("Walk");
-
-	//	SpritePlayer.setScale(PLAYER_SIZE, PLAYER_SIZE);
-	//	playerAttackRect.setScale(1.5f, 1.5f);
-//}
-////왼쪽
-//if (InputManager::instance()->GetKeyDown(Keyboard::Left))
-//{
-//	currentAction = PlayerState::MOVE;
-//	isLeft = true;
-
-//	animation.Play("Walk");
-
-//	SpritePlayer.setScale(LEFT_PLAYER_SIZE, PLAYER_SIZE);
-//	playerAttackRect.setScale(-1.5f, 1.5f);
-//}
-////오른쪽 왼쪽 떼면
-//if (InputManager::instance()->GetKeyUp(Keyboard::Right) ||
-//	InputManager::instance()->GetKeyUp(Keyboard::Left))
-//{
-//	
-//	currentAction = PlayerState::IDLE;
-
-//	animation.Play("Idle");
-//}
-
-//if (InputManager::instance()->GetKeyDown(Keyboard::Z))
-//{
-//	currentAction = PlayerState::DASH;
-//	isDash = true;
-
-//	dashPosition.x = playerPosition.x;			
-//	dashPosition.y = playerPosition.y;
-
-//	animation.Play("Dash");
-
-//	if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
-//	{
-//		currentAction = PlayerState::MOVE;
-//		animation.PlayQueue("Walk");
-//	}
-//}
-
-////공격키
-//if (InputManager::instance()->GetKeyDown(Keyboard::X))
-//{
-//	currentAction = PlayerState::ATTACK;
-//	isAttack = true;
-
-//	animation.Play("Attack1");
-//	animation.PlayQueue("Idle");
-//}
-//
-
-
-//if (InputManager::instance()->GetKeyDown(Keyboard::C))
-//{
-//	currentAction = PlayerState::JUMP;
-//	isJump = true;
-//	oldJumpPos.y = playerPosition.y;
-//	animation.Play("Jump");
-//	
-//}
-
-//if (InputManager::instance()->GetKeyDown(Keyboard::A))
-//{
-//	currentAction = PlayerState::SKILLATTACK;
-//	isSkill = true;
-//	if (isLeft)
-//	{
-//		skillPosition.x = playerPosition.x - 300.f;
-//		skillPosition.y = playerPosition.y - 400.f;
-//		spriteSkill.setScale(4.0f, 4.0f);
-//	}
-//	else if (!isLeft)
-//	{
-//		skillPosition.x = playerPosition.x + 300.f;
-//		skillPosition.y = playerPosition.y - 400.f;
-//		spriteSkill.setScale(-4.0f, 4.0f);
-//	}
-
-//	skillAnimation.Play("SoulBurn");
-//	animation.Play("Skill1");
-//	animation.PlayQueue("Idle");
-//}
-
 }
 
 /**********************************************************
@@ -251,6 +164,7 @@ void Player::UpdateInput(float dt)
 void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
+
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
@@ -269,6 +183,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		Jump();
 		break;
 	case PlayerState::DOWN:
+
 		break;
 	case PlayerState::DASH:
 		Dash();
@@ -276,16 +191,13 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	default:
 		break;
 	}
-
 	if (isSkill)
 	{
 		SkillAttack();
 	}
 
-	if (jumpForce < 0)
-	{
-		jumpForce = 0;
-	}
+	//std::cout << (int)currentAction << std::endl;
+	//std::cout << jumpSpeed << std::endl;
 
 	AnimationUpdate(dt);
 
@@ -293,16 +205,22 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	PlayerConllision(rects);
 
 	//중력
-	valocity += 980.f * dt;
-	playerPosition.y += valocity * dt;
+
+	gravity += 980.f * dt;
+	playerPosition.y += gravity * dt;
 
 	SpritePlayer.setPosition(playerPosition);
 	spriteSkill.setPosition(skillPosition.x, skillPosition.y - 50);
 	playerRect.setPosition(playerPosition.x, playerPosition.y - 50);
-	playerAttackRect.setPosition(playerPosition.x, playerPosition.y - 100);
+	if (isAttack == true)
+	{
+		playerAttackRect.setPosition(playerPosition.x, playerPosition.y - 100);
+	}
 	playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
 	animation.Update(dt);
 	skillAnimation.Update(dt);
+
+
 }
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)
@@ -312,29 +230,30 @@ void Player::AnimationUpdate(float dt)
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
-		if (InputManager::instance()->GetKeyDown(Keyboard::Right))
+
+		if (InputManager::instance()->GetKeyDown(Keyboard::Right))				//우
 		{
 			isLeft = false;
 			SetState(PlayerState::MOVE);
 		}
-		else if (InputManager::instance()->GetKeyDown(Keyboard::Left))
+		else if (InputManager::instance()->GetKeyDown(Keyboard::Left))			//좌
 		{
 			isLeft = true;
 			SetState(PlayerState::MOVE);
 		}
-		else if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
+		else if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left)) //지속
 		{
 			SetState(PlayerState::MOVE);
 		}
-		else if (InputManager::instance()->GetKeyDown(Keyboard::A))
+		else if (InputManager::instance()->GetKeyDown(Keyboard::A))				//공격
 		{
 			SetState(PlayerState::SKILLATTACK);
 		}
-		else if (InputManager::instance()->GetKeyDown(Keyboard::Z))
+		else if (InputManager::instance()->GetKeyDown(Keyboard::Z))				//대쉬
 		{
 			SetState(PlayerState::DASH);
 		}
-		else if (InputManager::instance()->GetKeyDown(Keyboard::X))
+		else if (InputManager::instance()->GetKeyDown(Keyboard::X))				//공격
 		{
 			SetState(PlayerState::ATTACK);
 		}
@@ -342,9 +261,23 @@ void Player::AnimationUpdate(float dt)
 		{
 			SetState(PlayerState::JUMP);
 		}
+		else if (InputManager::instance()->GetKeyDown(Keyboard::Space))
+		{
+
+			if (isSkulChange)
+			{
+				isSkulChange = false;
+			}
+			else
+			{
+				isSkulChange = true;
+			}
+			SetState(PlayerState::IDLE);
+		}
 		break;
 
 	case PlayerState::MOVE:
+		//
 		if ((InputManager::instance()->GetKeyUp(Keyboard::Right) || InputManager::instance()->GetKeyUp(Keyboard::Left)))
 		{
 			SetState(PlayerState::IDLE);
@@ -478,61 +411,109 @@ void Player::SetState(PlayerState newAction)
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
-		animation.Play("Idle");
-
+		isAttack = false;
+		animation.OnComplete = std::bind(&Player::ChangeSkul, this);
 		break;
 	case PlayerState::MOVE:
-		if (isLeft)
+		if (isSkulChange && isLeft)
+		{
+			animation.Play("L_Walk");
+			SpritePlayer.setScale(-2.5f, 2.5f);
+			playerAttackRect.setScale(-1.5f, 1.5f);
+		}
+		else if (isSkulChange && !isLeft)
+		{
+			animation.Play("L_Walk");
+			SpritePlayer.setScale(2.5f, 2.5f);
+			playerAttackRect.setScale(1.5f, 1.5f);
+
+		}
+		else if (!isSkulChange && isLeft)
 		{
 			animation.Play("Walk");
 			SpritePlayer.setScale(LEFT_PLAYER_SIZE, PLAYER_SIZE);
 			playerAttackRect.setScale(-1.5f, 1.5f);
 		}
-		else
+		else if (!isSkulChange && !isLeft)
 		{
 			animation.Play("Walk");
 			SpritePlayer.setScale(PLAYER_SIZE, PLAYER_SIZE);
 			playerAttackRect.setScale(1.5f, 1.5f);
+
 		}
+
 		break;
+
 	case PlayerState::ATTACK:
-		animation.Play("Attack1");
-		animation.OnComplete = std::bind(&Player::GetStateIdle, this);
-		animation.PlayQueue("Idle");
+
+		if (isSkulChange)
+		{
+			animation.Play("L_Attack");
+			animation.OnComplete = std::bind(&Player::ChangeSkul, this);
+			animation.PlayQueue("L_Idle");
+		}
+		else
+		{
+			animation.Play("Attack1");
+			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+			animation.PlayQueue("Idle");
+		}
+
+
 		break;
+
 	case PlayerState::SKILLATTACK:
 		isSkill = true;
 		tempPos = playerPosition;
-		if (isLeft)
+		if (isSkulChange)
 		{
-			skillPosition.x = playerPosition.x - 300.f;
-			skillPosition.y = playerPosition.y - 400.f;
-			spriteSkill.setScale(4.0f, 4.0f);
+
 		}
-		else if (!isLeft)
+		else
 		{
-			skillPosition.x = playerPosition.x + 300.f;
-			skillPosition.y = playerPosition.y - 400.f;
-			spriteSkill.setScale(-4.0f, 4.0f);
+			if (isLeft)
+			{
+				skillPosition.x = playerPosition.x - 300.f;
+				skillPosition.y = playerPosition.y - 400.f;
+				spriteSkill.setScale(4.0f, 4.0f);
+			}
+			else if (!isLeft)
+			{
+				skillPosition.x = playerPosition.x + 300.f;
+				skillPosition.y = playerPosition.y - 400.f;
+				spriteSkill.setScale(-4.0f, 4.0f);
+
+			}
+			skillAnimation.Play("SoulBurn");
+			animation.Play("Skill1");
+			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+			animation.PlayQueue("Idle");
 		}
-		skillAnimation.Play("SoulBurn");
-		animation.Play("Skill1");
 		
 		break;
+
 	case PlayerState::COMBOATTACK:
 		break;
+
 	case PlayerState::JUMP:
 		isJump = true;
-		isGround = false;
+		jumpSpeed = 800;
 		oldJumpPos = playerPosition;
 		animation.Play("Jump");
 		break;
+
 	case PlayerState::DOWN:
+		animation.Play("Down");
 		break;
+
 	case PlayerState::DASH:
 		isDash = true;
+
+		gravity = 0;
 		dashPosition = playerPosition;
+		dashDelay = DASH_COOLTIME;
 		animation.Play("Dash");
+		animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 		animation.PlayQueue("Idle");
 		break;
 	default:
@@ -568,6 +549,14 @@ void Player::Move()
 void Player::Attack()
 {
 	isAttack = true;
+	attackAlive -= stateDt;
+	if (attackAlive < 0)
+	{
+		attackAlive = 0.5f;
+		isAttack = false;
+		playerAttackRect.setPosition(0, 0);
+		currentAction = PlayerState::IDLE;
+	}
 }
 
 /**********************************************************
@@ -578,15 +567,19 @@ void Player::SkillAttack()
 	isSkill = true;
 	skillDown = 700.f;
 	skillPosition.y += skillDown * stateDt;
-	
+	skillAlive -= stateDt;
 	if (skillPosition.y > tempPos.y)
 	{
 		skillPosition.y = tempPos.y;
 	}
-	//스킬 이펙트 그리는게 끝나면
-	//isSkill = false;
+	if (skillAlive < 0)
+	{
+		isSkill = false;
+		skillAlive = 2.5f;
+		skillPosition.x = 0;
+		skillPosition.y = 0;
+	}
 }
-
 /**********************************************************
 * 설명 : 플레이어의 공격 동작을 구현한다.
 ***********************************************************/
@@ -603,6 +596,7 @@ void Player::Dash()
 			else
 			{
 				isDash = false;
+
 			}
 		}
 		else if (isLeft == false)
@@ -615,6 +609,7 @@ void Player::Dash()
 			else
 			{
 				isDash = false;
+
 			}
 		}
 	}
@@ -631,15 +626,10 @@ void Player::Jump()
 {
 	if (isJump == true)
 	{
-		jumpForce = 700.f;
 
-		playerPosition.y -= jumpForce * stateDt;
-
-		jumpForce -= valocity;
-		//std::cout << "돼";
+		jumpSpeed -= gravity * stateDt;
+		playerPosition.y -= jumpSpeed * stateDt;
 	}
-	
-
 }
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
@@ -671,15 +661,13 @@ void Player::PlayerConllision(std::vector<TestRectangle*> rects)
 
 			case Pivots::CB:
 				playerPosition.y -= (playerRect.getGlobalBounds().top + playerRect.getGlobalBounds().height) - (v->GetRect().top);
-				isGround = true;
-				valocity = -20;
+				gravity = 0;
 				InputManager::VerticalInit();
 				break;
 
 			defalut:
 				break;
 			}
-			playerRect.setPosition(playerPosition.x, playerPosition.y - 50);
 		}
 	}
 }
@@ -712,19 +700,19 @@ FloatRect Player::GetGlobalBound()
 void Player::Draw(RenderWindow& window)
 {
 	window.draw(SpritePlayer);
-	
+
 	window.draw(playerRect);
-	if (currentAction == PlayerState::ATTACK)
+	if (isAttack && currentAction == PlayerState::ATTACK)
 	{
 		window.draw(playerAttackRect);
 	}
 
-	if (isSkill)
+	if (isSkill && !isSkulChange)
 	{
 		window.draw(spriteSkill);
 		window.draw(playerSkillRect);
 	}
-	
+
 
 	//window.setView(mainView);
 }
@@ -768,10 +756,22 @@ FloatRect Player::GetPlayerAttackRect()
 	return playerAttackRect.getGlobalBounds();
 }
 
+bool Player::GetIsAttack()
+{
+	return isAttack;
+}
+
+bool Player::GetIsSkill()
+{
+	return isSkill;
+}
+
 FloatRect Player::GetPlayerSkiilRect()
 {
 	return playerSkillRect.getGlobalBounds();
 }
+
+
 
 int Player::GetPlayerDamage()
 {
@@ -779,7 +779,44 @@ int Player::GetPlayerDamage()
 	return playerAttackDamage;
 }
 
+
+
 void Player::GetStateIdle()
 {
 	currentAction = PlayerState::IDLE;
+}
+
+void Player::ChangeSkul()
+{
+	if (isSkulChange)
+	{
+		if (isLeft)
+		{
+			SpritePlayer.setScale(-2.5f, 2.5f);
+			SpritePlayer.setOrigin(70, 62);
+			animation.Play("L_Idle");
+		}
+		else
+		{
+			SpritePlayer.setScale(2.5f, 2.5f);
+			SpritePlayer.setOrigin(70, 62);
+			animation.Play("L_Idle");
+		}
+	}
+	else
+	{
+		if (isLeft)
+		{
+			SpritePlayer.setScale(-1.5f, 1.5f);
+			SpritePlayer.setOrigin(150, 100);
+			animation.Play("Idle");
+		}
+		else
+		{
+			SpritePlayer.setScale(1.5f, 1.5f);
+			SpritePlayer.setOrigin(150, 100);
+			animation.Play("Idle");
+		}
+		//currentAction = PlayerState::IDLE;
+	}
 }

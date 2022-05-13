@@ -1,16 +1,16 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : Áø Çö ¼·
-* ÀÛ ¼º ÀÏ : 2022-05-12
-* ³»    ¿ë : PinkEntÀÇ µ¿ÀÛÀ» ±¸ÇöÇÑ´Ù.
-* ¼ö Á¤ ÀÏ :
+* Ã€Ã› Â¼Âº Ã€Ãš : ÃÃ¸ Ã‡Ã¶ Â¼Â·
+* Ã€Ã› Â¼Âº Ã€Ã : 2022-05-12
+* Â³Â»    Â¿Ã« : PinkEntÃ€Ã‡ ÂµÂ¿Ã€Ã›Ã€Â» Â±Â¸Ã‡Ã¶Ã‡Ã‘Â´Ã™.
+* Â¼Ã¶ ÃÂ¤ Ã€Ã :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*includeÂµÃ‰ Ã‡Ã¬Â´Ãµ*/
 #include "PinkEnt.h"
 #include "../../Animation/rapidcsv.h"
 #include <iostream>
 
 /**********************************************************
-* ¼³¸í : PinkEnt¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+* Â¼Â³Â¸Ã­ : PinkEntÂ¸Â¦ ÃƒÃŠÂ±Ã¢ÃˆÂ­Ã‡Ã‘Â´Ã™.
 ***********************************************************/
 void PinkEnt::Init()
 {
@@ -25,7 +25,7 @@ void PinkEnt::Init()
 	animationGas.SetTarget(&spriteGas);
 
 	rapidcsv::Document clipsPinkEnt("data_tables/animations/Monster/PinkEnt/PinkEnt_animation_clips.csv");
-	std::vector<std::string> colId = clipsPinkEnt.GetColumn<std::string>("ID"); // ÀÏ¹İÈ­ÀÎÀÚ¸¦ ¹ŞÀ½
+	std::vector<std::string> colId = clipsPinkEnt.GetColumn<std::string>("ID"); // Ã€ÃÂ¹ÃÃˆÂ­Ã€ÃÃ€ÃšÂ¸Â¦ Â¹ÃÃ€Â½
 	std::vector<int> colFps = clipsPinkEnt.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clipsPinkEnt.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clipsPinkEnt.GetColumn<std::string>("CLIP PATH");
@@ -92,7 +92,7 @@ void PinkEnt::Init()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ À§Ä¡¸¦ ¼³Á¤ÇØÁØ´Ù.
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Ã€Â§Ã„Â¡Â¸Â¦ Â¼Â³ÃÂ¤Ã‡Ã˜ÃÃ˜Â´Ã™.
 ***********************************************************/
 PinkEnt::PinkEnt(int x, int y)
 {
@@ -104,7 +104,7 @@ PinkEnt::~PinkEnt()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ ¹× ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¾÷µ¥ÀÌÆ® ÇØÁØ´Ù.
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Â»Ã³Ã…Ã‚ Â¹Ã— Â¾Ã–Â´ÃÂ¸ÃÃ€ÃŒÂ¼Ã‡Ã€Â» Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â® Ã‡Ã˜ÃÃ˜Â´Ã™.
 ***********************************************************/
 void PinkEnt::Update(float dt, Player& player)
 {
@@ -130,7 +130,7 @@ void PinkEnt::Update(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ¿¡ µû¸¥ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¾÷µ¥ÀÌÆ® ÇØÁØ´Ù.
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Â»Ã³Ã…Ã‚Â¿Â¡ ÂµÃ»Â¸Â¥ Â¾Ã–Â´ÃÂ¸ÃÃ€ÃŒÂ¼Ã‡Ã€Â» Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â® Ã‡Ã˜ÃÃ˜Â´Ã™.
 ***********************************************************/
 void PinkEnt::AnimationUpdate(float dt, Player& player)
 {
@@ -207,7 +207,7 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ¸¦ ¼³Á¤ÇØÁØ´Ù.
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Â»Ã³Ã…Ã‚Â¸Â¦ Â¼Â³ÃÂ¤Ã‡Ã˜ÃÃ˜Â´Ã™.
 ***********************************************************/
 void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 {
@@ -227,7 +227,26 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 		{
 			animation.Play("AttackReady(Right)");
 			sprite.setOrigin(35, 56);
+
 		}
+
+			if (player.GetPlayerPosition().x < position.x)
+			{
+				animation.PlayQueue("AttackReady(Left)");
+				sprite.setOrigin(35, 56);
+			}
+			else
+			{
+				animation.PlayQueue("AttackReady(Right)");
+				sprite.setOrigin(35, 56);
+			}
+			if (afterAttack < 0)
+			{
+				afterAttack = 2.f;
+
+				spriteGas.setPosition(position.x - 140, position.y - 50);
+				animationGas.Play("EntGas");
+				attackReady = false;
 
 		spriteGas.setPosition(position.x - 140, position.y - 50);
 		animationGas.Play("EntGas");
@@ -246,7 +265,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Walk:
 		break;
 	case PinkEntAction::Death:
-		std::cout << "Á×À½";
+		std::cout << "ÃÃ—Ã€Â½";
 		break;
 	default:
 		break;
@@ -254,7 +273,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ °ø°İ ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Â°Ã¸Â°Ã Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::Attack(float dt, Player& player)
 {
@@ -262,7 +281,7 @@ void PinkEnt::Attack(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ°¡ °ø°İÀ» ¹Ş¾ÒÀ» ¶§ÀÇ Ã³¸® ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÂ°Â¡ Â°Ã¸Â°ÃÃ€Â» Â¹ÃÂ¾Ã’Ã€Â» Â¶Â§Ã€Ã‡ ÃƒÂ³Â¸Â® Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::Hit(float dt, Player& player)
 {
@@ -281,7 +300,7 @@ void PinkEnt::Hit(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ ÀÌµ¿À» Ã³¸®ÇØÁÙ ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÃ€Ã‡ Ã€ÃŒÂµÂ¿Ã€Â» ÃƒÂ³Â¸Â®Ã‡Ã˜ÃÃ™ Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::Move(float dt)
 {
@@ -332,7 +351,7 @@ void PinkEnt::Move(float dt)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ°¡ Á×¾úÀ» ¶§ÀÇ Ã³¸® ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÂ°Â¡ ÃÃ—Â¾ÃºÃ€Â» Â¶Â§Ã€Ã‡ ÃƒÂ³Â¸Â® Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::Death(float dt)
 {
@@ -341,7 +360,7 @@ void PinkEnt::Death(float dt)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ±×¸² ¹İÈ¯
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…Ã Â±Ã—Â¸Â² Â¹ÃÃˆÂ¯
 ***********************************************************/
 Sprite PinkEnt::GetSprite()
 {
@@ -349,7 +368,7 @@ Sprite PinkEnt::GetSprite()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ±×¸² Æ² ¹İÈ¯
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…Ã Â±Ã—Â¸Â² Ã†Â² Â¹ÃÃˆÂ¯
 ***********************************************************/
 FloatRect PinkEnt::GetGlobalBound()
 {
@@ -357,7 +376,7 @@ FloatRect PinkEnt::GetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í :¸ó½ºÅÍ È÷Æ®¹Ú½ºÀÇ Æ² ¹İÈ¯
+* Â¼Â³Â¸Ã­ :Â¸Ã³Â½ÂºÃ…Ã ÃˆÃ·Ã†Â®Â¹ÃšÂ½ÂºÃ€Ã‡ Ã†Â² Â¹ÃÃˆÂ¯
 ***********************************************************/
 FloatRect PinkEnt::MonsterGetGlobalBound()
 {
@@ -365,7 +384,7 @@ FloatRect PinkEnt::MonsterGetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ½ºÅ³ ¹Ú½ºÀÇ Æ² ¹İÈ¯
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…Ã Â½ÂºÃ…Â³ Â¹ÃšÂ½ÂºÃ€Ã‡ Ã†Â² Â¹ÃÃˆÂ¯
 ***********************************************************/
 FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 {
@@ -373,7 +392,7 @@ FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ µÇ´Â ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ ÇÁ·¹ÀÓ ³¡¿¡ µµ´ŞÇÏ¸é ¾×¼Ç »óÅÂ¸¦ º¯°æÇØÁÙ ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Ã‡ÃƒÂ·Â¹Ã€ÃŒ ÂµÃ‡Â´Ã‚ Â¾Ã–Â´ÃÂ¸ÃÃ€ÃŒÂ¼Ã‡Ã€Ã‡ Ã‡ÃÂ·Â¹Ã€Ã“ Â³Â¡Â¿Â¡ ÂµÂµÂ´ÃÃ‡ÃÂ¸Ã© Â¾Ã—Â¼Ã‡ Â»Ã³Ã…Ã‚Â¸Â¦ ÂºÂ¯Â°Ã¦Ã‡Ã˜ÃÃ™ Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::GetActionIdle()
 {
@@ -381,7 +400,7 @@ void PinkEnt::GetActionIdle()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ¸¦ È­¸é¿¡ ±×·ÁÁÙ ÇÔ¼ö
+* Â¼Â³Â¸Ã­ : Â¸Ã³Â½ÂºÃ…ÃÂ¸Â¦ ÃˆÂ­Â¸Ã©Â¿Â¡ Â±Ã—Â·ÃÃÃ™ Ã‡Ã”Â¼Ã¶
 ***********************************************************/
 void PinkEnt::Draw(RenderWindow& window)
 {
