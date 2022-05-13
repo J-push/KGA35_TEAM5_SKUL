@@ -3,14 +3,14 @@ intro1,10,0,data_tables/animations/Boss/boss_animation_intro1.csv
 intro2,10,0,data_tables/animations/Boss/boss_animation_intro2.csv
 intro2re,10,1,data_tables/animations/Boss/boss_animation_intro2reverse.csv
 attackready,10,1,data_tables/animations/Boss/boss_animation_attack(ready).csv
-attack,10,1,data_tables/animations/Boss/boss_animation_attack.csv
+attack,15,1,data_tables/animations/Boss/boss_animation_attack.csv
 idle,10,1,data_tables/animations/Boss/boss_animation_idle.csv
 walkback,10,1,data_tables/animations/Boss/boss_animation_walk(back).csv
 walkfront,10,1,data_tables/animations/Boss/boss_animation_walk(front).csv
 landingready,10,1,data_tables/animations/Boss/boss_animation_landing(Ready).csv
 landingbomb,10,1,data_tables/animations/Boss/boss_animation_landing(Bomb).csv
 landingdown,10,1,data_tables/animations/Boss/boss_animation_landing(Down).csv
-landingeffect,10,0,data_tables/animations/Boss/boss_animation_landingeffect.csv
+landingeffect,30,0,data_tables/animations/Boss/boss_animation_landingeffect.csv
 landingoutro,10,1,data_tables/animations/Boss/boss_animation_landing(Outro).csv
 bomb,10,1,data_tables/animations/Boss/boss_animation_bomb.csv
 superdoing,10,1,data_tables/animations/Boss/boss_animation_super(Doing).csv
