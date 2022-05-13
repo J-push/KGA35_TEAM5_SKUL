@@ -1,7 +1,17 @@
+/******************************************************************************
+* 작 성 자 : 진 현 섭
+* 작 성 일 : 2022-05-12
+* 내    용 : PinkEnt의 동작을 구현한다.
+* 수 정 일 :
+*******************************************************************************/
+/*include될 헤더*/
 #include "PinkEnt.h"
 #include "../../Animation/rapidcsv.h"
 #include <iostream>
 
+/**********************************************************
+* 설명 : PinkEnt를 초기화한다.
+***********************************************************/
 void PinkEnt::Init()
 {
 	sprite.setScale(2.f, 2.f);
@@ -55,14 +65,12 @@ void PinkEnt::Init()
 	damage = START_PINKENT_DAMAGE;
 	speed = 25;
 	hitReady = true;
-	attackReady = false;
+	attackReady = true;
 	pinkEntMoveDir = true;
 
 	attackDelay = 0;
 	walkDelay = 2;
-	afterAttack = 2;
-	hitDelay = 1.f;
-	changeAction = 4.f;
+	hitDelay = 0.5f;
 
 	shapeMonster.setFillColor(Color::Transparent);
 	shapeMonster.setOutlineColor(Color::Yellow);
@@ -79,10 +87,13 @@ void PinkEnt::Init()
 	{
 		dir /= length;
 	}
-
+	animation.Play("Idle");
 	action = PinkEntAction::Idle;
 }
 
+/**********************************************************
+* 설명 : 몬스터의 위치를 설정해준다.
+***********************************************************/
 PinkEnt::PinkEnt(int x, int y)
 {
 	position = Vector2f(x, y);
@@ -92,10 +103,15 @@ PinkEnt::~PinkEnt()
 {
 }
 
+/**********************************************************
+* 설명 : 몬스터의 상태 및 애니메이션을 업데이트 해준다.
+***********************************************************/
 void PinkEnt::Update(float dt, Player& player)
 {
 	animation.Update(dt);
 	animationGas.Update(dt);
+	
+	AnimationUpdate(dt, player);
 
 	pinkEntBound = shapeMonster.getGlobalBounds();
 	pinkEntSkillBound = shapeMonsterSkiil.getGlobalBounds();
@@ -111,189 +127,262 @@ void PinkEnt::Update(float dt, Player& player)
 	shapeMonsterSkiil.setSize(Vector2f(250.f, 250.f));
 	shapeMonsterSkiil.setPosition(position.x - 90, position.y - 120);
 	shapeMonsterSkiil.setOrigin(36, 61);
+}
 
-	Vector2f limitMinMove(800,600);
-	Vector2f limitMaxMove(1150,600);
-
-	if (!attackReady)
+/**********************************************************
+* 설명 : 몬스터의 상태에 따른 애니메이션을 업데이트 해준다.
+***********************************************************/
+void PinkEnt::AnimationUpdate(float dt, Player& player)
+{
+	switch (action)
 	{
-		attackDelay -= dt;
-	}
-	if (attackAble && attackDelay < 0)
-	{
-		attackDelay = 3;
-		attackReady = true;
-	}
-	if (action != PinkEntAction::Death)
-	{
-		if (pinkEntHitCollision && hitReady || pinkEntSkillHitCollision && hitReady)
+	case PinkEntAction::Idle:
+		animation.PlayQueue("Idle");
+		sprite.setOrigin(37, 66);
+		walkDelay -= dt;
+		if (!attackAble && walkDelay < 0)
 		{
-			hitReady = false;
-			action = PinkEntAction::Hit;
+			walkDelay = 2;
+			SetAction(PinkEntAction::Walk, player);
 		}
-		if (action == PinkEntAction::Hit)
+		if (pinkEntHitCollision || pinkEntSkillHitCollision)
 		{
-			shapeMonster.setSize(Vector2f(80.f, 90.f));
-			shapeMonster.setPosition(position.x - 10, position.y - 25);
-			shapeMonster.setOrigin(36, 61);
-
-			sprite.setOrigin(36, 61);
-			hitDelay -= dt;
-			if (mHp <= 0)
-			{
-				action = PinkEntAction::Death;
-			}
-			if (player.GetPlayerPosition().x < position.x)
-			{
-				animation.Play("Hit(Left)");
-			}
-			else
-			{
-				animation.Play("Hit(Right)");
-			}
-			if (hitDelay < 0)
-			{
-				mHp -= player.GetPlayerDamage();
-				hitReady = true;
-				hitDelay = 1.f;
-				pinkEntHitCollision = false;
-				pinkEntSkillHitCollision = false;
-				action = PinkEntAction::Idle;
-			}
+			SetAction(PinkEntAction::Hit, player);
 		}
-		if (action == PinkEntAction::Idle)
-		{
-			animation.ClearPlayQueue();
-			walkDelay -= dt;
-			animation.PlayQueue("Idle");
-			sprite.setOrigin(37,66);
 
-			if (attackReady && attackAble)
-			{
-				action = PinkEntAction::Attack;
-			}
-			else if (!attackAble && walkDelay < 0 && dir.x == 1.f)
-			{
-				walkDelay = 2;
-				animation.Play("Walk(Right)");
-				action = PinkEntAction::Walk;
-			}
-			else if (!attackAble && walkDelay < 0 && dir.x == -1.f)
-			{
-				walkDelay = 2;
-				animation.Play("Walk(Left)");
-				action = PinkEntAction::Walk;
-			}
-		}
-		if (action == PinkEntAction::Walk)
+		if (attackAble)
 		{
-			sprite.setOrigin(36, 61);
-
-			if (position.x < limitMinMove.x)
+			if (!attackReady)
 			{
-				position.x = limitMinMove.x;
-				animation.Play("Walk(Right)");
-				pinkEntMoveDir = false;
+				attackDelay -= dt;
 			}
-			else if (position.x > limitMaxMove.x)
+			if (attackDelay < 0)
 			{
-				position.x = limitMaxMove.x;
-				animation.Play("Walk(Left)");
-				pinkEntMoveDir = true;
+				attackDelay = 3.f;
+				attackReady = true;
 			}
 
-			if (attackReady && attackAble)
+			if (attackReady)
 			{
-				action = PinkEntAction::Attack;
-			}
-			if (pinkEntMoveDir)
-			{
-				animation.ClearPlayQueue();
-				animation.PlayQueue("Walk(Left)");
-				dir.x = -1.f;
-				dir.y = 0.f;
-				float length = sqrt(dir.x * dir.x + dir.y * dir.y);
-				if (length > 0)
-				{
-					dir /= length;
-				}
-			}
-			if (!pinkEntMoveDir)
-			{
-				animation.ClearPlayQueue();
-				animation.PlayQueue("Walk(Right)");
-				dir.x = 1.f;
-				dir.y = 0.f;
-				float length = sqrt(dir.x * dir.x + dir.y * dir.y);
-				if (length > 0)
-				{
-					dir /= length;
-				}
-			}
-			position += dir * dt * speed;
-			sprite.setPosition(position);
-		}
-		if (action == PinkEntAction::Attack)
-		{
-			afterAttack -= dt;
-			changeAction -= dt;
-			sprite.setOrigin(35, 56);
-			if (player.GetPlayerPosition().x < position.x)
-			{
-				animation.PlayQueue("AttackReady(Left)");
-				sprite.setOrigin(35, 56);
-			}
-			else
-			{
-				animation.PlayQueue("AttackReady(Right)");
-				sprite.setOrigin(35, 56);
-			}
-			if (afterAttack < 0)
-			{
-				afterAttack = 2.f;
-				std::cout << "공격 중";
-				spriteGas.setPosition(position.x - 140, position.y - 50);
-				animationGas.Play("EntGas");
 				attackReady = false;
-
-				if (!attackReady)
-				{
-					action = PinkEntAction::Idle;	
-				}
-				else if (!attackAble && !attackReady)
-				{
-					action = PinkEntAction::Walk;
-				}
+				SetAction(PinkEntAction::Attack, player);
 			}
 		}
-	}
-	else if (action == PinkEntAction::Death)
-	{
-	animation.ClearPlayQueue();
-	animation.Stop();
+		break;
+	case PinkEntAction::Attack:
+		Attack(dt, player);
+		if (pinkEntHitCollision || pinkEntSkillHitCollision)
+		{
+			SetAction(PinkEntAction::Hit, player);
+		}
+		break;
+	case PinkEntAction::Hit:
+		Hit(dt, player);
+		if (!pinkEntHitCollision && !pinkEntSkillHitCollision)
+		{
+			SetAction(PinkEntAction::Idle, player);
+		}
+		if (mHp <= 0)
+		{
+			SetAction(PinkEntAction::Death, player);
+		}
+		break;
+	case PinkEntAction::Walk:
+		Move(dt);
+		if (attackAble)
+		{
+			SetAction(PinkEntAction::Attack, player);
+		}
+		if (pinkEntHitCollision|| pinkEntSkillHitCollision)
+		{
+			SetAction(PinkEntAction::Hit, player);
+		}
+		break;
+	case PinkEntAction::Death:
+		Death(dt);
+		break;
+	default:
+		break;
 	}
 }
 
+/**********************************************************
+* 설명 : 몬스터의 상태를 설정해준다.
+***********************************************************/
+void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
+{
+	action = entAction;
+
+	switch (entAction)
+	{
+	case PinkEntAction::Idle:
+		break;
+	case PinkEntAction::Attack:
+		if (player.GetPlayerPosition().x < position.x)
+		{
+			animation.Play("AttackReady(Left)");
+			sprite.setOrigin(35, 56);
+		}
+		else
+		{
+			animation.Play("AttackReady(Right)");
+			sprite.setOrigin(35, 56);
+		}
+
+		spriteGas.setPosition(position.x - 140, position.y - 50);
+		animationGas.Play("EntGas");
+		animationGas.OnComplete = std::bind(&PinkEnt::GetActionIdle, this);
+		break;
+	case PinkEntAction::Hit:
+		if (player.GetPlayerPosition().x < position.x)
+		{
+			animation.Play("Hit(Left)");
+		}
+		else
+		{
+			animation.Play("Hit(Right)");
+		}
+		break;
+	case PinkEntAction::Walk:
+		break;
+	case PinkEntAction::Death:
+		std::cout << "죽음";
+		break;
+	default:
+		break;
+	}
+}
+
+/**********************************************************
+* 설명 : 몬스터의 공격 함수
+***********************************************************/
+void PinkEnt::Attack(float dt, Player& player)
+{
+	sprite.setOrigin(35, 56);
+}
+
+/**********************************************************
+* 설명 : 몬스터가 공격을 받았을 때의 처리 함수
+***********************************************************/
+void PinkEnt::Hit(float dt, Player& player)
+{
+	sprite.setOrigin(36, 61);
+	hitReady = false;
+	hitDelay -= dt;
+	if (hitDelay < 0)
+	{
+		hitReady = true;
+		hitDelay = 0.5f;
+		pinkEntHitCollision = false;
+		pinkEntSkillHitCollision = false;
+		mHp -= player.GetPlayerDamage();
+		std::cout << mHp << std::endl;
+	}
+}
+
+/**********************************************************
+* 설명 : 몬스터의 이동을 처리해줄 함수
+***********************************************************/
+void PinkEnt::Move(float dt)
+{
+	Vector2f limitMinMove(800, 600);
+	Vector2f limitMaxMove(1150, 600);
+
+	sprite.setOrigin(36, 61);
+
+	if (position.x < limitMinMove.x)
+	{
+		position.x = limitMinMove.x;
+		animation.Play("Walk(Right)");
+		pinkEntMoveDir = false;
+	}
+	else if (position.x > limitMaxMove.x)
+	{
+		position.x = limitMaxMove.x;
+		animation.Play("Walk(Left)");
+		pinkEntMoveDir = true;
+	}
+
+	if (pinkEntMoveDir)
+	{
+		animation.ClearPlayQueue();
+		animation.PlayQueue("Walk(Left)");
+		dir.x = -1.f;
+		dir.y = 0.f;
+		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+		if (length > 0)
+		{
+			dir /= length;
+		}
+	}
+	if (!pinkEntMoveDir)
+	{
+		animation.ClearPlayQueue();
+		animation.PlayQueue("Walk(Right)");
+		dir.x = 1.f;
+		dir.y = 0.f;
+		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+		if (length > 0)
+		{
+			dir /= length;
+		}
+	}
+	position += dir * dt * speed;
+	sprite.setPosition(position);
+}
+
+/**********************************************************
+* 설명 : 몬스터가 죽었을 때의 처리 함수
+***********************************************************/
+void PinkEnt::Death(float dt)
+{
+	animation.ClearPlayQueue();
+	animation.Stop();
+}
+
+/**********************************************************
+* 설명 : 몬스터 그림 반환
+***********************************************************/
 Sprite PinkEnt::GetSprite()
 {
 	return sprite;
 }
 
+/**********************************************************
+* 설명 : 몬스터 그림 틀 반환
+***********************************************************/
 FloatRect PinkEnt::GetGlobalBound()
 {
 	return sprite.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 :몬스터 히트박스의 틀 반환
+***********************************************************/
 FloatRect PinkEnt::MonsterGetGlobalBound()
 {
 	return shapeMonster.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 : 몬스터 스킬 박스의 틀 반환
+***********************************************************/
 FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 {
 	return shapeMonsterSkiil.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 : 플레이 되는 애니메이션의 프레임 끝에 도달하면 액션 상태를 변경해줄 함수
+***********************************************************/
+void PinkEnt::GetActionIdle()
+{
+	action = PinkEntAction::Idle;
+}
+
+/**********************************************************
+* 설명 : 몬스터를 화면에 그려줄 함수
+***********************************************************/
 void PinkEnt::Draw(RenderWindow& window)
 {
 	if (action != PinkEntAction::Death)

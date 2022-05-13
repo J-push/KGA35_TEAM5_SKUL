@@ -18,22 +18,22 @@ enum class PinkEntAction
 class PinkEnt
 {
 private:
-	const float START_PINKENT_HEALTH = 50;
-	const float START_PINKENT_DAMAGE = 20;
-	const float START_PINKENT_SPEED = 10;
+	const float START_PINKENT_HEALTH = 50; // 현재 체력
+	const float START_PINKENT_DAMAGE = 20; // 현재 데미지
+	const float START_PINKENT_SPEED = 10; // 현재 움직임의 스피드
 
-	Vector2f position;
+	Vector2f position;	// PinkEnt의 위치 좌표
 
-	PinkEntAction action;
+	PinkEntAction action;	// 몬스터의 상태 액션
 	
-	Sprite sprite;
-	AnimationController animation;
-	Sprite spriteGas;
-	AnimationController animationGas;
+	Sprite sprite;	// 몬스터 그림
+	AnimationController animation;	// 몬스터 애니메이션 효과 
+	Sprite spriteGas;	// 몬스터 스킬 가스 그림
+	AnimationController animationGas;	//몬스터 스킬 가스 애니메이션
 
 	std::map<std::string, Texture> texMap;
 
-	Vector2f dir;
+	Vector2f dir;	// 방향 좌표
 
 	Vector2f positionMonster;// 몬스터 히트 박스
 	RectangleShape shapeMonster;
@@ -41,22 +41,20 @@ private:
 	Vector2f positionMonsterSkiil; // 몬스터 스킬 히트박스
 	RectangleShape shapeMonsterSkiil;
 
-	bool attackAble;
+	bool attackAble;	// 충돌확인을 통해 공격 가능 확인 변수
 
 	FloatRect pinkEntBound;	// 몬스터 그림 크기의 Rect
 	FloatRect pinkEntSkillBound; // 몬스터 스킬의 Rect
 
-	int mHp;
-	int damage;
-	float speed;
+	int mHp;	// 체력
+	int damage;	// 데미지
+	float speed;	// 스피드
 
-	bool attackReady;
-	bool hitReady;
-	float afterAttack;
-	float attackDelay;
-	float walkDelay;
-	float hitDelay;
-	float changeAction;
+	bool attackReady;	// 공격 가능 확인 변수
+	bool hitReady;	// 공격을 받을 수 있는지 확인 변수
+	float attackDelay; // 다음 공격까지의 후딜레이
+	float walkDelay;	// 다음 이동까지의 딜레이
+	float hitDelay;	// 다음 공격을 받을 때까지의 딜레이
 
 	bool pinkEntHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool pinkEntSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
@@ -68,12 +66,20 @@ public:
 	~PinkEnt();
 
 	void Update(float dt, Player& player);
+	void AnimationUpdate(float dt, Player& player);
+	void SetAction(PinkEntAction entAction, Player& player);
+	void Attack(float dt, Player& player);
+	void Hit(float dt, Player& player);
+	void Move(float dt);
+	void Death(float dt);
 
 	Sprite GetSprite();
 
 	FloatRect GetGlobalBound();
 	FloatRect MonsterGetGlobalBound();
 	FloatRect MonsterSkillGetGlobalBound();
+
+	void GetActionIdle();
 
 	void Draw(RenderWindow& window);
 };
