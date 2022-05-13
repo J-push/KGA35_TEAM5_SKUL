@@ -72,6 +72,7 @@ void InputManager::ClearInput()
 	downButtons.clear();
 	downKeys.clear();
 	upKeys.clear();
+	upButtons.clear();
 }
 /**********************************************************
 * 설명 : 키입력을 받는다.

@@ -1,27 +1,27 @@
 #include "ColliderRect.h"
 
-ColliderRect::ColliderRect(float xpos, float ypos, float width, float height)
+ColliderRect::ColliderRect(float centerX, float centerY, float width, float height)
 {
-	rectangle.top = ypos - height * 0.5f;
-	rectangle.left = xpos - width * 0.5f;
+	rectangle.top = centerY - height * 0.5f;
+	rectangle.left = centerX - width * 0.5f;
 	rectangle.width = width;
 	rectangle.height = height;
 
 	rectShape.setFillColor(Color::White);
 	rectShape.setSize(Vector2f(width, height));
-	rectShape.setPosition(xpos - width *0.5 , ypos - height * 0.5);
-	rectShape.setOrigin(position);
+	rectShape.setPosition(position);
+	rectShape.setOrigin(Vector2f(width * 0.5f, height * 0.5f));
 }
 
-ColliderRect::ColliderRect(FloatRect getGlobalBounds, Vector2u mouseGrid)
+ColliderRect::ColliderRect(FloatRect getGlobalBounds, Vector2u mousePosGrid)
 {
-	position = Vector2f((float)mouseGrid.x * 32.f, (float)mouseGrid.y * 32.f);
+	position = Vector2f((float)getGlobalBounds.left, (float)getGlobalBounds.top);
 	rectangle.top = getGlobalBounds.top;
 	rectangle.left = getGlobalBounds.left;
 	rectangle.width = getGlobalBounds.width;
 	rectangle.height = getGlobalBounds.height;
 
-	rectShape.setFillColor(Color(153, 153, 153));
+	rectShape.setFillColor(Color(153, 153, 153, 100));
 	rectShape.setSize(Vector2f(getGlobalBounds.width, getGlobalBounds.height));
 	rectShape.setPosition(position);
 }

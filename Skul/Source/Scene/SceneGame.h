@@ -9,9 +9,6 @@
 #include "../swordman/swordman.h"
 #include <vector>
 
-
-
-
 class SceneGame : public Scene
 {
 private:

@@ -65,6 +65,7 @@ void Framework::Run()
 		Update(dt.asSeconds(), window, mainView);
 		Draw(window, mainView, uiView);
 	}
+
 }
 /**********************************************************
 * 설명 : 키 입력 처리를 한다.

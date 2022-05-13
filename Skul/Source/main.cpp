@@ -23,6 +23,6 @@ int main()
 	}
 
 	framework.Run();			//초기화 성공시 run()
-
+	cout << "종료" << endl;
 	return 0;
 }

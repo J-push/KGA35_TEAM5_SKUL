@@ -19,10 +19,17 @@ private:
 	const int MAPWIDTH = 120; 
 	const int MAPHEIGHT = 70;
 	const float VIEW_SPEED = 500.f;
+
 	sf::Sprite spriteTile;
 	sf::Sprite spriteBackground;
+
 	sf::View *tileView;
 	sf::View *uiView;
+
+	RectangleShape shape;
+	RectangleShape sampleSelector;
+	RectangleShape tileSelector;
+	RectangleShape *drag;
 
 	Vector2i resolution;
 
@@ -38,7 +45,6 @@ private:
 
 	Vector2u downGrid;
 	Vector2u upGrid;
-	Vector2u ingGrid;
 	vector<Vector2u> finalGrid;
 
 	vector<vector <RectangleShape>> tileMap;
@@ -51,16 +57,10 @@ private:
 	VertexArray palette;
 	InputState currentInputState;
 
-	RectangleShape sampleSelector;
-	RectangleShape tileSelector;
-	RectangleShape *drag;
+	bool currentMousePosition;
+	bool isDraw;
+	bool currentState;
 
-	bool CurrentMousePosition;
-
-	int fromX;
-	int toX;
-	int fromY;
-	int toY;
 	int currentIndex;
 	int texIndex;
 	int saveNum;
@@ -74,13 +74,12 @@ public:
 	// Scene을(를) 통해 상속됨
 	virtual void Init() override;
 	virtual void Release() override;
+	void ChangeMode();
 	int CreateTile(int c, int r, int idx);
-
-	void CreateBlocks(int fromX, int toX, int fromY, int toY);
 	void CreateRects();
+	void MoveMap(float dt);
+	void SetView(RenderWindow *window);
 	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
-	virtual void Start() override;
-	virtual void End() override;
 	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView);
 	/*int SelectIndex();
 	void SaveMap(int saveNum);
