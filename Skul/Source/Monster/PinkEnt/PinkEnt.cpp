@@ -1,16 +1,16 @@
 /******************************************************************************
-* ÀÛ ¼º ÀÚ : Áø Çö ¼·
-* ÀÛ ¼º ÀÏ : 2022-05-12
-* ³»    ¿ë : PinkEntÀÇ µ¿ÀÛÀ» ±¸ÇöÇÑ´Ù.
-* ¼ö Á¤ ÀÏ :
+* 작 성 자 : 진 현 섭
+* 작 성 일 : 2022-05-12
+* 내    용 : PinkEnt의 동작을 구현한다.
+* 수 정 일 :
 *******************************************************************************/
-/*includeµÉ Çì´õ*/
+/*include될 헤더*/
 #include "PinkEnt.h"
 #include "../../Animation/rapidcsv.h"
 #include <iostream>
 
 /**********************************************************
-* ¼³¸í : PinkEnt¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+* 설명 : PinkEnt를 초기화한다.
 ***********************************************************/
 void PinkEnt::Init()
 {
@@ -25,7 +25,7 @@ void PinkEnt::Init()
 	animationGas.SetTarget(&spriteGas);
 
 	rapidcsv::Document clipsPinkEnt("data_tables/animations/Monster/PinkEnt/PinkEnt_animation_clips.csv");
-	std::vector<std::string> colId = clipsPinkEnt.GetColumn<std::string>("ID"); // ÀÏ¹ÝÈ­ÀÎÀÚ¸¦ ¹ÞÀ½
+	std::vector<std::string> colId = clipsPinkEnt.GetColumn<std::string>("ID"); // 일반화인자를 받음
 	std::vector<int> colFps = clipsPinkEnt.GetColumn<int>("FPS");
 	std::vector<int> colLoop = clipsPinkEnt.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
 	std::vector<std::string> colPath = clipsPinkEnt.GetColumn<std::string>("CLIP PATH");
@@ -92,7 +92,7 @@ void PinkEnt::Init()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ À§Ä¡¸¦ ¼³Á¤ÇØÁØ´Ù.
+* 설명 : 몬스터의 위치를 설정해준다.
 ***********************************************************/
 PinkEnt::PinkEnt(int x, int y)
 {
@@ -104,13 +104,13 @@ PinkEnt::~PinkEnt()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ ¹× ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ¾÷µ¥ÀÌÆ® ÇØÁØ´Ù.
+* 설명 : 몬스터의 상태 및 애니메이션을 업데이트 해준다.
 ***********************************************************/
 void PinkEnt::Update(float dt, Player& player)
 {
 	animation.Update(dt);
 	animationGas.Update(dt);
-	
+
 	AnimationUpdate(dt, player);
 
 	pinkEntBound = shapeMonster.getGlobalBounds();
@@ -130,7 +130,7 @@ void PinkEnt::Update(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ¿¡ µû¸¥ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ¾÷µ¥ÀÌÆ® ÇØÁØ´Ù.
+* 설명 : 몬스터의 상태에 따른 애니메이션을 업데이트 해준다.
 ***********************************************************/
 void PinkEnt::AnimationUpdate(float dt, Player& player)
 {
@@ -193,7 +193,7 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 		{
 			SetAction(PinkEntAction::Attack, player);
 		}
-		if (pinkEntHitCollision|| pinkEntSkillHitCollision)
+		if (pinkEntHitCollision || pinkEntSkillHitCollision)
 		{
 			SetAction(PinkEntAction::Hit, player);
 		}
@@ -207,7 +207,7 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ »óÅÂ¸¦ ¼³Á¤ÇØÁØ´Ù.
+* 설명 : 몬스터의 상태를 설정해준다.
 ***********************************************************/
 void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 {
@@ -227,26 +227,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 		{
 			animation.Play("AttackReady(Right)");
 			sprite.setOrigin(35, 56);
-
 		}
-
-			if (player.GetPlayerPosition().x < position.x)
-			{
-				animation.PlayQueue("AttackReady(Left)");
-				sprite.setOrigin(35, 56);
-			}
-			else
-			{
-				animation.PlayQueue("AttackReady(Right)");
-				sprite.setOrigin(35, 56);
-			}
-			if (afterAttack < 0)
-			{
-				afterAttack = 2.f;
-
-				spriteGas.setPosition(position.x - 140, position.y - 50);
-				animationGas.Play("EntGas");
-				attackReady = false;
 
 		spriteGas.setPosition(position.x - 140, position.y - 50);
 		animationGas.Play("EntGas");
@@ -265,7 +246,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Walk:
 		break;
 	case PinkEntAction::Death:
-		std::cout << "Á×À½";
+		std::cout << "죽음";
 		break;
 	default:
 		break;
@@ -273,7 +254,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ °ø°Ý ÇÔ¼ö
+* 설명 : 몬스터의 공격 함수
 ***********************************************************/
 void PinkEnt::Attack(float dt, Player& player)
 {
@@ -281,7 +262,7 @@ void PinkEnt::Attack(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ°¡ °ø°ÝÀ» ¹Þ¾ÒÀ» ¶§ÀÇ Ã³¸® ÇÔ¼ö
+* 설명 : 몬스터가 공격을 받았을 때의 처리 함수
 ***********************************************************/
 void PinkEnt::Hit(float dt, Player& player)
 {
@@ -300,7 +281,7 @@ void PinkEnt::Hit(float dt, Player& player)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍÀÇ ÀÌµ¿À» Ã³¸®ÇØÁÙ ÇÔ¼ö
+* 설명 : 몬스터의 이동을 처리해줄 함수
 ***********************************************************/
 void PinkEnt::Move(float dt)
 {
@@ -351,7 +332,7 @@ void PinkEnt::Move(float dt)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ°¡ Á×¾úÀ» ¶§ÀÇ Ã³¸® ÇÔ¼ö
+* 설명 : 몬스터가 죽었을 때의 처리 함수
 ***********************************************************/
 void PinkEnt::Death(float dt)
 {
@@ -360,7 +341,7 @@ void PinkEnt::Death(float dt)
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ±×¸² ¹ÝÈ¯
+* 설명 : 몬스터 그림 반환
 ***********************************************************/
 Sprite PinkEnt::GetSprite()
 {
@@ -368,7 +349,7 @@ Sprite PinkEnt::GetSprite()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ±×¸² Æ² ¹ÝÈ¯
+* 설명 : 몬스터 그림 틀 반환
 ***********************************************************/
 FloatRect PinkEnt::GetGlobalBound()
 {
@@ -376,7 +357,7 @@ FloatRect PinkEnt::GetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í :¸ó½ºÅÍ È÷Æ®¹Ú½ºÀÇ Æ² ¹ÝÈ¯
+* 설명 :몬스터 히트박스의 틀 반환
 ***********************************************************/
 FloatRect PinkEnt::MonsterGetGlobalBound()
 {
@@ -384,7 +365,7 @@ FloatRect PinkEnt::MonsterGetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ ½ºÅ³ ¹Ú½ºÀÇ Æ² ¹ÝÈ¯
+* 설명 : 몬스터 스킬 박스의 틀 반환
 ***********************************************************/
 FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 {
@@ -392,7 +373,7 @@ FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 }
 
 /**********************************************************
-* ¼³¸í : ÇÃ·¹ÀÌ µÇ´Â ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ÇÁ·¹ÀÓ ³¡¿¡ µµ´ÞÇÏ¸é ¾×¼Ç »óÅÂ¸¦ º¯°æÇØÁÙ ÇÔ¼ö
+* 설명 : 플레이 되는 애니메이션의 프레임 끝에 도달하면 액션 상태를 변경해줄 함수
 ***********************************************************/
 void PinkEnt::GetActionIdle()
 {
@@ -400,7 +381,7 @@ void PinkEnt::GetActionIdle()
 }
 
 /**********************************************************
-* ¼³¸í : ¸ó½ºÅÍ¸¦ È­¸é¿¡ ±×·ÁÁÙ ÇÔ¼ö
+* 설명 : 몬스터를 화면에 그려줄 함수
 ***********************************************************/
 void PinkEnt::Draw(RenderWindow& window)
 {

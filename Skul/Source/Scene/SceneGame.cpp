@@ -42,11 +42,9 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt)
 {
-	for (auto pinkEnt : mPinkEnt)
-
 	playTime += check;
 
-	for (auto SwordMan : mSwordMans)
+	for (auto pinkEnt : mPinkEnt)
 	{
 		pinkEnt->Update(dt, player);
 	}
