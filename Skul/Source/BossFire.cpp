@@ -168,3 +168,38 @@ FloatRect BossFire::GetGlobalBound()
 {
 	return spriteFireBall.getGlobalBounds();
 }
+
+//bool BossFire::UpdateCollision(const Player &player)
+//{
+//	FloatRect bounds = spriteFireBall.getGlobalBounds();
+//
+//	if (bounds.intersects(player->getGetGlobalBound()))
+//	{
+//		return true;
+//	}
+//	return false;
+//}
+
+
+
+//bool Bullet::UpdateCollision(const vector<Zombie *> &zombies)
+//{
+//	FloatRect bounds = shape.getGlobalBounds();
+//
+//	for (auto zombie : zombies)
+//	{
+//		if (zombie->isAlive())
+//		{
+//			if (bounds.intersects(zombie->GetGlobalBound()))
+//			{
+//				zombie->onHitted();
+//				Stop();
+//
+//				return true;
+//			}
+//		}
+//	}
+//
+//	return false;
+//}
+

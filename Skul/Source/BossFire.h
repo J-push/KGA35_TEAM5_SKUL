@@ -2,6 +2,8 @@
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/Utils.h"
 
+#include "../Source/Player/Player.h"
+class Player;
 
 class BossFire
 {
@@ -48,5 +50,14 @@ public:
 
 	FloatRect GetGlobalBound();
 
+	bool UpdateCollision(Player &player)
+	{
+		FloatRect bounds = fireRect.getGlobalBounds();
+		if (bounds.intersects(player.GetPlayerRect()))
+		{			
+			Stop();
+			return true;
+		}
+		return false;
+	}
 };
-

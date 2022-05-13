@@ -8,6 +8,8 @@
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
 
+class bossfire;
+
 using namespace sf;
 
 enum class PlayerState		//추가
@@ -153,5 +155,7 @@ public:
 	
 	void GetStateIdle();
 	void ChangeSkul();
+
+	
 };
 

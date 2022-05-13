@@ -81,6 +81,13 @@ void SceneGame::Update(float dt)
 		}
 	}
 
+	if (boss.UpdateCollision(player))
+	{
+		player.JeaHit();
+		ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+		ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+		ui.UnderAttack(player.GetPosition(), dt);
+	}
 
 
 
@@ -95,9 +102,7 @@ void SceneGame::Update(float dt)
 		if (InputManager::GetMouseButtonDown(Mouse::Left))
 		{
 			player.JeaHit();
-			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.UnderAttack(player.GetPosition(), dt);
+			
 		}
 	}
 	/*bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());

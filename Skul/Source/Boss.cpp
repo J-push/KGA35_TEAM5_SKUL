@@ -2,14 +2,14 @@
 
 Boss::~Boss()
 {
-	for (auto bullet : unuseFires)
+	for (auto fire : unuseFires)
 	{
-		delete bullet;
+		delete fire;
 	}
 	unuseFires.clear();
-	for (auto bullet : useFires)
+	for (auto fire : useFires)
 	{
-		delete bullet;
+		delete fire;
 	}
 	useFires.clear();
 }

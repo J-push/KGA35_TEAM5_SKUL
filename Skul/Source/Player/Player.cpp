@@ -784,6 +784,8 @@ bool Player::GetIsSkill()
 	return isSkill;
 }
 
+
+
 FloatRect Player::GetPlayerSkiilRect()
 {
 	return playerSkillRect.getGlobalBounds();
@@ -838,3 +840,4 @@ void Player::ChangeSkul()
 		//currentAction = PlayerState::IDLE;
 	}
 }
+

@@ -8,7 +8,7 @@
 
 // ½ÇÇè¿ë
 #include "../Source/Manager/InputManager.h"
-
+#include "../Source/Player/Player.h"
 
 enum class BossStatus		
 {
@@ -97,6 +97,17 @@ public:
 
 	void SetStateIdle();
 
+	bool UpdateCollision(Player &player)
+	{
+		bool isCollied = false;
+
+		for (auto fire : useFires)
+		{
+			if (fire->UpdateCollision(player))
+			{
+				isCollied = true;
+			}
+		}
+		return isCollied;
+	}
 };
-
-
