@@ -16,6 +16,7 @@ Boss::~Boss()
 
 void Boss::Init()
 {
+	isHit = false;
 	int superCount = 0;
 	int launcher2 = 0;
 	int launcher3 = 0;
@@ -28,9 +29,20 @@ void Boss::Init()
 	Utils::SetOrigin(bossRect, Pivots::CC);
 	bossRect.setPosition(bossPosition);
 
+	bossLandingRect.setSize(Vector2f(200, 110));
+	bossLandingRect.setFillColor(Color(128, 128, 0, 100));
+	Utils::SetOrigin(bossLandingRect, Pivots::CC);
+	bossLandingRect.setPosition(bossPosition);
+
+
+
 	spriteBoss.setScale(1.7f, 1.7f);
 	spriteBoss.setPosition(bossPosition);
 	animation.SetTarget(&spriteBoss);
+
+	spriteEffect.setScale(2.0f, 2.0f);
+	spriteEffect.setPosition(bossPosition);
+	animationEffect.SetTarget(&spriteEffect);
 
 
 	rapidcsv::Document clipsBoss("data_tables/animations/Boss/boss_animation_clips.csv");
@@ -66,6 +78,7 @@ void Boss::Init()
 			clip.frames.push_back(AnimationFrame(texMap[colTexure[j]], IntRect(colL[j], colT[j], colW[j], colH[j])));
 		}
 		animation.AddClip(clip);
+		animationEffect.AddClip(clip);
 	}
 
 	for (int i = 0; i < FIRE_SIZE; ++i)
@@ -156,7 +169,7 @@ void Boss::FireRutine(Vector2f dir, float dt)
 	if (count == 4 && timer < 97.9f)
 	{
 		Fire(dir);
-		count++;
+		count = 0;		
 		timer = 100;
 		moveWhere = RandomMgr::GetRandom(1, 2);
 		FirstMove(dir, moveWhere);
@@ -256,22 +269,45 @@ void Boss::Landing(Vector2f dir)
 {
 	if (superCount == 0 && timer < 99.9)
 	{
-		bossPosition.x = dir.x;
-		animation.Play("landingready");
+		animation.Play("intro2re"); // 1.0
 		superCount++;
 	}
 	if (superCount == 1 && timer < 98.9)
 	{
-		bossPosition.y = dir.y - 10;
-		animation.Play("landingbomb");
+		bossPosition.x = dir.x;
+		animation.Play("intro2"); // 1.3
 		superCount++;
 	}
-	if (superCount == 2 && timer < 96.9)
+	if (superCount == 2 && timer < 97.8)
 	{
-		animation.Play("landingdown");
+		animation.Play("landingready"); // 0.4
 		superCount++;
 	}
-	if (superCount == 3 && timer < 94.9)
+	if (superCount == 3 && timer < 97.4)
+	{
+		bossPosition.y = dir.y - 10;
+		spriteEffect.setPosition(bossPosition.x - 293, bossPosition.y - 275);
+		animationEffect.Play("landingeffect"); // 2.0
+		animation.Play("landingdown");	
+		superCount++;
+	}
+	if (superCount == 4 && timer < 95.4)
+	{
+		animation.Play("landingdown"); // 2.0
+		superCount++;		
+	}
+	if (superCount == 5 && timer < 93.0)
+	{
+		animation.Play("landingoutro"); // 1.0
+		superCount++;
+	}
+	if (superCount == 6 && timer < 92.0)
+	{
+		bossPosition.y -= 200;
+		animation.Play("intro2"); // 1.3
+		superCount++;
+	}
+	if (superCount == 7 && timer < 90.7)
 	{
 		animation.Play("Move");
 		bossPosition.y = 550;
@@ -280,7 +316,7 @@ void Boss::Landing(Vector2f dir)
 		moveWhere = RandomMgr::GetRandom(1, 2);
 		FirstMove(dir, moveWhere);
 		action = BossStatus::MOVE;
-	}	
+	}
 }
 
 void Boss::FirstMove(Vector2f dir, int moving)
@@ -374,7 +410,7 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 		timer = 100;
 		count = 0;
 	
-		whatAction = RandomMgr::GetRandom(1, 3);
+		whatAction = RandomMgr::GetRandom(1, 2);
 		if (whatAction == 1)
 		{
 			action = BossStatus::FIREBALL;
@@ -401,8 +437,8 @@ FloatRect Boss::GetGlobalBound()
 	return spriteBoss.getGlobalBounds();
 }
 
-// intro1 intro2 attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
-// superdoing superready supergo
+// intro1 intro2 intro2re attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
+// superdoing superready supergo landingeffect landingoutro
 
 void Boss::Update(float dt, Vector2f dir)
 {
@@ -461,7 +497,9 @@ void Boss::Update(float dt, Vector2f dir)
 
 	Utils::SetOrigin(spriteBoss, Pivots::CC);
 	animation.Update(dt);
+	animationEffect.Update(dt);
 	bossRect.setPosition(bossPosition);
+	bossLandingRect.setPosition(bossPosition);
 	spriteBoss.setPosition(bossPosition);
 
 	// Ã¼Å©¿ë
@@ -493,8 +531,11 @@ void Boss::Update(float dt, Vector2f dir)
 
 void Boss::Draw(RenderWindow &window)
 {
+	window.draw(spriteEffect);
 	window.draw(spriteBoss);
 	window.draw(bossRect);
+	window.draw(bossLandingRect);
+
 	for (auto fire : useFires)
 	{
 		window.draw(fire->GetSprite());
@@ -502,6 +543,8 @@ void Boss::Draw(RenderWindow &window)
 		window.draw(fire->GetSuperEffectSprite());
 	}
 }
+
+
 
 int Boss::GetMaxHp()
 {
@@ -513,9 +556,32 @@ int Boss::GetCurrentHp()
 	return currentHp;
 }
 
-void Boss::underAttack(int damage)
+bool Boss::underAttack(float dt)
 {
-	currentHp -= damage;
+	hitTimer -= dt;
+	if (hitTimer < 99.5 && !isHit)
+	{
+		hitTimer = 100;
+		isHit = true;
+		return true;
+	}
+	else
+	{		
+		isHit = false;
+		return false;
+	}
+}
+
+void Boss::SetBossHp(int damage)
+{
+	if (currentHp > 0)
+	{
+		currentHp -= damage;
+	}
+	if (currentHp <= 0)
+	{
+		currentHp = 0;
+	}
 }
 
 

@@ -40,6 +40,7 @@ void Framework::Run()
 	while (window->isOpen())
 	{
 		Time dt = clock.restart();
+
 		InputManager::ClearInput();
 		Event event;
 		while (window->pollEvent(event))
@@ -97,3 +98,6 @@ void Framework::Draw(RenderWindow* window)
 
 	window->display();
 }
+
+
+

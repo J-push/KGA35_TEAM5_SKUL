@@ -156,26 +156,6 @@ void UIMaker::Update(float dt)
 	}
 	
 
-
-	// Game UI
-
-	/*stringstream HP;
-	HP << hpinfo->GetMaxPlayerHealthReal() << " / ";
-	textHp.setString(HP.str());*/
-
-
-
-	/*if (InputManager::GetMouseButtonDown(Mouse::Left) && hp > 0.f)
-	{
-		hp *= 0.9f;
-		spriteHpBar.setScale(hp, 2.5);
-	}*/
-	/*if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
-	{
-		hp += 0.01f;
-		spriteHpBar.setScale(hp, 2.5);
-	}*/
-
 	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ¸®Æ²º» ¸ÔÀ½
 	{
 		subHead = (int)Heads::LITTLEBORN;

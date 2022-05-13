@@ -32,14 +32,17 @@ private:
 	Sprite spriteBoss;
 	Vector2f bossPosition;
 
+	Sprite spriteEffect;
 
 	AnimationController animation;
+	AnimationController animationEffect;
 	std::map<std::string, Texture> texMap;
 	Texture texture;
 
 	RectangleShape bossRect; // 보스 피격판정
+	RectangleShape bossLandingRect; // 공격 판정
 
-	const int FIRE_SIZE = 1;
+	const int FIRE_SIZE = 10;
 	list<BossFire *> unuseFires;
 	list<BossFire *> useFires;
 
@@ -52,7 +55,9 @@ private:
 	int moveWhere;
 	int whatAction;
 
-	Time lastTime;
+	float hitTimer = 100;
+	bool isHit;
+	Time lastHit;
 
 
 public:
@@ -77,13 +82,17 @@ public:
 
 	FloatRect GetGlobalBound();
 
+
 	void Update(float dt, Vector2f dir);
 	void Draw(RenderWindow &window);
 
 
 	int GetMaxHp();
 	int GetCurrentHp();
-	void underAttack(int damage);
+
+
+	bool underAttack(float dt);
+	void SetBossHp(int damage);
 
 
 	void SetStateIdle();
