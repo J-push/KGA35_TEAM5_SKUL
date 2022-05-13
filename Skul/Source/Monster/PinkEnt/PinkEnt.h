@@ -25,7 +25,7 @@ private:
 	Vector2f position;	// PinkEnt의 위치 좌표
 
 	PinkEntAction action;	// 몬스터의 상태 액션
-	
+
 	Sprite sprite;	// 몬스터 그림
 	AnimationController animation;	// 몬스터 애니메이션 효과 
 	Sprite spriteGas;	// 몬스터 스킬 가스 그림
@@ -62,7 +62,7 @@ private:
 public:
 	void Init();
 	PinkEnt(int x, int y);
-	PinkEnt(){};
+	PinkEnt() {};
 	~PinkEnt();
 
 	void Update(float dt, Player& player);
