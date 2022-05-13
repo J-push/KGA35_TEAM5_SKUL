@@ -105,7 +105,6 @@ private:
 
 
 public:
-
 	void Init();
 	void SkillInit();
 
