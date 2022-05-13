@@ -15,13 +15,20 @@ enum class swordmanAction
 	Death,
 };
 
+enum class MoveDir
+{
+	None = 0,
+	Left,
+	Right,
+};
+
 class swordman
 {
 private:
-
 	const float START_swordman_HEALTH = 50; // 시작 소드맨 체력
 	const float START_swordman_SPEED = 70; // 시작 소드맨 스피드
-	const float START_swordman_DAMAGE = 20; // 시작 소드맨 데미지
+	const float START_swordman_DAMAGE = 2; // 시작 소드맨 데미지
+	const float START_SWORDMAN_KNOCKBACKSPEED = 1000.f;	// 넉백에서 움직일 거리를 설정해줄 스피드
 
 	Vector2f position;	// 소드맨 위치 좌표
 
@@ -44,7 +51,8 @@ private:
 
 	std::map<std::string, Texture> texMap;	// 소드맨 cvs 파일로 애니메이션 소스 그리는 변수
 
-	Vector2f dir;	// 
+	Vector2f dir;	// 방향 설정
+	MoveDir moveDir;
 
 	FloatRect swordmanBound;	// 몬스터 그림 크기의 Rect
 	FloatRect swordManAttackBound; // 몬스터 공격 그림 크기의 Rect
@@ -53,6 +61,7 @@ private:
 	int damage;	 // 소드맨 현재 데미지
 
 	float speed;	// 소드맨 현재 스피드
+	float knockBackSpeed; // 넉백 스피드
 
 	bool attackReady;	// 소드맨이 플레이어 공격 가능 여부 판단
 	bool hitReady;	// 소드맨이 공격에 맞을 때의 가능 여부 판단
@@ -64,7 +73,6 @@ private:
 	bool attackAble;	// 플레이어 히트 박스와의 충돌로 공격 가능 판단
 	bool leftMapCollision;	// 현재 좌측 맵이랑 충돌했는지, 충돌했으면 트루
 	bool rightMapCollision;	// 현재 우측 맵이랑 충돌했는지, 했다면 트루
-	bool swordManMoveDir;	// 몬스터가 맵에 충돌했을 때 처리해줄 변수
 	bool swordmanHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool swordmanSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
 public:
@@ -90,6 +98,12 @@ public:
 	FloatRect MonsterAttackGetGlobalBound();
 
 	void GetActionIdle();
+	void swordManAttackRectDirLeft();
+	void swordManAttackRectDirRight();
+	void HitKnockBack(float dt, Player& player);
+
+	int SwordManDamage();
+	bool IsAttackAble(float dt);
 
 	void Draw(RenderWindow& window);
 };

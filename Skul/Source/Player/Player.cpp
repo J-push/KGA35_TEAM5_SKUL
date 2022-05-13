@@ -24,6 +24,8 @@ void Player::Init()
 	playerPosition.x = 900.f;
 	playerPosition.y = 250.f;
 
+	// 현섭 공격 맞는 시간 추가
+	hitDelay = 1.f;
 
 	playerSpeed = START_PLAYER_SPEED;
 	isJump = false;
@@ -161,18 +163,35 @@ void Player::UpdateInput(float dt)
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<TestRectangle*> rects)
+void Player::Update(float dt, std::vector<TestRectangle*> rects, swordman* swordMan, PinkEnt* pinkEnt)
 {
 	stateDt = dt;
-
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
+		hitDelay -= dt;
+		if (hitDelay < 0)
+		{
+			hitDelay = 1.f;
+			IsHit(dt, swordMan, pinkEnt);
+		}
 		break;
 	case PlayerState::MOVE:
+		isHit -= dt;
+		if (isHit < 0)
+		{
+			isHit = 1.f;
+			IsHit(dt, swordMan, pinkEnt);
+		};
 		Move();
 		break;
 	case PlayerState::ATTACK:
+		isHit -= dt;
+		if (isHit < 0)
+		{
+			isHit = 1.f;
+			IsHit(dt, swordMan, pinkEnt);
+		}
 		Attack();
 		break;
 	case PlayerState::SKILLATTACK:
@@ -180,6 +199,12 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	case PlayerState::COMBOATTACK:
 		break;
 	case PlayerState::JUMP:
+		isHit -= dt;
+		if (isHit < 0)
+		{
+			isHit = 1.f;
+			IsHit(dt, swordMan, pinkEnt);
+		}
 		Jump();
 		break;
 	case PlayerState::DOWN:
@@ -199,7 +224,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	//std::cout << (int)currentAction << std::endl;
 	//std::cout << jumpSpeed << std::endl;
 
-	AnimationUpdate(dt);
+	AnimationUpdate(dt, swordMan, pinkEnt);
 
 	//충돌
 	PlayerConllision(rects);
@@ -219,13 +244,11 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
 	animation.Update(dt);
 	skillAnimation.Update(dt);
-
-
 }
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)
 ***********************************************************/
-void Player::AnimationUpdate(float dt)
+void Player::AnimationUpdate(float dt, swordman* swordMan, PinkEnt* pinkEnt)
 {
 	switch (currentAction)
 	{
@@ -275,7 +298,6 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::IDLE);
 		}
 		break;
-
 	case PlayerState::MOVE:
 		//
 		if ((InputManager::instance()->GetKeyUp(Keyboard::Right) || InputManager::instance()->GetKeyUp(Keyboard::Left)))
@@ -392,16 +414,13 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::ATTACK);
 		}
 		break;
-
 	default:
 		break;
 	}
 }
 
-
-
 /**********************************************************
-* 설명 : 상태를 설정한다.
+* 설명 : 상태를 설정한다. 		HyeonSeopSwordManHit(swordMan);
 ***********************************************************/
 void Player::SetState(PlayerState newAction)
 {
@@ -649,6 +668,41 @@ void Player::Jump()
 		playerPosition.y -= jumpSpeed * stateDt;
 	}
 }
+
+//현섭 추가
+/**********************************************************
+* 설명 : 플레이어가 소드맨 몬스터의 공격으로 인해 맞는 상태를 정의한다.
+***********************************************************/
+void Player::HyeonSeopSwordManHit(swordman* swordMan)
+{
+	currentPlayerHealth -= swordMan->SwordManDamage();
+	std::cout << currentPlayerHealth;	
+}
+
+/**********************************************************
+* 설명 : 플레이어가 핑크엔트 몬스터의 공격으로 인해 맞는 상태를 정의한다.
+***********************************************************/
+void Player::HyeonSeopPinkEntHit(PinkEnt* pinkEnt)
+{
+	currentPlayerHealth -= pinkEnt->PinkEntDamage();
+	std::cout << currentPlayerHealth;
+}
+/**********************************************************
+* 설명 : 플레이어가 공격 맞을 수 있는 상태.
+***********************************************************/
+void Player::IsHit(float dt, swordman* swordMan, PinkEnt* pinkEnt)
+{
+	//&& playerHitPinkEntAttack.intersects(pinkEnt->MonsterSkillGetGlobalBound())
+	if (pinkEnt->IsAttackAble(dt))
+	{
+		HyeonSeopPinkEntHit(pinkEnt);
+	}
+	if (swordMan->IsAttackAble(dt))
+	{
+		HyeonSeopSwordManHit(swordMan);
+	}
+}
+
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/

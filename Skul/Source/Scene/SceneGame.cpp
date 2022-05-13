@@ -16,7 +16,7 @@ void SceneGame::Init()
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-	CreateSwordMan(mSwordMans, 5);
+	CreateSwordMan(mSwordMans, 1);
 	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
 	player.SkillInit();
@@ -54,7 +54,7 @@ void SceneGame::Update(float dt)
 		SwordMan->Update(dt, player);
 	}
 	
-	player.Update(dt, tilemap.GetRects());
+	player.Update(dt, tilemap.GetRects(), mSwordman, pinkEnt);
 
 	tilemap.CreateBackGround();
 

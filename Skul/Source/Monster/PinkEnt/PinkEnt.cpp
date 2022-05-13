@@ -1,6 +1,6 @@
 /******************************************************************************
 * 작 성 자 : 진 현 섭
-* 작 성 일 : 2022-05-12
+* 작 성 일 : 2022-05-13
 * 내    용 : PinkEnt의 동작을 구현한다.
 * 수 정 일 :
 *******************************************************************************/
@@ -63,14 +63,15 @@ void PinkEnt::Init()
 
 	mHp = START_PINKENT_HEALTH;
 	damage = START_PINKENT_DAMAGE;
-	speed = 25;
+	speed = START_PINKENT_SPEED;
+	knockBackSpeed = START_PINKENT_KNOCKBACKSPEED;
 	hitReady = true;
 	attackReady = true;
-	pinkEntMoveDir = true;
 
-	attackDelay = 0;
+	attackDelay = 0.f;
 	walkDelay = 2;
 	hitDelay = 0.5f;
+	moveDir = PinkEntMoveDir::Left;
 
 	shapeMonster.setFillColor(Color::Transparent);
 	shapeMonster.setOutlineColor(Color::Yellow);
@@ -87,7 +88,6 @@ void PinkEnt::Init()
 	{
 		dir /= length;
 	}
-	animation.Play("Idle");
 	action = PinkEntAction::Idle;
 }
 
@@ -137,8 +137,16 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 	switch (action)
 	{
 	case PinkEntAction::Idle:
-		animation.PlayQueue("Idle");
+		if (player.GetPlayerPosition().x < position.x)
+		{
+			animation.PlayQueue("Idle(Left)");
+		}
+		else
+		{
+			animation.PlayQueue("Idle(Right)");
+		}
 		sprite.setOrigin(37, 66);
+
 		walkDelay -= dt;
 		if (!attackAble && walkDelay < 0)
 		{
@@ -152,15 +160,7 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 
 		if (attackAble)
 		{
-			if (!attackReady)
-			{
-				attackDelay -= dt;
-			}
-			if (attackDelay < 0)
-			{
-				attackDelay = 3.f;
-				attackReady = true;
-			}
+			IsAttackAble(dt);
 
 			if (attackReady)
 			{
@@ -199,7 +199,7 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 		}
 		break;
 	case PinkEntAction::Death:
-		Death(dt);
+		Death();
 		break;
 	default:
 		break;
@@ -220,11 +220,13 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Attack:
 		if (player.GetPlayerPosition().x < position.x)
 		{
+			moveDir = PinkEntMoveDir::Left;
 			animation.Play("AttackReady(Left)");
 			sprite.setOrigin(35, 56);
 		}
 		else
 		{
+			moveDir = PinkEntMoveDir::Right;
 			animation.Play("AttackReady(Right)");
 			sprite.setOrigin(35, 56);
 		}
@@ -236,17 +238,26 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Hit:
 		if (player.GetPlayerPosition().x < position.x)
 		{
+			moveDir = PinkEntMoveDir::Left;
 			animation.Play("Hit(Left)");
 		}
 		else
 		{
+			moveDir = PinkEntMoveDir::Right;
 			animation.Play("Hit(Right)");
 		}
 		break;
 	case PinkEntAction::Walk:
+		if (moveDir == PinkEntMoveDir::Left)
+		{
+			animation.Play("Walk(Left)");
+		}
+		else if (moveDir == PinkEntMoveDir::Right)
+		{
+			animation.Play("Walk(Right)");
+		}
 		break;
 	case PinkEntAction::Death:
-		std::cout << "죽음";
 		break;
 	default:
 		break;
@@ -276,7 +287,7 @@ void PinkEnt::Hit(float dt, Player& player)
 		pinkEntHitCollision = false;
 		pinkEntSkillHitCollision = false;
 		mHp -= player.GetPlayerDamage();
-		std::cout << mHp << std::endl;
+		HitKnockBack(dt, player);
 	}
 }
 
@@ -294,16 +305,16 @@ void PinkEnt::Move(float dt)
 	{
 		position.x = limitMinMove.x;
 		animation.Play("Walk(Right)");
-		pinkEntMoveDir = false;
+		moveDir = PinkEntMoveDir::Right;
 	}
 	else if (position.x > limitMaxMove.x)
 	{
 		position.x = limitMaxMove.x;
 		animation.Play("Walk(Left)");
-		pinkEntMoveDir = true;
+		moveDir = PinkEntMoveDir::Left;
 	}
 
-	if (pinkEntMoveDir)
+	if (moveDir == PinkEntMoveDir::Left)
 	{
 		animation.ClearPlayQueue();
 		animation.PlayQueue("Walk(Left)");
@@ -315,7 +326,7 @@ void PinkEnt::Move(float dt)
 			dir /= length;
 		}
 	}
-	if (!pinkEntMoveDir)
+	if (moveDir == PinkEntMoveDir::Right)
 	{
 		animation.ClearPlayQueue();
 		animation.PlayQueue("Walk(Right)");
@@ -334,9 +345,8 @@ void PinkEnt::Move(float dt)
 /**********************************************************
 * 설명 : 몬스터가 죽었을 때의 처리 함수
 ***********************************************************/
-void PinkEnt::Death(float dt)
+void PinkEnt::Death()
 {
-	animation.ClearPlayQueue();
 	animation.Stop();
 }
 
@@ -378,6 +388,57 @@ FloatRect PinkEnt::MonsterSkillGetGlobalBound()
 void PinkEnt::GetActionIdle()
 {
 	action = PinkEntAction::Idle;
+}
+
+/**********************************************************
+* 설명 : 몬스터가 공격을 받았을 때의 넉백 거리 지정 함수
+***********************************************************/
+void PinkEnt::HitKnockBack(float dt, Player& player)
+{
+	if (player.GetPlayerPosition().x < position.x)
+	{
+		position.x -= dir.x * knockBackSpeed * dt;
+	}
+	else
+	{
+		position.x += dir.x * knockBackSpeed * dt;
+	}
+	sprite.setPosition(position);
+}
+
+/**********************************************************
+* 설명 : 몬스터의 데미지 반환
+***********************************************************/
+int PinkEnt::PinkEntDamage()
+{
+	return damage;
+}
+
+bool PinkEnt::IsAttackAble(float dt)
+{
+	if (!attackReady)
+	{
+		attackDelay -= dt;
+	}
+	if (attackDelay < 0)
+	{
+		attackDelay = 3.f;
+		attackReady = true;
+	}
+
+	if (attackReady)
+	{
+		return attackReady;
+	}
+}
+
+bool PinkEnt::IsAttackCollision(float dt, Player& player)
+{
+	if (pinkEntSkillBound.intersects(player.GetPlayerRect()))
+	{
+		return true;
+	}
+	return false;
 }
 
 /**********************************************************

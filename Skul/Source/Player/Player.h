@@ -7,8 +7,11 @@
 #include "../../TestRectangle.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
+#include "../Monster/PinkEnt/PinkEnt.h"
 
 using namespace sf;
+
+class PinkEnt;
 
 enum class PlayerState		//추가
 {
@@ -36,7 +39,6 @@ private:
 	const float ATTACK_DELAY = 0.3f;			//공격 딜레이
 	
 	PlayerState currentAction = PlayerState::IDLE;					//플레이어 상태값
-
 
 	Texture texture;
 
@@ -79,6 +81,13 @@ private:
 	bool isDown;								//점프후 내려가는지
 	bool isAttack;								//공격했니?
 	bool isSkill;								//스킬썻니?
+
+	//현섭 추가
+	bool isHit;									//맞았니?
+	float hitDelay;								//다음 isHit까지의 대기 시간
+	FloatRect playerHitSwordManAttack;			//소드맨한테 맞았을 때의 충돌처리
+	FloatRect playerHitPinkEntAttack;			//핑크엔트한테 맞았을 때의 충돌처리
+
 	float skillAlive = 2.5f;
 	float attackAlive = 0.5f;
 
@@ -112,9 +121,9 @@ public:
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
 
 	void UpdateInput(float dt);
-	void Update(float dt, std::vector<TestRectangle*> rects);
+	void Update(float dt, std::vector<TestRectangle*> rects, swordman* swordMan, PinkEnt* pinkEnt);
 
-	void AnimationUpdate(float dt);
+	void AnimationUpdate(float dt, swordman* swordMan, PinkEnt* pinkEnt);
 	void SetState(PlayerState newAction);
 
 	void Move();
@@ -122,6 +131,11 @@ public:
 	void SkillAttack();
 	void Dash();
 	void Jump();
+	
+	// 현섭 추가
+	void HyeonSeopSwordManHit(swordman* swordMan);
+	void HyeonSeopPinkEntHit(PinkEnt* pinkEnt);
+	void IsHit(float dt, swordman* swordMan, PinkEnt* pinkEnt);
 
 
 	void PlayerConllision(std::vector<TestRectangle*> rects);
