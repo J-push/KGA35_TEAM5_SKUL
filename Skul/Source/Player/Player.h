@@ -74,7 +74,7 @@ private:
 	
 
 	bool isJump;								//점프했니?
-	bool isDoubleJump;	//2단점프가능?
+	bool isDoubleJump;							//2단점프가능?
 	bool isGround;
 	bool isDown;								//점프후 내려가는지
 	bool isAttack;								//공격했니?

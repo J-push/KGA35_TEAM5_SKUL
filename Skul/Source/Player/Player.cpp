@@ -30,7 +30,7 @@ void Player::Init()
 	isAttack = false;
 	isDash = false;
 	isSkill = false;
-	isSkulChange = true;
+	isSkulChange = false;
 
 	SpritePlayer.setPosition(playerPosition);
 	SpritePlayer.setOrigin(150, 100);
@@ -78,7 +78,7 @@ void Player::Init()
 		animation.AddClip(clip);
 	}
 
-	animation.Play("L_Idle");
+	animation.Play("Idle");
 	currentAction = PlayerState::IDLE;
 
 	playerRect.setSize(Vector2f(28, 60));
@@ -499,7 +499,14 @@ void Player::SetState(PlayerState newAction)
 		isJump = true;
 		jumpSpeed = 800;
 		oldJumpPos = playerPosition;
-		animation.Play("Jump");
+		if (isSkulChange)
+		{
+			animation.Play("L_Jump");
+		}
+		else
+		{
+			animation.Play("Jump");
+		}
 		break;
 
 	case PlayerState::DOWN:
@@ -507,14 +514,25 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::DASH:
+		
 		isDash = true;
 
 		gravity = 0;
 		dashPosition = playerPosition;
 		dashDelay = DASH_COOLTIME;
-		animation.Play("Dash");
-		animation.OnComplete = std::bind(&Player::GetStateIdle, this);
-		animation.PlayQueue("Idle");
+		if (isSkulChange)
+		{
+			animation.Play("L_Dash");
+			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+			animation.PlayQueue("L_Idle");
+			
+		}
+		else
+		{
+			animation.Play("Dash");
+			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+			animation.PlayQueue("Idle");
+		}
 		break;
 	default:
 		break;
