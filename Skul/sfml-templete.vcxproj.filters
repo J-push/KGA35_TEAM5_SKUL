@@ -61,6 +61,9 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
+    <ClCompile Include="ColliderRect.cpp" />
+    <ClCompile Include="Source\TileMap\Map.cpp">
+      <Filter>TileMap</Filter>
     <ClCompile Include="TestRectangle.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\BossFire.cpp" />
@@ -129,8 +132,13 @@
     </ClInclude>
     <ClInclude Include="Source\SceneEnd.h" />
     <ClInclude Include="Source\UIMaker.h" />
-    <ClInclude Include="TestRectangle.h" />
+    <ClInclude Include="ColliderRect.h" />
     <ClInclude Include="DefineList.h" />
+    <ClInclude Include="Source\TileMap\Map.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\csvfile.h">
+      <Filter>TileMap</Filter>
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\BossFire.h" />
     <ClInclude Include="Source\BossSuper.h" />

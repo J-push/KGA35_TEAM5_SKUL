@@ -32,12 +32,10 @@ public:
 	{
 		spriteCursor.setPosition(Mouse::getPosition().x, Mouse::getPosition().y);
 		shape.setPosition(Mouse::getPosition().x, Mouse::getPosition().y);
-		
 	}
 
 	virtual void Draw(sf::RenderWindow *window)
 	{
-		window->setMouseCursorVisible(false);
 		window->draw(spriteCursor);
 	}
 

@@ -273,11 +273,8 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	{
 
 	}
-	
 
-	//std::cout << (int)currentAction << std::endl;
 	std::cout << jumpForce << std::endl;
-	//std::cout << gravity << std::endl;
 
 
 	AnimationUpdate(dt);

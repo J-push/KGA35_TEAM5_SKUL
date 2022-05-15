@@ -27,13 +27,13 @@ void SceneEnd::End()
 {
 }
 
-void SceneEnd::Update(float dt)
+void SceneEnd::Update(float dt, RenderWindow *window, View *mainView)
 {
 	
 
 }
 
-void SceneEnd::Draw(sf::RenderWindow *window)
+void SceneEnd::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	
 	//¿£µå¿ë
