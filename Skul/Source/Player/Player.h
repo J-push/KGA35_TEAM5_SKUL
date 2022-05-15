@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
@@ -117,8 +118,17 @@ private:
 
 	bool isSkulChange;
 
-
-
+	//  현섭 추가
+	SoundBuffer attackBuffer;
+	Sound attack;
+	SoundBuffer changeBuffer;
+	Sound change;
+	SoundBuffer dashBuffer;
+	Sound dash;
+	SoundBuffer jumpBuffer;
+	Sound jump;
+	SoundBuffer deathBuffer;
+	Sound death;
 public:
 	float hitDelay;								//다음 isHit까지의 대기 시간
 
