@@ -61,8 +61,8 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 		SwordMan->Update(dt, player);
 	}
 	
-	player.Update(dt, tilemap.GetRects());
-	if (player.GetPlayerPosition().y > 1920)
+	player.Update(dt, tileMap.Getrects());
+	if (player.GetPlayerPosition().y < 1920)
 	{
 		boss.Update(dt, player.GetPlayerPosition());
 	}
@@ -144,7 +144,7 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 	}
 	ui.DrawSceneGame(window);
 
-	if (player.GetPlayerPosition().y > 1920)
+	if (player.GetPlayerPosition().y < 1920)
 	{
 		boss.Draw(*window);
 	}

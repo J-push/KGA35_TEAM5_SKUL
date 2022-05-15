@@ -36,8 +36,9 @@ void Boss::Init()
 	int superCount = 0;
 	int launcher2 = 0;
 	int launcher3 = 0;
-	bossPosition.x = 3700;
-	bossPosition.y = 750;
+	//bossPosition.x = 3700;
+	bossPosition.x = 1700;
+	bossPosition.y = 680;
 
 
 	spriteAttackEffect.setScale(0.7f, 0.7f);
@@ -396,7 +397,7 @@ void Boss::Landing(Vector2f dir)
 	if (count == 3 && timer < 98.4)
 	{
 		isLandingAttacking = true;
-		bossPosition.y = 750;
+		bossPosition.y = 680;
 		spriteText.setPosition(bossPosition.x - 70, bossPosition.y - 70);
 		spriteEffect.setPosition(bossPosition.x - 293, bossPosition.y - 275);
 		animationEffect.Play("landingeffect"); // 2.0
@@ -477,12 +478,12 @@ void Boss::FirstMove(Vector2f dir, int moving)
 ***********************************************************/
 void Boss::Move(float dt, Vector2f dir, int moving)
 {
-	if (2050 > bossPosition.x || bossPosition.x > 3750)
+	/*if (2050 > bossPosition.x || bossPosition.x > 3750)
 	{
 		timer = 100;
 		count = 0;
 		action = BossStatus::LANDING;
-	}
+	}*/
 	if (timer > 96)
 	{
 		if (moving == 1)
@@ -565,7 +566,7 @@ void Boss::Die(float dt)
 	if (dieCount == 1 && dietimer < 99.0)
 	{
 		bossPosition.x = 1700;
-		bossPosition.y = 750;
+		bossPosition.y = 680;
 		animation.Play("landingoutrore");
 		dieCount++;
 	}
