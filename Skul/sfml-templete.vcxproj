@@ -47,6 +47,7 @@
     <ClCompile Include="Source\Utils\Singleton.cpp" />
     <ClCompile Include="Source\Utils\Utils.cpp" />
     <ClCompile Include="ColliderRect.cpp" />
+    <ClCompile Include="TestRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefineList.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Source\Utils\Singleton.h" />
     <ClInclude Include="Source\Utils\Utils.h" />
     <ClInclude Include="ColliderRect.h" />
+    <ClInclude Include="TestRectangle.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

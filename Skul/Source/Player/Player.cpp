@@ -210,7 +210,7 @@ void Player::ChangeEffectInit()
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<ColliderRect*> rects)
+void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
 	Move();
@@ -773,7 +773,7 @@ void Player::Jump()
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/
-void Player::PlayerConllision(std::vector<ColliderRect*> rects)
+void Player::PlayerConllision(std::vector<TestRectangle*> rects)
 {
 	for (auto v : rects)
 	{
