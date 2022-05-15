@@ -172,6 +172,7 @@ public:
 	void GetStateIdle();
 	void ChangeSkul();
 	void ChangeEffectOff();
-
+	void AliveToDead();
+	void SkillDelete();
 };
 

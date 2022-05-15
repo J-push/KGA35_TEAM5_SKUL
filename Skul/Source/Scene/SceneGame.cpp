@@ -125,11 +125,11 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 	{
 		SwordMan->Draw(*window);
 	}
+	player.Draw(*window);
 	for (auto pinkEnt : mPinkEnt)
 	{
 		pinkEnt->Draw(*window);
 	}
-	player.Draw(*window);
 	ui.DrawSceneGame(window);
 	
 	boss.Draw(*window);
