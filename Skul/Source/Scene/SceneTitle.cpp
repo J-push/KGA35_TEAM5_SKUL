@@ -51,7 +51,7 @@ void SceneTitle::Update(float dt, RenderWindow *window, View *mainView)
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
-		mgr.ChangeScene(Scenes::EDITOR);
+		mgr.ChangeScene(Scenes::MENU);
 	}
 	if (InputManager::GetKeyDown(Keyboard::Num9))
 	{

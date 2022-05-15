@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
-#include "../TileMap/Tilemap.h"
 #include "../../ColliderRect.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
@@ -68,7 +68,6 @@ private:
 	Vector2i resolution;
 
 	std::map<std::string, Texture> texMap;		//맵관련
-	Tilemap tileMap;							//맵관련
 
 
 	//사각형 rect 3개
@@ -117,8 +116,12 @@ private:
 
 	bool isSkulChange;
 
-
-
+	//  현섭 추가
+	Sound attack;
+	Sound change;
+	Sound dash;
+	Sound jump;
+	Sound death;
 public:
 	float hitDelay;								//다음 isHit까지의 대기 시간
 
@@ -172,6 +175,7 @@ public:
 	void GetStateIdle();
 	void ChangeSkul();
 	void ChangeEffectOff();
-
+	void AliveToDead();
+	void SkillDelete();
 };
 

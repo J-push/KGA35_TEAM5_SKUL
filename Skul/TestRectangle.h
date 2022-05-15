@@ -3,15 +3,14 @@
 
 using namespace sf;
 
-class ColliderRect
+class TestRectangle
 {
 private:
-	FloatRect rectangle;
+	FloatRect Rectangle;
 	RectangleShape rectShape;
 	Vector2f position;
 public:
-	ColliderRect(float top, float left, float width, float height);
-	ColliderRect(FloatRect getGlobalBounds, Vector2u mousePosGrid);
+	TestRectangle(float top, float left, float width, float height);
 	const Vector2f GetPosition();
 	const FloatRect GetRect();
 	const RectangleShape GetRectShape();
