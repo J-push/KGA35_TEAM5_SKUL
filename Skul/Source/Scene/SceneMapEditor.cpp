@@ -127,7 +127,6 @@ void SceneMapEditor::MoveMap(float dt)
 
 void SceneMapEditor::SetView(RenderWindow *window)
 {
-    
     tileView->setViewport(sf::FloatRect(0.f, 0.f, 0.5f, 1.f));
     uiView->setViewport(sf::FloatRect(0.5f, 0.f, 0.5f, 1.f));
 
@@ -144,8 +143,6 @@ void SceneMapEditor::SetView(RenderWindow *window)
         mousePosGrid.y = mousePosView.y / gridSizeF;
     }
 
-
-   
     if (mousePosView2.x >= 0.f && mousePosView2.y >= 0.f && mousePosView2.x < 960.f && mousePosView2.y < 960.f)
     {
         mousePosGrid2.x = mousePosView2.x / (gridSizeF * 5.f);
@@ -214,7 +211,9 @@ void SceneMapEditor::ChangeMode()
 
 void SceneMapEditor::Init()
 {
-    InitMapData();
+    /*InitMapData();*/
+    LoadRect();
+    LoadImage();
     currentState = true;
     currentMousePosition = true;
     currentInputState = InputState::IMAGE;
@@ -233,8 +232,6 @@ void SceneMapEditor::Init()
             tileMap[i][j].setPosition(i * gridSizeF, j * gridSizeF);
         }
     }
-
-    
     tileSelector.setSize(Vector2f(gridSizeF, gridSizeF));
     tileSelector.setFillColor(sf::Color::Transparent);
     tileSelector.setOutlineThickness(1.f);
@@ -404,11 +401,10 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         }
         break;
     }
-
-    /*if (InputManager::GetKeyDown(Keyboard::L))
+    if (InputManager::GetKeyDown(Keyboard::L))
     {
         LoadRect();
-    }*/
+    }
 }
 
 void SceneMapEditor::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
@@ -457,33 +453,60 @@ void SceneMapEditor::InitMapData()
     std::vector<string> colId = dataFile.GetColumn<string>("mapId");
     std::vector<int> colWidth = dataFile.GetColumn<int>("mapWidth");
     std::vector<int> colHeight = dataFile.GetColumn<int>("mapHeight");
-    std::vector<string> colPath = dataFile.GetColumn<string>("mapDataPath");
-
-    int totalMaps = colId.size();
 
     this->mapWidth = colWidth[0];
     this->mapHeight = colHeight[0];
 }
 
-//void LoadRect()
-//{
-//    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapRect_data.csv");
-//
-//    std::vector<string> colId = dataFile.GetColumn<string>("Rect");
-//    std::vector<int> colTop = dataFile.GetColumn<int>("T");
-//    std::vector<int> colLeft = dataFile.GetColumn<int>("L");
-//    std::vector<int> colWidth = dataFile.GetColumn<int>("W");
-//    std::vector<int> colHeight = dataFile.GetColumn<int>("H");
-//    std::vector<string> colPath = dataFile.GetColumn<string>("mapRectPath");
-//
-//    int totalRects = colId.size();
-//
-//    for (int i = 0; i < totalRects; ++i)
-//    {
-//        ColliderRect *rect = new ColliderRect(colTop[i], colLeft[i], colWidth[i], colHeight[i]);
-//        
-//    }
-//}
+VertexArray SceneMapEditor::Getpalette()
+{
+    return palette;
+}
+
+vector<ColliderRect *> SceneMapEditor::Getrects()
+{
+    return rects;
+}
+
+vector<vector<RectangleShape>> SceneMapEditor::Gettile()
+{
+    return tileMap;
+}
+
+void SceneMapEditor::LoadRect()
+{
+    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapRect_data.csv");
+
+    std::vector<string> colId = dataFile.GetColumn<string>("Rect");
+    std::vector<int> colTop = dataFile.GetColumn<int>("T");
+    std::vector<int> colLeft = dataFile.GetColumn<int>("L");
+    std::vector<int> colWidth = dataFile.GetColumn<int>("W");
+    std::vector<int> colHeight = dataFile.GetColumn<int>("H");
+
+    int totalRects = colId.size();
+
+    for (int i = 0; i < totalRects; ++i)
+    {
+        ColliderRect *rect = new ColliderRect(colTop[i], colLeft[i], colWidth[i], colHeight[i]);
+        rects.push_back(rect);
+    }
+}
+
+void SceneMapEditor::LoadImage()
+{
+    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapTile_data.csv");
+
+    std::vector<string> colId = dataFile.GetColumn<string>("Tile");
+    std::vector<int> colcol = dataFile.GetColumn<int>("cols");
+    std::vector<int> colrow = dataFile.GetColumn<int>("rows");
+    std::vector<int> colindex = dataFile.GetColumn<int>("index");
+
+    int totalTiles = colId.size();
+    for (int i = 0; i < totalTiles; ++i)
+    {
+        CreateTile(colcol[i], colrow[i], colindex[i]);
+    }
+}
 
 void SceneMapEditor::Release()
 {

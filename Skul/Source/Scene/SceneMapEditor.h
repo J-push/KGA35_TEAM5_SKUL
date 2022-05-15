@@ -8,12 +8,13 @@
 #include <iostream>
 #include "../Animation/rapidcsv.h"
 #include "../TileMap/Map.h"
+#include "../../DefineList.h"
 
 using namespace sf;
 using namespace std;
 
 class Player;
-class SceneMapEditor : public Scene
+class SceneMapEditor
 {
 private:
 	const int TILE_TYPES = 35;
@@ -61,8 +62,8 @@ private:
 	bool isDraw;
 	bool currentState;
 
-	int mapWidth;
-	int mapHeight;
+	int mapWidth = 120;
+	int mapHeight = 70;
 	int currentIndex;
 	int texIndex;
 	int saveNum;
@@ -71,21 +72,25 @@ private:
 	unsigned gridSizeU;
 
 public:
-	SceneMapEditor(SceneMgr &mgr) : Scene(mgr)/*, unsigned gridSizeU(static_cast<unsigned>(gridSizeF)),
-		shape(Vector2f(gridSizeF, gridSizeF))*/ {};
-	// Scene을(를) 통해 상속됨
-	virtual void Init() override;
-	virtual void Release() override;
+	void Init();
+	void Release();
 	void ChangeMode();
 	int CreateTile(int c, int r, int idx);
 	void CreateRects();
 	void DeleteRects();
 	void MoveMap(float dt);
 	void SetView(RenderWindow *window);
-	/*std::vector<ColliderRect *> GetRects();*/
-	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
-	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView);
+    void Update(float dt, RenderWindow *window, View *mainView);
+	void Draw(sf::RenderWindow *window, View *mainView, View *uiView);
+	void DrawMap(sf::RenderWindow *window, View *mainView, View *uiView)
+	{
+		window->draw(palette, ResourceMgr::instance()->GetTexture("TILETEX"));
+	}
 	void LoadRect();
+	void LoadImage();
 	void InitMapData();
+	VertexArray Getpalette();
+	vector <ColliderRect *> Getrects();
+	vector<vector <RectangleShape>> Gettile();
 };
 
