@@ -40,10 +40,21 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("BOSSFRAMETEX", "graphics/UI/BossFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSHPBARTEX", "graphics/UI/BossHpBar.png", ResourceTypes::Texture));
 
+
 	// boss 
 	loaded.push_back(new Resource("BOSSTEX1", "graphics/Boss/bosstext1.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSTEX2", "graphics/Boss/bosstext2.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSTEX3", "graphics/Boss/bosstext3.png", ResourceTypes::Texture));
+
+	loaded.push_back(new Resource("PLAYERATTACKSOUND", "sound/player/Attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERCHANGESOUND", "sound/player/Change.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDASHSOUND", "sound/player/Dash.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERJUMPSOUND", "sound/player/Jump.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDEATHSOUND", "sound/player/Death.wav", ResourceTypes::SoundBuffer));
+
+	loaded.push_back(new Resource("SWORDMANATTACKSOUND", "sound/swordman/attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PINKENTATTACKSOUND", "sound/pinkent/attack.wav", ResourceTypes::SoundBuffer));
+
 
 
 	// endScene용

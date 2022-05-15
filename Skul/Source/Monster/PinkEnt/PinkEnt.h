@@ -71,7 +71,6 @@ private:
 	bool pinkEntHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool pinkEntSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
 
-	SoundBuffer attackBuffer;
 	Sound attack;
 public:
 	bool attackReady;	// 공격 가능 확인 변수

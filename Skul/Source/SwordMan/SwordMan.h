@@ -77,7 +77,6 @@ private:
 	bool swordmanHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool swordmanSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
 
-	SoundBuffer attackBuffer;	// 공격 사운드
 	Sound attack;
 public:
 	void Init();
