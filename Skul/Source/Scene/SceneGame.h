@@ -26,6 +26,9 @@ private:
 
 	Boss boss;
 
+	Vector2i resolution;
+	View *playerView;
+
 	std::vector<PinkEnt*> mPinkEnt;	// 핑크엔트 여러마리 생성
 	PinkEnt* pinkEnt;
 	SceneMapEditor rect;
