@@ -573,8 +573,7 @@ void Player::SetState(PlayerState newAction)
 			animation.Play("Skill1");
 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 			animation.PlayQueue("Idle");
-		}
-		
+		}		
 		break;
 
 	case PlayerState::COMBOATTACK:

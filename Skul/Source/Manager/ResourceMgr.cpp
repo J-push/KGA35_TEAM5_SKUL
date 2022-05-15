@@ -40,7 +40,10 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("BOSSFRAMETEX", "graphics/UI/BossFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSHPBARTEX", "graphics/UI/BossHpBar.png", ResourceTypes::Texture));
 
-
+	// boss 
+	loaded.push_back(new Resource("BOSSTEX1", "graphics/Boss/bosstext1.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BOSSTEX2", "graphics/Boss/bosstext2.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BOSSTEX3", "graphics/Boss/bosstext3.png", ResourceTypes::Texture));
 
 
 	// endScene용
