@@ -211,7 +211,6 @@ void SceneMapEditor::ChangeMode()
 
 void SceneMapEditor::Init()
 {
-    /*InitMapData();*/
     LoadRect();
     LoadImage();
     currentState = true;

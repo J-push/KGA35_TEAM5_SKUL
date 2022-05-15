@@ -13,6 +13,11 @@
 
 void SceneGame::Init()
 {
+	resolution.x = VideoMode::getDesktopMode().width;
+	resolution.y = VideoMode::getDesktopMode().height;
+	playerView = new View(FloatRect(0, 0, resolution.x, resolution.y));
+	playerView->setSize(1920.f, 1080.f);
+
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
@@ -105,6 +110,21 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 		}
 	}
 
+	if (InputManager::GetKey(Keyboard::Right))
+	{
+		playerView->move(200 * dt, 0.f);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Z))
+	{
+		playerView->move(1000 * dt, 0.f);
+	}
+
+	if (InputManager::GetKey(Keyboard::Left))
+	{
+		playerView->move(-200 * dt, 0.f);
+		
+	}
+
 	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
@@ -116,6 +136,7 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
+	window->setView(*playerView);
 	window->draw(spriteBackground);
 	for (auto blockshape : rect.Getrects())
 	{
@@ -166,8 +187,8 @@ void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
 
 	for (int i = 0; i < count; i++)
 	{
-		int x = RandomMgr::GetRandom(900,1100);
-		int y = 575;
+		int x = RandomMgr::GetRandom(576,928);
+		int y = 576;
 		pinkEnt = new PinkEnt(x, y);
 		pinkEnt->Init();
 		mpinkEnt.push_back(pinkEnt);
