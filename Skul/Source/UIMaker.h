@@ -53,7 +53,7 @@ private:
 	Sprite spriteLittleBoneIcon3;
 
 	int nowHead = 2;
-	int subHead = 0;
+	int subHead = 1;
 
 	float hp;
 	float bossHpText = 7.0f;

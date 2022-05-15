@@ -55,71 +55,64 @@ void SceneGame::Update(float dt)
 	}
 	
 	player.Update(dt, tilemap.GetRects());
+	boss.Update(dt, player.GetPlayerPosition());
+	ui.Update(dt);
 
 	tilemap.CreateBackGround();
 
-	ui.Update(dt);
-
 
 	// 보스가 플레이어 기본공격에 맞음
-	bool checkBossHIt = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
-	if (checkBossHIt)
+	bool isPlayerAttack = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
+	if (isPlayerAttack)
 	{
 		if (player.GetIsAttack() && boss.underAttack(dt))
 		{
-			boss.SetBossHp(10);
-			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+			boss.SetBossHp(10);		
 		}
 	}
-	bool checkBossSkillHIt = boss.GetGlobalBound().intersects(player.GetPlayerSkiilRect());
-	if (checkBossSkillHIt)
+	// 보스가 플레이어 스킬에 맞음
+	bool isPlayerSkill = boss.GetGlobalBound().intersects(player.GetPlayerSkiilRect());
+	if (isPlayerSkill)
 	{
 		if (player.GetIsSkill() && boss.underAttack(dt))
 		{
-			boss.SetBossHp(50);
-			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+			boss.SetBossHp(5);
 		}
 	}
 
 
-	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-
-	// 플레이어가 보스 기본공격에 맞음
+	// 플레이어가 보스 한테 맞음
+	boss.UpdateCollision(player);
 
 
 
 	// 마우스 충돌시 피 까임 확인용
-	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
-	if (checkHpHit)
+	bool checkPlayerHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
+	if (checkPlayerHit)
 	{
 		if (InputManager::GetMouseButtonDown(Mouse::Left))
 		{
-			player.Hit(damage);
-			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.UnderAttack(player.GetPosition(), dt);
+			player.Hit(10);
 		}
 	}
-	/*bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
+	bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
 	if (checkBossHIt)
 	{
 		if (InputManager::GetMouseButtonDown(Mouse::Left))
 		{
-			boss.underAttack(10);
-			ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
-
+			boss.SetBossHp(220);
 		}
-	}*/
+	}
 
+	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+	ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+	//ui.UnderAttack(player.GetPosition(), dt);
 
-
-	if (InputManager::GetKeyDown(Keyboard::Num7))
+	if (!boss.isAlive())
 	{
 		mgr.ChangeScene(Scenes::END);
 	}
-
-	boss.Update(dt, player.GetPlayerPosition());
 }
 
 void SceneGame::Draw(sf::RenderWindow* window)
@@ -177,6 +170,8 @@ void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
 		pinkEnt->Init();
 		mpinkEnt.push_back(pinkEnt);
 	}
+
+	
 }
 
 //int SceneGame::GetMaxPlayerHealthReal()

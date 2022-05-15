@@ -2,6 +2,8 @@
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/Utils.h"
 
+#include "../Source/Player/Player.h"
+class Player;
 
 class BossFire
 {
@@ -15,9 +17,14 @@ private:
 	Sprite spriteSuperEffect;
 	AnimationController animationSuperEffect;
 
+	Sprite spriteBomb;
+	AnimationController animationsBomb;
+
+
 	std::map<std::string, Texture> texMap;
 
 	bool isActive; // 활성화
+	bool isSuper;
 
 	RectangleShape fireRect; // 범위
 
@@ -43,10 +50,11 @@ public:
 
 	Sprite GetSprite();
 	Sprite GetSuperEffectSprite();
+	Sprite GetBombSprite();
 
 	RectangleShape GetRect();
 
 	FloatRect GetGlobalBound();
 
+	bool UpdateCollision(Player &player);
 };
-

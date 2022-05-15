@@ -9,6 +9,8 @@
 #include "../SwordMan/SwordMan.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
 
+class bossfire;
+
 using namespace sf;
 
 class PinkEnt;
@@ -157,5 +159,7 @@ public:
 	
 	void GetStateIdle();
 	void ChangeSkul();
+
+	
 };
 
