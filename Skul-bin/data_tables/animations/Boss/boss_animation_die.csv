@@ -1,0 +1,10 @@
+TEXTURE PATH,L,T,W,H
+graphics/Boss/Groggy.png,0,0,59,41
+graphics/Boss/Groggy.png,59,0,59,41
+graphics/Boss/Groggy.png,118,0,59,41
+graphics/Boss/Groggy.png,177,0,59,41
+graphics/Boss/Die.png,0,0,70,41
+graphics/Boss/Die.png,70,0,70,41
+graphics/Boss/Die.png,140,0,70,41
+graphics/Boss/Die.png,210,0,70,41
+graphics/Boss/Die.png,280,0,70,41

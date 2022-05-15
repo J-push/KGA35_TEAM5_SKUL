@@ -1,9 +1,9 @@
 ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
-intro1,10,0,data_tables/animations/Boss/boss_animation_intro1.csv
-intro2,10,0,data_tables/animations/Boss/boss_animation_intro2.csv
-intro2re,10,1,data_tables/animations/Boss/boss_animation_intro2reverse.csv
+intro1,20,0,data_tables/animations/Boss/boss_animation_intro1.csv
+intro2,20,0,data_tables/animations/Boss/boss_animation_intro2.csv
+intro2re,20,1,data_tables/animations/Boss/boss_animation_intro2reverse.csv
 attackready,10,1,data_tables/animations/Boss/boss_animation_attack(ready).csv
-attack,15,1,data_tables/animations/Boss/boss_animation_attack.csv
+attack,9,1,data_tables/animations/Boss/boss_animation_attack.csv
 idle,10,1,data_tables/animations/Boss/boss_animation_idle.csv
 walkback,10,1,data_tables/animations/Boss/boss_animation_walk(back).csv
 walkfront,10,1,data_tables/animations/Boss/boss_animation_walk(front).csv
@@ -11,8 +11,12 @@ landingready,10,1,data_tables/animations/Boss/boss_animation_landing(Ready).csv
 landingbomb,10,1,data_tables/animations/Boss/boss_animation_landing(Bomb).csv
 landingdown,10,1,data_tables/animations/Boss/boss_animation_landing(Down).csv
 landingeffect,30,0,data_tables/animations/Boss/boss_animation_landingeffect.csv
-landingoutro,10,1,data_tables/animations/Boss/boss_animation_landing(Outro).csv
+landingoutro,20,1,data_tables/animations/Boss/boss_animation_landing(Outro).csv
 bomb,10,1,data_tables/animations/Boss/boss_animation_bomb.csv
 superdoing,10,1,data_tables/animations/Boss/boss_animation_super(Doing).csv
 superready,10,1,data_tables/animations/Boss/boss_animation_super(Ready).csv
 supergo,10,1,data_tables/animations/Boss/boss_animation_super(Go).csv
+die,5,0,data_tables/animations/Boss/boss_animation_die.csv
+landingoutrore,10,1,data_tables/animations/Boss/boss_animation_landing(Outro)(re).csv
+dieintro,5,1,data_tables/animations/Boss/boss_animation_dieintro.csv
+attackeffect,20,0,data_tables/animations/Boss/boss_animation_attackEffect.csv

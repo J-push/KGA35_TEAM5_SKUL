@@ -751,11 +751,15 @@ int Player::GetCurrentPlayerHealth()
 	return currentPlayerHealth;
 }
 
-void Player::JeaHit()
+void Player::Hit(int damage)
 {
 	if (currentPlayerHealth > 0)
 	{
-		currentPlayerHealth -= 10;
+		currentPlayerHealth -= damage;
+	}
+	if (currentPlayerHealth < 0)
+	{
+		currentPlayerHealth = 0;
 	}
 }
 
@@ -783,6 +787,8 @@ bool Player::GetIsSkill()
 {
 	return isSkill;
 }
+
+
 
 FloatRect Player::GetPlayerSkiilRect()
 {
@@ -838,3 +844,4 @@ void Player::ChangeSkul()
 		//currentAction = PlayerState::IDLE;
 	}
 }
+

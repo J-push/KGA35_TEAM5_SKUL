@@ -68,7 +68,6 @@
     <ClCompile Include="Source\Monster\PinkEnt\PinkEnt.cpp">
       <Filter>Monster\PinkEnt</Filter>
     </ClCompile>
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">

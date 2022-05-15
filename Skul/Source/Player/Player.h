@@ -8,6 +8,8 @@
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
 
+class bossfire;
+
 using namespace sf;
 
 enum class PlayerState		//추가
@@ -138,7 +140,7 @@ public:
 	// 재휘 추가 최대, 현재체력 받아오기
 	int GetMaxPlayerHealth();
 	int GetCurrentPlayerHealth();
-	void JeaHit();
+	void Hit(int damage);
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
 	bool GetIsSkill();
@@ -153,5 +155,7 @@ public:
 	
 	void GetStateIdle();
 	void ChangeSkul();
+
+	
 };
 

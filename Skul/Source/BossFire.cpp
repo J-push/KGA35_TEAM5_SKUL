@@ -2,19 +2,25 @@
 
 BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 {
+	isSuper = false;
+
 	// 충돌 확인
 	fireRect.setSize(Vector2f(80, 40));
 	fireRect.setFillColor(Color(140, 72, 19, 70));
 	fireRect.setPosition(position);
 
 	spriteFireBall.setScale(0.8f, 0.8f);
-	Utils::SetOrigin(spriteFireBall, Pivots::CB);
+	Utils::SetOrigin(spriteFireBall, Pivots::CC);
 
 	animation.SetTarget(&spriteFireBall);
 
 	spriteSuperEffect.setScale(2.0f, 2.0f);
 	spriteSuperEffect.setPosition(Vector2f(100, 100));
 	animationSuperEffect.SetTarget(&spriteSuperEffect);
+
+	spriteBomb.setScale(3.0f, 3.0f);
+	spriteBomb.setPosition(Vector2f(100, 100));
+	animationsBomb.SetTarget(&spriteBomb);
 
 	rapidcsv::Document clipsFire("data_tables/animations/BossFireball/bossfireball_animation_clips.csv");
 	std::vector<std::string> colId = clipsFire.GetColumn<std::string>("ID");
@@ -50,6 +56,7 @@ BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 		}
 		animation.AddClip(clip);
 		animationSuperEffect.AddClip(clip);
+		animationsBomb.AddClip(clip);
 	}
 }
 
@@ -69,6 +76,9 @@ bool BossFire::IsActive()
 
 void BossFire::Shoot(Vector2f pos, Vector2f dir)
 {
+	isSuper = false;
+	speed = 500;
+
 	animation.Play("fireball");
 
 	SetActive(true);
@@ -98,6 +108,9 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 
 void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 {
+	isSuper = true;
+	speed = 500;
+
 	animation.Play("fireball");
 	animationSuperEffect.Play("supereffect");
 
@@ -135,18 +148,46 @@ void BossFire::Update(float dt)
 {
 	animation.Update(dt);
 	animationSuperEffect.Update(dt);
+	animationsBomb.Update(dt);
 
 	position += direction * speed * dt;
 	fireRect.setPosition(position);
 	spriteFireBall.setPosition(position);
 
-	distance += speed * dt;
-	if (distance > DEFAULT_DISTANCE)
+	if (isSuper)
 	{
-		Stop();
+		if (position.y > 690)
+		{
+			fireRect.setPosition(Vector2f(3000, 0));
+			speed = 0;
+			position.y = 550;
+			spriteFireBall.setRotation(0);
+			animation.Play("bomb");
+			animation.OnComplete = std::bind(&BossFire::Stop, this);
+		}
+		if (position.y == 550)
+		{
+			fireRect.setPosition(Vector2f(3000, 0));
+		}
 	}
+	if (!isSuper)
+	{
+		if (position.y > 780)
+		{
+			fireRect.setPosition(Vector2f(3000, 0));
+			speed = 0;
+			position.y = 700;
+			spriteFireBall.setRotation(0);
+			animation.Play("attackeffect");
+			animation.OnComplete = std::bind(&BossFire::Stop, this);
+		}
+		if (position.y == 700)
+		{
+			fireRect.setPosition(Vector2f(3000, 0));
+		}
+	}
+	
 
-	fireRect.setPosition(position);
 }
 
 Sprite BossFire::GetSprite()
@@ -159,6 +200,11 @@ Sprite BossFire::GetSuperEffectSprite()
 	return spriteSuperEffect;
 }
 
+Sprite BossFire::GetBombSprite()
+{
+	return spriteBomb;
+}
+
 RectangleShape BossFire::GetRect()
 {
 	return fireRect;
@@ -168,3 +214,15 @@ FloatRect BossFire::GetGlobalBound()
 {
 	return spriteFireBall.getGlobalBounds();
 }
+
+bool BossFire::UpdateCollision(Player &player)
+{
+	FloatRect bounds = fireRect.getGlobalBounds();
+	if (bounds.intersects(player.GetPlayerRect()))
+	{		
+		Stop();
+		return true;
+	}	
+	return false;
+}
+
