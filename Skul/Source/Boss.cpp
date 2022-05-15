@@ -468,7 +468,7 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 		timer = 100;
 		count = 0;
 	
-		whatAction = RandomMgr::GetRandom(2, 2);
+		whatAction = RandomMgr::GetRandom(1, 2);
 		if (whatAction == 1)
 		{
 			action = BossStatus::FIREBALL;
@@ -741,7 +741,7 @@ bool Boss::UpdateCollision(Player &player)
 			}
 			if (!isFireAttacking)
 			{
-				spriteAttackEffect.setScale(1.6f, 1.6f);
+				spriteAttackEffect.setScale(1.3f, 1.3f);
 				spriteAttackEffect.setPosition(player.GetPlayerPosition().x-100, player.GetPlayerPosition().y-150);
 				animationAttackEffect.Play("attackeffect");
 				player.Hit(20);
