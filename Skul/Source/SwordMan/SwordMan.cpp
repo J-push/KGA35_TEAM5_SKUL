@@ -90,6 +90,8 @@ void swordman::Init()
 	shapeRightMap.setOutlineColor(Color::Magenta);
 	shapeRightMap.setOutlineThickness(2);
 
+	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("SWORDMANATTACKSOUND"));
+
 	dir.x = -1.f;
 	dir.y = 0.f;
 	float length = sqrt(dir.x * dir.x + dir.y * dir.y);
@@ -254,6 +256,7 @@ void swordman::SetAction(swordmanAction swordManAction, Player& player)
 	case swordmanAction::Idle:
 		break;
 	case swordmanAction::Attack:
+		attack.play();
 		player.Hit(2);
 
 		if (player.GetPlayerPosition().x < position.x)

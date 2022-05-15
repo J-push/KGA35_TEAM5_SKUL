@@ -26,6 +26,16 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("EDITORBACKGROUNDTEX", "graphics/editorbackground.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("TILETEX", "graphics/TileGrass.png", ResourceTypes::Texture));
 
+	// 현섭 추가
+	loaded.push_back(new Resource("PLAYERATTACKSOUND", "sound/player/Attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERCHANGESOUND", "sound/player/Change.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDASHSOUND", "sound/player/Dash.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERJUMPSOUND", "sound/player/Jump.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDEATHSOUND", "sound/player/Death.wav", ResourceTypes::SoundBuffer));
+
+	loaded.push_back(new Resource("SWORDMANATTACKSOUND", "sound/swordman/attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PINKENTATTACKSOUND", "sound/pinkent/attack.wav", ResourceTypes::SoundBuffer));
+
 	// ui추가
 	loaded.push_back(new Resource("MAINFRAMETEX", "graphics/UI/PlayerFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("HPBARTEX", "graphics/UI/HpBar.png", ResourceTypes::Texture));
