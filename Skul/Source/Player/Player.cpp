@@ -163,35 +163,17 @@ void Player::UpdateInput(float dt)
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<TestRectangle*> rects, swordman* swordMan, PinkEnt* pinkEnt)
+void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
-		hitDelay -= dt;
-		if (hitDelay < 0)
-		{
-			hitDelay = 1.f;
-			IsHit(dt, swordMan, pinkEnt);
-		}
 		break;
 	case PlayerState::MOVE:
-		isHit -= dt;
-		if (isHit < 0)
-		{
-			isHit = 1.f;
-			IsHit(dt, swordMan, pinkEnt);
-		};
 		Move();
 		break;
 	case PlayerState::ATTACK:
-		isHit -= dt;
-		if (isHit < 0)
-		{
-			isHit = 1.f;
-			IsHit(dt, swordMan, pinkEnt);
-		}
 		Attack();
 		break;
 	case PlayerState::SKILLATTACK:
@@ -199,16 +181,9 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects, swordman* sword
 	case PlayerState::COMBOATTACK:
 		break;
 	case PlayerState::JUMP:
-		isHit -= dt;
-		if (isHit < 0)
-		{
-			isHit = 1.f;
-			IsHit(dt, swordMan, pinkEnt);
-		}
 		Jump();
 		break;
 	case PlayerState::DOWN:
-
 		break;
 	case PlayerState::DASH:
 		Dash();
@@ -224,7 +199,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects, swordman* sword
 	//std::cout << (int)currentAction << std::endl;
 	//std::cout << jumpSpeed << std::endl;
 
-	AnimationUpdate(dt, swordMan, pinkEnt);
+	AnimationUpdate(dt);
 
 	//충돌
 	PlayerConllision(rects);
@@ -248,7 +223,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects, swordman* sword
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)
 ***********************************************************/
-void Player::AnimationUpdate(float dt, swordman* swordMan, PinkEnt* pinkEnt)
+void Player::AnimationUpdate(float dt)
 {
 	switch (currentAction)
 	{
@@ -669,40 +644,6 @@ void Player::Jump()
 	}
 }
 
-//현섭 추가
-/**********************************************************
-* 설명 : 플레이어가 소드맨 몬스터의 공격으로 인해 맞는 상태를 정의한다.
-***********************************************************/
-void Player::HyeonSeopSwordManHit(swordman* swordMan)
-{
-	currentPlayerHealth -= swordMan->SwordManDamage();
-	std::cout << currentPlayerHealth;	
-}
-
-/**********************************************************
-* 설명 : 플레이어가 핑크엔트 몬스터의 공격으로 인해 맞는 상태를 정의한다.
-***********************************************************/
-void Player::HyeonSeopPinkEntHit(PinkEnt* pinkEnt)
-{
-	currentPlayerHealth -= pinkEnt->PinkEntDamage();
-	std::cout << currentPlayerHealth;
-}
-/**********************************************************
-* 설명 : 플레이어가 공격 맞을 수 있는 상태.
-***********************************************************/
-void Player::IsHit(float dt, swordman* swordMan, PinkEnt* pinkEnt)
-{
-	//&& playerHitPinkEntAttack.intersects(pinkEnt->MonsterSkillGetGlobalBound())
-	if (pinkEnt->IsAttackAble(dt))
-	{
-		HyeonSeopPinkEntHit(pinkEnt);
-	}
-	if (swordMan->IsAttackAble(dt))
-	{
-		HyeonSeopSwordManHit(swordMan);
-	}
-}
-
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/
@@ -805,11 +746,15 @@ int Player::GetCurrentPlayerHealth()
 	return currentPlayerHealth;
 }
 
-void Player::JeaHit()
+void Player::Hit(int damage)
 {
 	if (currentPlayerHealth > 0)
 	{
-		currentPlayerHealth -= 10;
+		currentPlayerHealth -= damage;
+	}
+	if (currentPlayerHealth < 0)
+	{
+		currentPlayerHealth = 0;
 	}
 }
 

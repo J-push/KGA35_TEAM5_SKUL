@@ -253,6 +253,8 @@ void swordman::SetAction(swordmanAction swordManAction, Player& player)
 	case swordmanAction::Idle:
 		break;
 	case swordmanAction::Attack:
+		player.Hit(2);
+
 		if (player.GetPlayerPosition().x < position.x)
 		{
 			moveDir = MoveDir::Left;
@@ -300,10 +302,6 @@ void swordman::SetAction(swordmanAction swordManAction, Player& player)
 ***********************************************************/
 void swordman::Attack(float dt, Player& player)
 {
-	if (InputManager::instance()->GetKeyDown(Keyboard::O))
-	{
-		animation.Play("Attack(Left)");
-	}
 }
 
 /**********************************************************

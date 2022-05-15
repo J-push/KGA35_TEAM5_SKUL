@@ -66,7 +66,7 @@ void PinkEnt::Init()
 	speed = START_PINKENT_SPEED;
 	knockBackSpeed = START_PINKENT_KNOCKBACKSPEED;
 	hitReady = true;
-	attackReady = true;
+	attackReady = false;
 
 	attackDelay = 0.f;
 	walkDelay = 2;
@@ -191,7 +191,13 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 		Move(dt);
 		if (attackAble)
 		{
-			SetAction(PinkEntAction::Attack, player);
+			IsAttackAble(dt);
+
+			if (attackReady)
+			{
+				attackReady = false;
+				SetAction(PinkEntAction::Attack, player);
+			}
 		}
 		if (pinkEntHitCollision || pinkEntSkillHitCollision)
 		{
@@ -218,6 +224,8 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Idle:
 		break;
 	case PinkEntAction::Attack:
+		player.Hit(4);
+
 		if (player.GetPlayerPosition().x < position.x)
 		{
 			moveDir = PinkEntMoveDir::Left;

@@ -54,7 +54,7 @@ void SceneGame::Update(float dt)
 		SwordMan->Update(dt, player);
 	}
 	
-	player.Update(dt, tilemap.GetRects(), mSwordman, pinkEnt);
+	player.Update(dt, tilemap.GetRects());
 
 	tilemap.CreateBackGround();
 
@@ -82,7 +82,8 @@ void SceneGame::Update(float dt)
 	}
 
 
-
+	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 
 	// 플레이어가 보스 기본공격에 맞음
 
@@ -94,7 +95,7 @@ void SceneGame::Update(float dt)
 	{
 		if (InputManager::GetMouseButtonDown(Mouse::Left))
 		{
-			player.JeaHit();
+			player.Hit(damage);
 			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 			ui.UnderAttack(player.GetPosition(), dt);
