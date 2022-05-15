@@ -16,7 +16,7 @@ void SceneGame::Init()
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-	CreateSwordMan(mSwordMans, 5);
+	CreateSwordMan(mSwordMans, 1);
 	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
 	player.SkillInit();
@@ -80,8 +80,10 @@ void SceneGame::Update(float dt)
 		}
 	}
 
+
 	// 플레이어가 보스 한테 맞음
 	boss.UpdateCollision(player);
+
 
 
 	// 마우스 충돌시 피 까임 확인용

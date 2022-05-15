@@ -32,6 +32,7 @@ private:
 	Time playTime;
 	Time check;
 
+	int damage;
 public:
 
 	int curHp;

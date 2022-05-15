@@ -6,6 +6,7 @@
 #include "../Source/Utils/ChangeMouse.h"
 #include "../Source/Manager/InputManager.h"
 #include "../Source/Player/Player.h"
+#include "../Source/Monster/PinkEnt/PinkEnt.h"
 
 class SceneGame;
 
@@ -63,6 +64,12 @@ private:
 	Sprite spriteBossFrame; // BOSSFRAMETEX
 	Sprite spriteBossHpBar; // BOSSHPBARTEX
 
+	// ¼Òµå¸Ç UI
+	Sprite spriteSwordManFrame; // SWORDMANFRAMETEX
+	Sprite spriteSwordManHpBar; // SWORDMANHPBARTEX
+
+
+	float swordManHp;
 	float bossHp;
 
 	// DamageText

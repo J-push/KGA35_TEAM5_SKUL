@@ -24,6 +24,8 @@ void Player::Init()
 	playerPosition.x = 900.f;
 	playerPosition.y = 250.f;
 
+	// 현섭 공격 맞는 시간 추가
+	hitDelay = 1.f;
 
 	playerSpeed = START_PLAYER_SPEED;
 	isJump = false;
@@ -164,7 +166,6 @@ void Player::UpdateInput(float dt)
 void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
-
 	switch (currentAction)
 	{
 	case PlayerState::IDLE:
@@ -183,7 +184,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 		Jump();
 		break;
 	case PlayerState::DOWN:
-
 		break;
 	case PlayerState::DASH:
 		Dash();
@@ -219,8 +219,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
 	animation.Update(dt);
 	skillAnimation.Update(dt);
-
-
 }
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)
@@ -275,7 +273,6 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::IDLE);
 		}
 		break;
-
 	case PlayerState::MOVE:
 		//
 		if ((InputManager::instance()->GetKeyUp(Keyboard::Right) || InputManager::instance()->GetKeyUp(Keyboard::Left)))
@@ -392,16 +389,13 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::ATTACK);
 		}
 		break;
-
 	default:
 		break;
 	}
 }
 
-
-
 /**********************************************************
-* 설명 : 상태를 설정한다.
+* 설명 : 상태를 설정한다. 		HyeonSeopSwordManHit(swordMan);
 ***********************************************************/
 void Player::SetState(PlayerState newAction)
 {
@@ -649,6 +643,7 @@ void Player::Jump()
 		playerPosition.y -= jumpSpeed * stateDt;
 	}
 }
+
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/
