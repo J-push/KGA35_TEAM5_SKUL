@@ -140,7 +140,7 @@ public:
 	// 재휘 추가 최대, 현재체력 받아오기
 	int GetMaxPlayerHealth();
 	int GetCurrentPlayerHealth();
-	void JeaHit();
+	void Hit(int damage);
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
 	bool GetIsSkill();

@@ -751,11 +751,15 @@ int Player::GetCurrentPlayerHealth()
 	return currentPlayerHealth;
 }
 
-void Player::JeaHit()
+void Player::Hit(int damage)
 {
 	if (currentPlayerHealth > 0)
 	{
-		currentPlayerHealth -= 10;
+		currentPlayerHealth -= damage;
+	}
+	if (currentPlayerHealth < 0)
+	{
+		currentPlayerHealth = 0;
 	}
 }
 

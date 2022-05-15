@@ -17,9 +17,14 @@ private:
 	Sprite spriteSuperEffect;
 	AnimationController animationSuperEffect;
 
+	Sprite spriteBomb;
+	AnimationController animationsBomb;
+
+
 	std::map<std::string, Texture> texMap;
 
 	bool isActive; // 활성화
+	bool isSuper;
 
 	RectangleShape fireRect; // 범위
 
@@ -45,19 +50,11 @@ public:
 
 	Sprite GetSprite();
 	Sprite GetSuperEffectSprite();
+	Sprite GetBombSprite();
 
 	RectangleShape GetRect();
 
 	FloatRect GetGlobalBound();
 
-	bool UpdateCollision(Player &player)
-	{
-		FloatRect bounds = fireRect.getGlobalBounds();
-		if (bounds.intersects(player.GetPlayerRect()))
-		{			
-			Stop();
-			return true;
-		}
-		return false;
-	}
+	bool UpdateCollision(Player &player);
 };
