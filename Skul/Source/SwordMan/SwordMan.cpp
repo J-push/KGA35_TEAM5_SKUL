@@ -1,6 +1,6 @@
 ﻿/******************************************************************************
 * 작 성 자 : 진 현 섭
-* 작 성 일 : 2022-05-06
+* 작 성 일 : 2022-05-13
 * 내    용 : swordman의 동작을 구현한다.
 * 수 정 일 :
 *******************************************************************************/
@@ -10,6 +10,7 @@
 #include <iostream>
 #include <ctime>
 #include <random>
+#include "../Player/Player.h"
 
 
 /**********************************************************
@@ -17,18 +18,16 @@
 ***********************************************************/
 void swordman::Init()
 {
-	//position.x = 1400; // 960
-	//position.y = 920; // 540
 	sprite.setScale(2.f, 2.f);
-	sprite.setOrigin(60, 65);
+	sprite.setOrigin(15, 53);
 	sprite.setPosition(position);
 	animation.SetTarget(&sprite);
 
-	rapidcsv::Document clipsswordman("data_tables/animations/swordman/swordman_animation_clips.csv");
-	std::vector<std::string> colId = clipsswordman.GetColumn<std::string>("ID"); // 일반화인자를 받음
-	std::vector<int> colFps = clipsswordman.GetColumn<int>("FPS");
-	std::vector<int> colLoop = clipsswordman.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
-	std::vector<std::string> colPath = clipsswordman.GetColumn<std::string>("CLIP PATH");
+	rapidcsv::Document clipsSwordMan("data_tables/animations/swordman/swordman_animation_clips.csv");
+	std::vector<std::string> colId = clipsSwordMan.GetColumn<std::string>("ID"); // 일반화인자를 받음
+	std::vector<int> colFps = clipsSwordMan.GetColumn<int>("FPS");
+	std::vector<int> colLoop = clipsSwordMan.GetColumn<int>("LOOP TYPE(0:Single, 1:Loop)");
+	std::vector<std::string> colPath = clipsSwordMan.GetColumn<std::string>("CLIP PATH");
 
 	int totalclips = colId.size();
 
@@ -59,19 +58,22 @@ void swordman::Init()
 		}
 		animation.AddClip(clip);
 	}
-	animation.Play("Walk(Left)");
 
 	mHp = START_swordman_HEALTH;
 	damage = START_swordman_DAMAGE;
 	speed = START_swordman_SPEED;
+	knockBackSpeed = START_SWORDMAN_KNOCKBACKSPEED;
 	hitReady = true;
 	attackReady = false;
 
-	attackDelay = 0;
+	attackDelay = 3.f;
 	walkDelay = 2;
 	afterAttack = 3;
 	hitDelay = 1.f;
+	moveDir = MoveDir::Left;
 
+	shapeMonster.setSize(Vector2f(60.f, 100.f));
+	shapeMonster.setPosition(position.x - 30, position.y - 100);
 	shapeMonster.setFillColor(Color::Transparent);
 	shapeMonster.setOutlineColor(Color::Yellow);
 	shapeMonster.setOutlineThickness(2);
@@ -88,10 +90,6 @@ void swordman::Init()
 	shapeRightMap.setOutlineColor(Color::Magenta);
 	shapeRightMap.setOutlineThickness(2);
 
-	shapeScope.setFillColor(Color::Transparent);
-	shapeScope.setOutlineColor(Color::Black);
-	shapeScope.setOutlineThickness(2);
-
 	dir.x = -1.f;
 	dir.y = 0.f;
 	float length = sqrt(dir.x * dir.x + dir.y * dir.y);
@@ -103,6 +101,9 @@ void swordman::Init()
 	action = swordmanAction::Idle;
 }
 
+/**********************************************************
+* 설명 : 몬스터의 위치를 설정해준다.
+***********************************************************/
 swordman::swordman(int x, int y)
 {
 	position = Vector2f(x, y);
@@ -113,206 +114,266 @@ swordman::~swordman()
 }
 
 /**********************************************************
-* 설명 : 아직 구현은 안 했지만 소드맨이 공격을 받았을 때의 처리 함수
-***********************************************************/
-bool swordman::OnHitted()
-{
-	return false;
-}
-
-/**********************************************************
 * 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
-void swordman::Update(float dt, FloatRect playerBound, FloatRect playerAttackBound, FloatRect playerSkiilBound, Vector2f playerPosition, int playerDamage, std::vector<ColliderRect*> rects)
+void swordman::Update(float dt, Player& player)
+
 {
 	animation.Update(dt);
+	AnimationUpdate(dt, player);
 
 	swordmanBound = shapeMonster.getGlobalBounds();
+	swordManAttackBound = shapeSwordManAttackRect.getGlobalBounds();
 
-	rangeBound = shapeMonster.getGlobalBounds();
-	attackAble = rangeBound.intersects(playerBound);
-
-	swordmanScope = shapeScope.getGlobalBounds();
+	attackAble = swordManAttackBound.intersects(player.GetPlayerRect());
 
 	leftMapCollision = swordmanBound.intersects(shapeLeftMap.getGlobalBounds());
 	rightMapCollision = swordmanBound.intersects(shapeRightMap.getGlobalBounds());
-	swordmanScopeCollision = swordmanScope.intersects(playerBound);	// 만들어만 놓고 아직 안 썼음
-	swordmanHitCollision = swordmanBound.intersects(playerAttackBound);
-	swordmanSkillHitCollision = swordmanBound.intersects(playerSkiilBound);
+	swordmanHitCollision = swordmanBound.intersects(player.GetPlayerAttackRect());
+	swordmanSkillHitCollision = swordmanBound.intersects(player.GetPlayerSkiilRect());
 
-	prevMapCollision = false;
-	prevRightMapCollision = false;
-
-	shapeScope.setSize(Vector2f(150.f, 100.f));
-	shapeScope.setPosition(position.x - 140, position.y - 120);
-
-	if (!attackReady)
+	if (dir.x == -1.f)
 	{
-		attackDelay -= dt;
+		swordManAttackRectDirLeft();
 	}
-	if (attackAble && attackDelay < 0)
+	else if (dir.x == 1.f)
 	{
-		attackDelay = 3;
-		attackReady = true;
+		swordManAttackRectDirRight();
 	}
+}
 
-	if (action != swordmanAction::Death)
+/**********************************************************
+* 설명 : 몬스터의 상태에 따른 애니메이션을 업데이트 해준다.
+***********************************************************/
+void swordman::AnimationUpdate(float dt, Player& player)
+{
+	switch (action)
 	{
-		if (swordmanHitCollision && hitReady || swordmanSkillHitCollision && hitReady)
+	case swordmanAction::Idle:
+		if (player.GetPlayerPosition().x < position.x)
 		{
-			hitReady = false;
-			action = swordmanAction::Hit;
+			animation.PlayQueue("Idle(Left)");
 		}
-		if (action == swordmanAction::Hit)
+		else
 		{
-			hitDelay -= dt;
-			if (mHp <= 0)
-			{
-				action = swordmanAction::Death;
-			}
-			if (playerPosition.x < position.x)
-			{
-				animation.Play("Hit(Left)");
-			}
-			else
-			{
-				animation.Play("Hit(Right)");
-			}
-			if (hitDelay < 0)
-			{
-				mHp -= playerDamage;
-				hitReady = true;
-				hitDelay = 1.f;
-				swordmanHitCollision = false;
-				swordmanSkillHitCollision = false;
-				action = swordmanAction::Idle;
-			}
+			animation.PlayQueue("Idle(Right)");
 		}
-		if (action == swordmanAction::Idle)
+		sprite.setOrigin(15, 53);
+
+		shapeMonster.setSize(Vector2f(60.f, 100.f));
+		shapeMonster.setPosition(position.x - 30, position.y - 100);
+
+		walkDelay -= dt;
+		if (!attackAble && walkDelay < 0)
 		{
-			animation.ClearPlayQueue();
-			walkDelay -= dt;
-			animation.PlayQueue("Idle");
-			shapeMonster.setOrigin(60, 60);
-			shapeMonster.setSize(Vector2f(60.f, 100.f));
-			shapeMonster.setPosition(position.x - 60, position.y - 60);
+			walkDelay = 2;
+			SetAction(swordmanAction::Walk, player);
+		}
+		if (swordmanHitCollision || swordmanSkillHitCollision)
+		{
+			SetAction(swordmanAction::Hit, player);
+		}
 
-			sprite.setOrigin(60, 65);
-			sprite.setPosition(position);
+		if (attackAble)
+		{
+			IsAttackAble(dt);
 
-			if (attackReady && attackAble)
+			if (attackReady)
 			{
-				action = swordmanAction::Attack;
-			}
-			else if (!attackAble && walkDelay < 0 && dir.x == 1.f)
-			{
-				walkDelay = 2;
-				animation.Play("Walk(Right)");
-				action = swordmanAction::Walk;
-			}
-			else if (!attackAble && walkDelay < 0 && dir.x == -1.f)
-			{
-				walkDelay = 2;
-				animation.Play("Walk(Left)");
-				action = swordmanAction::Walk;
+				attackReady = false;
+				SetAction(swordmanAction::Attack, player);
 			}
 		}
-	}
-	if (action == swordmanAction::Walk)
-	{
-		shapeMonster.setOrigin(60, 60);
-		shapeMonster.setSize(Vector2f(60.f, 80.f));
-		shapeMonster.setPosition(position.x - 40, position.y - 40);
+		break;
+	case swordmanAction::Attack:
 
-		sprite.setPosition(position);
-		sprite.setOrigin(60, 60);
+		shapeMonster.setSize(Vector2f(75.f, 100.f));
+		shapeMonster.setPosition(position.x - 45, position.y - 100);
 
-		if (attackReady && attackAble)
-		{
-			action = swordmanAction::Attack;
-		}
-		// 플레이어가 인식 범위에 들어오면 행해줄 조건
-	/*	if (swordmanScopeCollision)
-		{
-		}*/
+		Attack(dt, player);
 
-		if (!prevMapCollision && leftMapCollision)
+		sprite.setOrigin(40, 60);
+		if (swordmanHitCollision || swordmanSkillHitCollision)
 		{
-			animation.ClearPlayQueue();
-			animation.Play("Walk(Right)");
-			action = swordmanAction::RightWalk;
-			prevMapCollision = true;
-			leftMapCollision = false;
-			dir.x = 1.f;
-			dir.y = 0.f;
-			float length = sqrt(dir.x * dir.x + dir.y * dir.y);
-			if (length > 0)
-			{
-				dir /= length;
-			}
+			SetAction(swordmanAction::Hit, player);
 		}
-		if (!prevRightMapCollision && rightMapCollision)
+		break;
+	case swordmanAction::Hit:
+		hitDelay -= dt;
+		hitReady = false;
+		if (hitDelay < 0)
 		{
-			animation.ClearPlayQueue();
-			animation.Play("Walk(Left)");
-			action = swordmanAction::LeftWalk;
-			prevRightMapCollision = true;
-			rightMapCollision = false;
-			dir.x = -1.f;
-			dir.y = 0.f;
-			float length = sqrt(dir.x * dir.x + dir.y * dir.y);
-			if (length > 0)
-			{
-				dir /= length;
-			}
+			hitDelay = 0.5f;
+			Hit(dt, player);
 		}
-		position += dir * dt * speed;
-		sprite.setPosition(position);
-	}
-	if (action == swordmanAction::LeftWalk)
-	{
-		animation.PlayQueue("Walk(Left)");
-		action = swordmanAction::Walk;
-	}
-	if (action == swordmanAction::RightWalk)
-	{
-		animation.PlayQueue("Walk(Right)");
-		action = swordmanAction::Walk;
-	}
-	if (action == swordmanAction::Attack)
-	{
-		afterAttack -= dt;
-		if (playerPosition.x < position.x)
+
+		shapeMonster.setSize(Vector2f(60.f, 100.f));
+		shapeMonster.setPosition(position.x - 30, position.y - 100);
+
+		if (!swordmanHitCollision && !swordmanSkillHitCollision)
 		{
+			SetAction(swordmanAction::Idle, player);
+		}
+		if (mHp <= 0)
+		{
+			SetAction(swordmanAction::Death, player);
+		}
+		break;
+	case swordmanAction::Walk:
+		Move(dt);
+
+		shapeMonster.setSize(Vector2f(60.f, 100.f));
+		shapeMonster.setPosition(position.x - 30, position.y - 100);
+
+		if (attackAble)
+		{
+			SetAction(swordmanAction::Attack, player);
+		}
+		if (swordmanHitCollision || swordmanSkillHitCollision)
+		{
+			SetAction(swordmanAction::Hit, player);
+		}
+		break;
+	case swordmanAction::Death:
+		Death(dt);
+		break;
+	default:
+		break;
+	}
+}
+
+/**********************************************************
+* 설명 : 몬스터의 상태를 설정해준다.
+***********************************************************/
+void swordman::SetAction(swordmanAction swordManAction, Player& player)
+{
+	action = swordManAction;
+
+	switch (swordManAction)
+	{
+	case swordmanAction::Idle:
+		break;
+	case swordmanAction::Attack:
+		player.Hit(2);
+
+		if (player.GetPlayerPosition().x < position.x)
+		{
+			moveDir = MoveDir::Left;
 			animation.Play("Attack(Left)");
 		}
 		else
 		{
+			moveDir = MoveDir::Right;
 			animation.Play("Attack(Right)");
 		}
-		attackReady = false;
 
-		shapeMonster.setOrigin(60, 80);
-		shapeMonster.setSize(Vector2f(70.f, 100.f));
-		shapeMonster.setPosition(position.x - 30, position.y - 40);
-
-		sprite.setPosition(position);
-		sprite.setOrigin(60, 75);
-
-		if (!attackReady)
+		animation.OnComplete = std::bind(&swordman::GetActionIdle, this);
+		break;
+	case swordmanAction::Hit:
+		if (player.GetPlayerPosition().x < position.x)
 		{
-			action = swordmanAction::Idle;
+			moveDir = MoveDir::Left;
+			animation.Play("Hit(Left)");
 		}
-		else if (!attackAble && !attackReady)
+		else
 		{
-			action = swordmanAction::Walk;
+			moveDir = MoveDir::Right;
+			animation.Play("Hit(Right)");
 		}
+		break;
+	case swordmanAction::Walk:
+		if (moveDir == MoveDir::Left)
+		{
+			animation.Play("Walk(Left)");
+		}
+		else if (moveDir == MoveDir::Right)
+		{
+			animation.Play("Walk(Right)");
+		}
+		break;
+	case swordmanAction::Death:
+		break;
+	default:
+		break;
 	}
-	else if (action == swordmanAction::Death)
+}
+
+/**********************************************************
+* 설명 : 몬스터의 공격 함수
+***********************************************************/
+void swordman::Attack(float dt, Player& player)
+{
+}
+
+/**********************************************************
+* 설명 : 몬스터가 공격을 받았을 때의 처리 함수
+***********************************************************/
+void swordman::Hit(float dt, Player& player)
+{
+	sprite.setOrigin(30, 48);
+	hitReady = true;
+	hitDelay = 0.5f;
+	swordmanHitCollision = false;
+	swordmanSkillHitCollision = false;
+	mHp -= player.GetPlayerDamage();
+	HitKnockBack(dt, player);
+}
+
+/**********************************************************
+* 설명 : 몬스터의 이동을 처리해줄 함수
+***********************************************************/
+void swordman::Move(float dt)
+{
+	sprite.setOrigin(27, 47);
+
+	if (leftMapCollision)
+	{
+		animation.Play("Walk(Right)");
+		moveDir = MoveDir::Right;
+	}
+	else if (rightMapCollision)
+	{
+		animation.Play("Walk(Left)");
+		moveDir = MoveDir::Left;
+	}
+	if (moveDir == MoveDir::Left)
 	{
 		animation.ClearPlayQueue();
-		animation.Stop();
+		animation.PlayQueue("Walk(Left)");
+		rightMapCollision = false;
+		dir.x = -1.f;
+		dir.y = 0.f;
+		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+		if (length > 0)
+		{
+			dir /= length;
+		}
+		moveDir = MoveDir::None;
 	}
+	if (moveDir == MoveDir::Right)
+	{
+		animation.ClearPlayQueue();
+		animation.PlayQueue("Walk(Right)");
+		leftMapCollision = false;
+		dir.x = 1.f;
+		dir.y = 0.f;
+		float length = sqrt(dir.x * dir.x + dir.y * dir.y);
+		if (length > 0)
+		{
+			dir /= length;
+		}
+		moveDir = MoveDir::None;
+	}
+	position += dir * dt * speed;
+	sprite.setPosition(position);
+}
+
+/**********************************************************
+* 설명 : 몬스터가 죽었을 때의 처리 함수
+***********************************************************/
+void swordman::Death(float dt)
+{
+	animation.Stop();
 }
 
 /**********************************************************
@@ -340,22 +401,6 @@ FloatRect swordman::MonsterGetGlobalBound()
 }
 
 /**********************************************************
-* 설명 : 플레이어와의 충돌 더미 반환해줄 함수
-***********************************************************/
-FloatRect swordman::RangeGetGlobalBound()
-{
-	return shape.getGlobalBounds();
-}
-
-/**********************************************************
-* 설명 : 플레이어와의 충돌 더미를 반환해주는 함수
-***********************************************************/
-const RectangleShape swordman::GetShape()
-{
-	return shape;
-}
-
-/**********************************************************
 * 설명 : 좌측 더미맵의 글로벌 바운즈
 ***********************************************************/
 FloatRect swordman::LeftMapGetGlobalBound()
@@ -372,11 +417,90 @@ FloatRect swordman::RightMapGetGlobalBound()
 }
 
 /**********************************************************
-* 설명 : 아직 쓰지는 않지만 소드맨의 적 인식 범위 글로벌 바운즈
+* 설명 : 몬스터의 우측 공격 범위 지정 함수
 ***********************************************************/
-FloatRect swordman::ScopeGetGlobalBound()
+void swordman::swordManAttackRectDirRight()
 {
-	return shapeScope.getGlobalBounds();
+	shapeSwordManAttackRect.setSize(Vector2f(100.f, 100.f));
+	shapeSwordManAttackRect.setPosition(position.x + 85, position.y - 100);
+	shapeSwordManAttackRect.setFillColor(Color::Transparent);
+	shapeSwordManAttackRect.setOutlineColor(Color::Red);
+	shapeSwordManAttackRect.setOutlineThickness(2);
+	shapeSwordManAttackRect.setScale(-1.f, 1.f);
+}
+
+/**********************************************************
+* 설명 : 몬스터의 좌측 공격 범위 지정 함수
+***********************************************************/
+void swordman::swordManAttackRectDirLeft()
+{
+	shapeSwordManAttackRect.setSize(Vector2f(100.f, 100.f));
+	shapeSwordManAttackRect.setPosition(position.x - 85, position.y - 100);
+	shapeSwordManAttackRect.setFillColor(Color::Transparent);
+	shapeSwordManAttackRect.setOutlineColor(Color::Red);
+	shapeSwordManAttackRect.setOutlineThickness(2);
+	shapeSwordManAttackRect.setScale(1.f, 1.f);
+}
+
+/**********************************************************
+* 설명 : 몬스터가 플레이어를 공격 가능한 범위 그림 반환 함수
+***********************************************************/
+FloatRect swordman::MonsterAttackGetGlobalBound()
+{
+	return shapeSwordManAttackRect.getGlobalBounds();
+}
+
+/**********************************************************
+* 설명 : 플레이 되는 애니메이션의 프레임 끝에 도달하면 액션 상태를 변경해줄 함수
+***********************************************************/
+void swordman::GetActionIdle()
+{
+	action = swordmanAction::Idle;
+}
+
+/**********************************************************
+* 설명 : 몬스터가 공격을 받았을 때의 넉백 거리 지정 함수
+***********************************************************/
+void swordman::HitKnockBack(float dt, Player& player)
+{
+	if (player.GetPlayerPosition().x < position.x)
+	{
+		position.x -= dir.x * knockBackSpeed * dt;
+	}
+	else
+	{
+		position.x += dir.x * knockBackSpeed * dt;
+	}
+	sprite.setPosition(position);
+}
+
+/**********************************************************
+* 설명 : 몬스터의 데미지 반환
+***********************************************************/
+int swordman::SwordManDamage()
+{
+	return damage;
+}
+
+/**********************************************************
+* 설명 : 몬스터의 공격 가능 판단
+***********************************************************/
+bool swordman::IsAttackAble(float dt)
+{
+	if (!attackReady)
+	{
+		attackDelay -= dt;
+	}
+	if (attackDelay < 0)
+	{
+		attackDelay = 3.f;
+		attackReady = true;
+	}
+
+	if (attackReady)
+	{
+		return attackReady;
+	}
 }
 
 /**********************************************************
@@ -388,6 +512,10 @@ void swordman::Draw(RenderWindow& window)
 	window.draw(shapeRightMap);
 	if (action != swordmanAction::Death)
 	{
+		if (action == swordmanAction::Attack)
+		{
+			window.draw(shapeSwordManAttackRect);
+		}
 		window.draw(shapeMonster);
 		window.draw(sprite);
 	}

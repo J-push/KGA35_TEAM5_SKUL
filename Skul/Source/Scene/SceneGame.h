@@ -7,7 +7,10 @@
 #include "../Utils/ChangeMouse.h"
 #include "../../ColliderRect.h"
 #include "../swordman/swordman.h"
+#include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
+#include "../Boss.h"
+
 
 class SceneGame : public Scene
 {
@@ -17,10 +20,19 @@ private:
 	Tilemap tilemap;
 	sf::Sprite spriteBackground;
 	Player player;
-	std::vector<swordman*> mSwordMans;	// Á»ºñ ¿©·¯¸¶¸® »ı¼º
+	std::vector<swordman*> mSwordMans;	// ì†Œë“œë§¨ ì—¬ëŸ¬ë§ˆë¦¬ ìƒì„±
 	swordman* mSwordman;
-	swordman* mSwordman1;
-	swordman* mSwordman2;
+
+	Boss boss;
+
+	std::vector<PinkEnt*> mPinkEnt;	// í•‘í¬ì—”íŠ¸ ì—¬ëŸ¬ë§ˆë¦¬ ìƒì„±
+	PinkEnt* pinkEnt;
+
+	Clock forCheckTime;
+	Time playTime;
+	Time check;
+
+	int damage;
 public:
 
 	int curHp;
@@ -36,7 +48,7 @@ public:
 	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView) override;
 
 	void CreateSwordMan(std::vector<swordman*>& mSwordMans, int count);
-
+	void CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count);
 	int GetMaxPlayerHealthReal();
 	/*int GetCurrentPlayerHealthReal();*/
 };

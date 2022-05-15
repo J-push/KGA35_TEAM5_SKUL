@@ -3,13 +3,7 @@
 
 #include <iostream>
 
-
 UIMaker::UIMaker() : hp(2.5f)
-{
-}
-
-
-UIMaker::UIMaker(SceneGame *hp) : hpinfo(hp)
 {
 }
 
@@ -113,6 +107,15 @@ void UIMaker::Init()
 	textSpeed = 5.0f;
 	deleteDistance = 100.f;
 	isActive = false;
+
+	// boss
+	spriteBossFrame.setTexture(*ResourceMgr::instance()->GetTexture("BOSSFRAMETEX"));
+	spriteBossFrame.setPosition(BOSS_FRAME_X, BOSS_FRAME_Y);
+	spriteBossFrame.setScale(1.0, 1.0);
+	spriteBossHpBar.setTexture(*ResourceMgr::instance()->GetTexture("BOSSHPBARTEX"));
+	spriteBossHpBar.setPosition(BOSS_FRAME_X + 63, BOSS_FRAME_Y + 88);
+	spriteBossHpBar.setScale(7.0f, 2.9);
+
 }
 
 
@@ -154,30 +157,6 @@ void UIMaker::Update(float dt)
 	
 
 
-	// Game UI
-
-	/*stringstream HP;
-	HP << hpinfo->GetMaxPlayerHealthReal() << " / ";
-	textHp.setString(HP.str());*/
-
-
-
-	/*if (InputManager::GetMouseButtonDown(Mouse::Left) && hp > 0.f)
-	{
-		hp *= 0.9f;
-		spriteHpBar.setScale(hp, 2.5);
-	}*/
-	/*if (Keyboard::isKeyPressed(Keyboard::Num6) && hp < 2.5f)
-	{
-		hp += 0.01f;
-		spriteHpBar.setScale(hp, 2.5);
-	}*/
-
-	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ¸®Æ²º» ¸ÔÀ½
-	{
-		subHead = (int)Heads::LITTLEBORN;
-	}
-
 	if (InputManager::GetKeyDown(Keyboard::Space) && subHead != 0)
 	{
 		int change = 0;
@@ -187,8 +166,6 @@ void UIMaker::Update(float dt)
 	
 	}
 }
-
-
 
 
 void UIMaker::DrawSceneTitle(sf::RenderWindow *window)
@@ -222,6 +199,11 @@ void UIMaker::SetHpbarSize(int CurHp, int MaxHp)
 	spriteHpBar.setScale(hp, 2.5);
 }
 
+void UIMaker::SetBossHpbarSize(int CurHp, int MaxHp)
+{
+	bossHp = 7.0f * ((float)CurHp / MaxHp);
+	spriteBossHpBar.setScale(bossHp, 2.9);
+}
 
 
 void UIMaker::DrawSceneGame(sf::RenderWindow *window)
@@ -255,6 +237,10 @@ void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 	window->draw(spriteAbutton);
 	window->draw(textHp);
 	window->draw(underAttackText);
+
+	window->draw(spriteBossFrame);
+	window->draw(spriteBossHpBar);
+
 
 	mouseCursor.Draw(window);
 }

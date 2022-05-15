@@ -6,6 +6,7 @@
 #include "../Source/Utils/ChangeMouse.h"
 #include "../Source/Manager/InputManager.h"
 #include "../Source/Player/Player.h"
+#include "../Source/Monster/PinkEnt/PinkEnt.h"
 
 class SceneGame;
 
@@ -20,7 +21,6 @@ class UIMaker
 {
 private:
 
-	SceneGame *hpinfo;
 
 	Scenes currentScene;
 	MouseCursor mouseCursor;
@@ -53,17 +53,32 @@ private:
 	Sprite spriteLittleBoneIcon3;
 
 	int nowHead = 2;
-	int subHead = 0;
+	int subHead = 1;
 
 	float hp;
+	float bossHpText = 7.0f;
 
 	Text textHp;
+
+	// 보스 UI
+	Sprite spriteBossFrame; // BOSSFRAMETEX
+	Sprite spriteBossHpBar; // BOSSHPBARTEX
+
+	// 소드맨 UI
+	Sprite spriteSwordManFrame; // SWORDMANFRAMETEX
+	Sprite spriteSwordManHpBar; // SWORDMANHPBARTEX
+
+
+	float swordManHp;
+	float bossHp;
 
 	// DamageText
 	Text underAttackText;
 	float textSpeed;
 	float deleteDistance;
 	bool isActive;
+
+
 
 
 public:
@@ -81,6 +96,9 @@ public:
 	const int MINI_HEAD_X = MAIN_FRAME_X;
 	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
 
+	const int BOSS_FRAME_X = 500;
+	const int BOSS_FRAME_Y = 0;
+
 	UIMaker();
 	UIMaker(SceneGame *hp);
 
@@ -95,12 +113,14 @@ public:
 	void SetHpbarText(int CurHp, int MaxHp);
 	void SetHpbarSize(int CurHp, int MaxHp);
 
+	void SetBossHpbarSize(int CurHp, int MaxHp);
+
+
 	// Damage
 	void UnderAttack(Vector2f position, float dt);
 
 
 	virtual void DrawSceneTitle(sf::RenderWindow *window);
 	virtual void DrawSceneGame(sf::RenderWindow *window);
-
 };
 

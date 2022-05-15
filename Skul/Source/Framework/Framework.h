@@ -22,12 +22,15 @@ public:
 	Framework() {} // 멤버변수 초기화
 	~Framework() {}
 
+
 	bool Init();
 	void Run();
 
 	void ProcessEvent(Event event);	    //키입력
 	void Update(float delaTime, RenderWindow *window, View *mainView);		//업데이트
 	void Draw(sf::RenderWindow *window, View *mainView, View *uiView);	//그리기
+
+
 
 	// 윈도우 생성
 	// 메인 루프

@@ -9,16 +9,23 @@
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
+#include "../BossFire.h"
 
 void SceneGame::Init()
 {
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	tilemap.Init();
-	CreateSwordMan(mSwordMans, 5);
+	CreateSwordMan(mSwordMans, 1);
+	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
 	player.SkillInit();
+	player.ChangeEffectInit();
 	ui.Init();
+
+	boss.Init();
+
+	check = forCheckTime.restart();
 }
 
 void SceneGame::Release()
@@ -27,6 +34,7 @@ void SceneGame::Release()
 
 void SceneGame::Start()
 {
+	//Init();
 }
 
 void SceneGame::End()
@@ -35,33 +43,74 @@ void SceneGame::End()
 
 void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 {
+	playTime += check;
+
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Update(dt, player);
+	}
+
 	for (auto SwordMan : mSwordMans)
 	{
-		SwordMan->Update(dt, player.GetPlayerRect(), player.GetPlayerAttackRect(), player.GetPlayerSkiilRect(), player.GetPosition(), player.GetPlayerDamage(), tilemap.GetRects());
+		SwordMan->Update(dt, player);
 	}
 	
 	player.Update(dt, tilemap.GetRects());
+	boss.Update(dt, player.GetPlayerPosition());
+	ui.Update(dt);
 
 	tilemap.CreateBackGround();
 
-	ui.Update(dt);
 
-
-	// 마우스 충돌시 피 까임 확인용
-	bool checkHpHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
-	if (checkHpHit)
+	// 보스가 플레이어 기본공격에 맞음
+	bool isPlayerAttack = boss.GetGlobalBound().intersects(player.GetPlayerAttackRect());
+	if (isPlayerAttack)
 	{
-		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		if (player.GetIsAttack() && boss.underAttack(dt))
 		{
-			player.JeaHit();
-			ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
-			ui.UnderAttack(player.GetPosition(), dt);
+			boss.SetBossHp(10);		
+		}
+	}
+	// 보스가 플레이어 스킬에 맞음
+	bool isPlayerSkill = boss.GetGlobalBound().intersects(player.GetPlayerSkiilRect());
+	if (isPlayerSkill)
+	{
+		if (player.GetIsSkill() && boss.underAttack(dt))
+		{
+			boss.SetBossHp(5);
 		}
 	}
 
 
-	if (InputManager::GetKeyDown(Keyboard::Num7))
+	// 플레이어가 보스 한테 맞음
+	boss.UpdateCollision(player);
+
+
+
+	// 마우스 충돌시 피 까임 확인용
+	bool checkPlayerHit = ui.GetMouseBound().intersects(player.GetGlobalBound());
+	if (checkPlayerHit)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			player.Hit(10);
+		}
+	}
+	bool checkBossHIt = ui.GetMouseBound().intersects(boss.GetGlobalBound());
+	if (checkBossHIt)
+	{
+		if (InputManager::GetMouseButtonDown(Mouse::Left))
+		{
+			boss.SetBossHp(220);
+		}
+	}
+
+	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
+	ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
+	//ui.UnderAttack(player.GetPosition(), dt);
+
+	if (!boss.isAlive())
 	{
 		mgr.ChangeScene(Scenes::END);
 	}
@@ -71,12 +120,19 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
-	player.Draw(*window);
+	
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Draw(*window);
 	}
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Draw(*window);
+	}
+	player.Draw(*window);
 	ui.DrawSceneGame(window);
+	
+	boss.Draw(*window);
 }
 
 void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
@@ -89,12 +145,33 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 
 	for (int i = 0; i < count; i++)
 	{
-		int x = RandomMgr::GetRandom(1200,1500);
-		int y = 920;
+		int x = RandomMgr::GetRandom(1240,1500);
+		int y = 900;
 		mSwordman = new swordman(x, y);
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);
 	}
+	
+}
+
+void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
+{
+	for (auto pinkEnt : mpinkEnt)
+	{
+		delete pinkEnt;
+	}
+	mpinkEnt.clear();
+
+	for (int i = 0; i < count; i++)
+	{
+		int x = RandomMgr::GetRandom(900,1100);
+		int y = 575;
+		pinkEnt = new PinkEnt(x, y);
+		pinkEnt->Init();
+		mpinkEnt.push_back(pinkEnt);
+	}
+
+	
 }
 
 
@@ -103,5 +180,4 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 //{
 //	return  player.GetMaxPlayerHealth();
 //}
-
 

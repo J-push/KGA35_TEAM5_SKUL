@@ -35,7 +35,7 @@ int SceneMapEditor::CreateTile(int c, int r, int idx)
             palette[vertexIndex + 2].texCoords = Vector2f(gridSizeF * 1, offset + gridSizeF);
             palette[vertexIndex + 3].texCoords = Vector2f(gridSizeF * 0, offset + gridSizeF);
 
-            //texIndex 열의 마지막 부분일 떄
+            
             if (5 < texIndex && texIndex <= 11)
             {
                 float offset = (texIndex - 6) * gridSizeF;
@@ -127,7 +127,7 @@ void SceneMapEditor::MoveMap(float dt)
 
 void SceneMapEditor::SetView(RenderWindow *window)
 {
-    //화면 나누기
+    
     tileView->setViewport(sf::FloatRect(0.f, 0.f, 0.5f, 1.f));
     uiView->setViewport(sf::FloatRect(0.5f, 0.f, 0.5f, 1.f));
 
@@ -137,7 +137,7 @@ void SceneMapEditor::SetView(RenderWindow *window)
     const View &temp = window->getView();
 
     window->setView(*tileView);
-    //타일 뷰 그리드
+    
     if (mousePosView.x >= 0.f && mousePosView.y >= 0.f && mousePosView.x <= gridSizeU * mapWidth && mousePosView.y <= gridSizeU * mapHeight)
     {
         mousePosGrid.x = mousePosView.x / gridSizeF;
@@ -145,7 +145,7 @@ void SceneMapEditor::SetView(RenderWindow *window)
     }
 
 
-    //ui 뷰(타일 샘플) 그리드
+   
     if (mousePosView2.x >= 0.f && mousePosView2.y >= 0.f && mousePosView2.x < 960.f && mousePosView2.y < 960.f)
     {
         mousePosGrid2.x = mousePosView2.x / (gridSizeF * 5.f);
@@ -169,7 +169,7 @@ void SceneMapEditor::SetView(RenderWindow *window)
     }
 
     window->setView(temp);
-    //게임 요소 추가 
+    
     if (mousePosWindow.x <= 960.f)
     {
         tileSelector.setPosition(mousePosGrid.x * gridSizeF, mousePosGrid.y * gridSizeF);
@@ -180,7 +180,7 @@ void SceneMapEditor::SetView(RenderWindow *window)
         sampleSelector.setPosition(mousePosGrid2.x * gridSizeF * 5.f, mousePosGrid2.y * gridSizeF * 5.f);
     }
 
-    //UI 업데이트
+    
     std::stringstream ss;
 
     ss << "Screen: " << mousePosScreen.x << " " << mousePosScreen.y << "\n"
@@ -234,19 +234,19 @@ void SceneMapEditor::Init()
         }
     }
 
-    //왼쪽 타일셀렉터
+    
     tileSelector.setSize(Vector2f(gridSizeF, gridSizeF));
     tileSelector.setFillColor(sf::Color::Transparent);
     tileSelector.setOutlineThickness(1.f);
     tileSelector.setOutlineColor(sf::Color::Red);
 
-    //오른쪽 타일셀렉터
+    
     sampleSelector.setSize(Vector2f(gridSizeF * 5, gridSizeF * 5));
     sampleSelector.setFillColor(sf::Color::Transparent);
     sampleSelector.setOutlineThickness(1.f);
     sampleSelector.setOutlineColor(sf::Color::Blue);
 
-    //16:9 기본화면 세팅
+    
     text.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::Red);
@@ -282,7 +282,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     case::InputState::IMAGE:
         if (InputManager::GetMouseButtonDown(Mouse::Button::Left))
         {
-            //타일 선택
+            
             int count = 0;
             if (!currentMousePosition)
             {

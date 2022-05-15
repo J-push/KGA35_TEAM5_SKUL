@@ -8,7 +8,6 @@
 
 using namespace sf;
 
-
 class AnimationController
 {
 private:
@@ -25,7 +24,11 @@ private:
 
 	Sprite *sprite;						// 포인터 이유??
 
+	bool lastFrame;
+
 public:
+	std::function<void()> OnComplete;
+
 	AnimationController();
 
 	void SetTarget(Sprite *sprite);
@@ -42,5 +45,6 @@ public:
 	void ClearPlayQueue();
 	bool ClearPlayQueueCheck();
 
+	bool isLastFrame();
 };
 

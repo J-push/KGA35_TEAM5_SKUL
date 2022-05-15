@@ -45,8 +45,6 @@ void SceneTitle::Update(float dt, RenderWindow *window, View *mainView)
 		mgr.ChangeScene(Scenes::GAME);
 	}
 	
-
-
 	if (InputManager::GetKeyDown(Keyboard::Return))
 	{
 		mgr.ChangeScene(Scenes::GAME);
@@ -54,6 +52,10 @@ void SceneTitle::Update(float dt, RenderWindow *window, View *mainView)
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
 		mgr.ChangeScene(Scenes::EDITOR);
+	}
+	if (InputManager::GetKeyDown(Keyboard::Num9))
+	{
+		mgr.ChangeScene(Scenes::END);
 	}
 	ui.Update(dt);
 
