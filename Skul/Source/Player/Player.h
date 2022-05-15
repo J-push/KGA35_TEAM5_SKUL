@@ -7,8 +7,13 @@
 #include "../../TestRectangle.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
+#include "../Monster/PinkEnt/PinkEnt.h"
+
+class bossfire;
 
 using namespace sf;
+
+class PinkEnt;
 
 enum class PlayerState		//추가
 {
@@ -36,7 +41,6 @@ private:
 	const float ATTACK_DELAY = 0.5f;			//공격 딜레이
 	
 	PlayerState currentAction = PlayerState::IDLE;					//플레이어 상태값
-
 
 	Texture texture;
 
@@ -88,6 +92,7 @@ private:
 	bool isAttack;								//공격했니?
 	bool isSkill;								//스킬썻니?
 	bool isChangeEffect;						//스킬모션 나갈듯?
+
 	float skillAlive = 2.5f;
 	float attackAlive = 0.5f;
 
@@ -114,6 +119,8 @@ private:
 
 
 public:
+	float hitDelay;								//다음 isHit까지의 대기 시간
+
 	void Init();
 	void SkillInit();
 	void ChangeEffectInit();
@@ -134,7 +141,6 @@ public:
 	void Jump();
 	void Down();
 
-
 	void PlayerConllision(std::vector<TestRectangle*> rects);
 
 
@@ -149,7 +155,7 @@ public:
 	// 재휘 추가 최대, 현재체력 받아오기
 	int GetMaxPlayerHealth();
 	int GetCurrentPlayerHealth();
-	void JeaHit();
+	void Hit(int damage);
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
 	bool GetIsSkill();
@@ -165,5 +171,6 @@ public:
 	void GetStateIdle();
 	void ChangeSkul();
 	void ChangeEffectOff();
+
 };
 

@@ -27,9 +27,13 @@ void Player::Init()
 	playerPosition.x = 900.f;
 	playerPosition.y = 250.f;
 
-	//초기 상태 설정
+
 	isAlive = true;
 	isGround = false;
+	// 현섭 공격 맞는 시간 추가
+	hitDelay = 1.f;
+
+	playerSpeed = START_PLAYER_SPEED;
 	isJump = false;
 	isAttack = false;
 	isSkill = false;
@@ -199,10 +203,8 @@ void Player::ChangeEffectInit()
 void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
-
 	Move();
-
-
+  
 	//살음
 	if (isAlive == true)
 	{
@@ -301,7 +303,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 	skillAnimation.Update(dt);
 	changeEffectAnimation.Update(dt);
 
-
 }
 /**********************************************************
 * 설명 : 유한 상태 머신(FSM)
@@ -358,7 +359,6 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::IDLE);
 		}
 		break;
-
 	case PlayerState::MOVE:
 		if ((InputManager::instance()->GetKeyUp(Keyboard::Right) || InputManager::instance()->GetKeyUp(Keyboard::Left)))
 		{
@@ -481,16 +481,13 @@ void Player::AnimationUpdate(float dt)
 			SetState(PlayerState::MOVE);
 		}
 		break;
-
 	default:
 		break;
 	}
 }
 
-
-
 /**********************************************************
-* 설명 : 상태를 설정한다.
+* 설명 : 상태를 설정한다. 		HyeonSeopSwordManHit(swordMan);
 ***********************************************************/
 void Player::SetState(PlayerState newAction)
 {
@@ -745,6 +742,7 @@ void Player::Jump()
 	}
 }
 
+
 /**********************************************************
 * 설명 : 플레이어의 하강동작을 구현한다.
 ***********************************************************/
@@ -756,6 +754,7 @@ void Player::Down()
 	}
 	currentAction = PlayerState::IDLE;
 }
+
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/
@@ -863,11 +862,15 @@ int Player::GetCurrentPlayerHealth()
 	return currentPlayerHealth;
 }
 
-void Player::JeaHit()
+void Player::Hit(int damage)
 {
 	if (currentPlayerHealth > 0)
 	{
-		currentPlayerHealth -= 10;
+		currentPlayerHealth -= damage;
+	}
+	if (currentPlayerHealth < 0)
+	{
+		currentPlayerHealth = 0;
 	}
 }
 
@@ -895,6 +898,8 @@ bool Player::GetIsSkill()
 {
 	return isSkill;
 }
+
+
 
 FloatRect Player::GetPlayerSkiilRect()
 {
@@ -963,3 +968,4 @@ void Player::ChangeEffectOff()
 {
 	isChangeEffect = false;
 }
+

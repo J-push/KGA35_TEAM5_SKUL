@@ -1,3 +1,5 @@
 ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
-fireball,10,1,data_tables/animations/BossFireball/bossfireball_animation_fireball.csv
-supereffect,10,1,data_tables/animations/BossFireball/bossfireball_animation_superEffect.csv
+fireball,20,1,data_tables/animations/BossFireball/bossfireball_animation_fireball.csv
+supereffect,20,0,data_tables/animations/BossFireball/bossfireball_animation_superEffect.csv
+bomb,20,1,data_tables/animations/BossFireball/bossfireball_animation_bomb.csv
+attackeffect,20,0,data_tables/animations/BossFireball/bossfireball_animation_attackEffect.csv

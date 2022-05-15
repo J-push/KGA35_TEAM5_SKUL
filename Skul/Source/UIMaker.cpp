@@ -156,10 +156,6 @@ void UIMaker::Update(float dt)
 	}
 	
 
-	if (Keyboard::isKeyPressed(Keyboard::Num1)) // ∏Æ∆≤∫ª ∏‘¿Ω
-	{
-		subHead = (int)Heads::LITTLEBORN;
-	}
 
 	if (InputManager::GetKeyDown(Keyboard::Space) && subHead != 0)
 	{
@@ -170,8 +166,6 @@ void UIMaker::Update(float dt)
 	
 	}
 }
-
-
 
 
 void UIMaker::DrawSceneTitle(sf::RenderWindow *window)
@@ -210,7 +204,6 @@ void UIMaker::SetBossHpbarSize(int CurHp, int MaxHp)
 	bossHp = 7.0f * ((float)CurHp / MaxHp);
 	spriteBossHpBar.setScale(bossHp, 2.9);
 }
-
 
 
 void UIMaker::DrawSceneGame(sf::RenderWindow *window)

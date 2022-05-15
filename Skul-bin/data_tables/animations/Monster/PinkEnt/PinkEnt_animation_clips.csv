@@ -1,5 +1,6 @@
 ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
-Idle,10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_idle.csv
+Idle(Left),10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Idle(Left).csv
+Idle(Right),10,1,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Idle(Right).csv
 Attack(Left),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Attack(Left).csv
 Attack(Right),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Attack(Right).csv
 Hit(Left),10,0,data_tables/animations/Monster/PinkEnt/PinkEnt_animation_Hit(Left).csv
