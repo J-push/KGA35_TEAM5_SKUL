@@ -15,7 +15,10 @@ void SceneGame::Init()
 {
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
-	tilemap.Init();
+	spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
+	rect.Init();
+	rect.LoadRect();
+	rect.LoadImage();
 	CreateSwordMan(mSwordMans, 1);
 	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
@@ -24,7 +27,6 @@ void SceneGame::Init()
 	ui.Init();
 
 	boss.Init();
-
 	check = forCheckTime.restart();
 }
 
@@ -34,7 +36,7 @@ void SceneGame::Release()
 
 void SceneGame::Start()
 {
-	//Init();
+
 }
 
 void SceneGame::End()
@@ -55,11 +57,9 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 		SwordMan->Update(dt, player);
 	}
 	
-	player.Update(dt, tilemap.GetRects());
+	player.Update(dt, tileMap.Getrects());
 	boss.Update(dt, player.GetPlayerPosition());
 	ui.Update(dt);
-
-	tilemap.CreateBackGround();
 
 
 	// 보스가 플레이어 기본공격에 맞음
@@ -84,7 +84,7 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 
 	// 플레이어가 보스 한테 맞음
 	boss.UpdateCollision(player);
-
+	player.PlayerConllision(rect.Getrects());
 
 
 	// 마우스 충돌시 피 까임 확인용
@@ -108,8 +108,6 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
-	//ui.UnderAttack(player.GetPosition(), dt);
-
 	if (!boss.isAlive())
 	{
 		mgr.ChangeScene(Scenes::END);
@@ -119,8 +117,13 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	window->draw(spriteBackground);
-	tilemap.Draw(window);
+	for (auto blockshape : rect.Getrects())
+	{
+		window->draw(blockshape->GetRectShape());
+	}
 	
+	rect.DrawMap(window,mainView,uiView);
+
 	for (auto SwordMan : mSwordMans)
 	{
 		SwordMan->Draw(*window);
@@ -151,7 +154,6 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);
 	}
-	
 }
 
 void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
@@ -170,14 +172,6 @@ void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
 		pinkEnt->Init();
 		mpinkEnt.push_back(pinkEnt);
 	}
-
-	
 }
 
-
-
-//int SceneGame::GetMaxPlayerHealthReal()
-//{
-//	return  player.GetMaxPlayerHealth();
-//}
 
