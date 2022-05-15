@@ -106,8 +106,6 @@ public:
 	bool underAttack(float dt);
 	void SetBossHp(int damage);
 
-	void SetStateIdle();
-
 	bool isAlive();
 
 	bool UpdateCollision(Player &player);

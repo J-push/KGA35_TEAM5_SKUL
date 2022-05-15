@@ -1,5 +1,14 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-11
+* 내    용 : bossfire의 동작을 구현한다.
+* 수 정 일 :
+*******************************************************************************/
 #include "BossFire.h"
 
+/**********************************************************
+* 설명 : BossFire을 초기화한다.
+***********************************************************/
 BossFire::BossFire() : speed(DEFAULT_SPEED), distance(DEFAULT_DISTANCE)
 {
 	isSuper = false;
@@ -64,16 +73,25 @@ BossFire::~BossFire()
 {
 }
 
+/**********************************************************
+* 설명 : BossFire의 작동여부를 설정한다.
+***********************************************************/
 void BossFire::SetActive(bool active)
 {
 	isActive = active;
 }
 
+/**********************************************************
+* 설명 : BossFire의 작동여부를 받아온다.
+***********************************************************/
 bool BossFire::IsActive()
 {
 	return isActive;
 }
 
+/**********************************************************
+* 설명 : BossFire의 기본공격을 관리한다.
+***********************************************************/
 void BossFire::Shoot(Vector2f pos, Vector2f dir)
 {
 	isSuper = false;
@@ -103,9 +121,11 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 	fireRect.setRotation(dgree);
 
 	spriteSuperEffect.setPosition(6000,6000);
-
 }
 
+/**********************************************************
+* 설명 : BossFire의 필살기를 관리한다.
+***********************************************************/
 void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 {
 	isSuper = true;
@@ -139,11 +159,17 @@ void BossFire::SuperShoot(Vector2f pos, Vector2f dir)
 	fireRect.setRotation(dgree);
 }
 
+/**********************************************************
+* 설명 : BossFire의 실행을 멈춘다.
+***********************************************************/
 void BossFire::Stop()
 {
 	SetActive(false);
 }
 
+/**********************************************************
+* 설명 : BossFire의 업데이트를 관리한다.
+***********************************************************/
 void BossFire::Update(float dt)
 {
 	animation.Update(dt);
@@ -186,35 +212,43 @@ void BossFire::Update(float dt)
 			fireRect.setPosition(Vector2f(3000, 0));
 		}
 	}
-	
-
 }
 
+/**********************************************************
+* 설명 : BossFire의 sprite를 받아온다.
+***********************************************************/
 Sprite BossFire::GetSprite()
 {
 	return spriteFireBall;
 }
 
+/**********************************************************
+* 설명 : 이펙트의 sprite를 받아온다.
+***********************************************************/
 Sprite BossFire::GetSuperEffectSprite()
 {
 	return spriteSuperEffect;
 }
 
+/**********************************************************
+* 설명 : 폭발의 sprite를 받아온다.
+***********************************************************/
 Sprite BossFire::GetBombSprite()
 {
 	return spriteBomb;
 }
 
+/**********************************************************
+* 설명 : fire의 범위를 받아온다.
+***********************************************************/
 RectangleShape BossFire::GetRect()
 {
 	return fireRect;
 }
 
-FloatRect BossFire::GetGlobalBound()
-{
-	return spriteFireBall.getGlobalBounds();
-}
-
+/**********************************************************
+* 설명 : fire의 충돌처리를 담당한다.
+***********************************************************/
 bool BossFire::UpdateCollision(Player &player)
 {
 	FloatRect bounds = fireRect.getGlobalBounds();
