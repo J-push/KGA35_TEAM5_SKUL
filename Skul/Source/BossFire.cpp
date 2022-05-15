@@ -184,7 +184,7 @@ void BossFire::Update(float dt)
 	{
 		if (position.y > 605)
 		{
-			fireRect.setPosition(Vector2f(3000, 0));
+			fireRect.setPosition(Vector2f(10000, 0));
 			speed = 0;
 			position.y = 480;
 			position.x -= 230;
@@ -194,14 +194,14 @@ void BossFire::Update(float dt)
 		}
 		if (position.y == 480)
 		{
-			fireRect.setPosition(Vector2f(3000, 0));
+			fireRect.setPosition(Vector2f(10000, 0));
 		}
 	}
 	if (!isSuper)
 	{
 		if (position.y > 710)
 		{
-			fireRect.setPosition(Vector2f(3000, 0));
+			fireRect.setPosition(Vector2f(10000, 0));
 			speed = 0;
 			position.y = 630;
 			spriteFireBall.setRotation(0);
@@ -210,7 +210,7 @@ void BossFire::Update(float dt)
 		}
 		if (position.y == 630)
 		{
-			fireRect.setPosition(Vector2f(3000, 0));
+			fireRect.setPosition(Vector2f(10000, 0));
 		}
 	}
 }

@@ -39,6 +39,7 @@ void ResourceMgr::Init()
 
 	loaded.push_back(new Resource("BOSSFRAMETEX", "graphics/UI/BossFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSHPBARTEX", "graphics/UI/BossHpBar.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("BOSSGROUNDTEX", "graphics/UI/bossBack.png", ResourceTypes::Texture));
 	
 
 
