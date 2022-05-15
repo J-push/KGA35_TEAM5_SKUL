@@ -11,6 +11,7 @@
 #include <ctime>
 #include <random>
 #include "../Player/Player.h"
+#include "../Manager/ResourceMgr.h"
 
 
 /**********************************************************
