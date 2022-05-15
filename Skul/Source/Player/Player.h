@@ -142,7 +142,7 @@ public:
 	void Jump();
 	void Down();
 
-	void PlayerConllision(std::vector<TestRectangle*> rects);
+	void PlayerConllision(std::vector<ColliderRect*> rects);
 
 
 
