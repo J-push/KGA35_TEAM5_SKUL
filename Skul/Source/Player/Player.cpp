@@ -38,11 +38,11 @@ void Player::Init()
 	isAttack = false;
 	isSkill = false;
 	isDash = false;
-	isSkulChange = false;
+	isSkulChange = true;
 
 	SpritePlayer.setPosition(playerPosition);
-	SpritePlayer.setOrigin(150, 100);
-	SpritePlayer.setScale(PLAYER_SIZE, PLAYER_SIZE);
+	SpritePlayer.setOrigin(70, 62);
+	SpritePlayer.setScale(2.5f, 2.5f);
 	animation.SetTarget(&SpritePlayer);
 	rapidcsv::Document clips("data_tables/animations/Player/player_animation_clips.csv");
 
@@ -80,7 +80,7 @@ void Player::Init()
 		animation.AddClip(clip);
 	}
 
-	animation.Play("Idle");
+	animation.Play("L_Idle");
 	currentAction = PlayerState::IDLE;
 
 	playerRect.setSize(Vector2f(28, 60));
@@ -156,7 +156,7 @@ void Player::SkillInit()
 ***********************************************************/
 void Player::ChangeEffectInit()
 {
-	
+
 	spriteChangeEffect.setPosition(changeEffectPosition);
 	spriteChangeEffect.setOrigin(50, 50);
 	spriteChangeEffect.setScale(4.f, 4.f);
@@ -204,7 +204,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 {
 	stateDt = dt;
 	Move();
-  
+
 	//살음
 	if (isAlive == true)
 	{
@@ -238,46 +238,40 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 			SkillAttack();
 		}
 		//이동
-		else
-		{
 
-			if (isJump == false)
+		if (isJump == false)
+		{
+			//중력
+			gravity += GRAVITY_POWER * dt;
+			if (gravity > 1000.f)
 			{
-				//중력
-				gravity += GRAVITY_POWER * dt;
-				if (gravity > 1000.f)
-				{
-					gravity = 1000.f;
-				}
-			}
-			else if (isJump == true)
-			{
-				Jump();
-			}
-			playerPosition.y += gravity * dt;
-			if (isDash == true)
-			{
-				Dash();
+				gravity = 1000.f;
 			}
 		}
+		else if (isJump == true)
+		{
+
+			Jump();
+		}
+		playerPosition.y += gravity * dt;
+
 		//점프
-	
-	
+
+
 		if (currentAction == PlayerState::DASH)
 		{
 			Dash();
 		}
 	}
 	//죽음
-	else if(isAlive == false)
+	else if (isAlive == false)
 	{
-
+		isAttack = false;
+		isJump = false;
+		isSkill = false;
 	}
-	
 
-	//std::cout << (int)currentAction << std::endl;
 	std::cout << jumpForce << std::endl;
-	//std::cout << gravity << std::endl;
 
 
 	AnimationUpdate(dt);
@@ -358,7 +352,12 @@ void Player::AnimationUpdate(float dt)
 			}
 			SetState(PlayerState::IDLE);
 		}
+		if (currentPlayerHealth <= 0)
+		{
+			SetState(PlayerState::DEAD);
+		}
 		break;
+
 	case PlayerState::MOVE:
 		if ((InputManager::instance()->GetKeyUp(Keyboard::Right) || InputManager::instance()->GetKeyUp(Keyboard::Left)))
 		{
@@ -381,26 +380,13 @@ void Player::AnimationUpdate(float dt)
 		{
 			SetState(PlayerState::JUMP);
 		}
+		if (currentPlayerHealth <= 0)
+		{
+			SetState(PlayerState::DEAD);
+		}
 		break;
 
 	case PlayerState::ATTACK:
-		if (InputManager::instance()->GetKeyDown(Keyboard::Right))				//우
-		{
-			isAttack = false;
-			isLeft = false;
-			SetState(PlayerState::MOVE);
-		}
-		if (InputManager::instance()->GetKeyDown(Keyboard::Left))			//좌
-		{
-			isAttack = false;
-			isLeft = true;
-			SetState(PlayerState::MOVE);
-		}
-		if (InputManager::instance()->GetKeyDown(Keyboard::A))
-		{
-			isAttack = false;
-			SetState(PlayerState::SKILLATTACK);
-		}
 		if (InputManager::instance()->GetKeyDown(Keyboard::Z))
 		{
 			isAttack = false;
@@ -410,6 +396,10 @@ void Player::AnimationUpdate(float dt)
 		{
 			isAttack = false;
 			SetState(PlayerState::JUMP);
+		}
+		if (currentPlayerHealth <= 0)
+		{
+			SetState(PlayerState::DEAD);
 		}
 		break;
 
@@ -428,9 +418,14 @@ void Player::AnimationUpdate(float dt)
 		{
 			SetState(PlayerState::DASH);
 		}
-		break;
-
-	case PlayerState::COMBOATTACK:
+		if (InputManager::instance()->GetKeyDown(Keyboard::C))
+		{
+			SetState(PlayerState::JUMP);
+		}
+		if (currentPlayerHealth <= 0)
+		{
+			SetState(PlayerState::DEAD);
+		}
 		break;
 
 	case PlayerState::JUMP:
@@ -452,16 +447,16 @@ void Player::AnimationUpdate(float dt)
 			isLeft = true;
 			SetState(PlayerState::MOVE);
 		}
-		if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
+		if (currentPlayerHealth <= 0)
 		{
-			SetState(PlayerState::MOVE);
+			SetState(PlayerState::DEAD);
 		}
 		break;
 	case PlayerState::DOWN:
 		break;
 
 	case PlayerState::DASH:
-	
+
 		if (InputManager::instance()->GetKeyDown(Keyboard::C))
 		{
 			SetState(PlayerState::JUMP);
@@ -480,7 +475,12 @@ void Player::AnimationUpdate(float dt)
 			isLeft = true;
 			SetState(PlayerState::MOVE);
 		}
+		if (currentPlayerHealth <= 0)
+		{
+			SetState(PlayerState::DEAD);
+		}
 		break;
+	case PlayerState::DEAD:
 	default:
 		break;
 	}
@@ -499,10 +499,8 @@ void Player::SetState(PlayerState newAction)
 	case PlayerState::IDLE:
 		isAttack = false;
 		animation.OnComplete = std::bind(&Player::ChangeSkul, this);
-		
-		
-		
 		break;
+
 	case PlayerState::MOVE:
 		if (isSkulChange && isLeft)
 		{
@@ -530,7 +528,6 @@ void Player::SetState(PlayerState newAction)
 			playerAttackRect.setScale(1.5f, 1.5f);
 
 		}
-
 		break;
 
 	case PlayerState::ATTACK:
@@ -548,8 +545,6 @@ void Player::SetState(PlayerState newAction)
 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 			animation.PlayQueue("Idle");
 		}
-
-
 		break;
 
 	case PlayerState::SKILLATTACK:
@@ -577,17 +572,14 @@ void Player::SetState(PlayerState newAction)
 			skillAnimation.Play("SoulBurn");
 			animation.Play("Skill1");
 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+			skillAnimation.OnComplete = std::bind(&Player::SkillDelete, this);
 			animation.PlayQueue("Idle");
 		}
-		
-		break;
-
-	case PlayerState::COMBOATTACK:
 		break;
 
 	case PlayerState::JUMP:
 		isJump = true;
-		oldJumpPos = playerPosition;
+		//oldJumpPos = playerPosition;
 		if (isSkulChange)
 		{
 			animation.Play("L_Jump");
@@ -598,10 +590,10 @@ void Player::SetState(PlayerState newAction)
 		}
 		break;
 
-	case PlayerState::DOWN:
-		animation.Play("Down");
-		animation.PlayQueue("Idle");
-		break;
+		/*case PlayerState::DOWN:
+			animation.Play("Down");
+			animation.PlayQueue("Idle");
+			break;*/
 
 	case PlayerState::DASH:
 		isDash = true;
@@ -612,7 +604,7 @@ void Player::SetState(PlayerState newAction)
 			animation.Play("L_Dash");
 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 			animation.PlayQueue("L_Idle");
-			
+
 		}
 		else
 		{
@@ -621,6 +613,18 @@ void Player::SetState(PlayerState newAction)
 			animation.PlayQueue("Idle");
 		}
 		break;
+
+	case PlayerState::DEAD:
+		if (isSkulChange)
+		{
+			animation.Play("L_Dead");
+		}
+		else
+		{
+			animation.Play("Dead");
+		}
+		animation.OnComplete = std::bind(&Player::AliveToDead, this);
+
 	default:
 		break;
 	}
@@ -661,6 +665,7 @@ void Player::Attack()
 		attackAlive = 0.5f;
 		playerAttackRect.setPosition(0, 0);
 		currentAction = PlayerState::IDLE;
+		isAttack = false;
 	}
 }
 
@@ -729,6 +734,9 @@ void Player::Dash()
 void Player::Jump()
 {
 	isGround = false;
+
+
+
 	jumpForce -= GRAVITY_POWER * stateDt;
 	playerPosition.y -= jumpForce * stateDt;
 
@@ -738,21 +746,8 @@ void Player::Jump()
 		isDown = true;
 		jumpForce = 800.f;
 
-		currentAction == PlayerState::DOWN;
+		currentAction = PlayerState::IDLE;
 	}
-}
-
-
-/**********************************************************
-* 설명 : 플레이어의 하강동작을 구현한다.
-***********************************************************/
-void Player::Down()
-{
-	if (isGround == true)
-	{
-		isDown = false;
-	}
-	currentAction = PlayerState::IDLE;
 }
 
 /**********************************************************
@@ -789,7 +784,6 @@ void Player::PlayerConllision(std::vector<TestRectangle*> rects)
 				InputManager::VerticalInit();
 				isGround = true;
 				break;
-
 			defalut:
 				break;
 			}
@@ -825,9 +819,13 @@ FloatRect Player::GetGlobalBound()
 void Player::Draw(RenderWindow& window)
 {
 	//window.setView(*mainView);
-	window.draw(SpritePlayer);
+	if (isAlive)
+	{
+		window.draw(SpritePlayer);
 
-	window.draw(playerRect);
+		window.draw(playerRect);
+	}
+
 	if (isAttack && currentAction == PlayerState::ATTACK)
 	{
 		window.draw(playerAttackRect);
@@ -967,5 +965,16 @@ void Player::ChangeSkul()
 void Player::ChangeEffectOff()
 {
 	isChangeEffect = false;
+}
+
+void Player::AliveToDead()
+{
+	isAlive = false;
+
+}
+
+void Player::SkillDelete()
+{
+	isSkill = false;
 }
 
