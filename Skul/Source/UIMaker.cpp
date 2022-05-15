@@ -208,7 +208,7 @@ void UIMaker::SetBossHpbarSize(int CurHp, int MaxHp)
 
 void UIMaker::DrawSceneGame(sf::RenderWindow *window)
 {
-
+	
 	window->draw(spriteMainFrame);
 	window->draw(spriteHpBar);
 	

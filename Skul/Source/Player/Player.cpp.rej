@@ -1,0 +1,210 @@
+diff a/Skul/Source/Player/Player.cpp b/Skul/Source/Player/Player.cpp	(rejected hunks)
+@@ -156,7 +156,7 @@
+ ***********************************************************/
+ void Player::ChangeEffectInit()
+ {
+-	
++
+ 	spriteChangeEffect.setPosition(changeEffectPosition);
+ 	spriteChangeEffect.setOrigin(50, 50);
+ 	spriteChangeEffect.setScale(4.f, 4.f);
+@@ -204,7 +204,7 @@
+ {
+ 	stateDt = dt;
+ 	Move();
+-  
++
+ 	//살음
+ 	if (isAlive == true)
+ 	{
+@@ -238,46 +238,40 @@
+ 			SkillAttack();
+ 		}
+ 		//이동
+-		else
+-		{
+ 
+-			if (isJump == false)
+-			{
+-				//중력
+-				gravity += GRAVITY_POWER * dt;
+-				if (gravity > 1000.f)
+-				{
+-					gravity = 1000.f;
+-				}
+-			}
+-			else if (isJump == true)
+-			{
+-				Jump();
+-			}
+-			playerPosition.y += gravity * dt;
+-			if (isDash == true)
++		if (isJump == false)
++		{
++			//중력
++			gravity += GRAVITY_POWER * dt;
++			if (gravity > 1000.f)
+ 			{
+-				Dash();
++				gravity = 1000.f;
+ 			}
+ 		}
++		else if (isJump == true)
++		{
++
++			Jump();
++		}
++		playerPosition.y += gravity * dt;
++
+ 		//점프
+-	
+-	
++
++
+ 		if (currentAction == PlayerState::DASH)
+ 		{
+ 			Dash();
+ 		}
+ 	}
+ 	//죽음
+-	else if(isAlive == false)
++	else if (isAlive == false)
+ 	{
+-
++		isAttack = false;
++		isJump = false;
++		isSkill = false;
+ 	}
+-	
+ 
+-	//std::cout << (int)currentAction << std::endl;
+ 	std::cout << jumpForce << std::endl;
+-	//std::cout << gravity << std::endl;
+ 
+ 
+ 	AnimationUpdate(dt);
+@@ -411,6 +397,10 @@
+ 			isAttack = false;
+ 			SetState(PlayerState::JUMP);
+ 		}
++		if (currentPlayerHealth <= 0)
++		{
++			SetState(PlayerState::DEAD);
++		}
+ 		break;
+ 
+ 	case PlayerState::SKILLATTACK:
+@@ -452,16 +447,16 @@
+ 			isLeft = true;
+ 			SetState(PlayerState::MOVE);
+ 		}
+-		if (InputManager::instance()->GetKey(Keyboard::Right) || InputManager::instance()->GetKey(Keyboard::Left))
++		if (currentPlayerHealth <= 0)
+ 		{
+-			SetState(PlayerState::MOVE);
++			SetState(PlayerState::DEAD);
+ 		}
+ 		break;
+ 	case PlayerState::DOWN:
+ 		break;
+ 
+ 	case PlayerState::DASH:
+-	
++
+ 		if (InputManager::instance()->GetKeyDown(Keyboard::C))
+ 		{
+ 			SetState(PlayerState::JUMP);
+@@ -577,17 +572,14 @@
+ 			skillAnimation.Play("SoulBurn");
+ 			animation.Play("Skill1");
+ 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
++			skillAnimation.OnComplete = std::bind(&Player::SkillDelete, this);
+ 			animation.PlayQueue("Idle");
+ 		}
+-		
+-		break;
+-
+-	case PlayerState::COMBOATTACK:
+ 		break;
+ 
+ 	case PlayerState::JUMP:
+ 		isJump = true;
+-		oldJumpPos = playerPosition;
++		//oldJumpPos = playerPosition;
+ 		if (isSkulChange)
+ 		{
+ 			animation.Play("L_Jump");
+@@ -598,10 +590,10 @@
+ 		}
+ 		break;
+ 
+-	case PlayerState::DOWN:
+-		animation.Play("Down");
+-		animation.PlayQueue("Idle");
+-		break;
++		/*case PlayerState::DOWN:
++			animation.Play("Down");
++			animation.PlayQueue("Idle");
++			break;*/
+ 
+ 	case PlayerState::DASH:
+ 		isDash = true;
+@@ -612,7 +604,7 @@
+ 			animation.Play("L_Dash");
+ 			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
+ 			animation.PlayQueue("L_Idle");
+-			
++
+ 		}
+ 		else
+ 		{
+@@ -621,6 +613,18 @@
+ 			animation.PlayQueue("Idle");
+ 		}
+ 		break;
++
++	case PlayerState::DEAD:
++		if (isSkulChange)
++		{
++			animation.Play("L_Dead");
++		}
++		else
++		{
++			animation.Play("Dead");
++		}
++		animation.OnComplete = std::bind(&Player::AliveToDead, this);
++
+ 	default:
+ 		break;
+ 	}
+@@ -825,9 +819,13 @@
+ void Player::Draw(RenderWindow& window)
+ {
+ 	//window.setView(*mainView);
+-	window.draw(SpritePlayer);
++	if (isAlive)
++	{
++		window.draw(SpritePlayer);
++
++		window.draw(playerRect);
++	}
+ 
+-	window.draw(playerRect);
+ 	if (isAttack && currentAction == PlayerState::ATTACK)
+ 	{
+ 		window.draw(playerAttackRect);
+@@ -969,3 +967,14 @@
+ 	isChangeEffect = false;
+ }
+ 
++void Player::AliveToDead()
++{
++	isAlive = false;
++
++}
++
++void Player::SkillDelete()
++{
++	isSkill = false;
++}
++

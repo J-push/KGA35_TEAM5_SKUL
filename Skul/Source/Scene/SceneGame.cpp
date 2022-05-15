@@ -19,6 +19,10 @@ void SceneGame::Init()
 	playerView->setSize(1920.f, 1080.f);
 
 	spriteBackground.setTexture(*ResourceMgr::instance()->GetTexture("BACKGROUNDTEX"));
+	spriteEndFrame.setTexture(*ResourceMgr::instance()->GetTexture("ENDTEX"));
+	spriteEndFrame.setPosition(130, 50);
+	spriteEndFrame.setScale(1.3, 1.3);
+
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
 	rect.Init();
@@ -63,7 +67,11 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 	}
 	
 	player.Update(dt, tileMap.Getrects());
-	boss.Update(dt, player.GetPlayerPosition());
+	if (player.GetPlayerPosition().y < 1920)
+	{
+		boss.Update(dt, player.GetPlayerPosition());
+	}
+
 	ui.Update(dt);
 
 
@@ -136,7 +144,11 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
+
 	window->setView(*playerView);
+
+	window->setMouseCursorVisible(false);
+
 	window->draw(spriteBackground);
 	for (auto blockshape : rect.Getrects())
 	{
@@ -155,8 +167,17 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 		pinkEnt->Draw(*window);
 	}
 	ui.DrawSceneGame(window);
+
+	if (player.GetPlayerPosition().y < 1920)
+	{
+		boss.Draw(*window);
+	}
 	
-	boss.Draw(*window);
+	if (!player.GetIsAlive())
+	{
+		window->clear();
+		window->draw(spriteEndFrame);
+	}
 }
 
 void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
