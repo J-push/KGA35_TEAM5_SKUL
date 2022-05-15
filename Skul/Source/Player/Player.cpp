@@ -7,8 +7,8 @@
 /*include될 헤더*/
 #include "Player.h"
 #include "../Animation/rapidcsv.h"
-#include "../Utils/Utils.h"
 #include "../Manager/ResourceMgr.h"
+#include "../Utils/Utils.h"
 #include <iostream>
 
 /**********************************************************
@@ -25,8 +25,8 @@ void Player::Init()
 	jumpForce = 0.f;
 
 
-	playerPosition.x = 900.f;
-	playerPosition.y = 250.f;
+	playerPosition.x = 600.f;
+	playerPosition.y = 500.f;
 
 
 	isAlive = true;
@@ -281,7 +281,7 @@ void Player::Update(float dt, std::vector<ColliderRect*> rects)
 		isSkill = false;
 	}
 
-	std::cout << jumpForce << std::endl;
+	//std::cout << jumpForce << std::endl;
 
 
 	AnimationUpdate(dt);
@@ -302,7 +302,11 @@ void Player::Update(float dt, std::vector<ColliderRect*> rects)
 	{
 		playerAttackRect.setPosition(playerPosition.x, playerPosition.y - 100);
 	}
-	playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
+	if (isSkill == true)
+	{
+		playerSkillRect.setPosition(skillPosition.x, skillPosition.y - 50);
+	}
+	
 	animation.Update(dt);
 	skillAnimation.Update(dt);
 	changeEffectAnimation.Update(dt);
@@ -546,7 +550,7 @@ void Player::SetState(PlayerState newAction)
 		if (isSkulChange)
 		{
 			animation.Play("L_Attack");
-			animation.OnComplete = std::bind(&Player::ChangeSkul, this);
+			animation.OnComplete = std::bind(&Player::GetStateIdle, this);
 			animation.PlayQueue("L_Idle");
 		}
 		else
@@ -710,6 +714,7 @@ void Player::Dash()
 {
 	if (isDash)
 	{
+		isJump = false;
 		if (isLeft == true)
 		{
 			if (playerPosition.x > dashPosition.x - 300.f)
@@ -738,6 +743,7 @@ void Player::Dash()
 	}
 	if (!isDash)
 	{
+		
 		currentAction = PlayerState::IDLE;
 	}
 }
