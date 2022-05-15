@@ -124,7 +124,6 @@ private:
 	Sound dash;
 	Sound jump;
 	Sound death;
-
 public:
 	float hitDelay;								//다음 isHit까지의 대기 시간
 

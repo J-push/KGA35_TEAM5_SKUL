@@ -90,6 +90,7 @@ void swordman::Init()
 	shapeRightMap.setOutlineColor(Color::Magenta);
 	shapeRightMap.setOutlineThickness(2);
 
+
 	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("SWORDMANATTACKSOUND"));
 
 	dir.x = -1.f;

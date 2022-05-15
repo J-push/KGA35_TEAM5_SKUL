@@ -113,6 +113,7 @@ void Player::Init()
 	jump.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERJUMPSOUND"));
 
 	death.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERDEATHSOUND"));
+
 }
 
 /**********************************************************
@@ -591,6 +592,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::JUMP:
+		jump.play();
 		isJump = true;
 		jump.play();
 		//oldJumpPos = playerPosition;
@@ -610,6 +612,7 @@ void Player::SetState(PlayerState newAction)
 			break;*/
 
 	case PlayerState::DASH:
+		dash.play();
 		isDash = true;
 		dash.play();
 		dashPosition = playerPosition;
@@ -630,6 +633,8 @@ void Player::SetState(PlayerState newAction)
 		break;
 	case PlayerState::DEAD:
 		death.play();
+
+      
 		if (isSkulChange)
 		{
 			animation.Play("L_Dead");
@@ -639,6 +644,7 @@ void Player::SetState(PlayerState newAction)
 			animation.Play("Dead");
 		}
 		animation.OnComplete = std::bind(&Player::AliveToDead, this);
+
 	default:
 		break;
 	}

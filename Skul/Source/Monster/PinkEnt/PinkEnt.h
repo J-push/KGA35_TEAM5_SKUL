@@ -28,51 +28,53 @@ enum class PinkEntMoveDir
 class PinkEnt
 {
 private:
-	const float START_PINKENT_HEALTH = 50; // ÇöÀç Ã¼·Â
-	const float START_PINKENT_DAMAGE = 4; // ÇöÀç µ¥¹ÌÁö
-	const float START_PINKENT_SPEED = 25; // ÇöÀç ¿òÁ÷ÀÓÀÇ ½ºÇÇµå
-	const float START_PINKENT_KNOCKBACKSPEED = 1000.f;	// ³Ë¹é¿¡¼­ ¿òÁ÷ÀÏ °Å¸®¸¦ ¼³Á¤ÇØÁÙ ½ºÇÇµå
+	const float START_PINKENT_HEALTH = 50; // í˜„ì¬ ì²´ë ¥
+	const float START_PINKENT_DAMAGE = 4; // í˜„ì¬ ë°ë¯¸ì§€
+	const float START_PINKENT_SPEED = 25; // í˜„ì¬ ì›€ì§ì„ì˜ ìŠ¤í”¼ë“œ
+	const float START_PINKENT_KNOCKBACKSPEED = 1000.f;	// ë„‰ë°±ì—ì„œ ì›€ì§ì¼ ê±°ë¦¬ë¥¼ ì„¤ì •í•´ì¤„ ìŠ¤í”¼ë“œ
 
-	Vector2f position;	// PinkEntÀÇ À§Ä¡ ÁÂÇ¥
+	Vector2f position;	// PinkEntì˜ ìœ„ì¹˜ ì¢Œí‘œ
 
-	PinkEntAction action;	// ¸ó½ºÅÍÀÇ »óÅÂ ¾×¼Ç
+	PinkEntAction action;	// ëª¬ìŠ¤í„°ì˜ ìƒíƒœ ì•¡ì…˜
 
-	Sprite sprite;	// ¸ó½ºÅÍ ±×¸²
-	AnimationController animation;	// ¸ó½ºÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç È¿°ú 
-	Sprite spriteGas;	// ¸ó½ºÅÍ ½ºÅ³ °¡½º ±×¸²
-	AnimationController animationGas;	//¸ó½ºÅÍ ½ºÅ³ °¡½º ¾Ö´Ï¸ŞÀÌ¼Ç
+	Sprite sprite;	// ëª¬ìŠ¤í„° ê·¸ë¦¼
+	AnimationController animation;	// ëª¬ìŠ¤í„° ì• ë‹ˆë©”ì´ì…˜ íš¨ê³¼ 
+	Sprite spriteGas;	// ëª¬ìŠ¤í„° ìŠ¤í‚¬ ê°€ìŠ¤ ê·¸ë¦¼
+	AnimationController animationGas;	//ëª¬ìŠ¤í„° ìŠ¤í‚¬ ê°€ìŠ¤ ì• ë‹ˆë©”ì´ì…˜
 
 	std::map<std::string, Texture> texMap;
 
-	Vector2f dir;	// ¹æÇâ ÁÂÇ¥
+	Vector2f dir;	// ë°©í–¥ ì¢Œí‘œ
 	PinkEntMoveDir moveDir;
 
-	Vector2f positionMonster;// ¸ó½ºÅÍ È÷Æ® ¹Ú½º
+	Vector2f positionMonster;// ëª¬ìŠ¤í„° íˆíŠ¸ ë°•ìŠ¤
 	RectangleShape shapeMonster;
 
-	Vector2f positionMonsterSkiil; // ¸ó½ºÅÍ ½ºÅ³ È÷Æ®¹Ú½º
+	Vector2f positionMonsterSkiil; // ëª¬ìŠ¤í„° ìŠ¤í‚¬ íˆíŠ¸ë°•ìŠ¤
 	RectangleShape shapeMonsterSkiil;
 
-	bool attackAble;	// Ãæµ¹È®ÀÎÀ» ÅëÇØ °ø°İ °¡´É È®ÀÎ º¯¼ö
+	bool attackAble;	// ì¶©ëŒí™•ì¸ì„ í†µí•´ ê³µê²© ê°€ëŠ¥ í™•ì¸ ë³€ìˆ˜
 
-	FloatRect pinkEntBound;	// ¸ó½ºÅÍ ±×¸² Å©±âÀÇ Rect
-	FloatRect pinkEntSkillBound; // ¸ó½ºÅÍ ½ºÅ³ÀÇ Rect
+	FloatRect pinkEntBound;	// ëª¬ìŠ¤í„° ê·¸ë¦¼ í¬ê¸°ì˜ Rect
+	FloatRect pinkEntSkillBound; // ëª¬ìŠ¤í„° ìŠ¤í‚¬ì˜ Rect
 
-	int mHp;	// Ã¼·Â
-	int damage;	// µ¥¹ÌÁö
-	float speed;	// ½ºÇÇµå
-	float knockBackSpeed; // ³Ë¹é ½ºÇÇµå
+	int mHp;	// ì²´ë ¥
+	int damage;	// ë°ë¯¸ì§€
+	float speed;	// ìŠ¤í”¼ë“œ
+	float knockBackSpeed; // ë„‰ë°± ìŠ¤í”¼ë“œ
 
-	bool hitReady;	// °ø°İÀ» ¹ŞÀ» ¼ö ÀÖ´ÂÁö È®ÀÎ º¯¼ö
-	float attackDelay; // ´ÙÀ½ °ø°İ±îÁöÀÇ ÈÄµô·¹ÀÌ
-	float walkDelay;	// ´ÙÀ½ ÀÌµ¿±îÁöÀÇ µô·¹ÀÌ
-	float hitDelay;	// ´ÙÀ½ °ø°İÀ» ¹ŞÀ» ¶§±îÁöÀÇ µô·¹ÀÌ
+	bool hitReady;	// ê³µê²©ì„ ë°›ì„ ìˆ˜ ìˆëŠ”ì§€ í™•ì¸ ë³€ìˆ˜
+	float attackDelay; // ë‹¤ìŒ ê³µê²©ê¹Œì§€ì˜ í›„ë”œë ˆì´
+	float walkDelay;	// ë‹¤ìŒ ì´ë™ê¹Œì§€ì˜ ë”œë ˆì´
+	float hitDelay;	// ë‹¤ìŒ ê³µê²©ì„ ë°›ì„ ë•Œê¹Œì§€ì˜ ë”œë ˆì´
 
-	bool pinkEntHitCollision;	// ÇÃ·¹ÀÌ¾îÇÑÅ× °ø°İÀ» ¹Ş¾ÒÀ» ¶§ÀÇ Ãæµ¹Ã³¸®
-	bool pinkEntSkillHitCollision;	// ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³¿¡ ¸Â¾ÒÀ» ¶§ÀÇ Ãæµ¹Ã³¸®
+	bool pinkEntHitCollision;	// í”Œë ˆì´ì–´í•œí…Œ ê³µê²©ì„ ë°›ì•˜ì„ ë•Œì˜ ì¶©ëŒì²˜ë¦¬
+	bool pinkEntSkillHitCollision;	// í”Œë ˆì´ì–´ì˜ ìŠ¤í‚¬ì— ë§ì•˜ì„ ë•Œì˜ ì¶©ëŒì²˜ë¦¬
+
+	SoundBuffer attackBuffer;
 	Sound attack;
 public:
-	bool attackReady;	// °ø°İ °¡´É È®ÀÎ º¯¼ö
+	bool attackReady;	// ê³µê²© ê°€ëŠ¥ í™•ì¸ ë³€ìˆ˜
 
 	void Init();
 	PinkEnt(int x, int y);
