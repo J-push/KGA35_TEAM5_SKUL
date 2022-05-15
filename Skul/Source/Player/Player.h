@@ -25,6 +25,7 @@ enum class PlayerState		//추가
 	JUMP,
 	DOWN,
 	DASH,
+	DEAD,
 };
 
 

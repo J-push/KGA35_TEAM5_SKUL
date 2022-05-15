@@ -255,10 +255,6 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 				Jump();
 			}
 			playerPosition.y += gravity * dt;
-			if (isDash == true)
-			{
-				Dash();
-			}
 		}
 		//점프
 	
@@ -480,7 +476,9 @@ void Player::AnimationUpdate(float dt)
 			isLeft = true;
 			SetState(PlayerState::MOVE);
 		}
+		
 		break;
+	case PlayerState::DEAD:
 	default:
 		break;
 	}
@@ -621,6 +619,8 @@ void Player::SetState(PlayerState newAction)
 			animation.PlayQueue("Idle");
 		}
 		break;
+	case PlayerState::DEAD:
+		animation.Play("DEAD");
 	default:
 		break;
 	}
