@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "../Animation/rapidcsv.h"
 #include "../Utils/Utils.h"
+#include "../Manager/ResourceMgr.h"
 #include <iostream>
 
 /**********************************************************
