@@ -1,2 +1,3 @@
 ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
 SoulBurn,10,0,data_tables/animations/PlayerSkill/playerSkill_animation_SoulBurn.csv
+ChangeEffect,17,0,data_tables/animations/PlayerSkill/playerSkill_animation_ChangeEffect.csv

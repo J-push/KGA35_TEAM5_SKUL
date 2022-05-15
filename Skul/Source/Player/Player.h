@@ -29,11 +29,11 @@ private:
 	const float PLAYER_SIZE = 1.5f;				//플레이어 scale 크기
 	const float LEFT_PLAYER_SIZE = -1.5f;		//플레이어 애니매이션 반전
 	const float START_PLAYER_HEALTH = 100;		//시작 플레이어 체력;
-	const float START_PLAYER_SPEED = 200;		//시작 플레이어 속도;
+	const float START_PLAYER_SPEED = 200;		//시작 플레이어 속도; 
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
-	const float GRAVITY_POWER = 980.f;			//중력
+	const float GRAVITY_POWER = 1000.f;			//중력
 	const float DASH_COOLTIME = 3.f;			//대쉬 쿨타임
-	const float ATTACK_DELAY = 0.3f;			//공격 딜레이
+	const float ATTACK_DELAY = 0.5f;			//공격 딜레이
 	
 	PlayerState currentAction = PlayerState::IDLE;					//플레이어 상태값
 
@@ -43,15 +43,23 @@ private:
 	Sprite SpritePlayer;						//player 그리기
 	Vector2f playerPosition;					//player 좌표
 
+
 	Sprite spriteSkill;							//스킬 그리기
 	Vector2f skillPosition;						//스킬 위치
 
+
+	Sprite spriteChangeEffect;
+	Vector2f changeEffectPosition;
+
+
 	AnimationController animation;				//player 애니메이션
 	AnimationController skillAnimation;				//스킬 애니메이션
-	AnimationController littleBorn;
+	AnimationController changeEffectAnimation;				//스킬 애니메이션
+
 
 	IntRect gameMap;
 
+	View* mainView;
 	Vector2i resolution;
 
 	std::map<std::string, Texture> texMap;		//맵관련
@@ -72,13 +80,14 @@ private:
 	bool isDash;								//대쉬했니?
 	float dashDelay;
 	
-
+	bool isAlive;								//죽었니 살았니
+	bool isMoving;
 	bool isJump;								//점프했니?
-	bool isDoubleJump;							//2단점프가능?
 	bool isGround;
 	bool isDown;								//점프후 내려가는지
 	bool isAttack;								//공격했니?
 	bool isSkill;								//스킬썻니?
+	bool isChangeEffect;						//스킬모션 나갈듯?
 	float skillAlive = 2.5f;
 	float attackAlive = 0.5f;
 
@@ -86,7 +95,7 @@ private:
 
 	float attackDelay;							//공격딜레이
 
-	float jumpSpeed;
+	float jumpForce;
 
 	Vector2f dashPosition;						
 
@@ -107,6 +116,7 @@ private:
 public:
 	void Init();
 	void SkillInit();
+	void ChangeEffectInit();
 
 	
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
@@ -122,6 +132,7 @@ public:
 	void SkillAttack();
 	void Dash();
 	void Jump();
+	void Down();
 
 
 	void PlayerConllision(std::vector<TestRectangle*> rects);
@@ -153,5 +164,6 @@ public:
 	
 	void GetStateIdle();
 	void ChangeSkul();
+	void ChangeEffectOff();
 };
 

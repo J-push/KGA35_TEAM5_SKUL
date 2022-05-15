@@ -39,6 +39,7 @@ void SceneMgr::ChangeScene(Scenes newScene)
 	//scenes[(int)currentScene]->Init();
 	scenes[(int)currentScene]->Start();
 }
+
 /*******************************************************************
 * 설명 : 장면을 업데이트 한다.
 ********************************************************************/

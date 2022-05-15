@@ -20,6 +20,7 @@ void SceneGame::Init()
 	CreatePinkEnt(mPinkEnt, 1);
 	player.Init();
 	player.SkillInit();
+	player.ChangeEffectInit();
 	ui.Init();
 
 	boss.Init();
