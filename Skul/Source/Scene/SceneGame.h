@@ -36,6 +36,7 @@ public:
 	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView) override;
 
 	void CreateSwordMan(std::vector<swordman*>& mSwordMans, int count);
+
 	int GetMaxPlayerHealthReal();
 	/*int GetCurrentPlayerHealthReal();*/
 };

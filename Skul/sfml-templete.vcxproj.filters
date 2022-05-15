@@ -62,6 +62,9 @@
     <ClCompile Include="Source\SceneEnd.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="ColliderRect.cpp" />
+    <ClCompile Include="Source\TileMap\Map.cpp">
+      <Filter>TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation\AnimationClip.h">
@@ -128,6 +131,12 @@
     <ClInclude Include="Source\UIMaker.h" />
     <ClInclude Include="ColliderRect.h" />
     <ClInclude Include="DefineList.h" />
+    <ClInclude Include="Source\TileMap\Map.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\csvfile.h">
+      <Filter>TileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Animation">

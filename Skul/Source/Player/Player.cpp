@@ -399,11 +399,6 @@ void Player::Update(float dt, std::vector<ColliderRect*> rects)
 				break;
 
 			case Pivots::CB:
-				/*if (isJump)
-				{
-					isJump = false;
-				}*/
-				
 				mPlayerPosition.y -= (playerRect.getGlobalBounds().top + playerRect.getGlobalBounds().height) - (v->GetRect().top);
 				graviteSpeed = 0;
 				InputManager::VerticalInit();

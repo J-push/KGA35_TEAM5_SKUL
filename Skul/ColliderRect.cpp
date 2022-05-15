@@ -1,16 +1,15 @@
 #include "ColliderRect.h"
 
-ColliderRect::ColliderRect(float centerX, float centerY, float width, float height)
+ColliderRect::ColliderRect(float top, float left, float width, float height)
 {
-	rectangle.top = centerY - height * 0.5f;
-	rectangle.left = centerX - width * 0.5f;
+	rectangle.top = top;
+	rectangle.left = left;
 	rectangle.width = width;
 	rectangle.height = height;
 
 	rectShape.setFillColor(Color::White);
 	rectShape.setSize(Vector2f(width, height));
 	rectShape.setPosition(position);
-	rectShape.setOrigin(Vector2f(width * 0.5f, height * 0.5f));
 }
 
 ColliderRect::ColliderRect(FloatRect getGlobalBounds, Vector2u mousePosGrid)

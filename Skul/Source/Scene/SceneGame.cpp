@@ -69,7 +69,6 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
-
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	player.Draw(*window);
@@ -97,6 +96,8 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 		mSwordMans.push_back(mSwordman);
 	}
 }
+
+
 
 //int SceneGame::GetMaxPlayerHealthReal()
 //{

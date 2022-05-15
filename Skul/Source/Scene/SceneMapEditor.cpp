@@ -1,10 +1,11 @@
 #include "SceneMapEditor.h"
 #include "../Manager/ResourceMgr.h"
+#include "../TileMap/csvfile.h"
 
 int SceneMapEditor::CreateTile(int c, int r, int idx)
 {
-    int cols = MAPWIDTH;
-    int rows = MAPHEIGHT;
+    int cols = mapWidth;
+    int rows = mapHeight;
 
     palette.setPrimitiveType(Quads);
     palette.resize(cols * rows * VERTS_IN_QUAD);
@@ -25,7 +26,7 @@ int SceneMapEditor::CreateTile(int c, int r, int idx)
     {
         for (int c = 0; c < cols; ++c)
         {
-            texIndex = 11;
+            texIndex = 5;
             texIndex = idx;
 
             float offset = texIndex * gridSizeF;
@@ -84,6 +85,12 @@ void SceneMapEditor::CreateRects()
 {
     ColliderRect *rect = new ColliderRect(drag->getGlobalBounds(), downGrid);
     rects.push_back(rect);
+    cout << rect->GetRect().top << " " << rect->GetRect().left << " " << rect->GetRect().width << " " << rect->GetRect().height << "\n";
+}
+
+void SceneMapEditor::DeleteRects()
+{
+    rects.pop_back();
 }
 
 void SceneMapEditor::MoveMap(float dt)
@@ -131,7 +138,7 @@ void SceneMapEditor::SetView(RenderWindow *window)
 
     window->setView(*tileView);
     //타일 뷰 그리드
-    if (mousePosView.x >= 0.f && mousePosView.y >= 0.f && mousePosView.x <= gridSizeU * MAPWIDTH && mousePosView.y <= gridSizeU * MAPHEIGHT)
+    if (mousePosView.x >= 0.f && mousePosView.y >= 0.f && mousePosView.x <= gridSizeU * mapWidth && mousePosView.y <= gridSizeU * mapHeight)
     {
         mousePosGrid.x = mousePosView.x / gridSizeF;
         mousePosGrid.y = mousePosView.y / gridSizeF;
@@ -207,16 +214,17 @@ void SceneMapEditor::ChangeMode()
 
 void SceneMapEditor::Init()
 {
+    InitMapData();
     currentState = true;
     currentMousePosition = true;
     currentInputState = InputState::IMAGE;
     gridSizeU =static_cast<unsigned>(gridSizeF);
 
-    tileMap.resize(MAPWIDTH, vector<RectangleShape>());
-    for (int i = 0; i < MAPWIDTH; i++)
+    tileMap.resize(mapWidth, vector<RectangleShape>());
+    for (int i = 0; i < mapWidth; i++)
     {
-        tileMap[i].resize(MAPHEIGHT, RectangleShape());
-        for (int j = 0; j < MAPHEIGHT; j++)
+        tileMap[i].resize(mapHeight, RectangleShape());
+        for (int j = 0; j < mapHeight; j++)
         {
             tileMap[i][j].setSize(Vector2f(gridSizeF, gridSizeF));
             tileMap[i][j].setFillColor(Color::White);
@@ -298,6 +306,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         if (InputManager::GetMouseButton(Mouse::Button::Left) && currentMousePosition)
         {
             CreateTile(mousePosGrid.x, mousePosGrid.y, currentIndex);
+            cout << "Gridx : " << mousePosGrid.x << " " << "Gridy : " << mousePosGrid.y << " " << "index : " << currentIndex << "\n";
         }
         if (InputManager::GetMouseButton(Mouse::Button::Right) && currentMousePosition)
         {
@@ -310,6 +319,8 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         {
             finalGrid.clear();
             downGrid = mousePosGrid;
+            std::cout << "DGrid : " << downGrid.x << " " << downGrid.y << "\n";
+
             drag = new RectangleShape(Vector2f(0.f, 0.f));
             drag->setFillColor({ 100, 100, 200, 125 });
             drag->setPosition(downGrid.x * gridSizeF, downGrid.y * gridSizeF);
@@ -345,17 +356,67 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
 
             delete drag;
             upGrid = mousePosGrid;
+            std::cout << "UGrid : " << upGrid.x << " " << upGrid.y << "\n";
+        }
+        if (InputManager::GetMouseButtonDown(Mouse::Button::Left) && !currentMousePosition)
+        {
+            currentInputState = InputState::IMAGE;
+        }
+        if (InputManager::GetMouseButtonDown(Mouse::Button::Right) && currentMousePosition)
+        {
+            finalGrid.clear();
+            downGrid = mousePosGrid;
+            drag = new RectangleShape(Vector2f(0.f, 0.f));
+            drag->setFillColor({ 100, 100, 200, 125 });
+            drag->setPosition(downGrid.x * gridSizeF, downGrid.y * gridSizeF);
+        }
+
+        if (InputManager::GetMouseButton(Mouse::Button::Right) && currentMousePosition)
+        {
+            drag->setSize(Vector2f(((int)mousePosGrid.x - (int)downGrid.x) * gridSizeF, ((int)mousePosGrid.y - (int)downGrid.y) * gridSizeF));
+
+            if (((int)mousePosGrid.x - (int)downGrid.x) >= 0)
+            {
+                drag->setSize(Vector2f(drag->getSize().x + gridSizeF, drag->getSize().y));
+            }
+
+            if (((int)mousePosGrid.y - (int)downGrid.y) >= 0)
+            {
+                drag->setSize(Vector2f(drag->getSize().x, drag->getSize().y + gridSizeF));
+            }
+
+            if (((int)mousePosGrid.x - (int)downGrid.x) < 0)
+            {
+                drag->setSize(Vector2f(drag->getSize().x, drag->getSize().y));
+            }
+
+            if (((int)mousePosGrid.y - (int)downGrid.y) < 0)
+            {
+                drag->setSize(Vector2f(drag->getSize().x, drag->getSize().y));
+            }
+        }
+        if (InputManager::GetMouseButtonUp(Mouse::Button::Right))
+        {
+            DeleteRects();
+
+            delete drag;
+            upGrid = mousePosGrid;
         }
         break;
     }
+
+    /*if (InputManager::GetKeyDown(Keyboard::L))
+    {
+        LoadRect();
+    }*/
 }
 
 void SceneMapEditor::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
     window->setView(*tileView);
-    for (int x = 0; x < MAPWIDTH; x++)
+    for (int x = 0; x < mapWidth; x++)
     {
-        for (int y = 0; y < MAPHEIGHT; y++)
+        for (int y = 0; y < mapHeight; y++)
         {
             window->draw(tileMap[x][y]);
         }
@@ -389,6 +450,40 @@ void SceneMapEditor::Draw(sf::RenderWindow *window, View *mainView, View *uiView
     }
     window->setView(*tileView);
 }
+
+void SceneMapEditor::InitMapData()
+{
+    rapidcsv::Document dataFile("data_tables/maps/Map_data.csv");
+    std::vector<string> colId = dataFile.GetColumn<string>("mapId");
+    std::vector<int> colWidth = dataFile.GetColumn<int>("mapWidth");
+    std::vector<int> colHeight = dataFile.GetColumn<int>("mapHeight");
+    std::vector<string> colPath = dataFile.GetColumn<string>("mapDataPath");
+
+    int totalMaps = colId.size();
+
+    this->mapWidth = colWidth[0];
+    this->mapHeight = colHeight[0];
+}
+
+//void LoadRect()
+//{
+//    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapRect_data.csv");
+//
+//    std::vector<string> colId = dataFile.GetColumn<string>("Rect");
+//    std::vector<int> colTop = dataFile.GetColumn<int>("T");
+//    std::vector<int> colLeft = dataFile.GetColumn<int>("L");
+//    std::vector<int> colWidth = dataFile.GetColumn<int>("W");
+//    std::vector<int> colHeight = dataFile.GetColumn<int>("H");
+//    std::vector<string> colPath = dataFile.GetColumn<string>("mapRectPath");
+//
+//    int totalRects = colId.size();
+//
+//    for (int i = 0; i < totalRects; ++i)
+//    {
+//        ColliderRect *rect = new ColliderRect(colTop[i], colLeft[i], colWidth[i], colHeight[i]);
+//        
+//    }
+//}
 
 void SceneMapEditor::Release()
 {

@@ -6,6 +6,8 @@
 #include "../Player/Player.h"
 #include <sstream>
 #include <iostream>
+#include "../Animation/rapidcsv.h"
+#include "../TileMap/Map.h"
 
 using namespace sf;
 using namespace std;
@@ -16,13 +18,10 @@ class SceneMapEditor : public Scene
 private:
 	const int TILE_TYPES = 35;
 	const int VERTS_IN_QUAD = 4;
-	const int MAPWIDTH = 120; 
-	const int MAPHEIGHT = 70;
 	const float VIEW_SPEED = 500.f;
 
 	sf::Sprite spriteTile;
 	sf::Sprite spriteBackground;
-
 	sf::View *tileView;
 	sf::View *uiView;
 
@@ -57,14 +56,17 @@ private:
 	VertexArray palette;
 	InputState currentInputState;
 
+	string name;
 	bool currentMousePosition;
 	bool isDraw;
 	bool currentState;
 
+	int mapWidth;
+	int mapHeight;
 	int currentIndex;
 	int texIndex;
 	int saveNum;
-
+	
 	float gridSizeF = 32.f;
 	unsigned gridSizeU;
 
@@ -77,12 +79,13 @@ public:
 	void ChangeMode();
 	int CreateTile(int c, int r, int idx);
 	void CreateRects();
+	void DeleteRects();
 	void MoveMap(float dt);
 	void SetView(RenderWindow *window);
+	/*std::vector<ColliderRect *> GetRects();*/
 	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
 	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView);
-	/*int SelectIndex();
-	void SaveMap(int saveNum);
-	void LoadMap(int loadNum);*/
+	void LoadRect();
+	void InitMapData();
 };
 
