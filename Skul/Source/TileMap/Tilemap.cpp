@@ -186,23 +186,23 @@ void Tilemap::CreateTestRect()
     rects.clear();
 
     // 왼쪽벽
-    TestRectangle* rect1 = new TestRectangle(64.f, 540.f, 128.f, 1080.f);
+    ColliderRect* rect1 = new ColliderRect(64.f, 540.f, 128.f, 1080.f);
     rects.push_back(rect1);
     //지형
-    TestRectangle* rect2 = new TestRectangle(630.f, 982.f, 1042.f, 360.f);
+    ColliderRect* rect2 = new ColliderRect(630.f, 982.f, 1042.f, 360.f);
     rects.push_back(rect2);
     //낮은지형
-    TestRectangle* rect3 = new TestRectangle(1374.f, 987.f, 448.f, 176.f);  //1120 top, 888 left, 1568 width, 1080 height
+    ColliderRect* rect3 = new ColliderRect(1374.f, 987.f, 448.f, 176.f);  //1120 top, 888 left, 1568 width, 1080 height
     rects.push_back(rect3);
     //오른쪽 끝 지형
-    TestRectangle* rect4 = new TestRectangle(1776.f, 954.f, 354.f, 308.f);
+    ColliderRect* rect4 = new ColliderRect(1776.f, 954.f, 354.f, 308.f);
     rects.push_back(rect4);
     //위에 떠있는 지형
-    TestRectangle* rect5 = new TestRectangle(975, 585, 355, 16);
+    ColliderRect* rect5 = new ColliderRect(975, 585, 355, 16);
     rects.push_back(rect5);
 }
 
-std::vector<TestRectangle*> Tilemap::GetRects()
+std::vector<ColliderRect*> Tilemap::GetRects()
 {
     return rects;
 }

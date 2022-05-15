@@ -5,10 +5,12 @@ void SceneMenu::Init()
 {
 	//test.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
 	//test.setString("MENU");
+	map.Init();
 }
 
 void SceneMenu::Release()
 {
+	map.Release();
 }
 
 void SceneMenu::Start()
@@ -19,15 +21,12 @@ void SceneMenu::End()
 {
 }
 
-void SceneMenu::Update(float dt)
+void SceneMenu::Update(float dt, RenderWindow *window, View *mainView)
 {
-	if (Keyboard::isKeyPressed(Keyboard::Space))
-	{
-		mgr.ChangeScene(Scenes::GAME);
-	}
+	map.Update(dt,window, mainView);
 }
 
-void SceneMenu::Draw(sf::RenderWindow* window)
+void SceneMenu::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
-	//window->draw(test);
+	map.Draw(window, mainView, uiView);
 }

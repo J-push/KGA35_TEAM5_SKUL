@@ -26,56 +26,56 @@ enum class MoveDir
 class swordman
 {
 private:
-	const float START_swordman_HEALTH = 50; // ½ÃÀÛ ¼Òµå¸Ç Ã¼·Â
-	const float START_swordman_SPEED = 70; // ½ÃÀÛ ¼Òµå¸Ç ½ºÇÇµå
-	const float START_swordman_DAMAGE = 2; // ½ÃÀÛ ¼Òµå¸Ç µ¥¹ÌÁö
-	const float START_SWORDMAN_KNOCKBACKSPEED = 1000.f;	// ³Ë¹é¿¡¼­ ¿òÁ÷ÀÏ °Å¸®¸¦ ¼³Á¤ÇØÁÙ ½ºÇÇµå
+	const float START_swordman_HEALTH = 50; // Â‹ÂœÂÂ‘ Â†ÂŒÂ“Âœï§ ï§£ëŒ€
+	const float START_swordman_SPEED = 70; // Â‹ÂœÂÂ‘ Â†ÂŒÂ“Âœï§ ÂŠã…½Â”ì‡°Â“Âœ
+	const float START_swordman_DAMAGE = 2; // Â‹ÂœÂÂ‘ Â†ÂŒÂ“Âœï§ Âê³•ï¿½ï§Â€
+	const float START_SWORDMAN_KNOCKBACKSPEED = 1000.f;	// Â„Â‰è«›ê¹†Â—ÂÂ„Âœ Â›Â€ï§ÂÂ å«„ê³•â”ç‘œ Â„ã…¼Â•Â•ëŒÂ„ ÂŠã…½Â”ì‡°Â“Âœ
 
-	Vector2f position;	// ¼Òµå¸Ç À§Ä¡ ÁÂÇ¥
+	Vector2f position;	// Â†ÂŒÂ“Âœï§ ÂœÂ„ç§»Â˜ é†«ÂŒÂ‘Âœ
 
-	swordmanAction action;	// ¼Òµå¸Ç ¾×¼Ç Å¬·¡½ºÀÇ º¯¼ö
+	swordmanAction action;	// Â†ÂŒÂ“Âœï§ Â•â‰ªÂ…Â˜ ÂëŒ€ÂÂ˜ÂŠã…¼ÂÂ˜ è¹‚Â€ÂˆÂ˜
 
-	Vector2f positionMonster;// ¸ó½ºÅÍ È÷Æ® ¹Ú½º
+	Vector2f positionMonster;// ï§ÑŠÂŠã…½Â„ ÂÂˆÂŠ è«›Â•ÂŠ
 	RectangleShape shapeMonster;
 
-	Vector2f swordManAttackRectPosition;	// ¼Òµå¸Ç °ø°İ ·ºÆ®
+	Vector2f swordManAttackRectPosition;	// Â†ÂŒÂ“Âœï§ æ€¨ë“¦êº½ ï¿½Â‰ÂŠ
 	RectangleShape shapeSwordManAttackRect;
 
-	Vector2f positionLeftMap;// ÁÂÃø º® Ãæµ¹
+	Vector2f positionLeftMap;// é†«ÂŒï§¥ è¸° ç•°â‘¸ÂŒ
 	RectangleShape shapeLeftMap;
 
-	Vector2f positionRightMap;// ¿ìÃø º® Ãæµ¹
+	Vector2f positionRightMap;// Âšê³—ë¥« è¸° ç•°â‘¸ÂŒ
 	RectangleShape shapeRightMap;
 
-	Sprite sprite;	// ¼Òµå¸Ç ±×¸²
-	AnimationController animation;	// ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö
+	Sprite sprite;	// Â†ÂŒÂ“Âœï§ æ´¹ëªƒâ”
+	AnimationController animation;	// Â•Â‹Âˆï§Â”ÂëŒÂ…Â˜ è¹‚Â€ÂˆÂ˜
 
-	std::map<std::string, Texture> texMap;	// ¼Òµå¸Ç cvs ÆÄÀÏ·Î ¾Ö´Ï¸ŞÀÌ¼Ç ¼Ò½º ±×¸®´Â º¯¼ö
+	std::map<std::string, Texture> texMap;	// Â†ÂŒÂ“Âœï§ cvs ÂŒÂŒÂì‡°Âœ Â•Â‹Âˆï§Â”ÂëŒÂ…Â˜ Â†ÂŒÂŠ æ´¹ëªƒâ”ÂŠÂ” è¹‚Â€ÂˆÂ˜
 
-	Vector2f dir;	// ¹æÇâ ¼³Á¤
+	Vector2f dir;	// è«›â‘ºÂ– Â„ã…¼Â•
 	MoveDir moveDir;
 
-	FloatRect swordmanBound;	// ¸ó½ºÅÍ ±×¸² Å©±âÀÇ Rect
-	FloatRect swordManAttackBound; // ¸ó½ºÅÍ °ø°İ ±×¸² Å©±âÀÇ Rect
+	FloatRect swordmanBound;	// ï§ÑŠÂŠã…½Â„ æ´¹ëªƒâ” ÂÑˆë¦°ÂÂ˜ Rect
+	FloatRect swordManAttackBound; // ï§ÑŠÂŠã…½Â„ æ€¨ë“¦êº½ æ´¹ëªƒâ” ÂÑˆë¦°ÂÂ˜ Rect
 
-	int mHp; // ¼Òµå¸Ç ÇöÀç Ã¼·Â
-	int damage;	 // ¼Òµå¸Ç ÇöÀç µ¥¹ÌÁö
+	int mHp; // Â†ÂŒÂ“Âœï§ Â˜Â„Â ï§£ëŒ€
+	int damage;	 // Â†ÂŒÂ“Âœï§ Â˜Â„Â Âê³•ï¿½ï§Â€
 
-	float speed;	// ¼Òµå¸Ç ÇöÀç ½ºÇÇµå
-	float knockBackSpeed; // ³Ë¹é ½ºÇÇµå
+	float speed;	// Â†ÂŒÂ“Âœï§ Â˜Â„Â ÂŠã…½Â”ì‡°Â“Âœ
+	float knockBackSpeed; // Â„Â‰è«› ÂŠã…½Â”ì‡°Â“Âœ
 
-	bool attackReady;	// ¼Òµå¸ÇÀÌ ÇÃ·¹ÀÌ¾î °ø°İ °¡´É ¿©ºÎ ÆÇ´Ü
-	bool hitReady;	// ¼Òµå¸ÇÀÌ °ø°İ¿¡ ¸ÂÀ» ¶§ÀÇ °¡´É ¿©ºÎ ÆÇ´Ü
-	float afterAttack; // ¼Òµå¸Ç °ø°İ ¸ğ¼Ç ÈÄµô·¹ÀÌ
-	float attackDelay;	// °ø°İÀ» ÇÑ¹ø ÇÏ°í ³ª¼­ Àá±ñ ÈÄµô·¹ÀÌ
-	float walkDelay;	// actionÀÌ ´Ù½Ã walk·Î µ¹¾Æ°¡±â Àü±îÁöÀÇ µô·¹ÀÌ½Ã°£
-	float hitDelay;	// ¼Òµå¸ÇÇÑÅ× Ãß°¡Å¸°¡ ÀÖ´ÂÁö È®ÀÎÇÏ´Â ½Ã°£
+	bool attackReady;	// Â†ÂŒÂ“Âœï§â‘¥Â Â”ÂŒï¿½ÂˆÂëŒÂ– æ€¨ë“¦êº½ åª›Â€ÂŠ Â—Ñ‰Â€ ÂŒÂÂ‹
+	bool hitReady;	// Â†ÂŒÂ“Âœï§â‘¥Â æ€¨ë“¦êº½Â—Â ï§ÂÂÂ„ Â•ÂŒÂÂ˜ åª›Â€ÂŠ Â—Ñ‰Â€ ÂŒÂÂ‹
+	float afterAttack; // Â†ÂŒÂ“Âœï§ æ€¨ë“¦êº½ ï§â‘¥Â…Â˜ Â›Â„Â”Âœï¿½ÂˆÂ
+	float attackDelay;	// æ€¨ë“¦êº½ÂÂ„ Â•Âœè¸°Âˆ Â•Â˜æ€¨ Â‚Â˜Â„Âœ ÂæºÂ Â›Â„Â”Âœï¿½ÂˆÂ
+	float walkDelay;	// actionÂ Â‹ã…¼Â‹Âœ walkæ¿¡Âœ ÂŒÂ•Â„åª›Â€æ¹² ï¿½Â„æºÂŒï§Â€ÂÂ˜ Â”Âœï¿½ÂˆÂëŒÂ‹Âœåª›Â„
+	float hitDelay;	// Â†ÂŒÂ“Âœï§â‘¦Â•ÂœÂ…ÂŒ ç•°Â”åª›Â€ÂƒÂ€åª›Â€ ÂÂˆÂŠÂ”ï§Â€ Â™Â•Âëª…Â•Â˜ÂŠÂ” Â‹Âœåª›Â„
 
-	bool attackAble;	// ÇÃ·¹ÀÌ¾î È÷Æ® ¹Ú½º¿ÍÀÇ Ãæµ¹·Î °ø°İ °¡´É ÆÇ´Ü
-	bool leftMapCollision;	// ÇöÀç ÁÂÃø ¸ÊÀÌ¶û Ãæµ¹Çß´ÂÁö, Ãæµ¹ÇßÀ¸¸é Æ®·ç
-	bool rightMapCollision;	// ÇöÀç ¿ìÃø ¸ÊÀÌ¶û Ãæµ¹Çß´ÂÁö, Çß´Ù¸é Æ®·ç
-	bool swordmanHitCollision;	// ÇÃ·¹ÀÌ¾îÇÑÅ× °ø°İÀ» ¹Ş¾ÒÀ» ¶§ÀÇ Ãæµ¹Ã³¸®
-	bool swordmanSkillHitCollision;	// ÇÃ·¹ÀÌ¾îÀÇ ½ºÅ³¿¡ ¸Â¾ÒÀ» ¶§ÀÇ Ãæµ¹Ã³¸®
+	bool attackAble;	// í”Œë ˆì´ì–´ íˆíŠ¸ ë°•ìŠ¤ì™€ì˜ ì¶©ëŒë¡œ ê³µê²© ê°€ëŠ¥ íŒë‹¨
+	bool leftMapCollision;	// í˜„ì¬ ì¢Œì¸¡ ë§µì´ë‘ ì¶©ëŒí–ˆëŠ”ì§€, ì¶©ëŒí–ˆìœ¼ë©´ íŠ¸ë£¨
+	bool rightMapCollision;	// í˜„ì¬ ìš°ì¸¡ ë§µì´ë‘ ì¶©ëŒí–ˆëŠ”ì§€, í–ˆë‹¤ë©´ íŠ¸ë£¨
+	bool swordmanHitCollision;	// í”Œë ˆì´ì–´í•œí…Œ ê³µê²©ì„ ë°›ì•˜ì„ ë•Œì˜ ì¶©ëŒì²˜ë¦¬
+	bool swordmanSkillHitCollision;	// í”Œë ˆì´ì–´ì˜ ìŠ¤í‚¬ì— ë§ì•˜ì„ ë•Œì˜ ì¶©ëŒì²˜ë¦¬
 
 	Sound attack;
 public:
@@ -83,6 +83,7 @@ public:
 	swordman(int x, int y);
 	swordman() {};
 	~swordman();
+
 
 	void Update(float dt, Player& player);
 	void AnimationUpdate(float dt, Player& player);

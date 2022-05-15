@@ -23,13 +23,12 @@ private:
 
 public:
 	void Init();
-	void Release() {}
+	void Release();
 	void ChangeScene(Scenes newScene);
 
-	void Update(float dt);
-	void Draw(sf::RenderWindow* window);
+	void Update(float dt, sf::RenderWindow *window, sf::View *mainView);
+	void Draw(sf::RenderWindow *window, sf::View *mainView, sf::View *uiView);
 	
 	Scenes GetCurrentScene();
-
 };
 

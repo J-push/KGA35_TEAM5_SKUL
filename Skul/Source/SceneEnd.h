@@ -18,8 +18,8 @@ public:
 	virtual void Release() override;
 	virtual void Start() override;
 	virtual void End() override;
-	virtual void Update(float dt) override;
-	virtual void Draw(sf::RenderWindow *window) override;
+	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
+	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView) override;
 
 
 };

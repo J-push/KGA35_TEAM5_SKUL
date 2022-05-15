@@ -209,7 +209,7 @@ void Player::ChangeEffectInit()
 /**********************************************************
 * 설명 : 플레이어를 업데이트한다.
 ***********************************************************/
-void Player::Update(float dt, std::vector<TestRectangle*> rects)
+void Player::Update(float dt, std::vector<ColliderRect*> rects)
 {
 	stateDt = dt;
 	Move();
@@ -247,6 +247,7 @@ void Player::Update(float dt, std::vector<TestRectangle*> rects)
 			SkillAttack();
 		}
 		//이동
+
 
 		if (isJump == false)
 		{
@@ -484,6 +485,7 @@ void Player::AnimationUpdate(float dt)
 			isLeft = true;
 			SetState(PlayerState::MOVE);
 		}
+
 		if (currentPlayerHealth <= 0)
 		{
 			SetState(PlayerState::DEAD);
@@ -585,6 +587,7 @@ void Player::SetState(PlayerState newAction)
 			skillAnimation.OnComplete = std::bind(&Player::SkillDelete, this);
 			animation.PlayQueue("Idle");
 		}
+
 		break;
 
 	case PlayerState::JUMP:
@@ -625,7 +628,6 @@ void Player::SetState(PlayerState newAction)
 			animation.PlayQueue("Idle");
 		}
 		break;
-
 	case PlayerState::DEAD:
 		death.play();
 		if (isSkulChange)
@@ -637,7 +639,6 @@ void Player::SetState(PlayerState newAction)
 			animation.Play("Dead");
 		}
 		animation.OnComplete = std::bind(&Player::AliveToDead, this);
-
 	default:
 		break;
 	}
@@ -766,7 +767,7 @@ void Player::Jump()
 /**********************************************************
 * 설명 : 플레이어의 충돌을 정의한다.
 ***********************************************************/
-void Player::PlayerConllision(std::vector<TestRectangle*> rects)
+void Player::PlayerConllision(std::vector<ColliderRect*> rects)
 {
 	for (auto v : rects)
 	{

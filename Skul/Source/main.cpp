@@ -23,6 +23,5 @@ int main()
 	}
 
 	framework.Run();			//초기화 성공시 run()
-
 	return 0;
 }

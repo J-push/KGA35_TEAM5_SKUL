@@ -37,7 +37,7 @@ void SceneTitle::End()
 /**********************************************************
 * 설명 : SceneTitle을 업데이트한다.
 ***********************************************************/
-void SceneTitle::Update(float dt)
+void SceneTitle::Update(float dt, RenderWindow *window, View *mainView)
 {
 	
 	if (ui.GetClickGameStart())
@@ -51,7 +51,7 @@ void SceneTitle::Update(float dt)
 	}
 	if (Keyboard::isKeyPressed(Keyboard::Num0))
 	{
-		mgr.ChangeScene(Scenes::EDITOR);
+		mgr.ChangeScene(Scenes::MENU);
 	}
 	if (InputManager::GetKeyDown(Keyboard::Num9))
 	{
@@ -64,7 +64,7 @@ void SceneTitle::Update(float dt)
 /**********************************************************
 * 설명 : SceneTitle을 그린다.
 ***********************************************************/
-void SceneTitle::Draw(sf::RenderWindow* window)
+void SceneTitle::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	window->draw(spriteTitle);
 
