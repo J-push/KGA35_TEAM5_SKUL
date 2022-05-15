@@ -182,33 +182,33 @@ void BossFire::Update(float dt)
 
 	if (isSuper)
 	{
-		if (position.y > 680)
+		if (position.y > 605)
 		{
 			fireRect.setPosition(Vector2f(3000, 0));
 			speed = 0;
-			position.y = 550;
+			position.y = 480;
 			position.x -= 230;
 			spriteFireBall.setRotation(0);
 			animation.Play("bomb");
 			animation.OnComplete = std::bind(&BossFire::Stop, this);
 		}
-		if (position.y == 550)
+		if (position.y == 480)
 		{
 			fireRect.setPosition(Vector2f(3000, 0));
 		}
 	}
 	if (!isSuper)
 	{
-		if (position.y > 780)
+		if (position.y > 710)
 		{
 			fireRect.setPosition(Vector2f(3000, 0));
 			speed = 0;
-			position.y = 700;
+			position.y = 630;
 			spriteFireBall.setRotation(0);
 			animation.Play("attackeffect");
 			animation.OnComplete = std::bind(&BossFire::Stop, this);
 		}
-		if (position.y == 700)
+		if (position.y == 630)
 		{
 			fireRect.setPosition(Vector2f(3000, 0));
 		}
