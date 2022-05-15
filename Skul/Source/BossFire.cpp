@@ -100,7 +100,7 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 	animation.Play("fireball");
 
 	SetActive(true);
-	
+
 	fireRect.setSize(Vector2f(80, 40));
 	fireRect.setFillColor(Color(140, 72, 19, 70));
 
@@ -116,11 +116,11 @@ void BossFire::Shoot(Vector2f pos, Vector2f dir)
 	direction = Utils::Normalize(dir);
 	float dgree = Utils::GetAngel(position, position + dir);
 	spriteFireBall.setRotation(dgree);
-	
+
 	fireRect.setPosition(pos);
 	fireRect.setRotation(dgree);
 
-	spriteSuperEffect.setPosition(6000,6000);
+	spriteSuperEffect.setPosition(6000, 6000);
 }
 
 /**********************************************************
@@ -254,10 +254,10 @@ bool BossFire::UpdateCollision(Player &player)
 {
 	FloatRect bounds = fireRect.getGlobalBounds();
 	if (bounds.intersects(player.GetPlayerRect()))
-	{		
+	{
 		Stop();
 		return true;
-	}	
+	}
 	return false;
 }
 
