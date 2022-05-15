@@ -5,7 +5,7 @@
 #include "../TileMap/Tilemap.h"
 #include "../UIMaker.h"
 #include "../Utils/ChangeMouse.h"
-#include "../../TestRectangle.h"
+#include "../../ColliderRect.h"
 #include "../swordman/swordman.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
@@ -44,8 +44,8 @@ public:
 	virtual void Release() override;
 	virtual void Start() override;
 	virtual void End() override;
-	virtual void Update(float dt) override;
-	virtual void Draw(sf::RenderWindow* window) override;
+	virtual void Update(float dt, RenderWindow *window, View *mainView) override;
+	virtual void Draw(sf::RenderWindow *window, View *mainView, View *uiView) override;
 
 	void CreateSwordMan(std::vector<swordman*>& mSwordMans, int count);
 	void CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count);

@@ -41,11 +41,12 @@
     <ClCompile Include="Source\Scene\SceneMenu.cpp" />
     <ClCompile Include="Source\Scene\SceneTitle.cpp" />
     <ClCompile Include="Source\SwordMan\SwordMan.cpp" />
+    <ClCompile Include="Source\TileMap\Map.cpp" />
     <ClCompile Include="Source\TileMap\Tilemap.cpp" />
     <ClCompile Include="Source\UIMaker.cpp" />
     <ClCompile Include="Source\Utils\Singleton.cpp" />
     <ClCompile Include="Source\Utils\Utils.cpp" />
-    <ClCompile Include="TestRectangle.cpp" />
+    <ClCompile Include="ColliderRect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DefineList.h" />
@@ -70,12 +71,14 @@
     <ClInclude Include="Source\Scene\SceneMenu.h" />
     <ClInclude Include="Source\Scene\SceneTitle.h" />
     <ClInclude Include="Source\SwordMan\SwordMan.h" />
+    <ClInclude Include="Source\TileMap\csvfile.h" />
+    <ClInclude Include="Source\TileMap\Map.h" />
     <ClInclude Include="Source\TileMap\Tilemap.h" />
     <ClInclude Include="Source\UIMaker.h" />
     <ClInclude Include="Source\Utils\ChangeMouse.h" />
     <ClInclude Include="Source\Utils\Singleton.h" />
     <ClInclude Include="Source\Utils\Utils.h" />
-    <ClInclude Include="TestRectangle.h" />
+    <ClInclude Include="ColliderRect.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

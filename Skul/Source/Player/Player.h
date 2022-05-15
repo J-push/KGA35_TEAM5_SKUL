@@ -4,7 +4,7 @@
 #include <map>
 #include "../Manager/InputManager.h"
 #include "../TileMap/Tilemap.h"
-#include "../../TestRectangle.h"
+#include "../../ColliderRect.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
@@ -130,7 +130,7 @@ public:
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
 
 	void UpdateInput(float dt);
-	void Update(float dt, std::vector<TestRectangle*> rects);
+	void Update(float dt, std::vector<ColliderRect *> rects);
 
 	void AnimationUpdate(float dt);
 	void SetState(PlayerState newAction);

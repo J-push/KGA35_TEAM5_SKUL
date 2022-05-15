@@ -12,9 +12,6 @@
 #include "../Utils/Singleton.h"
 #include "../Manager/InputManager.h"
 
-// http://rapapa.net/?p=381
-// https://maxlevel-trace.tistory.com/4
-
 using namespace std;
 /**********************************************************
 * 설명 : Framework를 초기화한다.
@@ -66,9 +63,10 @@ void Framework::Run()
 			//ProcessEvent(event);
 		}
 
-		Update(dt.asSeconds());
-		Draw(window);
+		Update(dt.asSeconds(), window, mainView);
+		Draw(window, mainView, uiView);
 	}
+
 }
 /**********************************************************
 * 설명 : 키 입력 처리를 한다.
@@ -81,20 +79,20 @@ void Framework::ProcessEvent(Event event)
 /**********************************************************
 * 설명 : 업데이트를 처리한다.
 ***********************************************************/
-void Framework::Update(float delaTime)
+void Framework::Update(float delaTime, RenderWindow *window, View *mainView)
 {
-	sceneMgr.Update(delaTime);
+	sceneMgr.Update(delaTime, window, mainView);
 	InputManager::Update(delaTime, *window, *mainView);
 }
 
 /**********************************************************
 * 설명 : 화면에 scene을 그려준다.
 ***********************************************************/
-void Framework::Draw(RenderWindow* window)
+void Framework::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 	window->clear();
 
-	sceneMgr.Draw(window);
+	sceneMgr.Draw(window, mainView, uiView);
 
 	window->display();
 }

@@ -114,9 +114,10 @@ swordman::~swordman()
 }
 
 /**********************************************************
-* 설명 : 몬스터의 상태 및 애니메이션을 업데이트 해준다.
+* 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
 void swordman::Update(float dt, Player& player)
+
 {
 	animation.Update(dt);
 	AnimationUpdate(dt, player);

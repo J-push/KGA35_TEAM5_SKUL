@@ -41,7 +41,7 @@ void SceneGame::End()
 {
 }
 
-void SceneGame::Update(float dt)
+void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 {
 	playTime += check;
 
@@ -116,9 +116,8 @@ void SceneGame::Update(float dt)
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow* window)
+void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
-
 	window->draw(spriteBackground);
 	tilemap.Draw(window);
 	
@@ -174,6 +173,8 @@ void SceneGame::CreatePinkEnt(std::vector<PinkEnt*>& mpinkEnt, int count)
 
 	
 }
+
+
 
 //int SceneGame::GetMaxPlayerHealthReal()
 //{
