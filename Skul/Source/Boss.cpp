@@ -564,7 +564,7 @@ void Boss::Die(float dt)
 
 	if (dieCount == 1 && dietimer < 99.0)
 	{
-		bossPosition.x = 1700;
+		bossPosition.x = 3600;
 		bossPosition.y = 680;
 		animation.Play("landingoutrore");
 		dieCount++;

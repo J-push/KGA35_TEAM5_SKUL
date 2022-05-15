@@ -26,5 +26,6 @@ void SceneMenu::Update(float dt, RenderWindow *window, View *mainView)
 
 void SceneMenu::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
+	//window->setMouseCursorVisible(false);
 	map.Draw(window, mainView, uiView);
 }
