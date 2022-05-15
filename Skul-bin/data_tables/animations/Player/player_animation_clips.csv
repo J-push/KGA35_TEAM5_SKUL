@@ -12,4 +12,4 @@ L_Idle,10,1,data_tables/animations/Player/player_animation_littleBorn_idle.csv
 L_Walk,10,1,data_tables/animations/Player/player_animation_littleBorn_Walk.csv
 L_Attack,17,0,data_tables/animations/Player/player_animation_littleBorn_Attack.csv
 L_Dash,10,0,data_tables/animations/Player/player_animation_littleBorn_Dash.csv
-L_Jump,10,0,data_tables/animations/Player/player_animation_littleBorn_Jump.csv
+L_Jump,10,1,data_tables/animations/Player/player_animation_littleBorn_Jump.csv
