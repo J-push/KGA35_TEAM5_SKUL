@@ -104,6 +104,20 @@ void Player::Init()
 	playerSkillRect.setOutlineColor(Color::Black);
 	playerSkillRect.setOutlineThickness(2);
 
+	attackBuffer.loadFromFile("sound/player/Attack.wav");
+	attack.setBuffer(attackBuffer);
+
+	changeBuffer.loadFromFile("sound/player/Change.wav");
+	change.setBuffer(changeBuffer);
+
+	dashBuffer.loadFromFile("sound/player/Dash.wav");
+	dash.setBuffer(dashBuffer);
+
+	jumpBuffer.loadFromFile("sound/player/Jump.wav");
+	jump.setBuffer(jumpBuffer);
+
+	deathBuffer.loadFromFile("sound/player/Death.wav");
+	death.setBuffer(deathBuffer);
 }
 
 /**********************************************************
@@ -339,7 +353,7 @@ void Player::AnimationUpdate(float dt)
 		}
 		if (InputManager::instance()->GetKeyDown(Keyboard::Space))
 		{
-
+			change.play();
 			if (isSkulChange)
 			{
 				isSkulChange = false;
@@ -532,7 +546,7 @@ void Player::SetState(PlayerState newAction)
 
 	case PlayerState::ATTACK:
 		isAttack = true;
-
+		attack.play();
 		if (isSkulChange)
 		{
 			animation.Play("L_Attack");
@@ -578,6 +592,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::JUMP:
+		jump.play();
 		isJump = true;
 		//oldJumpPos = playerPosition;
 		if (isSkulChange)
@@ -596,6 +611,7 @@ void Player::SetState(PlayerState newAction)
 		break;*/
 
 	case PlayerState::DASH:
+		dash.play();
 		isDash = true;
 		dashPosition = playerPosition;
 		dashDelay = DASH_COOLTIME;
@@ -615,6 +631,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::DEAD:
+      
 		if (isSkulChange)
 		{
 			animation.Play("L_Dead");
@@ -624,7 +641,8 @@ void Player::SetState(PlayerState newAction)
 			animation.Play("Dead");
 		}
 		animation.OnComplete = std::bind(&Player::AliveToDead, this);
-		
+		death.play();
+
 	default:
 		break;
 	}
