@@ -29,7 +29,7 @@ Boss::~Boss()
 void Boss::Init()
 {
 	isHit = false;
-	isFireAttacking = false;
+	isFireAttacking = true;
 	isLandingAttacking = false;
 	alive = true;
 
@@ -113,7 +113,7 @@ void Boss::Init()
 }
 
 /**********************************************************
-* 설명 : Boss를 초기화한다.
+* 설명 : Boss의 인트로.
 ***********************************************************/
 void Boss::Intro(float dt)
 {
@@ -144,7 +144,6 @@ void Boss::Intro(float dt)
 ***********************************************************/
 void Boss::Fire(Vector2f dir)
 {
-
 	Vector2f realdir = dir - bossPosition;
 	realdir = Utils::Normalize(realdir);
 
@@ -162,7 +161,6 @@ void Boss::Fire(Vector2f dir)
 	unuseFires.pop_front();
 	useFires.push_back(bossFire);
 	bossFire->Shoot(spawnPos, realdir);
-
 }
 
 /**********************************************************
@@ -181,6 +179,8 @@ void Boss::FireRutine(Vector2f dir, float dt)
 	
 	if (count == 0 && timer < 99.9f)
 	{
+		spriteText.setTexture(*ResourceMgr::instance()->GetTexture("BOSSTEX1"));
+		spriteText.setPosition(bossPosition.x - 100, bossPosition.y - 120);
 		isFireAttacking = true;
 		animation.Play("attack");
 		Fire(dir);
@@ -203,6 +203,8 @@ void Boss::FireRutine(Vector2f dir, float dt)
 	}
 	if (count == 4 && timer < 97.9f)
 	{
+		spriteText.setPosition(Vector2f(6000,6000));
+
 		Fire(dir);
 		count = 0;		
 		timer = 100;
@@ -245,7 +247,7 @@ void Boss::SuperFire(Vector2f dir, Vector2f pos)
 ***********************************************************/
 void Boss::SuperFireRutine(Vector2f dir, float dt)
 {	
-	if (superCount == 0 && timer < 99.9)
+	if (count == 0 && timer < 99.9)
 	{
 		if (bossPosition.x - dir.x > 0) // 플레이어가 보스의 왼쪽
 		{
@@ -256,54 +258,114 @@ void Boss::SuperFireRutine(Vector2f dir, float dt)
 			spriteBoss.setScale(-1.7f, 1.7f);
 		}
 		animation.Play("superready");
-		superCount++;
+		count++;
 	}
-	if (superCount == 1 && timer < 99.1)
+	if (count == 1 && timer < 99.1)
 	{
+		spriteText.setTexture(*ResourceMgr::instance()->GetTexture("BOSSTEX2"));
+		spriteText.setPosition(bossPosition.x - 120, bossPosition.y - 120);
 		isFireAttacking = false;
 		animation.Play("supergo");
-		superCount++;
+		count++;
 	}
-	if (superCount == 2 && timer < 97.9)
+	if (count == 2 && timer < 97.9)
 	{
 		animation.Play("superdoing");
 		SuperFire(dir, Vector2f(380, 230));
-		superCount++;
+		count++;
 	}
-	if (superCount == 3 && timer < 95.9)
+	if (count == 3 && timer < 95.9)
 	{
 		SuperFire(dir, Vector2f(380, 230));
 		SuperFire(dir, Vector2f(1030, 180));
-		superCount++;
+		count++;
 	}
 
-	if (superCount == 4 && timer < 93.9)
+	if (count == 4 && timer < 93.9)
 	{
 		SuperFire(dir, Vector2f(1030, 180));
 		SuperFire(dir, Vector2f(1730, 230));
-		superCount++;
+		count++;
 	}
 
-	if (superCount == 5 && timer < 91.9)
+	if (count == 5 && timer < 91.9)
 	{
 		SuperFire(dir, Vector2f(1730, 230));
-		superCount++;
+		count++;
 	}
 
-	if (superCount == 6 && timer < 89.9)
+	if (count == 6 && timer < 89.9)
 	{
 		SuperFire(dir, Vector2f(380, 230));
 		SuperFire(dir, Vector2f(1030, 180));
 		SuperFire(dir, Vector2f(1730, 230));
-		superCount++;
+		count++;
 	}
-	if (superCount == 7 && timer < 87.9)
+	if (count == 7 && timer < 87.9)
 	{
-		superCount = 0;
+		count = 0;
 		timer = 100;
+		spriteText.setPosition(Vector2f(6000, 6000));
 		moveWhere = RandomMgr::GetRandom(1, 2);
+		isFireAttacking = true;
 		FirstMove(dir, moveWhere);
 		action = BossStatus::MOVE;
+	}
+}
+
+void Boss::SuperFireHp()
+{
+	if (bossPosition.y < 600 && isFireAttacking)
+	{
+		if (currentHp < 350 && superCount == 0)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 300 && superCount == 1)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 250 && superCount == 2)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 200 && superCount == 3)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 150 && superCount == 4)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 100 && superCount == 5)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
+		if (currentHp < 50 && superCount == 6)
+		{
+			timer = 100;
+			count = 0;
+			superCount++;
+			action = BossStatus::METEO;
+		}
 	}
 }
 
@@ -312,59 +374,64 @@ void Boss::SuperFireRutine(Vector2f dir, float dt)
 ***********************************************************/
 void Boss::Landing(Vector2f dir)
 {
-	if (superCount == 0 && timer < 99.9)
+	if (count == 0 && timer < 99.9)
 	{
 		spriteEffect.setScale(2.0f, 2.0f);
 		animation.Play("intro2re"); // 1.0
-		superCount++;
+		count++;
 	}
-	if (superCount == 1 && timer < 99.4)
+	if (count == 1 && timer < 99.4)
 	{
 		bossPosition.x = dir.x;
 		animation.Play("intro2"); // 1.3
-		superCount++;
+		count++;
 	}
-	if (superCount == 2 && timer < 98.8)
+	if (count == 2 && timer < 98.8)
 	{
+		spriteText.setTexture(*ResourceMgr::instance()->GetTexture("BOSSTEX3"));
+		spriteText.setPosition(bossPosition.x - 70, bossPosition.y - 130);
 		animation.Play("landingready"); // 0.4
-		superCount++;
+		count++;
 	}
-	if (superCount == 3 && timer < 98.4)
+	if (count == 3 && timer < 98.4)
 	{
 		isLandingAttacking = true;
-		bossPosition.y = dir.y - 10;
+		bossPosition.y = 750;
+		spriteText.setPosition(bossPosition.x - 70, bossPosition.y - 70);
 		spriteEffect.setPosition(bossPosition.x - 293, bossPosition.y - 275);
 		animationEffect.Play("landingeffect"); // 2.0
 		animation.Play("landingdown");	
-		superCount++;
+		count++;
 	}
-	if (superCount == 4 && timer < 98.2)
+	if (count == 4 && timer < 98.2)
 	{
 		isLandingAttacking = false;
-		superCount++;
+		count++;
 	}
-	if (superCount == 5 && timer < 96.4)
+	if (count == 5 && timer < 96.4)
 	{
 		animation.Play("landingdown"); // 2.0
-		superCount++;		
+		count++;		
 	}
-	if (superCount == 6 && timer < 94.1)
+	if (count == 6 && timer < 94.1)
 	{
+		spriteText.setPosition(Vector2f(6000, 6000));
 		animation.Play("landingoutro"); // 1.0
-		superCount++;
+		count++;
 	}
-	if (superCount == 7 && timer < 93.6)
+	if (count == 7 && timer < 93.6)
 	{
 		bossPosition.y -= 200;
 		animation.Play("intro2"); // 1.3
-		superCount++;
+		count++;
 	}
-	if (superCount == 8 && timer < 92.7)
+	if (count == 8 && timer < 92.7)
 	{
 		animation.Play("Move");
 		bossPosition.y = 550;
-		superCount = 0;
+		count = 0;
 		timer = 100;
+		
 		moveWhere = RandomMgr::GetRandom(1, 2);
 		FirstMove(dir, moveWhere);
 		action = BossStatus::MOVE;
@@ -468,16 +535,16 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 		timer = 100;
 		count = 0;
 	
-		whatAction = RandomMgr::GetRandom(1, 2);
-		if (whatAction == 1)
+		whatAction = RandomMgr::GetRandom(1, 5);
+		if (1 <= whatAction && whatAction <= 4)
 		{
 			action = BossStatus::FIREBALL;
 		}
-		if (whatAction == 2)
+		/*if (whatAction == 2)
 		{
 			action = BossStatus::METEO;
-		}
-		if (whatAction == 3)
+		}*/
+		if (whatAction == 5)
 		{
 			action = BossStatus::LANDING;
 		}	
@@ -505,6 +572,7 @@ void Boss::Die(float dt)
 
 	if (dieCount == 2 && dietimer < 98.0)
 	{
+		bossPosition.y += 20;
 		animation.Play("die");
 		dieCount++;
 	}
@@ -549,6 +617,8 @@ void Boss::Update(float dt, Vector2f dir)
 	{
 		action = BossStatus::DIE;
 	}
+
+	SuperFireHp();
 
 	switch (action)
 	{
@@ -653,6 +723,7 @@ void Boss::Draw(RenderWindow &window)
 	window.draw(spriteAttackEffect);
 	window.draw(bossRect);
 	window.draw(bossLandingRect);
+	window.draw(spriteText);
 
 	for (auto fire : useFires)
 	{

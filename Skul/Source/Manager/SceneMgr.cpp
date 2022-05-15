@@ -20,13 +20,13 @@ void SceneMgr::Init()
 	scenes[(int)Scenes::TITLE] = new SceneTitle(*this);
 	scenes[(int)Scenes::MENU] = new SceneMenu(*this);
 	scenes[(int)Scenes::GAME] = new SceneGame(*this);
-	scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
+	//scenes[(int)Scenes::EDITOR] = new SceneMapEditor(*this);
 	scenes[(int)Scenes::END] = new SceneEnd(*this);
   
 	scenes[(int)Scenes::TITLE]->Init();	
 	scenes[(int)Scenes::MENU]->Init();
 	scenes[(int)Scenes::GAME]->Init();
-	scenes[(int)Scenes::EDITOR]->Init();
+	//scenes[(int)Scenes::EDITOR]->Init();
 	scenes[(int)Scenes::END]->Init();
 }
 void SceneMgr::Release()

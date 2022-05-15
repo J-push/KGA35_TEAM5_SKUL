@@ -234,19 +234,16 @@ void SceneMapEditor::Init()
         }
     }
 
-    
     tileSelector.setSize(Vector2f(gridSizeF, gridSizeF));
     tileSelector.setFillColor(sf::Color::Transparent);
     tileSelector.setOutlineThickness(1.f);
     tileSelector.setOutlineColor(sf::Color::Red);
-
-    
+ 
     sampleSelector.setSize(Vector2f(gridSizeF * 5, gridSizeF * 5));
     sampleSelector.setFillColor(sf::Color::Transparent);
     sampleSelector.setOutlineThickness(1.f);
     sampleSelector.setOutlineColor(sf::Color::Blue);
-
-    
+  
     text.setFont(*ResourceMgr::instance()->GetFont("MAINFONT"));
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::Red);
@@ -465,25 +462,24 @@ void SceneMapEditor::InitMapData()
     this->mapHeight = colHeight[0];
 }
 
-//void LoadRect()
-//{
-//    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapRect_data.csv");
-//
-//    std::vector<string> colId = dataFile.GetColumn<string>("Rect");
-//    std::vector<int> colTop = dataFile.GetColumn<int>("T");
-//    std::vector<int> colLeft = dataFile.GetColumn<int>("L");
-//    std::vector<int> colWidth = dataFile.GetColumn<int>("W");
-//    std::vector<int> colHeight = dataFile.GetColumn<int>("H");
-//    std::vector<string> colPath = dataFile.GetColumn<string>("mapRectPath");
-//
-//    int totalRects = colId.size();
-//
-//    for (int i = 0; i < totalRects; ++i)
-//    {
-//        ColliderRect *rect = new ColliderRect(colTop[i], colLeft[i], colWidth[i], colHeight[i]);
-//        
-//    }
-//}
+void SceneMapEditor::LoadRect()
+{
+    rapidcsv::Document dataFile("data_tables/maps/Stage1_mapRect_data.csv");
+
+    std::vector<string> colId = dataFile.GetColumn<string>("Rect");
+    std::vector<int> colTop = dataFile.GetColumn<int>("T");
+    std::vector<int> colLeft = dataFile.GetColumn<int>("W");
+    std::vector<int> colWidth = dataFile.GetColumn<int>("L");
+    std::vector<int> colHeight = dataFile.GetColumn<int>("H");
+
+    int totalRects = colId.size();
+
+    for (int i = 0; i < totalRects; ++i)
+    {
+        ColliderRect *rect = new ColliderRect(colTop[i], colLeft[i], colWidth[i], colHeight[i]);
+    }
+
+}
 
 void SceneMapEditor::Release()
 {
