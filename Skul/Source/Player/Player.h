@@ -4,7 +4,6 @@
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
-#include "../TileMap/Tilemap.h"
 #include "../../ColliderRect.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
@@ -69,7 +68,6 @@ private:
 	Vector2i resolution;
 
 	std::map<std::string, Texture> texMap;		//맵관련
-	Tilemap tileMap;							//맵관련
 
 
 	//사각형 rect 3개

@@ -7,6 +7,7 @@
 /*include될 헤더*/
 #include "PinkEnt.h"
 #include "../../Animation/rapidcsv.h"
+#include "../../Manager/ResourceMgr.h"
 #include <iostream>
 
 /**********************************************************

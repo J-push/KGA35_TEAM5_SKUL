@@ -58,7 +58,15 @@ void ResourceMgr::Init()
 	loaded.push_back(new Resource("SWORDMANATTACKSOUND", "sound/swordman/attack.wav", ResourceTypes::SoundBuffer));
 	loaded.push_back(new Resource("PINKENTATTACKSOUND", "sound/pinkent/attack.wav", ResourceTypes::SoundBuffer));
 
+	// Sound
+	loaded.push_back(new Resource("PLAYERATTACKSOUND", "sound/player/Attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERCHANGESOUND", "sound/player/Change.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDASHSOUND", "sound/player/Dash.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERJUMPSOUND", "sound/player/Jump.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PLAYERDEATHSOUND", "sound/player/Death.wav", ResourceTypes::SoundBuffer));
 
+	loaded.push_back(new Resource("SWORDMANATTACKSOUND", "sound/swordman/attack.wav", ResourceTypes::SoundBuffer));
+	loaded.push_back(new Resource("PINKENTATTACKSOUND", "sound/pinkent/attack.wav", ResourceTypes::SoundBuffer));
 
 	// endScene용
 	loaded.push_back(new Resource("SCORETEX", "graphics/UI/ScoreFrame.png", ResourceTypes::Texture));
