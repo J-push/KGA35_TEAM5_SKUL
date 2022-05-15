@@ -124,8 +124,8 @@ void PinkEnt::Update(float dt, Player& player)
 	shapeMonster.setPosition(position.x, position.y - 25);
 	shapeMonster.setOrigin(36, 61);
 
-	shapeMonsterSkiil.setSize(Vector2f(250.f, 250.f));
-	shapeMonsterSkiil.setPosition(position.x - 90, position.y - 120);
+	shapeMonsterSkiil.setSize(Vector2f(370.f, 250.f));
+	shapeMonsterSkiil.setPosition(position.x - 170, position.y - 120);
 	shapeMonsterSkiil.setOrigin(36, 61);
 }
 
@@ -191,13 +191,8 @@ void PinkEnt::AnimationUpdate(float dt, Player& player)
 		Move(dt);
 		if (attackAble)
 		{
-			IsAttackAble(dt);
-
-			if (attackReady)
-			{
-				attackReady = false;
-				SetAction(PinkEntAction::Attack, player);
-			}
+			attackReady = false;
+			SetAction(PinkEntAction::Attack, player);
 		}
 		if (pinkEntHitCollision || pinkEntSkillHitCollision)
 		{
