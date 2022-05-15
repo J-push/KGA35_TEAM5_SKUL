@@ -18,6 +18,7 @@ private:
 	float backGroundX = 1920.f / 1332.f;
 	float backGroundY = 1080.f / 850.f;
 	sf::Sprite spriteBackground;
+	Sprite spriteEndFrame;
 	sf::Sprite spriteTile;
 	Player player;
 	std::vector<swordman*> mSwordMans;	// 소드맨 여러마리 생성
