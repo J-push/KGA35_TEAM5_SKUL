@@ -182,11 +182,12 @@ void BossFire::Update(float dt)
 
 	if (isSuper)
 	{
-		if (position.y > 690)
+		if (position.y > 680)
 		{
 			fireRect.setPosition(Vector2f(3000, 0));
 			speed = 0;
 			position.y = 550;
+			position.x -= 230;
 			spriteFireBall.setRotation(0);
 			animation.Play("bomb");
 			animation.OnComplete = std::bind(&BossFire::Stop, this);
