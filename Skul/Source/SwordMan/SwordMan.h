@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include "../Animation/AnimationController.h"
 #include <map>
 
@@ -75,6 +76,8 @@ private:
 	bool rightMapCollision;	// 현재 우측 맵이랑 충돌했는지, 했다면 트루
 	bool swordmanHitCollision;	// 플레이어한테 공격을 받았을 때의 충돌처리
 	bool swordmanSkillHitCollision;	// 플레이어의 스킬에 맞았을 때의 충돌처리
+
+	Sound attack;
 public:
 	void Init();
 	swordman(int x, int y);

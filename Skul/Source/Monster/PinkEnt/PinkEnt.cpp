@@ -81,6 +81,8 @@ void PinkEnt::Init()
 	shapeMonsterSkiil.setOutlineColor(Color::Blue);
 	shapeMonsterSkiil.setOutlineThickness(2);
 
+	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PINKENTATTACKSOUND"));
+
 	dir.x = -1.f;
 	dir.y = 0.f;
 	float length = sqrt(dir.x * dir.x + dir.y * dir.y);
@@ -219,6 +221,7 @@ void PinkEnt::SetAction(PinkEntAction entAction, Player& player)
 	case PinkEntAction::Idle:
 		break;
 	case PinkEntAction::Attack:
+		attack.play();
 		player.Hit(4);
 
 		if (player.GetPlayerPosition().x < position.x)

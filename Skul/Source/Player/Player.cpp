@@ -104,6 +104,15 @@ void Player::Init()
 	playerSkillRect.setOutlineColor(Color::Black);
 	playerSkillRect.setOutlineThickness(2);
 
+	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERATTACKSOUND"));
+
+	change.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERCHANGESOUND"));
+
+	dash.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERDASHSOUND"));
+
+	jump.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERJUMPSOUND"));
+
+	death.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERDEATHSOUND"));
 }
 
 /**********************************************************
@@ -339,7 +348,7 @@ void Player::AnimationUpdate(float dt)
 		}
 		if (InputManager::instance()->GetKeyDown(Keyboard::Space))
 		{
-
+			change.play();
 			if (isSkulChange)
 			{
 				isSkulChange = false;
@@ -532,6 +541,7 @@ void Player::SetState(PlayerState newAction)
 
 	case PlayerState::ATTACK:
 		isAttack = true;
+		attack.play();
 
 		if (isSkulChange)
 		{
@@ -579,6 +589,7 @@ void Player::SetState(PlayerState newAction)
 
 	case PlayerState::JUMP:
 		isJump = true;
+		jump.play();
 		//oldJumpPos = playerPosition;
 		if (isSkulChange)
 		{
@@ -597,6 +608,7 @@ void Player::SetState(PlayerState newAction)
 
 	case PlayerState::DASH:
 		isDash = true;
+		dash.play();
 		dashPosition = playerPosition;
 		dashDelay = DASH_COOLTIME;
 		if (isSkulChange)
@@ -615,6 +627,7 @@ void Player::SetState(PlayerState newAction)
 		break;
 
 	case PlayerState::DEAD:
+		death.play();
 		if (isSkulChange)
 		{
 			animation.Play("L_Dead");

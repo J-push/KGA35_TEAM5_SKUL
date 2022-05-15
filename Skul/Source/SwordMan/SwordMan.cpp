@@ -90,6 +90,8 @@ void swordman::Init()
 	shapeRightMap.setOutlineColor(Color::Magenta);
 	shapeRightMap.setOutlineThickness(2);
 
+	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("SWORDMANATTACKSOUND"));
+
 	dir.x = -1.f;
 	dir.y = 0.f;
 	float length = sqrt(dir.x * dir.x + dir.y * dir.y);
@@ -114,9 +116,10 @@ swordman::~swordman()
 }
 
 /**********************************************************
-* 설명 : 몬스터의 상태 및 애니메이션을 업데이트 해준다.
+* 설명 : 소드맨 동작 처리 함수
 ***********************************************************/
 void swordman::Update(float dt, Player& player)
+
 {
 	animation.Update(dt);
 	AnimationUpdate(dt, player);
@@ -253,6 +256,7 @@ void swordman::SetAction(swordmanAction swordManAction, Player& player)
 	case swordmanAction::Idle:
 		break;
 	case swordmanAction::Attack:
+		attack.play();
 		player.Hit(2);
 
 		if (player.GetPlayerPosition().x < position.x)
