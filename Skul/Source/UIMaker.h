@@ -20,6 +20,8 @@ enum class Heads
 class UIMaker
 {
 private:
+
+
 	Scenes currentScene;
 	MouseCursor mouseCursor;
 
@@ -36,6 +38,7 @@ private:
 	std::map<std::string, Texture> texMap;
 
 	bool clickGameStart;
+
 
 	// Game UI
 	Sprite spriteMainFrame;

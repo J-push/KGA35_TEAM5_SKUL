@@ -9,7 +9,7 @@ ColliderRect::ColliderRect(float top, float left, float width, float height)
 
 	rectShape.setFillColor(Color::White);
 	rectShape.setSize(Vector2f(width, height));
-	rectShape.setPosition(Vector2f(left, top));
+	rectShape.setPosition(position);
 }
 
 ColliderRect::ColliderRect(FloatRect getGlobalBounds, Vector2u mousePosGrid)

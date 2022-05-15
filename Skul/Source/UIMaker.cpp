@@ -115,7 +115,9 @@ void UIMaker::Init()
 	spriteBossHpBar.setTexture(*ResourceMgr::instance()->GetTexture("BOSSHPBARTEX"));
 	spriteBossHpBar.setPosition(BOSS_FRAME_X + 63, BOSS_FRAME_Y + 88);
 	spriteBossHpBar.setScale(7.0f, 2.9);
+
 }
+
 
 void UIMaker::Update(float dt)
 {

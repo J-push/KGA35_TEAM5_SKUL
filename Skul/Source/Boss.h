@@ -2,7 +2,6 @@
 
 #include "../Source/Animation/AnimationController.h"
 #include "../Source/Utils/Utils.h"
-#include "../Source/Manager/ResourceMgr.h"
 #include <map>
 #include "../Source/BossFire.h"
 #include "../Source/Manager/RandomMgr.h"
@@ -29,8 +28,6 @@ private:
 	int currentHp = 400;
 	float speed = 100;
 
-	Sprite spriteText;
-
 	BossStatus action;
 
 	Sprite spriteBoss;
@@ -55,8 +52,8 @@ private:
 
 	int introCount;
 	int count;
-	int superCount = 0;
 	int dieCount = 0;
+	int superCount;
 	bool bossLook; // ture¸é walkback
 
 	float timer = 100;
@@ -85,7 +82,6 @@ public:
 	void FireRutine(Vector2f dir, float dt);
 	void SuperFire(Vector2f dir, Vector2f pos);
 	void SuperFireRutine(Vector2f dir , float dt);
-	void SuperFireHp();
 	void Landing(Vector2f dir);
 
 	void FirstMove(Vector2f dir, int moving);

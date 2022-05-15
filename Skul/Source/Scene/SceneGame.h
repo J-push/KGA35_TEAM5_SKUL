@@ -10,7 +10,7 @@
 #include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
 #include "../Boss.h"
-#include "../Scene/SceneMapEditor.h"
+
 
 class SceneGame : public Scene
 {

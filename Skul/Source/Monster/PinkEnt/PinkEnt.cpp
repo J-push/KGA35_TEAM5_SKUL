@@ -81,7 +81,6 @@ void PinkEnt::Init()
 	shapeMonsterSkiil.setOutlineColor(Color::Blue);
 	shapeMonsterSkiil.setOutlineThickness(2);
 
-	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PINKENTATTACKSOUND"));
 	attackBuffer.loadFromFile("sound/pinkent/attack.wav");
 	attack.setBuffer(attackBuffer);
 

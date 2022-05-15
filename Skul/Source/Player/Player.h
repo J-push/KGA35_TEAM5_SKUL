@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "SFML/Audio.hpp"
+#include <SFML/Audio.hpp>
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
 #include "../TileMap/Tilemap.h"
-#include "../../TestRectangle.h"
+#include "../../ColliderRect.h"
 #include "../Utils/Utils.h"
 #include "../SwordMan/SwordMan.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
@@ -41,7 +41,7 @@ private:
 	const float GRAVITY_POWER = 1000.f;			//중력
 	const float DASH_COOLTIME = 3.f;			//대쉬 쿨타임
 	const float ATTACK_DELAY = 0.5f;			//공격 딜레이
-
+	
 	PlayerState currentAction = PlayerState::IDLE;					//플레이어 상태값
 
 	Texture texture;
@@ -85,7 +85,7 @@ private:
 
 	bool isDash;								//대쉬했니?
 	float dashDelay;
-
+	
 	bool isAlive;								//죽었니 살았니
 	bool isMoving;
 	bool isJump;								//점프했니?
@@ -104,7 +104,7 @@ private:
 
 	float jumpForce;
 
-	Vector2f dashPosition;
+	Vector2f dashPosition;						
 
 	float playerSpeed;							//player 속도
 
@@ -119,10 +119,15 @@ private:
 	bool isSkulChange;
 
 	//  현섭 추가
+	SoundBuffer attackBuffer;
 	Sound attack;
+	SoundBuffer changeBuffer;
 	Sound change;
+	SoundBuffer dashBuffer;
 	Sound dash;
+	SoundBuffer jumpBuffer;
 	Sound jump;
+	SoundBuffer deathBuffer;
 	Sound death;
 public:
 	float hitDelay;								//다음 isHit까지의 대기 시간
@@ -131,11 +136,11 @@ public:
 	void SkillInit();
 	void ChangeEffectInit();
 
-
+	
 	void Spawn(IntRect arena, Vector2i res, int tileSize);
 
 	void UpdateInput(float dt);
-	void Update(float dt, std::vector<TestRectangle*> rects);
+	void Update(float dt, std::vector<ColliderRect *> rects);
 
 	void AnimationUpdate(float dt);
 	void SetState(PlayerState newAction);
@@ -147,7 +152,7 @@ public:
 	void Jump();
 	void Down();
 
-	void PlayerConllision(std::vector<TestRectangle*> rects);
+	void PlayerConllision(std::vector<ColliderRect*> rects);
 
 
 
@@ -155,7 +160,7 @@ public:
 	Vector2f GetPosition();
 	Sprite GetSprite();
 	virtual FloatRect GetGlobalBound();
-	void Draw(RenderWindow& window);
+	void Draw(RenderWindow &window);
 
 
 	// 재휘 추가 최대, 현재체력 받아오기
@@ -173,11 +178,10 @@ public:
 
 	int GetPlayerDamage();	// 평타 데미지
 
-
+	
 	void GetStateIdle();
 	void ChangeSkul();
 	void ChangeEffectOff();
-	void AliveToDead();
-	void SkillDelete();
+
 };
 
