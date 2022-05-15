@@ -211,8 +211,8 @@ void SceneMapEditor::ChangeMode()
 
 void SceneMapEditor::Init()
 {
-    LoadRect();
-    LoadImage();
+    //LoadRect();
+    //LoadImage();
     currentState = true;
     currentMousePosition = true;
     currentInputState = InputState::IMAGE;
@@ -403,6 +403,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
     if (InputManager::GetKeyDown(Keyboard::L))
     {
         LoadRect();
+        LoadImage();
     }
 }
 

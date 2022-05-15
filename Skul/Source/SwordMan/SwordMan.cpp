@@ -79,16 +79,16 @@ void swordman::Init()
 	shapeMonster.setOutlineColor(Color::Yellow);
 	shapeMonster.setOutlineThickness(2);
 
-	shapeLeftMap.setPosition(1050, 800);
-	shapeLeftMap.setSize(Vector2f(100.f, 100.f));
+	shapeLeftMap.setPosition(880, 750);
+	shapeLeftMap.setSize(Vector2f(100.f, 140.f));
 	shapeLeftMap.setFillColor(Color::Transparent);
 	shapeLeftMap.setOutlineColor(Color::Blue);
 	shapeLeftMap.setOutlineThickness(2);
 
-	shapeRightMap.setPosition(1600, 800);
-	shapeRightMap.setSize(Vector2f(100.f, 100.f));
+	shapeRightMap.setPosition(1480, 750);
+	shapeRightMap.setSize(Vector2f(100.f, 140.f));
 	shapeRightMap.setFillColor(Color::Transparent);
-	shapeRightMap.setOutlineColor(Color::Magenta);
+	shapeRightMap.setOutlineColor(Color::Blue);
 	shapeRightMap.setOutlineThickness(2);
 
 	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("SWORDMANATTACKSOUND"));

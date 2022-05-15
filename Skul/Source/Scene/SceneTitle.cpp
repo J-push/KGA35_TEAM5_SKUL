@@ -66,6 +66,7 @@ void SceneTitle::Update(float dt, RenderWindow *window, View *mainView)
 ***********************************************************/
 void SceneTitle::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
+	//window->setMouseCursorVisible(false);
 	window->draw(spriteTitle);
 
 	

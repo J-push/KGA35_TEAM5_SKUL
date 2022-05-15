@@ -63,15 +63,15 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 {
 	playTime += check;
 
-	for (auto pinkEnt : mPinkEnt)
-	{
-		pinkEnt->Update(dt, player);
-	}
+	//for (auto pinkEnt : mPinkEnt)
+	//{
+	//	pinkEnt->Update(dt, player);
+	//}
 
-	for (auto SwordMan : mSwordMans)
-	{
-		SwordMan->Update(dt, player);
-	}
+	//for (auto SwordMan : mSwordMans)
+	//{
+	//	SwordMan->Update(dt, player);
+	//}
 	
 	player.Update(dt, tileMap.Getrects());
 	if (player.GetPlayerPosition().x > 1920)
@@ -151,7 +151,6 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
-
 	window->draw(spriteBossBackGround);
 	window->setView(*playerView);
 
@@ -165,15 +164,15 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 	
 	rect.DrawMap(window,mainView,uiView);
 
-	for (auto SwordMan : mSwordMans)
-	{
-		SwordMan->Draw(*window);
-	}
+	//for (auto SwordMan : mSwordMans)
+	//{
+	//	SwordMan->Draw(*window);
+	//}
 	player.Draw(*window);
-	for (auto pinkEnt : mPinkEnt)
-	{
-		pinkEnt->Draw(*window);
-	}
+	//for (auto pinkEnt : mPinkEnt)
+	//{
+	//	pinkEnt->Draw(*window);
+	//}
 	ui.DrawSceneGame(window);
 
 	if (player.GetPlayerPosition().x > 1920)
@@ -198,8 +197,8 @@ void SceneGame::CreateSwordMan(std::vector<swordman*>& mSwordMans, int count)
 
 	for (int i = 0; i < count; i++)
 	{
-		int x = RandomMgr::GetRandom(1240,1500);
-		int y = 900;
+		int x = RandomMgr::GetRandom(1100,1400);
+		int y = 860;
 		mSwordman = new swordman(x, y);
 		mSwordman->Init();
 		mSwordMans.push_back(mSwordman);

@@ -26,7 +26,7 @@ class Boss
 {
 private:
 	int maxHp = 400;
-	int currentHp = 400;
+	int currentHp = 20;
 	float speed = 100;
 
 	Sprite spriteText;

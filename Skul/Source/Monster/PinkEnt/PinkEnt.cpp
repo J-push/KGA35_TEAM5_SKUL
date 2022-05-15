@@ -303,8 +303,8 @@ void PinkEnt::Hit(float dt, Player& player)
 ***********************************************************/
 void PinkEnt::Move(float dt)
 {
-	Vector2f limitMinMove(800, 600);
-	Vector2f limitMaxMove(1150, 600);
+	Vector2f limitMinMove(600, 600);
+	Vector2f limitMaxMove(950, 600);
 
 	sprite.setOrigin(36, 61);
 
