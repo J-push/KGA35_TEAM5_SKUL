@@ -1,4 +1,13 @@
+/******************************************************************************
+* 작 성 자 : 김 재 휘
+* 작 성 일 : 2022-05-10
+* 내    용 : boss의 동작을 구현한다.
+* 수 정 일 :
+*******************************************************************************/
 #include "Boss.h"
+
+// intro1 intro2 intro2re attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
+// superdoing superready supergo landingeffect landingoutro
 
 Boss::~Boss()
 {
@@ -14,6 +23,9 @@ Boss::~Boss()
 	useFires.clear();
 }
 
+/**********************************************************
+* 설명 : Boss를 초기화한다.
+***********************************************************/
 void Boss::Init()
 {
 	isHit = false;
@@ -100,6 +112,9 @@ void Boss::Init()
 	action = BossStatus::INTRO;
 }
 
+/**********************************************************
+* 설명 : Boss를 초기화한다.
+***********************************************************/
 void Boss::Intro(float dt)
 {
 	if (introCount == 0 && timer < 99.9)
@@ -124,6 +139,9 @@ void Boss::Intro(float dt)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss가 사용할 일반공격.
+***********************************************************/
 void Boss::Fire(Vector2f dir)
 {
 
@@ -147,6 +165,9 @@ void Boss::Fire(Vector2f dir)
 
 }
 
+/**********************************************************
+* 설명 : Boss가 사용할 일반공격 루틴.
+***********************************************************/
 void Boss::FireRutine(Vector2f dir, float dt)
 {
 	if (bossPosition.x - dir.x > 0) // 플레이어가 보스의 왼쪽
@@ -191,6 +212,9 @@ void Boss::FireRutine(Vector2f dir, float dt)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss가 사용할 필살기.
+***********************************************************/
 void Boss::SuperFire(Vector2f dir, Vector2f pos)
 {
 	pos.x -= 230;
@@ -216,6 +240,9 @@ void Boss::SuperFire(Vector2f dir, Vector2f pos)
 	bossFire->SuperShoot(spawnPos, realdir);
 }
 
+/**********************************************************
+* 설명 : Boss가 사용할 필살기 루틴.
+***********************************************************/
 void Boss::SuperFireRutine(Vector2f dir, float dt)
 {	
 	if (superCount == 0 && timer < 99.9)
@@ -280,6 +307,9 @@ void Boss::SuperFireRutine(Vector2f dir, float dt)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss가 사용할 착지공격.
+***********************************************************/
 void Boss::Landing(Vector2f dir)
 {
 	if (superCount == 0 && timer < 99.9)
@@ -341,6 +371,9 @@ void Boss::Landing(Vector2f dir)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss의 시작 움직임 설정.
+***********************************************************/
 void Boss::FirstMove(Vector2f dir, int moving)
 {
 
@@ -372,6 +405,9 @@ void Boss::FirstMove(Vector2f dir, int moving)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss의 이동 설정.
+***********************************************************/
 void Boss::Move(float dt, Vector2f dir, int moving)
 {
 	if (50 > bossPosition.x || bossPosition.x > 1800)
@@ -448,6 +484,9 @@ void Boss::Move(float dt, Vector2f dir, int moving)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss가 죽었을 때 설정.
+***********************************************************/
 void Boss::Die(float dt)
 {
 	if (dieCount == 0 && dietimer < 99.7)
@@ -476,27 +515,34 @@ void Boss::Die(float dt)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss의 기본상태 설정.
+***********************************************************/
 void Boss::Idle()
 {
 	animation.PlayQueue("idle");
 	moveWhere = RandomMgr::GetRandom(1, 2);
 }
 
+/**********************************************************
+* 설명 : Boss의 피격범위.
+***********************************************************/
 FloatRect Boss::GetGlobalBound()
 {
 	return spriteBoss.getGlobalBounds();
 }
 
+/**********************************************************
+* 설명 : Boss의 착지공격 범위.
+***********************************************************/
 FloatRect Boss::GetBossLanding()
 {
 	return bossLandingRect.getGlobalBounds();
 }
 
-
-
-// intro1 intro2 intro2re attackready attack idle walkback walkfront landingready landingbomb landingdown bomb
-// superdoing superready supergo landingeffect landingoutro
-
+/**********************************************************
+* 설명 : Boss의 업데이트를 관리한다.
+***********************************************************/
 void Boss::Update(float dt, Vector2f dir)
 {
 	if (currentHp <= 0)
@@ -597,6 +643,9 @@ void Boss::Update(float dt, Vector2f dir)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss의 Draw를 관리한다.
+***********************************************************/
 void Boss::Draw(RenderWindow &window)
 {
 	window.draw(spriteEffect);
@@ -614,18 +663,25 @@ void Boss::Draw(RenderWindow &window)
 	}
 }
 
-
-
+/**********************************************************
+* 설명 : Boss의 최대체력을 받아온다.
+***********************************************************/
 int Boss::GetMaxHp()
 {
 	return maxHp;
 }
 
+/**********************************************************
+* 설명 : Boss의 현재체력을 받아온다.
+***********************************************************/
 int Boss::GetCurrentHp()
 {
 	return currentHp;
 }
 
+/**********************************************************
+* 설명 : Boss의 피격 딜레이를 설정한다.
+***********************************************************/
 bool Boss::underAttack(float dt)
 {
 	hitTimer -= dt;
@@ -642,6 +698,9 @@ bool Boss::underAttack(float dt)
 	}
 }
 
+/**********************************************************
+* 설명 : Boss가 공격받았을 때 체력을 조절한다.
+***********************************************************/
 void Boss::SetBossHp(int damage)
 {
 	if (currentHp > 0)
@@ -654,17 +713,17 @@ void Boss::SetBossHp(int damage)
 	}
 }
 
-
-void Boss::SetStateIdle()
-{
-	action = BossStatus::IDLE;
-}
-
+/**********************************************************
+* 설명 : Boss가 살아있는지 확인한다.
+***********************************************************/
 bool Boss::isAlive()
 {
 	return alive;
 }
 
+/**********************************************************
+* 설명 : Boss공격의 충돌처리를 담당한다.
+***********************************************************/
 bool Boss::UpdateCollision(Player &player)
 {
 	bool isCollied = false;
@@ -697,7 +756,6 @@ bool Boss::UpdateCollision(Player &player)
 		player.Hit(30);
 		isLandingAttacking = false;
 		isCollied = true;
-	}
-	
+	}	
 	return isCollied;
 }

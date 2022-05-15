@@ -54,7 +54,5 @@ public:
 
 	RectangleShape GetRect();
 
-	FloatRect GetGlobalBound();
-
 	bool UpdateCollision(Player &player);
 };
