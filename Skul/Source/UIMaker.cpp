@@ -9,7 +9,7 @@ UIMaker::UIMaker() : hp(2.5f)
 
 void UIMaker::Init()
 {
-
+	lookBoss = false;
 	clickGameStart = false;
 	mouseCursor.Init();
 
@@ -250,6 +250,49 @@ void UIMaker::UnderAttack(Vector2f position, float dt)
 	position.y -= 100;
 	underAttackText.setPosition(position);
 	position.y -= textSpeed * dt;
+}
+
+void UIMaker::SetUiPosition(Vector2f position)
+{
+	if (position.x < 1029)
+	{
+		spriteMainFrame.setPosition(MAIN_FRAME_X + 117, MAIN_FRAME_Y);
+		spriteHpBar.setPosition(HP_BAR_X + 117, HP_BAR_Y);
+		spriteAbutton.setPosition(A_X + 117, A_Y);
+		spriteGrimReaperIcon1.setPosition(MINI_HEAD_X + 117, MINI_HEAD_Y);
+		spriteGrimReaperIcon3.setPosition(PORTRAIT_X + 117, PORTRAIT_Y);
+		spriteGrimReaperSkill.setPosition(SKIIL1_X + 117, SKIIL1_Y);
+		spriteLittleBoneIcon1.setPosition(MINI_HEAD_X + 117, MINI_HEAD_Y);
+		spriteLittleBoneIcon3.setPosition(PORTRAIT_X + 35 + 117, PORTRAIT_Y + 18);
+		textHp.setPosition(246 + 117, 911);
+	}
+	else if (position.x > 2880 || lookBoss)
+	{
+		lookBoss = true;
+		spriteMainFrame.setPosition(MAIN_FRAME_X + 117 + 1850, MAIN_FRAME_Y);
+		spriteHpBar.setPosition(HP_BAR_X + 117 + 1850, HP_BAR_Y);
+		spriteAbutton.setPosition(A_X + 117 + 1850, A_Y);
+		spriteGrimReaperIcon1.setPosition(MINI_HEAD_X + 117 + 1850, MINI_HEAD_Y);
+		spriteGrimReaperIcon3.setPosition(PORTRAIT_X + 117 + 1850, PORTRAIT_Y);
+		spriteGrimReaperSkill.setPosition(SKIIL1_X + 117 + 1850, SKIIL1_Y);
+		spriteLittleBoneIcon1.setPosition(MINI_HEAD_X + 117 + 1850, MINI_HEAD_Y);
+		spriteLittleBoneIcon3.setPosition(PORTRAIT_X + 35 + 117 + 1850, PORTRAIT_Y + 18);
+		textHp.setPosition(246 + 117 + 1850, 911);
+	}
+
+	else
+	{
+		spriteMainFrame.setPosition(position.x - 900, MAIN_FRAME_Y);
+		spriteGrimReaperIcon1.setPosition(position.x - 900, MINI_HEAD_Y);
+		spriteGrimReaperIcon3.setPosition(position.x - 920, PORTRAIT_Y);
+		spriteGrimReaperSkill.setPosition(position.x - 758, SKIIL1_Y);
+		spriteLittleBoneIcon1.setPosition(position.x - 895, MINI_HEAD_Y);
+		spriteLittleBoneIcon3.setPosition(position.x - 890, PORTRAIT_Y + 18);
+		spriteHpBar.setPosition(position.x -792, HP_BAR_Y);
+		spriteAbutton.setPosition(position.x -740, A_Y);
+		textHp.setPosition(position.x - 690, 911);
+	}
+
 }
 
 

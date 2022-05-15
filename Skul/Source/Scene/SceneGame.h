@@ -38,6 +38,9 @@ private:
 	Time check;
 
 	int damage;
+
+	Sprite spriteBossBackGround;
+	bool lookBoss;
 public:
 
 	int curHp;

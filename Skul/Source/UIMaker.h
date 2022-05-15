@@ -77,6 +77,7 @@ private:
 	float textSpeed;
 	float deleteDistance;
 	bool isActive;
+	bool lookBoss;
 
 
 
@@ -96,7 +97,7 @@ public:
 	const int MINI_HEAD_X = MAIN_FRAME_X;
 	const int MINI_HEAD_Y = MAIN_FRAME_Y + 80;
 
-	const int BOSS_FRAME_X = 500;
+	const int BOSS_FRAME_X = 2420;
 	const int BOSS_FRAME_Y = 0;
 
 	UIMaker();
@@ -119,6 +120,7 @@ public:
 	// Damage
 	void UnderAttack(Vector2f position, float dt);
 
+	void SetUiPosition(Vector2f position);
 
 	virtual void DrawSceneTitle(sf::RenderWindow *window);
 	virtual void DrawSceneGame(sf::RenderWindow *window);

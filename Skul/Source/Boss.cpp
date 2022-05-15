@@ -36,8 +36,7 @@ void Boss::Init()
 	int superCount = 0;
 	int launcher2 = 0;
 	int launcher3 = 0;
-	//bossPosition.x = 3700;
-	bossPosition.x = 1700;
+	bossPosition.x = 3700;
 	bossPosition.y = 680;
 
 
@@ -272,34 +271,34 @@ void Boss::SuperFireRutine(Vector2f dir, float dt)
 	if (count == 2 && timer < 97.9)
 	{
 		animation.Play("superdoing");
-		SuperFire(dir, Vector2f(380, 230));
+		SuperFire(dir, Vector2f(2300, 230));
 		count++;
 	}
 	if (count == 3 && timer < 95.9)
 	{
-		SuperFire(dir, Vector2f(380, 230));
-		SuperFire(dir, Vector2f(1030, 180));
+		SuperFire(dir, Vector2f(2300, 230));
+		SuperFire(dir, Vector2f(2950, 180));
 		count++;
 	}
 
 	if (count == 4 && timer < 93.9)
 	{
-		SuperFire(dir, Vector2f(1030, 180));
-		SuperFire(dir, Vector2f(1730, 230));
+		SuperFire(dir, Vector2f(2950, 180));
+		SuperFire(dir, Vector2f(3650, 230));
 		count++;
 	}
 
 	if (count == 5 && timer < 91.9)
 	{
-		SuperFire(dir, Vector2f(1730, 230));
+		SuperFire(dir, Vector2f(3650, 230));
 		count++;
 	}
 
 	if (count == 6 && timer < 89.9)
 	{
-		SuperFire(dir, Vector2f(380, 230));
-		SuperFire(dir, Vector2f(1030, 180));
-		SuperFire(dir, Vector2f(1730, 230));
+		SuperFire(dir, Vector2f(2300, 230));
+		SuperFire(dir, Vector2f(2950, 180));
+		SuperFire(dir, Vector2f(3650, 230));
 		count++;
 	}
 	if (count == 7 && timer < 87.9)
@@ -478,12 +477,12 @@ void Boss::FirstMove(Vector2f dir, int moving)
 ***********************************************************/
 void Boss::Move(float dt, Vector2f dir, int moving)
 {
-	/*if (2050 > bossPosition.x || bossPosition.x > 3750)
+	if (2050 > bossPosition.x || bossPosition.x > 3750)
 	{
 		timer = 100;
 		count = 0;
 		action = BossStatus::LANDING;
-	}*/
+	}
 	if (timer > 96)
 	{
 		if (moving == 1)
@@ -722,14 +721,14 @@ void Boss::Draw(RenderWindow &window)
 	window.draw(spriteEffect);
 	window.draw(spriteBoss);
 	window.draw(spriteAttackEffect);
-	window.draw(bossRect);
-	window.draw(bossLandingRect);
+	//window.draw(bossRect);
+	//window.draw(bossLandingRect);
 	window.draw(spriteText);
 
 	for (auto fire : useFires)
 	{
 		window.draw(fire->GetSprite());
-		window.draw(fire->GetRect());
+		//window.draw(fire->GetRect());
 		window.draw(fire->GetSuperEffectSprite());
 		window.draw(fire->GetBombSprite());
 	}
@@ -792,6 +791,8 @@ bool Boss::isAlive()
 {
 	return alive;
 }
+
+
 
 /**********************************************************
 * 설명 : Boss공격의 충돌처리를 담당한다.

@@ -13,6 +13,7 @@
 
 void SceneGame::Init()
 {
+	lookBoss = false;
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
 	playerView = new View(FloatRect(0, 0, resolution.x, resolution.y));
@@ -22,6 +23,12 @@ void SceneGame::Init()
 	spriteEndFrame.setTexture(*ResourceMgr::instance()->GetTexture("ENDTEX"));
 	spriteEndFrame.setPosition(130, 50);
 	spriteEndFrame.setScale(1.3, 1.3);
+
+	spriteBossBackGround.setTexture(*ResourceMgr::instance()->GetTexture("BOSSGROUNDTEX"));
+	spriteBossBackGround.setPosition(1920, -230);
+	spriteBossBackGround.setScale(2.2, 2.2);
+	
+
 
 	spriteBackground.setScale(Vector2f(backGroundX, backGroundY));
 	spriteTile.setTexture(*ResourceMgr::instance()->GetTexture("TILETEX"));
@@ -67,7 +74,7 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 	}
 	
 	player.Update(dt, tileMap.Getrects());
-	if (player.GetPlayerPosition().y < 1920)
+	if (player.GetPlayerPosition().x > 1920)
 	{
 		boss.Update(dt, player.GetPlayerPosition());
 	}
@@ -118,21 +125,21 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 		}
 	}
 
-	if (InputManager::GetKey(Keyboard::Right))
+	if (player.GetPlayerPosition().x < 1029)
 	{
-		playerView->move(200 * dt, 0.f);
+		playerView->setCenter(990, 540);
 	}
-	if (InputManager::GetKeyDown(Keyboard::Z))
+	else if (player.GetPlayerPosition().x > 2880 || lookBoss)
 	{
-		playerView->move(1000 * dt, 0.f);
+		playerView->setCenter(2885, 540);
+		lookBoss = true;
+	}
+	else
+	{
+		playerView->setCenter(player.GetPlayerPosition().x, 540);
 	}
 
-	if (InputManager::GetKey(Keyboard::Left))
-	{
-		playerView->move(-200 * dt, 0.f);
-		
-	}
-
+	ui.SetUiPosition(player.GetPlayerPosition());
 	ui.SetHpbarSize(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetHpbarText(player.GetCurrentPlayerHealth(), player.GetMaxPlayerHealth());
 	ui.SetBossHpbarSize(boss.GetCurrentHp(), boss.GetMaxHp());
@@ -145,6 +152,7 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 {
 
+	window->draw(spriteBossBackGround);
 	window->setView(*playerView);
 
 	window->setMouseCursorVisible(false);
@@ -168,7 +176,7 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 	}
 	ui.DrawSceneGame(window);
 
-	if (player.GetPlayerPosition().y < 1920)
+	if (player.GetPlayerPosition().x > 1920)
 	{
 		boss.Draw(*window);
 	}
