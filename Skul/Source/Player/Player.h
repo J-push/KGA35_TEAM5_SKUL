@@ -165,6 +165,7 @@ public:
 	Vector2f GetPlayerPosition();
 	bool GetIsAttack();
 	bool GetIsSkill();
+	bool GetIsAlive();
 
 
 	FloatRect GetPlayerRect();

@@ -2,7 +2,7 @@
 * 작 성 자 : 김 재 휘
 * 작 성 일 : 2022-05-10
 * 내    용 : boss의 동작을 구현한다.
-* 수 정 일 : 2022-05-16
+* 수 정 일 :
 *******************************************************************************/
 #include "Boss.h"
 
@@ -36,7 +36,7 @@ void Boss::Init()
 	int superCount = 0;
 	int launcher2 = 0;
 	int launcher3 = 0;
-	bossPosition.x = 1700;
+	bossPosition.x = 3700;
 	bossPosition.y = 750;
 
 
@@ -477,7 +477,7 @@ void Boss::FirstMove(Vector2f dir, int moving)
 ***********************************************************/
 void Boss::Move(float dt, Vector2f dir, int moving)
 {
-	if (50 > bossPosition.x || bossPosition.x > 1800)
+	if (2050 > bossPosition.x || bossPosition.x > 3750)
 	{
 		timer = 100;
 		count = 0;

@@ -910,6 +910,11 @@ bool Player::GetIsSkill()
 	return isSkill;
 }
 
+bool Player::GetIsAlive()
+{
+	return isAlive;
+}
+
 
 
 FloatRect Player::GetPlayerSkiilRect()

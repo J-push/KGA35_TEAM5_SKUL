@@ -39,6 +39,9 @@ void ResourceMgr::Init()
 
 	loaded.push_back(new Resource("BOSSFRAMETEX", "graphics/UI/BossFrame.png", ResourceTypes::Texture));
 	loaded.push_back(new Resource("BOSSHPBARTEX", "graphics/UI/BossHpBar.png", ResourceTypes::Texture));
+	
+
+
 
 
 	// boss 
@@ -59,6 +62,7 @@ void ResourceMgr::Init()
 
 	// endScene용
 	loaded.push_back(new Resource("SCORETEX", "graphics/UI/ScoreFrame.png", ResourceTypes::Texture));
+	loaded.push_back(new Resource("ENDTEX", "graphics/UI/DieFrame.png", ResourceTypes::Texture));
 
 	for (std::list<Resource *>::iterator it = loaded.begin(); it != loaded.end(); ++it)
 	{
