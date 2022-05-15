@@ -104,20 +104,15 @@ void Player::Init()
 	playerSkillRect.setOutlineColor(Color::Black);
 	playerSkillRect.setOutlineThickness(2);
 
-	attackBuffer.loadFromFile("sound/player/Attack.wav");
-	attack.setBuffer(attackBuffer);
+	attack.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERATTACKSOUND"));
 
-	changeBuffer.loadFromFile("sound/player/Change.wav");
-	change.setBuffer(changeBuffer);
+	change.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERCHANGESOUND"));
 
-	dashBuffer.loadFromFile("sound/player/Dash.wav");
-	dash.setBuffer(dashBuffer);
+	dash.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERDASHSOUND"));
 
-	jumpBuffer.loadFromFile("sound/player/Jump.wav");
-	jump.setBuffer(jumpBuffer);
+	jump.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERJUMPSOUND"));
 
-	deathBuffer.loadFromFile("sound/player/Death.wav");
-	death.setBuffer(deathBuffer);
+	death.setBuffer(*ResourceMgr::instance()->GetSoundBuffer("PLAYERDEATHSOUND"));
 }
 
 /**********************************************************
