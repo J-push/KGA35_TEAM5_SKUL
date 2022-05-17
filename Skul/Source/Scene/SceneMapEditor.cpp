@@ -302,7 +302,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         if (InputManager::GetMouseButton(Mouse::Button::Left) && currentMousePosition)
         {
             CreateTile(mousePosGrid.x, mousePosGrid.y, currentIndex);
-            cout << "Gridx : " << mousePosGrid.x << " " << "Gridy : " << mousePosGrid.y << " " << "index : " << currentIndex << "\n";
+            //cout << "Gridx : " << mousePosGrid.x << " " << "Gridy : " << mousePosGrid.y << " " << "index : " << currentIndex << "\n";
         }
         if (InputManager::GetMouseButton(Mouse::Button::Right) && currentMousePosition)
         {
@@ -315,7 +315,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
         {
             finalGrid.clear();
             downGrid = mousePosGrid;
-            std::cout << "DGrid : " << downGrid.x << " " << downGrid.y << "\n";
+           // std::cout << "DGrid : " << downGrid.x << " " << downGrid.y << "\n";
 
             drag = new RectangleShape(Vector2f(0.f, 0.f));
             drag->setFillColor({ 100, 100, 200, 125 });
@@ -352,7 +352,7 @@ void SceneMapEditor::Update(float dt, RenderWindow *window, View *mainView)
 
             delete drag;
             upGrid = mousePosGrid;
-            std::cout << "UGrid : " << upGrid.x << " " << upGrid.y << "\n";
+            //std::cout << "UGrid : " << upGrid.x << " " << upGrid.y << "\n";
         }
         if (InputManager::GetMouseButtonDown(Mouse::Button::Left) && !currentMousePosition)
         {
