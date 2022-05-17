@@ -68,7 +68,7 @@ private:
 	bool currentState;
 
 	int mapWidth = 120;
-	int mapHeight = 34;
+	int mapHeight = 67;
 	int currentIndex;
 	int texIndex;
 	int saveNum;
