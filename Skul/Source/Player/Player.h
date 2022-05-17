@@ -4,9 +4,9 @@
 #include "../Animation/AnimationController.h"
 #include <map>
 #include "../Manager/InputManager.h"
-#include "../../ColliderRect.h"
+#include "../TileMap/ColliderRect.h"
 #include "../Utils/Utils.h"
-#include "../SwordMan/SwordMan.h"
+#include "../Monster/SwordMan/swordman.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
 
 class bossfire;
@@ -34,7 +34,7 @@ class Player
 private:
 	const float PLAYER_SIZE = 1.5f;				//플레이어 scale 크기
 	const float LEFT_PLAYER_SIZE = -1.5f;		//플레이어 애니매이션 반전
-	const float START_PLAYER_HEALTH = 9999;		//시작 플레이어 체력;
+	const float START_PLAYER_HEALTH = 100;		//시작 플레이어 체력;
 	const float START_PLAYER_SPEED = 200;		//시작 플레이어 속도; 
 	const float START_PLAYER_STR = 10;			//시작 플레이어 공격력
 	const float GRAVITY_POWER = 1000.f;			//중력

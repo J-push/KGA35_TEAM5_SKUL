@@ -9,7 +9,7 @@
 #include "../Manager/ResourceMgr.h"
 #include "../Manager/RandomMgr.h"
 #include "../Framework/Framework.h"
-#include "../BossFire.h"
+#include "../Boss/BossFire.h"
 
 void SceneGame::Init()
 {
@@ -63,15 +63,15 @@ void SceneGame::Update(float dt, RenderWindow *window, View *mainView)
 {
 	playTime += check;
 
-	//for (auto pinkEnt : mPinkEnt)
-	//{
-	//	pinkEnt->Update(dt, player);
-	//}
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Update(dt, player);
+	}
 
-	//for (auto SwordMan : mSwordMans)
-	//{
-	//	SwordMan->Update(dt, player);
-	//}
+	for (auto SwordMan : mSwordMans)
+	{
+		SwordMan->Update(dt, player);
+	}
 	
 	player.Update(dt, tileMap.Getrects());
 	if (player.GetPlayerPosition().x > 1920)
@@ -164,15 +164,15 @@ void SceneGame::Draw(sf::RenderWindow *window, View *mainView, View *uiView)
 	
 	rect.DrawMap(window,mainView,uiView);
 
-	//for (auto SwordMan : mSwordMans)
-	//{
-	//	SwordMan->Draw(*window);
-	//}
+	for (auto SwordMan : mSwordMans)
+	{
+		SwordMan->Draw(*window);
+	}
 	player.Draw(*window);
-	//for (auto pinkEnt : mPinkEnt)
-	//{
-	//	pinkEnt->Draw(*window);
-	//}
+	for (auto pinkEnt : mPinkEnt)
+	{
+		pinkEnt->Draw(*window);
+	}
 	ui.DrawSceneGame(window);
 
 	if (player.GetPlayerPosition().x > 1920)

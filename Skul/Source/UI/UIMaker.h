@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../Source/Manager/ResourceMgr.h"
-#include "../Source/Manager/SceneMgr.h"
-#include "../Source/Animation/AnimationController.h"
-#include "../Source/Utils/ChangeMouse.h"
-#include "../Source/Manager/InputManager.h"
-#include "../Source/Player/Player.h"
-#include "../Source/Monster/PinkEnt/PinkEnt.h"
+#include "../Manager/ResourceMgr.h"
+#include "../Manager/SceneMgr.h"
+#include "../Animation/AnimationController.h"
+#include "../Utils/ChangeMouse.h"
+#include "../Manager/InputManager.h"
+#include "../Player/Player.h"
+#include "../Monster/PinkEnt/PinkEnt.h"
 
 class SceneGame;
 

@@ -10,7 +10,7 @@
 #include "../Scene/SceneGame.h"
 #include "../Scene/SceneMapEditor.h"
 #include "../Scene/SceneMenu.h"
-#include "../SceneEnd.h"
+#include "../Scene/SceneEnd.h"
 
 /**********************************************************
 * 설명 : Scene들을 초기화한다.

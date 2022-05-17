@@ -1,5 +1,5 @@
 #include "UIMaker.h"
-#include "Scene/SceneGame.h"
+#include "../Scene/SceneGame.h"
 
 #include <iostream>
 

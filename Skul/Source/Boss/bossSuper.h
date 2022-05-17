@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Source/Animation/AnimationController.h"
-#include "../Source/Utils/Utils.h"
+#include "../Animation/AnimationController.h"
+#include "../Utils/Utils.h"
 
 
 class BossSuper
