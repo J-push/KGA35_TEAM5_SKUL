@@ -1,15 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include "../Player/Player.h"
-#include "../swordman/swordman.h"
-#include "../UIMaker.h"
+#include "../Monster/SwordMan/swordman.h"
+#include "../UI/UIMaker.h"
 #include "../Utils/ChangeMouse.h"
-#include "../../ColliderRect.h"
-#include "../swordman/swordman.h"
+#include "../TileMap/ColliderRect.h"
 #include "../Monster/PinkEnt/PinkEnt.h"
 #include <vector>
 #include "SceneMapEditor.h"
-#include "../Boss.h"
+#include "../Boss/Boss.h"
 
 
 class SceneGame : public Scene

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../Source/Animation/AnimationController.h"
-#include "../Source/Utils/Utils.h"
-#include "../Source/Manager/ResourceMgr.h"
+#include "../Animation/AnimationController.h"
+#include "../Utils/Utils.h"
+#include "../Manager/ResourceMgr.h"
 #include <map>
-#include "../Source/BossFire.h"
-#include "../Source/Manager/RandomMgr.h"
+#include "../Boss/BossFire.h"
+#include "../Manager/RandomMgr.h"
 
 // ½ÇÇè¿ë
-#include "../Source/Manager/InputManager.h"
-#include "../Source/Player/Player.h"
+#include "../Manager/InputManager.h"
+#include "../Player/Player.h"
 
 enum class BossStatus
 {
@@ -26,7 +26,7 @@ class Boss
 {
 private:
 	int maxHp = 400;
-	int currentHp = 20;
+	int currentHp = 400;
 	float speed = 100;
 
 	Sprite spriteText;

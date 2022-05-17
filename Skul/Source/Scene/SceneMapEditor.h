@@ -8,10 +8,15 @@
 #include <iostream>
 #include "../Animation/rapidcsv.h"
 #include "../TileMap/Map.h"
-#include "../../DefineList.h"
 
 using namespace sf;
 using namespace std;
+
+enum class InputState
+{
+	BLOCK,
+	IMAGE,
+};
 
 class Player;
 class SceneMapEditor

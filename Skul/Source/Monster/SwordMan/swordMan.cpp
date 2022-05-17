@@ -6,12 +6,13 @@
 *******************************************************************************/
 /*include될 헤더*/
 #include "../swordman/swordman.h"
-#include "../Animation/rapidcsv.h"
+#include "../../Animation/rapidcsv.h"
 #include <iostream>
 #include <ctime>
 #include <random>
-#include "../Player/Player.h"
-#include "../Manager/ResourceMgr.h"
+#include "../../Player/Player.h"
+#include "../../Manager/ResourceMgr.h"
+#include "swordMan.h"
 
 
 /**********************************************************

@@ -1,8 +1,8 @@
 #pragma once
-#include "../Source/Animation/AnimationController.h"
-#include "../Source/Utils/Utils.h"
+#include "../Animation/AnimationController.h"
+#include "../Utils/Utils.h"
 
-#include "../Source/Player/Player.h"
+#include "../Player/Player.h"
 class Player;
 
 class BossFire

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Manager/SceneMgr.h"
 #include "../Manager/ResourceMgr.h"
-#include "../UIMaker.h"
+#include "../UI/UIMaker.h"
 
 
 class Scene

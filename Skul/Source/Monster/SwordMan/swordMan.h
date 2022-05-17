@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
-#include "../Animation/AnimationController.h"
+#include "../../Animation/AnimationController.h"
 #include <map>
 
 using namespace sf;
@@ -110,5 +110,9 @@ public:
 	bool IsAttackAble(float dt);
 
 	void Draw(RenderWindow& window);
+};
+
+class SwordMan
+{
 };
 
