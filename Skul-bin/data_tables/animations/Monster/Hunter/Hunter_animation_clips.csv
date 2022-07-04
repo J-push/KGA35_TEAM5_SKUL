@@ -1,0 +1,9 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+Idle,10,1,data_tables/animations/Monster/Hunter/Hunter_animation_idle.csv
+Attack(Left),10,0,data_tables/animations/Monster/Hunter/Hunter_animation_Attack(Left).csv
+Attack(Right),10,0,data_tables/animations/Monster/Hunter/Hunter_animation_Attack(Right).csv
+Hit(Left),10,0,data_tables/animations/Monster/Hunter/Hunter_animation_Hit(Left).csv
+Hit(Right),10,0,data_tables/animations/Monster/Hunter/Hunter_animation_Hit(Right).csv
+Walk(Left),10,1,data_tables/animations/Monster/Hunter/Hunter_animation_Walk(Left).csv
+Walk(Right),10,1,data_tables/animations/Monster/Hunter/Hunter_animation_Walk(Right).csv
+Arrow,10,0,data_tables/animations/Monster/Hunter/Hunter_animation_Arrow.csv

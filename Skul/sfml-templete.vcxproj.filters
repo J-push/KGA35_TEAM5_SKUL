@@ -1,96 +1,220 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Animation\AnimationClip.cpp">
+      <Filter>Source\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation\AnimationController.cpp">
+      <Filter>Source\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\Framework.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\InputManager.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\RandomMgr.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\ResourceMgr.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager\SceneMgr.cpp">
+      <Filter>Source\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Monster\PinkEnt\PinkEnt.cpp">
+      <Filter>Source\Monster\PinkEnt</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\Player.cpp">
+      <Filter>Source\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player\Skul\LittleBone.cpp">
+      <Filter>Source\Player\Skul</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource\Resource.cpp">
+      <Filter>Source\Resourece</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Scene.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneGame.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneMapEditor.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneMenu.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneTitle.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileMap\Map.cpp">
+      <Filter>Source\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Singleton.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils\Utils.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Monster\SwordMan\swordMan.cpp">
+      <Filter>Source\Monster\SwordMan</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Boss\boss.cpp">
+      <Filter>Source\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Boss\bossFire.cpp">
+      <Filter>Source\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Boss\bossSuper.cpp">
+      <Filter>Source\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\UIMaker.cpp">
+      <Filter>Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneEnd.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileMap\ColliderRect.cpp">
+      <Filter>Source\TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneCharacter.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneMenu.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneTitle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Singleton.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
+    <ClInclude Include="Source\Animation\AnimationClip.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation\AnimationController.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation\rapidcsv.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Framework.h">
+      <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\InputManager.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\RandomMgr.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\ResourceMgr.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager\SceneMgr.h">
+      <Filter>Source\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Monster\PinkEnt\PinkEnt.h">
+      <Filter>Source\Monster\PinkEnt</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\Player.h">
+      <Filter>Source\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player\Skul\LittleBone.h">
+      <Filter>Source\Player\Skul</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Resource\Resource.h">
+      <Filter>Source\Resourece</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Scene.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneGame.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneMapEditor.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneMenu.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneTitle.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\csvfile.h">
+      <Filter>Source\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\Map.h">
+      <Filter>Source\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\ChangeMouse.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Singleton.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\Utils.h">
+      <Filter>Source\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Monster\SwordMan\swordMan.h">
+      <Filter>Source\Monster\SwordMan</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\boss.h">
+      <Filter>Source\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\bossFire.h">
+      <Filter>Source\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Boss\bossSuper.h">
+      <Filter>Source\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\UIMaker.h">
+      <Filter>Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneEnd.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap\ColliderRect.h">
+      <Filter>Source\TileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneCharacter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMenu.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneTitle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
+    <Filter Include="Source">
+      <UniqueIdentifier>{dc584d56-e53b-4098-977b-d3a83b89da1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Animation">
+      <UniqueIdentifier>{b60db0c9-2b9a-4a6c-ad0a-21f32c07f52d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Framework">
+      <UniqueIdentifier>{1b0b1e78-730e-4ffc-8911-00dd1ab62dec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager">
+      <UniqueIdentifier>{2d7af2cb-1a5f-4de5-96c0-9a9d4866693d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Monster">
+      <UniqueIdentifier>{53f9075a-84d2-4f92-bbd5-7f211491620b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Monster\PinkEnt">
+      <UniqueIdentifier>{e85cc299-ffbb-40e9-9bcd-38fc3fc77bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Monster\SwordMan">
+      <UniqueIdentifier>{79373e91-2944-43f2-a2b4-17af9c5b5d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player">
+      <UniqueIdentifier>{845dc28f-cc9e-4f28-b506-802901f81f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Player\Skul">
+      <UniqueIdentifier>{964f83f5-fede-4ffe-829e-254ac1785806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resourece">
+      <UniqueIdentifier>{f704225f-07b4-4d30-b7c8-623146db7866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{17680423-2e23-4c40-ba5d-201bbba2a253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\TileMap">
+      <UniqueIdentifier>{0490f3ec-5580-4fb5-a6c2-dd42e60b7692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utils">
+      <UniqueIdentifier>{f947702e-1764-4af7-a5eb-9395e9d87a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Boss">
+      <UniqueIdentifier>{7d913997-8500-4ec7-a3a9-812f2bef92f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UI">
+      <UniqueIdentifier>{5dc4d0a9-cf7d-4e1f-95f4-ae2c00081f60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -1,0 +1,5 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+STARTTEX,10,0,data_tables/animations/title/title_animation_start.csv
+MAPTEX,10,0,data_tables/animations/title/title_animation_mapediet.csv
+STARTMOUSETEX,60,0,data_tables/animations/title/title_animation_startmouse.csv
+MAPMOUSETEX,60,0,data_tables/animations/title/title_animation_mapedietmouse.csv

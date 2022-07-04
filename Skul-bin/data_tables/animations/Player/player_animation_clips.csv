@@ -1,0 +1,17 @@
+ID,FPS,"LOOP TYPE(0:Single, 1:Loop)",CLIP PATH
+Idle,10,1,data_tables/animations/Player/player_animation_idle.csv
+Walk,10,1,data_tables/animations/Player/player_animation_Walk.csv
+Attack1,17,0,data_tables/animations/Player/player_animation_Attack1.csv
+Attack2,17,0,data_tables/animations/Player/player_animation_Attack2.csv
+Attack3,17,0,data_tables/animations/Player/player_animation_Attack3.csv
+Dash,10,0,data_tables/animations/Player/player_animation_Dash.csv
+Jump,10,1,data_tables/animations/Player/player_animation_Jump.csv
+Skill1,17,0,data_tables/animations/Player/player_animation_Skill1.csv
+Down,10,1,data_tables/animations/Player/player_animation_Down.csv
+L_Idle,10,1,data_tables/animations/Player/player_animation_littleBorn_idle.csv
+L_Walk,10,1,data_tables/animations/Player/player_animation_littleBorn_Walk.csv
+L_Attack,17,0,data_tables/animations/Player/player_animation_littleBorn_Attack.csv
+L_Dash,10,0,data_tables/animations/Player/player_animation_littleBorn_Dash.csv
+L_Jump,10,1,data_tables/animations/Player/player_animation_littleBorn_Jump.csv
+Dead,2,0,data_tables/animations/Player/player_animation_Dead.csv
+L_Dead,2,0,data_tables/animations/Player/player_animation_littleBorn_Dead.csv
